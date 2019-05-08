@@ -54,7 +54,7 @@
 (defroute matching-path "/matching" []
   (lazy-push :matching {}))
 
-(defroute matching-path "/myprofile" []
+(defroute myprofile-path "/myprofile" []
   (lazy-push :myprofile {}))
 
 (defroute not-found-path "*" []
