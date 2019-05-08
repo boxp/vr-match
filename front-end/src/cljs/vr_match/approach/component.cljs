@@ -138,8 +138,8 @@
    }
    .return-animation {
      animation-name: returnSwipeCard;
-     animation-duration: 150ms;
-     animation-timing-function: ease-out;
+     animation-duration: 500ms;
+     animation-timing-function: cubic-bezier(0.460, 0.185, 0.285, 1.195);
      animation-iteration-count: 1;
      animation-fill-mode: both;
    }"))
