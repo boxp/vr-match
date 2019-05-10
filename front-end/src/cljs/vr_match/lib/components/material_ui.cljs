@@ -44,6 +44,7 @@
 (def list-item-avatar (r/adapt-react-class js/MaterialUI.ListItemAvatar))
 (def list-item-text (r/adapt-react-class js/MaterialUI.ListItemText))
 (def list-item-icon (r/adapt-react-class js/MaterialUI.ListItemIcon))
+(def list-item-secondary-action (r/adapt-react-class js/MaterialUI.ListItemSecondaryAction))
 
 ;; material-ui/styles
 (def with-styles (.-withStyles js/MaterialUIStyles))
@@ -58,10 +59,10 @@
 (def secondary-color mui-color-red)
 
 (def favorite-color primary-color)
-  (def skip-color "#e0e0e0")
+(def skip-color "#e0e0e0")
 
 (defn theme []
   (create-mui-theme
    #js {"palette"
-        #js {"primary" #js {"main" "#ef5350"}
+        #js {"primary" #js {"main" primary-color}
              "secondary" secondary-color}}))

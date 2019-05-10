@@ -26,7 +26,9 @@
    :matching {:container #(resolve 'vr-match.matching.container/matching)
               :module-name :matching}
    :myprofile {:container #(resolve 'vr-match.myprofile.container/myprofile)
-              :module-name :myprofile}})
+               :module-name :myprofile}
+   :mypage {:container #(resolve 'vr-match.mypage.container/mypage)
+            :module-name :mypage}})
 
 (defn- lazy-push
   [key params]
@@ -56,6 +58,9 @@
 
 (defroute myprofile-path "/myprofile" []
   (lazy-push :myprofile {}))
+
+(defroute mypage-path "/mypage" []
+  (lazy-push :mypage {}))
 
 (defroute not-found-path "*" []
   (lazy-push :approach {}))
