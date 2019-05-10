@@ -27,6 +27,9 @@
    :myprofile {:entries #{"vr-match.myprofile.container"}
                :output-to (str output-dir "/myprofile.js")
                :depends-on #{:client}}
+   :mypage {:entries #{"vr-match.mypage.container"}
+            :output-to (str output-dir "/mypage.js")
+            :depends-on #{:client}}
    ;; 分割されたモジュールをロードするために最低限必要なモジュール
    ;; モジュールの分割を行うと必ずこのモジュールが分割されるので出力先ファイル名だけ変更している
    :cljs-base {:output-to (str output-dir "/cljs_base.js")}
@@ -42,7 +45,6 @@
                  [secretary "1.2.3"]
                  [kibu/pushy "0.3.8"]
                  [day8.re-frame/http-fx "0.1.6"]
-                 [stylefy "1.9.0"]
                  [cljsjs/material-ui "3.1.1-0"]
                  [re-graph "0.1.8"]
                  [vincit/venia "0.2.5"]]
