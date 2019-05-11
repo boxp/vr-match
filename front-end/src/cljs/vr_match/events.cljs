@@ -20,6 +20,11 @@
              {:ws-url nil
               :http-url (str (-> $ :db :api-endpoint) "/graphql")}]))))
 
+(re-frame/reg-event-fx
+ ::initialize-worker
+ (fn [_]
+   {::effects/initialize-worker {}}))
+
 (re-frame/reg-event-db
  ::universal-push
  (fn [db [_ key params]]

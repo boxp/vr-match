@@ -17,6 +17,7 @@ front-end
     │       └── その他のフォルダ: wizard,loginなど機能別の実装を置く場所(re-ducksを参照)
     ├── cljs-client: クライアントサイドのエントリーポイント
     └── cljs-server: SSR用サーバーのエントリーポイント
+    └── cljs-worker: WebWorkerのエントリーポイント
 ```
 
 ## 参考技術スタック

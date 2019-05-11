@@ -87,6 +87,8 @@
          [::events/initialize
           {:history history
            :preload preload}])
+        (re-frame/dispatch
+         [::events/initialize-worker])
         (dev-setup)
         (hook-history)
         (mount-root)))))

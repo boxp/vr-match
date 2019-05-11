@@ -86,10 +86,11 @@
     {:id           "prod"
      :source-paths ["src/cljs" "src/cljs-client"]
      :compiler     {:main vr-match.client
+                    :closure-defines {vr-match.effects/worker-resource-path "/static/worker/js/compiled/worker.js"
+                                      goog.DEBUG false}
                     :output-dir      "resources/public/prod/js/compiled"
                     :asset-path      "/static/js/compiled"
                     :optimizations   :advanced
-                    :closure-defines {goog.DEBUG false}
                     :pretty-print    false
                     :npm-deps false
                     :modules ~(modules "resources/public/prod/js/compiled")}}
@@ -120,5 +121,23 @@
                     :closure-defines {vr-match.server/dev? false
                                       vr-match.server/static-file-path "resources/public/prod/"
                                       goog.DEBUG false}
-                    :pretty-print    false}}]})
-
+                    :pretty-print    false}}
+     {:id           "worker-dev"
+      :source-paths ["src/cljs-worker"]
+      :compiler     {:main vr-match.worker
+                     :output-dir "resources/public/worker/js/compiled"
+                     :output-to "resources/public/worker/js/compiled/worker.js"
+                     :asset-path "/static/worker/js/compiled"
+                     :target :webworker
+                     :source-map-timestamp true
+                     :optimizations :simple
+                     :npm-deps false}}
+    {:id           "worker-prod"
+     :source-paths ["src/cljs-worker"]
+     :compiler     {:main vr-match.worker
+                    :output-dir "resources/public/prod/worker/js/compiled"
+                    :output-to "resources/public/prod/worker/js/compiled/worker.js"
+                    :asset-path "/static/worker/js/compiled"
+                    :target :webworker
+                    :optimizations :advanced
+                    :npm-deps false}}]})

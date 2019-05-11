@@ -4,6 +4,8 @@
    [re-frame.db :as db]
    [pushy.core :as pushy]))
 
+(goog-define worker-resource-path "/static/worker/js/compiled/worker.js")
+
 (re-frame/reg-fx
  ::set-localstorage
  (fn [[key item]]
@@ -13,3 +15,10 @@
  ::route
  (fn [[path]]
    (pushy/set-token! (:history @db/app-db) path)))
+
+(re-frame/reg-fx
+ ::initialize-worker
+ (fn []
+   (when js/Worker
+     (->> (js/Worker. worker-resource-path)
+          (set! (.-worker js/window))))))

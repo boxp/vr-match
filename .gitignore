@@ -1,6 +1,8 @@
 /*-init.clj
 front-end/resources/public/js/compiled
+front-end/resources/public/worker/js/compiled
 front-end/resources/public/prod/js/compiled
+front-end/resources/public/prod/worker/js/compiled
 front-end/resources/public/prod/sw.js
 front-end/dev-resources
 front-end/node_modules
