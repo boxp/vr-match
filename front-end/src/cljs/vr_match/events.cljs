@@ -2,7 +2,6 @@
   (:require
    [ajax.core :as ajax]
    [re-frame.core :as re-frame]
-   [re-graph.core :as re-graph]
    [venia.core :as v]
    [vr-match.effects :as effects]
    [vr-match.coeffects :as coeffects]
