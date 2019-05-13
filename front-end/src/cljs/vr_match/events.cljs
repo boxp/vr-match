@@ -1,7 +1,9 @@
 (ns vr-match.events
   (:require
+   [ajax.core :as ajax]
    [re-frame.core :as re-frame]
    [re-graph.core :as re-graph]
+   [venia.core :as v]
    [vr-match.effects :as effects]
    [vr-match.coeffects :as coeffects]
    [vr-match.db :as db]))
@@ -14,11 +16,7 @@
    (as-> {:db db/default-db} $
      (if preload (update $ :db #(merge % preload)))
      (if history (assoc-in $ [:db :history] history) $)
-     (if api-endpoint (assoc-in $ [:db :api-endpoint] api-endpoint) $)
-     (assoc $ :dispatch
-            [::re-graph/init
-             {:ws-url nil
-              :http-url (str (-> $ :db :api-endpoint) "/graphql")}]))))
+     (if api-endpoint (assoc-in $ [:db :api-endpoint] api-endpoint) $))))
 
 (re-frame/reg-event-fx
  ::initialize-worker
@@ -51,3 +49,14 @@
  ::close-drawer
  (fn [db _]
    (assoc-in db [:drawer :open?] false)))
+
+(re-frame/reg-event-fx
+ ::graphql-query
+ (fn [{:keys [db]} [_ {:keys [query success-handler error-handler]}]]
+   {::effects/ajax-worker [{:uri (str (-> db :api-endpoint) "/graphql")
+                            :method :post
+                            :params {:query (v/graphql-query
+                                             {:venia/queries query})
+                                     :variables {}}
+                            :success-handler success-handler
+                            :error-handler error-handler}]}))

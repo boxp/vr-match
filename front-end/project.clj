@@ -46,14 +46,14 @@
                  [kibu/pushy "0.3.8"]
                  [day8.re-frame/http-fx "0.1.6"]
                  [cljsjs/material-ui "3.1.1-0"]
-                 [re-graph "0.1.8"]
-                 [vincit/venia "0.2.5"]]
+                 [vincit/venia "0.2.5"]
+                 [cljs-ajax "0.8.0"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]]
 
   :min-lein-version "2.5.3"
 
-  :source-paths ["src/clj" "src/cljs" "src/cljs-client" "src/cljs-server"]
+  :source-paths ["src/clj" "src/cljs" "src/cljs-client" "src/cljs-server" "src/cljs-worker"]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "resources/public/prod/js/compiled" "target"]
 
