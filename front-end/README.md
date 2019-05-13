@@ -23,7 +23,7 @@ npm install
 Port8888番でSSR用サーバーが立ち上がります
 
 ```
-npm run watch
+npm start
 ```
 
 ## ビルド

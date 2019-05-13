@@ -4,6 +4,7 @@
   "description": "A [re-frame](https://github.com/Day8/re-frame) application designed to ... well, that part is up to you.",
   "scripts": {
     "clean": "lein clean",
+    "start": "npm run watch",
     "repl": "lein repl",
     "figwheel": "lein figwheel",
     "format": "lein cljfmt fix",
