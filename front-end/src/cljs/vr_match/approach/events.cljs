@@ -12,14 +12,16 @@
 
 (re-frame/reg-event-fx
  ::fetch-approach-list
- (fn [{:keys [db] :as cofx} [_ {:keys [limit]}]]
+ (fn [{:keys [db] :as cofx} [_ {:keys [count]}]]
    {:dispatch [::events/graphql-query
-               {:query [[:approachList {:limit limit
-                                        :offset 0}
-                         [:id
-                          :userName
-                          :introduction
-                          :image
-                          [:platForms [:id :name]]]]]
+               {:query [[:approachList {:first count}
+                         [[:edges
+                           [:cursor
+                            [:node
+                             [:id
+                              :userName
+                              :introduction
+                              :image
+                              [:platForms [:id :name]]]]]]]]]
                 :success-handler ::on-success-fetch-approach-list
                 :error-handler ::events/api-error}]}))

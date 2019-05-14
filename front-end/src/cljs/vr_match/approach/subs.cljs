@@ -4,4 +4,8 @@
 (re-frame/reg-sub
  ::approach-list
  (fn [db]
-   (-> db :approach :list)))
+   (->> db
+        :approach
+        :list
+        :edges
+        (map :node))))

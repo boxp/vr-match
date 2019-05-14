@@ -7,13 +7,28 @@
             :userName {:type String}
             :introduction {:type String}
             :image {:type (list String)}
-            :platForms {:type (list :PlatForms)}}}}
+            :platForms {:type (list :PlatForms)}}}
+  :UserEdge
+  {:fields {:cursor {:type String}
+            :node {:type :User}}}
+  :PageInfo
+  {:fields {:startCursor {:type String}
+            :endCursor {:type String}
+            :hasPreviousPage {:type Boolean}
+            :hasNextPage {:type Boolean}}}
+  :ApproachList
+  {:fields {:total {:type Int
+                    :description "取得可能なお相手の総人数"}
+            :edges {:type (list UserEdge)}
+            :pageInfo {:type :PageInfo}}}}
  :queries
- {:approachList {:type (list :User)
-                 :args {:limit {:type Int
-                                :description "取得したい最大人数。デフォルトは12"
-                                :default-value 20}
-                        :offset {:type Int
-                                 :description "既に取得したお相手の人数。デフォルトは0"
-                                 :default-value 0}}
+ {:approachList {:type :ApproachList
+                 :args {:first {:type Int
+                                :optional true}
+                        :after {:type String
+                                :optional true}
+                        :last {:type Int
+                               :optional true}
+                        :before {:type String
+                                 :optional true}}
                  :resolve :resolve-approach-list}}}

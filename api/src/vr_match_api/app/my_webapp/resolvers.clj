@@ -1,13 +1,23 @@
-(ns vr-match-api.app.my-webapp.resolvers)
+(ns vr-match-api.app.my-webapp.resolvers
+  (:require [clojure.data.codec.base64 :as b64]))
 
 (defn approach-list
   [context arguments value]
-  (let [{:keys [limit offset]} arguments]
-    (->>
-     {:id 1
-      :title "サンプル画像"
-      :userName "一箱"
-      :introduction "バーチャル清楚系女子高校生Webアプリケーションエンジニアおじさんです。こっそりプログラミングしてます。"
-      :platForms [{:id 1 :name "VRChat"} {:id 2 :name "VRoidHub"} {:id 3 :name "VirtualCast"}]
-      :image ["https://storage.googleapis.com/boxp-tmp/profile_sample.png"]}
-     (repeat limit))))
+  (let [{:keys [first after last before]} arguments
+        cursor (-> 1 str .getBytes b64/encode)]
+    {:edges
+     (->>
+      {:node
+       {:id 1
+        :title "サンプル画像"
+        :userName "一箱"
+        :introduction "バーチャル清楚系女子高校生Webアプリケーションエンジニアおじさんです。こっそりプログラミングしてます。"
+        :platForms [{:id 1 :name "VRChat"} {:id 2 :name "VRoidHub"} {:id 3 :name "VirtualCast"}]
+        :image ["https://storage.googleapis.com/boxp-tmp/profile_sample.png"]}
+       :cursor cursor}
+      (repeat first))
+     :pageInfo {:startCursor cursor
+                :endCursor cursor
+                :hasPreviousPage true
+                :hasNextPage true}
+     :total 99999}))

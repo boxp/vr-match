@@ -5,6 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/core.async "0.4.474"]
+                 [org.clojure/data.codec "0.1.1"]
                  [environ "1.1.0"]
                  [com.stuartsierra/component "0.3.2"]
                  [ring "1.6.1"]
@@ -12,7 +13,8 @@
                  [compojure "1.6.0"]
                  [cheshire "5.7.1"]
                  [org.clojure/tools.namespace "0.2.10"]
-                 [com.walmartlabs/lacinia "0.33.0-alpha-3"]]
+                 [com.walmartlabs/lacinia "0.33.0-alpha-3"]
+                 [vincit/venia "0.2.5"]]
   :profiles
   {:dev {:source-paths ["src" "dev"]}
    :uberjar {:main vr-match-api.system}})
