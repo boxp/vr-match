@@ -1,8 +1,9 @@
 (ns user
   (:require [com.stuartsierra.component :as component]
             [clojure.tools.namespace.repl :refer (refresh)]
-            [vr-match-api.system :refer [vr-match-api-system
-                                     load-config]]))
+            [com.walmartlabs.lacinia :as lacinia]
+            [venia.core :as venia]
+            [vr-match-api.system :refer [vr-match-api-system load-config]]))
 
 (def system nil)
 
@@ -24,3 +25,11 @@
 (defn reset []
   (stop)
   (refresh :after 'user/go))
+
+(defn q
+  ([query] (q query nil))
+  ([query variables]
+   (lacinia/execute (-> system :my-webapp-handler :graphql-schema)
+                    (venia/graphql-query query)
+                    variables
+                    nil)))
