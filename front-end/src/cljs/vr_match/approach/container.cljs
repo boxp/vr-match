@@ -11,19 +11,16 @@
 
 (declare mock-approach-state)
 
-(defn handle-click-skip []
-  (js/setTimeout
-   (fn []
-     (swap! mock-approach-state
-            #(update % :cardItems rest)))
-   300))
+(defn handle-click-skip
+  [id]
+  (re-frame/dispatch [::approach-events/skip id]))
 
-(defn handle-click-favorite []
-  (js/setTimeout
-   (fn []
-     (swap! mock-approach-state
-            #(update % :cardItems rest)))
-   300))
+(defn handle-click-favorite
+  [id]
+  (re-frame/dispatch [::approach-events/favorite id]))
+
+(defn handle-fetch-next []
+  (re-frame/dispatch [::approach-events/fetch-next-approach-list {:count user-per-page}]))
 
 (defn handle-did-mount
   []
@@ -56,6 +53,7 @@
                                                      :handleClickFavorite handle-click-favorite
                                                      :handleClickGoToProfile handle-click-go-to-profile
                                                      :handleDidMount handle-did-mount
+                                                     :handleFetchNext handle-fetch-next
                                                      :cardItems @card-items})]))
 
 (util/universal-set-loaded! :approach)

@@ -85,17 +85,24 @@
                           (assoc :isDragging false)))))))
 
 (defn- handleOnExit
-  [props]
-  (letfn [(shift-card-items [state]
-            (-> state
-                (assoc :firstItem (-> props :cardItems second))
-                (assoc :secondItem (-> props :cardItems (nth 3)))))]
+  [{:keys [handleFetchNext
+           handleClickFavorite
+           handleClickSkip
+           cardItems] :as props}]
+  (let [should-fetch-next? (<= (-> cardItems count) 4)
+        current-card-id (-> @approach-state :firstItem :id)
+        shift-card-items (fn [state]
+                           (-> state
+                               (assoc :firstItem (-> cardItems second))
+                               (assoc :secondItem (-> cardItems (nth 3 nil)))))]
     (cond (:isSkip @approach-state)
-          (do (swap! approach-state shift-card-items)
-              (:handleClickSkip props))
+          (do (handleClickSkip current-card-id)
+              (swap! approach-state shift-card-items)
+              (when should-fetch-next? (handleFetchNext)))
           (:isFavorite @approach-state)
-          (do (swap! approach-state shift-card-items)
-              (:handleClickFavorite props)))
+          (do (handleClickFavorite current-card-id)
+              (swap! approach-state shift-card-items)
+              (when should-fetch-next? (handleFetchNext))))
     (swap! approach-state
            #(-> %
                 (assoc :isSkip false)
@@ -256,7 +263,8 @@
                  classes
                  cardItems
                  handleClickSkip
-                 handleClickFavorite] :as props}]
+                 handleClickFavorite
+                 handleFetchNext] :as props}]
       [navigation-bar-layout {:title "アバターをさがす"}
        [:div {:style {:height "100%"
                       :display "flex"
