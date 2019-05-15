@@ -45,6 +45,7 @@
 (def list-item-text (r/adapt-react-class js/MaterialUI.ListItemText))
 (def list-item-icon (r/adapt-react-class js/MaterialUI.ListItemIcon))
 (def list-item-secondary-action (r/adapt-react-class js/MaterialUI.ListItemSecondaryAction))
+(def list-subheader (r/adapt-react-class js/MaterialUI.ListSubheader))
 
 ;; material-ui/styles
 (def with-styles (.-withStyles js/MaterialUIStyles))
