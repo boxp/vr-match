@@ -1,7 +1,8 @@
 {:objects
  {:PlatForms
   {:fields {:id {:type Int}
-            :name {:type String}}}
+            :name {:type String}
+            :url {:type String}}}
   :User
   {:fields {:id {:type Int}
             :userName {:type String}
