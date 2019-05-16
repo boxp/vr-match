@@ -1,5 +1,6 @@
 (ns vr-match.client
   (:require
+   [cljs.spec.alpha :as s]
    [cljs.spec.test.alpha :as st]
    [react-dom]
    [cljs.loader :as loader]
@@ -7,16 +8,17 @@
    [pushy.core :as pushy]
    [reagent.core :as reagent]
    [re-frame.core :as re-frame]
+   [secretary.core :as secretary :refer-macros [defroute]]
+   [expound.alpha :as expound]
+   ["material-ui"]
+   ["material-ui/styles"]
+   ["material-ui/colors"]
    [vr-match.events :as events]
    [vr-match.lib.component :as component]
    [vr-match.lib.components.material-ui :as mui]
    [vr-match.route :as route]
    [vr-match.config :as config]
-   [vr-match.util :as util]
-   [secretary.core :as secretary :refer-macros [defroute]]
-   ["material-ui"]
-   ["material-ui/styles"]
-   ["material-ui/colors"]))
+   [vr-match.util :as util]))
 
 ;; TODO: 現状では、 react-jss をクライアントサイドの ClojureScript で使える手がないので無理やり Context API を使って Material-UI の SSR を実現している
 ;; from https://github.com/cssinjs/react-jss/blob/master/src/ns.js
@@ -40,6 +42,8 @@
 (defn dev-setup []
   (when config/debug?
     (enable-console-print!)
+    (set! s/*explain-out* expound/printer)
+    (st/instrument)
     (println "dev mode")))
 
 (def history

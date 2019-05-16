@@ -3,4 +3,4 @@
 
 (s/def ::id int?)
 (s/def ::name string?)
-(s/def ::platForm (s/keys :req [::id ::name]))
+(s/def ::platForm (s/keys :req-un [::id ::name]))

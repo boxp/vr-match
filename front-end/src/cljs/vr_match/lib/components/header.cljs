@@ -13,34 +13,22 @@
 (s/def ::title string?)
 (s/def ::isOpen boolean?)
 (s/def ::me ::me/me)
-(s/def ::handleOpenDrawer
-  (s/fspec :args (s/cat)
-           :ret nil))
-(s/def ::handleClickClose
-  (s/fspec :args (s/cat)
-           :ret nil))
-(s/def ::handleClickMyProfile
-  (s/fspec :args (s/cat)
-           :ret nil))
-(s/def ::handleClickSearch
-  (s/fspec :args (s/cat)
-           :ret nil))
-(s/def ::handleClickFavorite
-  (s/fspec :args (s/cat)
-           :ret nil))
-(s/def ::handleClickMatching
-  (s/fspec :args (s/cat)
-           :ret nil))
+(s/def ::handleOpenDrawer fn?)
+(s/def ::handleClickClose fn?)
+(s/def ::handleClickMyProfile fn?)
+(s/def ::handleClickSearch fn?)
+(s/def ::handleClickFavorite fn?)
+(s/def ::handleClickMatching fn?)
 (s/def ::header-component-props
-  (s/keys :req [::title
-                ::isOpen
-                ::me
-                ::handleOpenDrawer
-                ::handleClickClose
-                ::handleClickMyProfile
-                ::handleClickSearch
-                ::handleClickFavorite
-                ::handleClickMatching]))
+  (s/keys :req-un [::title
+                   ::isOpen
+                   ::me
+                   ::handleOpenDrawer
+                   ::handleClickClose
+                   ::handleClickMyProfile
+                   ::handleClickSearch
+                   ::handleClickFavorite
+                   ::handleClickMatching]))
 (s/fdef header-component
   :args (s/cat :props ::header-component-props)
   :ret vector?)
@@ -98,12 +86,12 @@
   (handle-close-drawer))
 
 (s/def ::header-props
-  (s/keys :req [::title]))
+  (s/keys :req-un [::title]))
 (s/fdef header
-  :args (s/cat :props ::header-container-props)
+  :args (s/cat :props ::header-props)
   :ret vector?)
 (defn header
-  [{:keys [title]}]
+  [{:keys [title] :as props}]
   (let [open-drawer? (re-frame/subscribe [::subs/open-drawer?])
         me {:id 1
             :title "サンプル画像"

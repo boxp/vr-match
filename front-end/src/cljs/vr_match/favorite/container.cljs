@@ -33,9 +33,7 @@
                            :userName "アリシア・ソリッド"
                            :introduction "ニコニ立体で公式キャラクターやってます。よろしくお願いします！"
                            :platForms [{:id 3 :name "VirtualCast"}]
-                           :image "https://storage.googleapis.com/boxp-tmp/profile_sample_3.jpg"}]
-                         cycle
-                         (take 30))))))
+                           :image "https://storage.googleapis.com/boxp-tmp/profile_sample_3.jpg"}])))))
    300))
 
 (defn handle-go-to-profile

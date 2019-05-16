@@ -7,5 +7,5 @@
 (s/def ::userName string?)
 (s/def ::image (s/coll-of string?))
 (s/def ::platForms (s/coll-of ::plat-form/platForm))
-(s/def ::me (s/keys :req [::id ::userName ::image ::platForms]))
+(s/def ::me (s/keys :req-un [::id ::userName ::image ::platForms]))
 

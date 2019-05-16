@@ -48,7 +48,8 @@
                  [day8.re-frame/http-fx "0.1.6"]
                  [cljsjs/material-ui "3.1.1-0"]
                  [vincit/venia "0.2.5"]
-                 [cljs-ajax "0.8.0"]]
+                 [cljs-ajax "0.8.0"]
+                 [expound "0.7.2"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]]
 
