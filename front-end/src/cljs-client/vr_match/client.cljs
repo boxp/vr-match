@@ -1,5 +1,6 @@
 (ns vr-match.client
   (:require
+   [cljs.spec.test.alpha :as st]
    [react-dom]
    [cljs.loader :as loader]
    [cljs.reader :as reader]
@@ -71,7 +72,8 @@
 (defn ^:export remount-for-figwheel []
   (re-frame/clear-subscription-cache!)
   (reagent/render-component [index]
-                            (.getElementById js/document "app")))
+                            (.getElementById js/document "app"))
+  (st/instrument))
 
 (defn- preload-state []
   (some->
