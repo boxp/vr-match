@@ -16,7 +16,8 @@
   :ret vector?)
 (defn edit-user-name-dialog
   [props]
-  (let [draft-user-name (r/atom (-> props :userName))]
+  (let [draft-user-name (r/atom (-> props :userName))
+        handle-change (fn [e] (some->> e .-target .-value (reset! draft-user-name)))]
     (fn [{:keys [isOpen
                  userName
                  handleSubmit
@@ -29,7 +30,9 @@
         [mui/text-field {:autoFocus true
                          :margin "dense"
                          :label "ユーザー名"
-                         :type "text"}]]
+                         :type "text"
+                         :on-change handle-change
+                         :default-value @draft-user-name}]]
        [mui/dialog-actions
         [mui/button {:on-click handleCancel}
          "キャンセル"]
