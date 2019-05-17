@@ -46,10 +46,10 @@
                      :style {:width 112
                              :height 112}}]]]]]]
    [mui/dialog-actions
+    [mui/button {:on-click handleClickBack
+                 :size "large"}
+     "戻る"]
     [mui/button {:color "primary"
                  :size "large"
                  :on-click #(handleClickGoToProfile (:id partner))}
-     "相手のプロフィールを見る"]
-    [mui/button {:on-click handleClickBack
-                 :size "large"}
-     "戻る"]]])
+     "相手のプロフィールを見る"]]])

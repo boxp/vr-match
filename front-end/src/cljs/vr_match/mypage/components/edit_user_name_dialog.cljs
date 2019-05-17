@@ -23,8 +23,8 @@
                  handleCancel]}]
       [mui/dialog {:open isOpen
                    :onClose handleCancel
-                   :aria-labelledby "ユーザー名を入力してください"}
-       [mui/dialog-title "ユーザー名を入力してください"]
+                   :aria-labelledby "ユーザー名を編集"}
+       [mui/dialog-title "ユーザー名を編集"]
        [mui/dialog-content
         [mui/text-field {:autoFocus true
                          :margin "dense"
@@ -33,8 +33,6 @@
        [mui/dialog-actions
         [mui/button {:on-click handleCancel}
          "キャンセル"]
-        [mui/button {:on-click handleSubmit}
+        [mui/button {:on-click handleSubmit
+                     :color "primary"}
          "決定"]]])))
-
-
-
