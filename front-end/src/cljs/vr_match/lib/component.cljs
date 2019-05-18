@@ -43,7 +43,6 @@
 (defn navigation-bar-layout
   [{:keys [title] :as props} children]
   [:div {:style {:position "relative"
-                 :overflow "hidden"
                  :height "100%"}}
    [header {:title title}]
    [:div {:style {:padding-top "56px"
