@@ -9,10 +9,10 @@
    :profile {:entries #{"vr-match.profile.container"}
              :output-to (str output-dir "/profile.js")
              :depends-on #{:client}}
-   :login {:entries #{"vr-match.login.container"}
+   :login {:entries #{"vr-match.auth.containers.login"}
            :output-to (str output-dir "/login.js")
            :depends-on #{:client}}
-   :register {:entries #{"vr-match.register.container"}
+   :register {:entries #{"vr-match.auth.containers.register"}
               :output-to (str output-dir "/register.js")
               :depends-on #{:client}}
    :wizard {:entries #{"vr-match.wizard.container"}
@@ -47,6 +47,7 @@
                  [kibu/pushy "0.3.8"]
                  [day8.re-frame/http-fx "0.1.6"]
                  [cljsjs/material-ui "3.1.1-0"]
+                 [cljsjs/firebase "5.7.3-1"]
                  [vincit/venia "0.2.5"]
                  [cljs-ajax "0.8.0"]
                  [expound "0.7.2"]]

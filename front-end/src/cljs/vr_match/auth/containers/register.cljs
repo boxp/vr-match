@@ -1,4 +1,4 @@
-(ns vr-match.register.container
+(ns vr-match.auth.containers.register
   (:require [reagent.core :as r]
             [re-frame.core :as re-frame]
             [vr-match.register.component :as component]

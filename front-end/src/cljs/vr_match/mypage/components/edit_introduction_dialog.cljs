@@ -4,7 +4,6 @@
    [reagent.core :as r]
    [vr-match.lib.components.material-ui :as mui]))
 
-
 (s/def ::isOpen boolean?)
 (s/def ::introduction string?)
 (s/def ::handleClickSubmit fn?)

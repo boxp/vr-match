@@ -1,15 +1,13 @@
-(ns vr-match.login.component
+(ns vr-match.auth.components.register
   (:require [cljs.spec.alpha :as s]
             [reagent.core :as r]
             [clojure.string :as string]
-            [vr-match.lib.component :refer [navigation-bar-layout]]
             [vr-match.lib.components.material-ui :as mui]
             [vr-match.lib.components.plat-form-chip :refer [plat-form-chip]]))
 
-(defn login
+(defn register
   [{:keys [backgroundImage
-           handleClickTwitter
-           handleClickRegister] :as props}]
+           handleClickTwitter] :as props}]
   [mui/grid {:style {:height "100%"
                      :width "100%"}
              :container true
@@ -40,17 +38,4 @@
     [mui/button {:variant "contained"
                  :color "primary"
                  :on-click handleClickTwitter}
-     "Twitterアカウントでログイン"]]
-   [mui/grid {:style {:margin-top 24}
-              :container true
-              :direction "row"
-              :justify "center"
-              :align-items "center"}
-    [mui/typo-graphy {:component "p1"
-                      :variant "body2"}
-     "はじめての方は"]
-    [mui/button {:color "primary"
-                 :size "small"
-                 :on-click handleClickRegister}
-     "こちらから新規登録"]]])
-
+     "Twitterアカウントで登録"]]])
