@@ -1,7 +1,7 @@
 (ns vr-match.auth.containers.register
   (:require [reagent.core :as r]
             [re-frame.core :as re-frame]
-            [vr-match.register.component :as component]
+            [vr-match.auth.components.register :as component]
             [vr-match.events :as events]
             [vr-match.util :as util]))
 

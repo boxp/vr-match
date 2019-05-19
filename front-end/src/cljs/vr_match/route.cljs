@@ -15,9 +15,9 @@
               :module-name :approach}
    :profile {:container #(resolve 'vr-match.profile.container/profile)
              :module-name :profile}
-   :login {:container #(resolve 'vr-match.login.container/login)
+   :login {:container #(resolve 'vr-match.auth.containers.login/login)
            :module-name :login}
-   :register {:container #(resolve 'vr-match.register.container/register)
+   :register {:container #(resolve 'vr-match.auth.containers.register/register)
               :module-name :register}
    :wizard {:container #(resolve 'vr-match.wizard.container/wizard)
             :module-name :wizard}
