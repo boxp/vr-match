@@ -18,3 +18,8 @@ global.window.navigator.userAgent = "";
 // SSRサーバーを :optimization :simple でビルドする時、モジュール解決に失敗して以下のエラーが出るので無理やり補完する
 // TypeError: Cannot read property 'renderToString' of undefined
 // goog.global = global;
+
+// for https://github.com/firebase/firebase-js-sdk/issues/965
+self = {
+    fetch: function(){},
+};
