@@ -15,12 +15,16 @@
 (defn handle-click-register []
   (re-frame/dispatch [::events/push "/register"]))
 
+(defn handle-initialize []
+  (re-frame/dispatch [::auth-events/initialize]))
+
 (defn login
   [params]
   [component/login
    (merge @login-state
           {:handleClickTwitter handle-click-twitter
-           :handleClickRegister handle-click-register})])
+           :handleClickRegister handle-click-register
+           :handleInitialize handle-initialize})])
 
 (util/universal-set-loaded! :login)
 

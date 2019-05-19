@@ -37,3 +37,4 @@
    (some-> js/window
            .-worker
            (.postMessage (pr-str params)))))
+
