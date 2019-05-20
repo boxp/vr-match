@@ -118,11 +118,12 @@
     [:div#app
      {:dangerouslySetInnerHTML
       {:__html app-html}}]
-    [:script {:src "/static/js/compiled/cljs_base.js"}]
-    [:script {:src "/static/js/compiled/app.js"}]]
+    ]
    [:div
     {:dangerouslySetInnerHTML
      {:__html  (str "<script>window.preload = '" (-> @db/app-db pr-str) "'</script>")}}]
+   [:script {:src "/static/js/compiled/cljs_base.js"}]
+   [:script {:src "/static/js/compiled/app.js"}]
    (when-not dev?
      [:div
       {:dangerouslySetInnerHTML
