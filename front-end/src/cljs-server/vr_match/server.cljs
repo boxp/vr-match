@@ -123,7 +123,7 @@
     {:dangerouslySetInnerHTML
      {:__html  (str "<script>window.preload = '" (-> @db/app-db pr-str) "'</script>")}}]
    [:script {:src "/static/js/compiled/cljs_base.js"}]
-   [:script {:src "/static/js/compiled/app.js"}]
+   [:script {:src "/static/js/compiled/app.js" :async true}]
    (when-not dev?
      [:div
       {:dangerouslySetInnerHTML
