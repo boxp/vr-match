@@ -11,7 +11,7 @@
   (let [props (r/props this)]
     ((:handleInitialize props))))
 
-(s/def ::backgroundImage fn?)
+(s/def ::backgroundImage string?)
 (s/def ::handleClickTwitter fn?)
 (s/def ::handleClickRegister fn?)
 (s/def ::handleInitialize fn?)
