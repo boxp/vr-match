@@ -4,7 +4,8 @@
    [vr-match.lib.component :refer [navigation-bar-layout]]
    [vr-match.lib.components.material-ui :as mui]
    [vr-match.mypage.components.edit-user-name-dialog :refer [edit-user-name-dialog]]
-   [vr-match.mypage.components.edit-introduction-dialog :refer [edit-introduction-dialog]]))
+   [vr-match.mypage.components.edit-introduction-dialog :refer [edit-introduction-dialog]]
+   [vr-match.mypage.components.edit-platform-dialog :refer [edit-platform-dialog]]))
 
 (defn- handle-change-image
   [draft-image e]
@@ -28,15 +29,19 @@
 
 (defn mypage
   [{:keys [me
+           platformOptions
            handleSubmitUserName] :as props}]
   (let [draft-image (r/atom (-> me :image first))
         image-ref (r/atom nil)
         editing-user-name? (r/atom false)
         editing-introduction? (r/atom false)
+        editing-platform? (r/atom false)
         handle-click-user-name #(reset! editing-user-name? true)
         handle-cancel-user-name #(reset! editing-user-name? false)
         handle-click-introduction #(reset! editing-introduction? true)
-        handle-cancel-introduction #(reset! editing-introduction? false)]
+        handle-cancel-introduction #(reset! editing-introduction? false)
+        handle-click-platform #(reset! editing-platform? true)
+        handle-cancel-platform #(reset! editing-platform? false)]
     (fn []
       [navigation-bar-layout {:title "プロフィールを編集"}
        [:div {:style {:position "relative"}}
@@ -78,6 +83,17 @@
           [mui/list-item-secondary-action {:on-click handle-click-introduction}
            [mui/icon-button
             [mui/icon "navigate_next"]]]]]
+        [mui/list {:subheader (r/as-element [mui/list-subheader "活動場所"])}
+         [mui/list-item {:key "platform"
+                         :on-click handle-click-platform}
+          [mui/list-item-avatar
+           [mui/avatar
+            [mui/icon "place"]]]
+          [mui/list-item-text {:primary-typography-props #js {"noWrap" true}}
+           (:introduction me)]
+          [mui/list-item-secondary-action {:on-click handle-click-introduction}
+           [mui/icon-button
+            [mui/icon "navigate_next"]]]]]
         [:input {:type "file"
                  :on-change #(handle-change-image draft-image %)
                  :ref (fn [com] (reset! image-ref com))
@@ -89,4 +105,8 @@
         [edit-introduction-dialog {:isOpen @editing-introduction?
                                    :introduction (-> me :introduction)
                                    :handleClickSubmit handle-cancel-introduction
-                                   :handleCancel handle-cancel-introduction}]]])))
+                                   :handleCancel handle-cancel-introduction}]
+        [edit-platform-dialog {:isOpen @editing-platform?
+                               :platforms (-> me :platForms)
+                               :handleClickSubmit handle-cancel-platform
+                               :handleCancel handle-cancel-platform}]]])))
