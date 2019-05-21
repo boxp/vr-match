@@ -36,7 +36,8 @@
               platForms)]
         [mui/grid {:container true
                    :justify "flex-start"
-                   :spacing 8}
+                   :spacing 8
+                   :style {"marginBottom" 8}}
          (map (fn [{:keys [id name]}] [mui/grid {:key id
                                                  :item true}
                                        [plat-form-chip {:name name}]])
