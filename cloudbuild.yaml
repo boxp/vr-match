@@ -50,3 +50,6 @@ steps:
     kubectl apply -f front-end-service.yml
     kubectl apply -f api-deployment.yml
     kubectl apply -f api-service.yml
+
+options:
+  machineType: 'N1_HIGHCPU_8'
