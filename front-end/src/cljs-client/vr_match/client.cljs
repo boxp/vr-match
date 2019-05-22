@@ -9,7 +9,6 @@
    [reagent.core :as reagent]
    [re-frame.core :as re-frame]
    [secretary.core :as secretary :refer-macros [defroute]]
-   [expound.alpha :as expound]
    ["material-ui"]
    ["material-ui/styles"]
    ["material-ui/colors"]
@@ -42,7 +41,6 @@
 (defn dev-setup []
   (when config/debug?
     (enable-console-print!)
-    (set! s/*explain-out* expound/printer)
     (st/instrument)
     (println "dev mode")))
 
@@ -69,7 +67,6 @@
          [component/app]]])}))
 
 (defn mount-root []
-  (re-frame/clear-subscription-cache!)
   (react-dom/hydrate (reagent/as-element [index])
                   (.getElementById js/document "app")))
 

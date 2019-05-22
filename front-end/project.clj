@@ -49,8 +49,7 @@
                  [cljsjs/material-ui "3.1.1-0"]
                  [cljsjs/firebase "5.7.3-1"]
                  [vincit/venia "0.2.5"]
-                 [cljs-ajax "0.8.0"]
-                 [expound "0.7.2"]]
+                 [cljs-ajax "0.8.0"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]]
 
