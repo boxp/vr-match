@@ -27,11 +27,17 @@
   [image-ref]
   (some-> @image-ref .click))
 
+(defn- platforms->text
+  [platforms]
+  (if (zero? (count platforms))
+    "未設定"
+    (->> platforms
+         (map :name)
+         (clojure.string/join ", "))))
+
 (defn mypage
-  [{:keys [me
-           platformOptions
-           handleSubmitUserName] :as props}]
-  (let [draft-image (r/atom (-> me :image first))
+  [props]
+  (let [draft-image (r/atom (-> props :me :image first))
         image-ref (r/atom nil)
         editing-user-name? (r/atom false)
         editing-introduction? (r/atom false)
@@ -42,7 +48,9 @@
         handle-cancel-introduction #(reset! editing-introduction? false)
         handle-click-platform #(reset! editing-platform? true)
         handle-cancel-platform #(reset! editing-platform? false)]
-    (fn []
+    (fn [{:keys [me
+                 platformOptions
+                 handleSubmitUserName]}]
       [navigation-bar-layout {:title "プロフィールを編集"}
        [:div {:style {:position "relative"}}
         [mui/button-base {:on-click #(handle-click-reset-image image-ref)
@@ -90,7 +98,7 @@
            [mui/avatar
             [mui/icon "place"]]]
           [mui/list-item-text {:primary-typography-props #js {"noWrap" true}}
-           (:introduction me)]
+           (-> me :platForms platforms->text)]
           [mui/list-item-secondary-action {:on-click handle-click-introduction}
            [mui/icon-button
             [mui/icon "navigate_next"]]]]]
@@ -108,5 +116,6 @@
                                    :handleCancel handle-cancel-introduction}]
         [edit-platform-dialog {:isOpen @editing-platform?
                                :platforms (-> me :platForms)
+                               :platformOptions platformOptions
                                :handleClickSubmit handle-cancel-platform
                                :handleCancel handle-cancel-platform}]]])))

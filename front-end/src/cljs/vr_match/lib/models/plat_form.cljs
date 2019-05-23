@@ -3,4 +3,7 @@
 
 (s/def ::id int?)
 (s/def ::name string?)
-(s/def ::platForm (s/keys :req-un [::id ::name]))
+(s/def ::userId string?)
+(s/def ::link string?)
+(s/def ::platForm (s/keys :req-un [::id ::name]
+                          :opt-un [::userId ::link]))
