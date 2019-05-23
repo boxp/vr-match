@@ -149,7 +149,9 @@
            [:> js/MaterialUI.Icon
             "add"]]]]]
        [:> js/MaterialUI.DialogActions
-        [:> js/MaterialUI.Button {:on-click handleCancel}
+        [:> js/MaterialUI.Button {:on-click (fn []
+                                              (handleCancel)
+                                              (reset! draft-platforms platforms))}
          "キャンセル"]
         [:> js/MaterialUI.Button {:on-click handleSubmit
                                   :color "primary"}
