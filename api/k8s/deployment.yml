@@ -21,3 +21,15 @@ spec:
             value: "8000"
           - name: VR_MATCH_CLIENT_ORIGIN
             value: "https://vr-match.boxp.tk"
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.11
+        command: ["/cloud_sql_proxy",
+                  "-instances=boxp-tk:asia-northeast1:vr-match-staging=tcp:3306",
+                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        securityContext:
+          runAsUser: 2 # non-root user
+          allowPrivilegeEscalation: false
+        volumeMounts:
+          - name: cloudsql-instance-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
