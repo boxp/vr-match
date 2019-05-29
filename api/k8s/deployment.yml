@@ -33,3 +33,7 @@ spec:
           - name: cloudsql-instance-credentials
             mountPath: /secrets/cloudsql
             readOnly: true
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: vr-match-staging-cloudsql-instance-credentials
