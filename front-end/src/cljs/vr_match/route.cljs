@@ -11,6 +11,8 @@
 (def route-table
   {:example {:container #(resolve 'vr-match.example.container/box)
              :module-name :example}
+   :welcome {:container #(resolve 'vr-match.welcome.container/welcome)
+              :module-name :welcome}
    :approach {:container #(resolve 'vr-match.approach.container/approach)
               :module-name :approach}
    :profile {:container #(resolve 'vr-match.profile.container/profile)
@@ -36,6 +38,9 @@
 
 ;; ルーティング定義
 (defroute root-path "/" []
+  (lazy-push :welcome {}))
+
+(defroute login-path "/login" []
   (lazy-push :login {}))
 
 (defroute profile-path "/profile/:id" [id]

@@ -8,6 +8,7 @@
     [reagent.dom.server :as r]
     [secretary.core :as secretary]
     [vr-match.example.container]
+    [vr-match.welcome.container]
     [vr-match.approach.container]
     [vr-match.profile.container]
     [vr-match.auth.containers.login]

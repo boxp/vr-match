@@ -3,6 +3,9 @@
   {:example {:entries #{"vr-match.example.container"}
              :output-to (str output-dir "/example.js")
              :depends-on #{:client}}
+   :welcome {:entries #{"vr-match.welcome.container"}
+              :output-to (str output-dir "/welcome.js")
+              :depends-on #{:client}}
    :approach {:entries #{"vr-match.approach.container"}
               :output-to (str output-dir "/approach.js")
               :depends-on #{:client}}

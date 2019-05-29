@@ -8,6 +8,7 @@
    [pushy.core :as pushy]
    [reagent.core :as reagent]
    [re-frame.core :as re-frame]
+   [secretary.core :as secretary]
    ["material-ui"]
    ["material-ui/styles"]
    ["material-ui/colors"]
