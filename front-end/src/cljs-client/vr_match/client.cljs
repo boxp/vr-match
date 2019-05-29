@@ -1,7 +1,7 @@
 (ns vr-match.client
   (:require
-   ;; [cljs.spec.alpha :as s]
-   ;; [cljs.spec.test.alpha :as st]
+   [cljs.spec.alpha :as s]
+   [cljs.spec.test.alpha :as st]
    [react-dom]
    [cljs.loader :as loader]
    [cljs.reader :as reader]
@@ -41,7 +41,7 @@
 (defn dev-setup []
   (when config/debug?
     (enable-console-print!)
-    ;; (st/instrument)
+    (st/instrument)
     (println "dev mode")))
 
 (def history
@@ -74,8 +74,7 @@
   (re-frame/clear-subscription-cache!)
   (reagent/render-component [index]
                             (.getElementById js/document "app"))
-  ;; (st/instrument)
-  )
+  (st/instrument))
 
 (defn- preload-state []
   (some->
