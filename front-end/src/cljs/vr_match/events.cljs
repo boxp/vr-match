@@ -1,6 +1,5 @@
 (ns vr-match.events
   (:require
-   [ajax.core :as ajax]
    [re-frame.core :as re-frame]
    [venia.core :as v]
    [vr-match.effects :as effects]
