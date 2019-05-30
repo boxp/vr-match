@@ -7,3 +7,10 @@
  ::initialize
  (fn [{:keys [db]} _]
    {::effects/initialize-firebase {}}))
+
+(re-frame/reg-event-fx
+ ::send-sign-in-link-to-email
+ (fn [{:keys [db]}
+      [_ {:keys [email callback-path]}]]
+   {::effects/send-sign-in-link-to-email {:email email
+                                          :callback-path callback-path}}))

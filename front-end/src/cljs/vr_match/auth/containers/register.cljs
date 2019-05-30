@@ -10,9 +10,13 @@
 (defn- handle-click-twitter []
   (re-frame/dispatch [::events/push "/wizard"]))
 
+(defn- handle-click-email-register []
+  (re-frame/dispatch [::events/push "/email-register"]))
+
 (defn register
   [params]
   [component/register (merge @register-state
-                             {:handleClickTwitter handle-click-twitter})])
+                             {:handleClickEmailRegister handle-click-email-register
+                              :handleClickTwitter handle-click-twitter})])
 
 (util/universal-set-loaded! :register)

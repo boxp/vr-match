@@ -12,15 +12,15 @@
   {:example {:container #(resolve 'vr-match.example.container/box)
              :module-name :example}
    :welcome {:container #(resolve 'vr-match.welcome.container/welcome)
-              :module-name :welcome}
+             :module-name :welcome}
    :approach {:container #(resolve 'vr-match.approach.container/approach)
               :module-name :approach}
    :profile {:container #(resolve 'vr-match.profile.container/profile)
              :module-name :profile}
-   :login {:container #(resolve 'vr-match.auth.containers.login/login)
-           :module-name :login}
    :register {:container #(resolve 'vr-match.auth.containers.register/register)
               :module-name :register}
+   :email-register {:container #(resolve 'vr-match.auth.containers.email-register/email-register)
+                    :module-name :email-register}
    :wizard {:container #(resolve 'vr-match.wizard.container/wizard)
             :module-name :wizard}
    :favorite {:container #(resolve 'vr-match.favorite.container/favorite)
@@ -40,14 +40,14 @@
 (defroute root-path "/" []
   (lazy-push :welcome {}))
 
-(defroute login-path "/login" []
-  (lazy-push :login {}))
-
 (defroute profile-path "/profile/:id" [id]
   (lazy-push :profile {:id id}))
 
 (defroute register-path "/register" []
   (lazy-push :register {}))
+
+(defroute email-register-path "/email-register" []
+  (lazy-push :email-register {}))
 
 (defroute approach-path "/approach" []
   (lazy-push :approach {}))

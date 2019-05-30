@@ -4,20 +4,20 @@
              :output-to (str output-dir "/example.js")
              :depends-on #{:client}}
    :welcome {:entries #{"vr-match.welcome.container"}
-              :output-to (str output-dir "/welcome.js")
-              :depends-on #{:client}}
+             :output-to (str output-dir "/welcome.js")
+             :depends-on #{:client}}
    :approach {:entries #{"vr-match.approach.container"}
               :output-to (str output-dir "/approach.js")
               :depends-on #{:client}}
    :profile {:entries #{"vr-match.profile.container"}
              :output-to (str output-dir "/profile.js")
              :depends-on #{:client}}
-   :login {:entries #{"vr-match.auth.containers.login"}
-           :output-to (str output-dir "/login.js")
-           :depends-on #{:client}}
    :register {:entries #{"vr-match.auth.containers.register"}
               :output-to (str output-dir "/register.js")
               :depends-on #{:client}}
+   :email-register {:entries #{"vr-match.auth.containers.email-register"}
+                    :output-to (str output-dir "/email_register.js")
+                    :depends-on #{:client}}
    :wizard {:entries #{"vr-match.wizard.container"}
             :output-to (str output-dir "/wizard.js")
             :depends-on #{:client}}
@@ -127,16 +127,16 @@
                                       vr-match.server/static-file-path "resources/public/prod/"
                                       goog.DEBUG false}
                     :pretty-print    false}}
-     {:id           "worker-dev"
-      :source-paths ["src/cljs-worker"]
-      :compiler     {:main vr-match.worker
-                     :output-dir "resources/public/worker/js/compiled"
-                     :output-to "resources/public/worker/js/compiled/worker.js"
-                     :asset-path "/static/worker/js/compiled"
-                     :target :webworker
-                     :source-map-timestamp true
-                     :optimizations :simple
-                     :npm-deps false}}
+    {:id           "worker-dev"
+     :source-paths ["src/cljs-worker"]
+     :compiler     {:main vr-match.worker
+                    :output-dir "resources/public/worker/js/compiled"
+                    :output-to "resources/public/worker/js/compiled/worker.js"
+                    :asset-path "/static/worker/js/compiled"
+                    :target :webworker
+                    :source-map-timestamp true
+                    :optimizations :simple
+                    :npm-deps false}}
     {:id           "worker-prod"
      :source-paths ["src/cljs-worker"]
      :compiler     {:main vr-match.worker

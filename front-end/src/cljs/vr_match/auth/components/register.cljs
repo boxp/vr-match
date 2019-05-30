@@ -7,7 +7,8 @@
 
 (defn register
   [{:keys [backgroundImage
-           handleClickTwitter] :as props}]
+           handleClickTwitter
+           handleClickEmailRegister] :as props}]
   [mui/grid {:style {:height "100%"
                      :width "100%"}
              :container true
@@ -30,12 +31,20 @@
                      :gutterBottom true
                      :variant "display3"}
     "Hito Hub"]
-   [mui/grid {:style {:margin-top 208}
+   [mui/grid {:style {:margin-top 208
+                      :width "296px"}
               :container true
               :direction "column"
               :justify "center"
               :alignItems "center"}
     [mui/button {:variant "contained"
                  :color "primary"
-                 :on-click handleClickTwitter}
-     "Twitterアカウントで登録"]]])
+                 :on-click handleClickTwitter
+                 :style {:width "100%"}}
+     "Twitterアカウントで登録"]
+    [mui/button {:variant "contained"
+                 :color "primary"
+                 :on-click handleClickEmailRegister
+                 :style {:width "100%"
+                         :margin-top "16px"}}
+     "Emailで登録"]]])
