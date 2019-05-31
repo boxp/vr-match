@@ -17,12 +17,15 @@
 
 (re-frame/reg-fx
  ::send-sign-in-link-to-email
- (fn [{:keys [email callback-path] :as params}]
+ (fn [{:keys [email redirect-path callback-success callback-error] :as params}]
    (.. js/firebase
        auth
        (sendSignInLinkToEmail email
-                              #js {"url" (str (.. js/location -origin) callback-path)
+                              #js {"url" (str (.. js/location -origin) redirect-path)
                                    "handleCodeInApp" true})
        (then
         (fn []
-          (println "Success!"))))))
+          (re-frame/dispatch (conj callback-success email))))
+       (catch
+        (fn [error]
+          (re-frame/dispatch (conj callback-error error)))))))

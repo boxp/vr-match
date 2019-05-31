@@ -9,7 +9,7 @@
 
 (re-frame/reg-fx
  ::set-localstorage
- (fn [[key item]]
+ (fn [{:keys [key item]}]
    (.setItem js/localStorage key (pr-str item))))
 
 (re-frame/reg-fx

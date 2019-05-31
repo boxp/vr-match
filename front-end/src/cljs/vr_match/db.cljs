@@ -7,4 +7,5 @@
    :api-endpoint ""
    :api-error nil
    :drawer {:open? false}
+   :fetch-status {}
    :history nil})

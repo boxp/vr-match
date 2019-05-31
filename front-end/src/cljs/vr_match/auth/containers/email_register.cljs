@@ -11,7 +11,7 @@
 (defn- handle-submit
   [email]
   (re-frame/dispatch [::events/send-sign-in-link-to-email {:email email
-                                                           :callback-path "/email-register"}]))
+                                                           :redirect-path "/email-register"}]))
 
 (defn email-register
   [_]
