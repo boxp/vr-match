@@ -1,6 +1,6 @@
-(ns vr-match-api.domain.usecase.example
+(ns vr-match-back-end.domain.usecase.example
   (:require [com.stuartsierra.component :as component]
-            [vr-match-api.infra.repository.example :refer [get-example]]))
+            [vr-match-back-end.infra.repository.example :refer [get-example]]))
 
 (defn get-message
   [{:keys [example-repository] :as comp}]

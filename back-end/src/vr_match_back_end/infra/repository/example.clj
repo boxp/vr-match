@@ -1,6 +1,6 @@
-(ns vr-match-api.infra.repository.example
+(ns vr-match-back-end.infra.repository.example
   (:require [com.stuartsierra.component :as component]
-            [vr-match-api.domain.entity.example :refer [map->Example]]))
+            [vr-match-back-end.domain.entity.example :refer [map->Example]]))
 
 (defn get-example
   [comp]

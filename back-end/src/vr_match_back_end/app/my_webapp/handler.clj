@@ -1,12 +1,12 @@
-(ns vr-match-api.app.my-webapp.handler
+(ns vr-match-back-end.app.my-webapp.handler
   (:require [com.stuartsierra.component :as component]
             [cheshire.core :refer [generate-string parse-string]]
             [clojure.edn :as edn]
             [com.walmartlabs.lacinia.util :refer [attach-resolvers]]
             [com.walmartlabs.lacinia.schema :as schema]
             [com.walmartlabs.lacinia :refer [execute]]
-            [vr-match-api.domain.usecase.example :as example-usecase]
-            [vr-match-api.app.my-webapp.resolvers :as resolvers]))
+            [vr-match-back-end.domain.usecase.example :as example-usecase]
+            [vr-match-back-end.app.my-webapp.resolvers :as resolvers]))
 
 (defn index
   [{:keys [example-usecase] :as comp}]

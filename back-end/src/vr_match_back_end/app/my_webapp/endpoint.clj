@@ -1,9 +1,9 @@
-(ns vr-match-api.app.my-webapp.endpoint
+(ns vr-match-back-end.app.my-webapp.endpoint
   (:require [com.stuartsierra.component :as component]
             [compojure.core :refer [defroutes context GET POST OPTIONS routes]]
             [compojure.route :as route]
             [ring.adapter.jetty :as server]
-            [vr-match-api.app.my-webapp.handler :as handler]))
+            [vr-match-back-end.app.my-webapp.handler :as handler]))
 
 (defn wrap-header-csp
   [handler origin]

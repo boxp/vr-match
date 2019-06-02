@@ -1,4 +1,4 @@
-(ns vr-match-api.infra.datasource.example
+(ns vr-match-back-end.infra.datasource.example
   (:require [com.stuartsierra.component :as component]))
 
 (defn connect

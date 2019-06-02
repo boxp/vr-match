@@ -1,4 +1,4 @@
-(ns vr-match-api.app.my-webapp.resolvers
+(ns vr-match-back-end.app.my-webapp.resolvers
   (:require [clojure.data.codec.base64 :as b64]))
 
 (defn approach-list

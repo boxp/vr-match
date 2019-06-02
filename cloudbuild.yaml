@@ -7,8 +7,8 @@ steps:
   id: 'build-front-end'
   waitFor: ['-']
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/vr-match-api:$REVISION_ID', '-f', './api/Dockerfile', './api' ]
-  id: 'build-api'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/vr-match-back-end:$REVISION_ID', '-f', './back-end/Dockerfile', './back-end' ]
+  id: 'build-back-end'
   waitFor: ['-']
 
 # Push
@@ -17,9 +17,9 @@ steps:
   id: 'push-front-end'
   waitFor: ['build-front-end']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ["push", "gcr.io/$PROJECT_ID/vr-match-api:$REVISION_ID"]
-  id: 'push-api'
-  waitFor: ['build-api']
+  args: ["push", "gcr.io/$PROJECT_ID/vr-match-back-end:$REVISION_ID"]
+  id: 'push-back-end'
+  waitFor: ['build-back-end']
 
 # Apply environment variable
 - name: 'loicmahieu/alpine-envsubst'
@@ -28,14 +28,14 @@ steps:
   - "REVISION_ID=$REVISION_ID"
   - "PROJECT_ID=$PROJECT_ID"
   id: 'apply-env'
-  waitFor: ['push-front-end', 'push-api']
+  waitFor: ['push-front-end', 'push-back-end']
   args:
   - '-c'
   - |
     envsubst < front-end/k8s/deployment.yml > front-end-deployment.yml
     envsubst < front-end/k8s/service.yml > front-end-service.yml
-    envsubst < api/k8s/deployment.yml > api-deployment.yml
-    envsubst < api/k8s/service.yml > api-service.yml
+    envsubst < back-end/k8s/deployment.yml > back-end-deployment.yml
+    envsubst < back-end/k8s/service.yml > back-end-service.yml
 
 # Deploy
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -48,8 +48,8 @@ steps:
     gcloud container clusters get-credentials alice --zone asia-northeast1-a
     kubectl apply -f front-end-deployment.yml
     kubectl apply -f front-end-service.yml
-    kubectl apply -f api-deployment.yml
-    kubectl apply -f api-service.yml
+    kubectl apply -f back-end-deployment.yml
+    kubectl apply -f back-end-service.yml
 
 options:
   machineType: 'N1_HIGHCPU_8'

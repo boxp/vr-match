@@ -1,4 +1,4 @@
-(defproject vr-match-api "0.1.0-SNAPSHOT"
+(defproject vr-match-back-end "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -17,4 +17,4 @@
                  [vincit/venia "0.2.5"]]
   :profiles
   {:dev {:source-paths ["src" "dev"]}
-   :uberjar {:main vr-match-api.system}})
+   :uberjar {:main vr-match-back-end.system}})
