@@ -18,6 +18,9 @@
    :email-register {:entries #{"vr-match.auth.containers.email-register"}
                     :output-to (str output-dir "/email_register.js")
                     :depends-on #{:client}}
+   :email-register-complete {:entries #{"vr-match.auth.containers.email-register-complete"}
+                             :output-to (str output-dir "/email_register_complete.js")
+                             :depends-on #{:client}}
    :wizard {:entries #{"vr-match.wizard.container"}
             :output-to (str output-dir "/wizard.js")
             :depends-on #{:client}}

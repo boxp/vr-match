@@ -2,6 +2,8 @@
 
 (def default-db
   {:approach {:list []}
+   :auth {:sign-in-link {:error nil
+                         :email ""}}
    :router {:key :loading
             :params {}}
    :api-endpoint ""
