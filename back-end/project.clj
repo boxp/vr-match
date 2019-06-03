@@ -7,7 +7,7 @@
                  [org.clojure/core.async "0.4.490"]
                  [org.clojure/data.codec "0.1.1"]
                  [environ "1.1.0"]
-                 [com.stuartsierra/component "0.3.2"]
+                 [com.stuartsierra/component "0.4.0"]
                  [ring "1.7.1"]
                  [ring/ring-json "0.4.0"]
                  [compojure "1.6.1"]
