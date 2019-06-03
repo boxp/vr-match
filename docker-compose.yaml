@@ -1,0 +1,17 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev
+    ports:
+      - "3306:3306"
+    volumes:
+      - .local/mysql5.7:/var/lib/mysql
+    networks:
+      - vr-match
+networks:
+  vr-match:
+    external: true
