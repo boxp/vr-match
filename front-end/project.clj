@@ -52,7 +52,7 @@
                  [secretary "1.2.3"]
                  [kibu/pushy "0.3.8"]
                  [day8.re-frame/http-fx "0.1.6"]
-                 [cljsjs/material-ui "3.1.1-0"]
+                 [cljsjs/material-ui "3.9.3-0"]
                  [cljsjs/firebase "5.7.3-1"]
                  [vincit/venia "0.2.5"]
                  [cljs-ajax "0.8.0"]]
