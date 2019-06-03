@@ -49,7 +49,7 @@
                  [org.clojure/test.check "0.9.0"]
                  [reagent "0.8.1"]
                  [re-frame "0.10.6"]
-                 [secretary "1.2.3"]
+                 [clj-commons/secretary "1.2.4"]
                  [kibu/pushy "0.3.8"]
                  [day8.re-frame/http-fx "0.1.6"]
                  [cljsjs/material-ui "3.9.3-0"]
