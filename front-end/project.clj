@@ -70,7 +70,7 @@
   :profiles
   {:dev
    {:dependencies [[binaryage/devtools "0.9.10"]
-                   [cider/piggieback "0.3.5"]
+                   [cider/piggieback "0.4.1"]
                    [figwheel-sidecar "0.5.18"]
                    [day8.re-frame/re-frame-10x "0.4.0"]]
     :plugins      [[lein-figwheel "0.5.18"]
