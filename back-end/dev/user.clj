@@ -3,13 +3,13 @@
             [clojure.tools.namespace.repl :refer (refresh)]
             [com.walmartlabs.lacinia :as lacinia]
             [venia.core :as venia]
-            [vr-match-api.system :refer [vr-match-api-system load-config]]))
+            [vr-match-back-end.system :refer [vr-match-back-end-system load-config]]))
 
 (def system nil)
 
 (defn init []
   (alter-var-root #'system
-                  (constantly (vr-match-api-system (load-config)))))
+                  (constantly (vr-match-back-end-system (load-config)))))
 
 (defn start []
   (alter-var-root #'system component/start))
