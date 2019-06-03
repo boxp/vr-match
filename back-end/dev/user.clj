@@ -3,7 +3,7 @@
             [clojure.tools.namespace.repl :refer (refresh)]
             [com.walmartlabs.lacinia :as lacinia]
             [venia.core :as venia]
-            [vr-match-back-end.system :refer [vr-match-back-end-system load-config]]))
+            [vr-match-back-end.app.my-webapp.system :refer [vr-match-back-end-system load-config]]))
 
 (def system nil)
 

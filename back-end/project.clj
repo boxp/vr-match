@@ -17,4 +17,4 @@
                  [vincit/venia "0.2.5"]]
   :profiles
   {:dev {:source-paths ["src" "dev"]}
-   :uberjar {:main vr-match-back-end.system}})
+   :uberjar {:main vr-match-back-end.app.my-webapp.system}})

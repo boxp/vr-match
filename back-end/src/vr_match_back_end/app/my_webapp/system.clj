@@ -1,4 +1,4 @@
-(ns vr-match-back-end.system
+(ns vr-match-back-end.app.my-webapp.system
   (:require [com.stuartsierra.component :as component]
             [environ.core :refer [env]]
             [vr-match-back-end.infra.datasource.example :refer [example-datasource-component]]

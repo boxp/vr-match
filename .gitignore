@@ -13,6 +13,7 @@ out
 .lein-failures
 .rebel_readline_history
 .cljs_nashorn_repl
+.local
 nashorn_code_cache
 target
 .#*
