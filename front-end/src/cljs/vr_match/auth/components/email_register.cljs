@@ -4,7 +4,6 @@
 
 (defn- handle-change-email
   [draft-email e]
-  (println (.. e -target -value))
   (reset! draft-email (.. e -target -value)))
 
 (defn- component-did-mount
