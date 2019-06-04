@@ -13,6 +13,11 @@
    (.setItem js/localStorage key (pr-str item))))
 
 (re-frame/reg-fx
+ ::remove-localstorage
+ (fn [{:keys [key]}]
+   (.removeItem js/localStorage key)))
+
+(re-frame/reg-fx
  ::route
  (fn [[path]]
    (pushy/set-token! (:history @db/app-db) path)))

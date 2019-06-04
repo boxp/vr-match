@@ -32,3 +32,18 @@
        (catch
         (fn [error]
           (re-frame/dispatch (conj callback-error error)))))))
+
+(re-frame/reg-fx
+ ::sign-in-with-email-link
+ (fn [{:keys [email callback-success callback-error]}]
+   (let [location (.. js/window -location -href)]
+     (when (.. @firebase-instance auth (isSignInWithEmailLink location))
+       (.. @firebase-instance
+           auth
+           (signInWithEmailLink email location)
+           (then
+            (fn [result]
+              (re-frame/dispatch (conj callback-success email))))
+           (catch
+            (fn [error]
+              (re-frame/dispatch (conj callback-error error)))))))))

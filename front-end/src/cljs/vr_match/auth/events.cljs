@@ -25,7 +25,7 @@
  (fn [{:keys [db]}
       [_ error]]
    {:db (-> db
-            (assoc :api-error error)
+            (assoc-in [:auth :sign-in-link :error] error)
             (assoc-in [:fetch-status :sign-in-link] :loaded))}))
 
 (re-frame/reg-event-fx
@@ -39,3 +39,40 @@
                                                  :callback-error [::error-send-sign-in-link-to-email]}
       :db (-> db
               (assoc-in [:fetch-status :sign-in-link] :loading))})))
+
+(re-frame/reg-event-fx
+ ::success-sign-in-with-email
+ (fn [{:keys [db]}
+      [_ email]]
+   {::effects/remove-localstorage {:key "emailForSignIn"}
+    :db (-> db
+            (assoc-in [:fetch-status :sign-in-with-email] :loaded)
+            (assoc-in [:auth :sign-in-link :error] nil))}))
+
+(re-frame/reg-event-fx
+ ::error-sign-in-with-email
+ (fn [{:keys [db]}
+      [_ error]]
+   {:db (-> db
+            (assoc-in [:auth :sign-in-with-email :error] error)
+            (assoc-in [:fetch-status :sign-in-link] :loaded))}))
+
+(re-frame/reg-event-fx
+ ::sign-in-with-email
+ (fn [{:keys [db]}
+      [_ {:keys [email]}]]
+   (when (-> db :fetch-status :sign-in-with-email (not= :loading))
+     {::auth-effects/sign-in-with-email {:email email
+                                         :callback-success [::success-sign-in-with-email]
+                                         :callback-error [::error-sign-in-with-email]}
+      :db (-> db
+              (assoc-in [:fetch-status :sign-in-with-email] :loading))})))
+
+(re-frame/reg-event-fx
+ ::auth-sign-in-with-email
+ [(re-frame/inject-cofx ::effects/local-storage "emailForSignIn")]
+ (fn [{:keys [db local-storage]}]
+   (if local-storage
+     {:dispatch [::sign-in-with-email {:email local-storage}]}
+     {:db (-> db
+              (assoc-in [:auth :sign-in-with-email :email-input-required?] true))})))
