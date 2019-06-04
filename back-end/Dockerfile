@@ -6,4 +6,4 @@ RUN lein deps
 COPY . /usr/src/app
 RUN mv "$(lein uberjar | sed -n 's/^Created \(.*standalone\.jar\)/\1/p')" app-standalone.jar
 EXPOSE 8080
-CMD ["java", "-Djava.security.policy=/usr/src/app/java.policy", "-cp", "app-standalone.jar" "vr_match_back_end.app.my_webapp.system"]
+CMD ["java", "-Djava.security.policy=/usr/src/app/java.policy", "-cp", "app-standalone.jar", "vr_match_back_end.app.my_webapp.system"]
