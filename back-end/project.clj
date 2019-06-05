@@ -15,7 +15,7 @@
                  [org.clojure/tools.namespace "0.2.10"]
                  [com.walmartlabs/lacinia "0.33.0"]
                  [vincit/venia "0.2.5"]
-                 [com.google.firebase/firebase-admin "6.8.0"]]
+                 [com.google.firebase/firebase-admin "6.8.1"]]
   :profiles
   {:dev {:source-paths ["src" "dev"]}
    :uberjar {:main vr-match-back-end.app.my-webapp.system}})
