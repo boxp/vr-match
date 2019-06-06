@@ -1,4 +1,5 @@
 /*-init.clj
+back-end/resources/firebase-service-account-key.json
 front-end/resources/public/js/compiled
 front-end/resources/public/worker/js/compiled
 front-end/resources/public/prod/js/compiled
