@@ -47,3 +47,17 @@
            (catch
             (fn [error]
               (re-frame/dispatch (conj callback-error error)))))))))
+
+(re-frame/reg-fx
+ ::renew-id-token
+ (fn [{:keys [callback-success callback-error]}]
+   (.. @firebase-instance
+       auth
+       -currentUser
+       (getIdToken true)
+       (then
+        (fn [id-token]
+          (re-frame/dispatch (conj callback-success id-token))))
+       (catch
+        (fn [error]
+          (re-frame/dispatch (conj callback-error error)))))))

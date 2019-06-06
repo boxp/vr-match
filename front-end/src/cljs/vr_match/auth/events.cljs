@@ -43,10 +43,19 @@
               (assoc-in [:fetch-status :sign-in-link] :loading))})))
 
 (re-frame/reg-event-fx
+ ::success-renew-id-token
+ (fn [{:keys [db]}
+      [_ id-token]]
+   ;; TODO: ユーザー登録APIをたたく
+   {}))
+
+(re-frame/reg-event-fx
  ::success-sign-in-with-email
  (fn [{:keys [db]}
       [_ email]]
    {::effects/remove-localstorage {:key "emailForSignIn"}
+    ::auth-effects/renew-id-token {:callback-success [::success-renew-id-token]
+                                   :callback-error [:error-sign-in-with-email]}
     :db (-> db
             (assoc-in [:fetch-status :sign-in-with-email] :loaded)
             (assoc-in [:auth :sign-in-link :error] nil))}))
