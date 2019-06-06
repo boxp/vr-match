@@ -4,6 +4,7 @@
             [vr-match-back-end.infra.datasource.example :refer [example-datasource-component]]
             [vr-match-back-end.infra.datasource.firebase-admin :refer [map->FirebaseAdminDatasourceComponent]]
             [vr-match-back-end.infra.repository.example :refer [example-repository-component]]
+            [vr-match-back-end.infra.repository.auth :refer [map->AuthRepositoryComponent]]
             [vr-match-back-end.domain.usecase.example :refer [example-usecase-component]]
             [vr-match-back-end.app.my-webapp.handler :refer [my-webapp-handler-component]]
             [vr-match-back-end.app.my-webapp.endpoint :refer [my-webapp-endpoint-component]])
@@ -21,6 +22,9 @@
     :example-repository (component/using
                           (example-repository-component)
                           [:example-datasource])
+    :auth-repository (component/using
+                      (map->AuthRepositoryComponent {})
+                      [:firebase-admin-datasource])
     :example-usecase (component/using
                        (example-usecase-component)
                        [:example-repository])

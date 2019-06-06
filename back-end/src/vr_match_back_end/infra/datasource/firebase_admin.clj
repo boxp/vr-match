@@ -2,6 +2,7 @@
   (:import
    (java.io FileInputStream)
    (com.google.firebase FirebaseOptions$Builder FirebaseApp)
+   (com.google.firebase.auth FirebaseAuth)
    (com.google.auth.oauth2 GoogleCredentials))
   (:require
    [clojure.java.io :as io]
@@ -18,14 +19,17 @@
      (.. (FirebaseOptions$Builder.)
          (setCredentials credential)
          (setDatabaseUrl database-url)
-         build))))
+         build)
+     (str (gensym)))))
 
-(defrecord FirebaseAdminDatasourceComponent [database-url app]
+(defrecord FirebaseAdminDatasourceComponent [database-url app auth]
   component/Lifecycle
   (start [this]
     (println ";; Starting FirebaseAdminDatasourceComponent")
-    (-> this
-        (assoc :app (init-app database-url))))
+    (let [application (init-app database-url)]
+      (-> this
+          (assoc :app application)
+          (assoc :auth (FirebaseAuth/getInstance application)))))
   (stop [this]
     (println ";; Stopping FirebaseAdminDatasourceComponent")
     (-> this
