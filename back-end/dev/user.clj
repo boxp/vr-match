@@ -1,9 +1,11 @@
 (ns user
-  (:require [com.stuartsierra.component :as component]
-            [clojure.tools.namespace.repl :refer (refresh)]
-            [com.walmartlabs.lacinia :as lacinia]
-            [venia.core :as venia]
-            [vr-match-back-end.app.my-webapp.system :refer [vr-match-back-end-system load-config]]))
+  (:require
+   [clojure.spec.test.alpha :as stest]
+   [com.stuartsierra.component :as component]
+   [clojure.tools.namespace.repl :refer (refresh)]
+   [com.walmartlabs.lacinia :as lacinia]
+   [venia.core :as venia]
+   [vr-match-back-end.app.my-webapp.system :refer [vr-match-back-end-system load-config]]))
 
 (def system nil)
 
@@ -19,6 +21,7 @@
                   (fn [s] (when s (component/stop s)))))
 
 (defn go []
+  (stest/instrument)
   (init)
   (start))
 

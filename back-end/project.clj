@@ -6,7 +6,9 @@
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.async "0.4.490"]
                  [org.clojure/data.codec "0.1.1"]
+                 [org.clojure/test.check "0.9.0"]
                  [environ "1.1.0"]
+                 [clj-time "0.15.0"]
                  [com.stuartsierra/component "0.4.0"]
                  [ring "1.7.1"]
                  [ring/ring-json "0.4.0"]
@@ -15,6 +17,8 @@
                  [org.clojure/tools.namespace "0.2.10"]
                  [com.walmartlabs/lacinia "0.33.0"]
                  [vincit/venia "0.2.5"]
+                 [com.layerware/hugsql "0.4.9"]
+                 [mysql/mysql-connector-java "8.0.16"]
                  [com.google.firebase/firebase-admin "6.8.1"]
                  [com.google.auth/google-auth-library-oauth2-http "0.16.1"]]
   :profiles

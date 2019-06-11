@@ -26,6 +26,21 @@ spec:
               secretKeyRef:
                 name: vr-match-staging-secrets
                 key: FIREBASE_SERVICE_ACCOUNT_KEY
+          - name: VR_MATCH_MYSQL_DBNAME
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: MYSQL_DBNAME
+          - name: VR_MATCH_MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: MYSQL_USER
+          - name: VR_MATCH_MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: MYSQL_PASSWORD
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.11
         command: ["/cloud_sql_proxy",

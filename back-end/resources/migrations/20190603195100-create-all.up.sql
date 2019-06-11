@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user` (
   `firebase_id` VARCHAR(45) NOT NULL,
   `name` VARCHAR(190) NOT NULL,
   `introduction` TEXT NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `firebase_id_UNIQUE` (`firebase_id` ASC))
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`platform` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(190) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` DATETIME NOT NULL,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
@@ -53,6 +53,8 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`platform` (
 CREATE TABLE IF NOT EXISTS `vr_match`.`user_platform` (
   `user_id` BIGINT(20) NOT NULL,
   `platform_id` BIGINT(20) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`, `platform_id`),
   UNIQUE INDEX `UNIQUE` (`platform_id` ASC, `user_id` ASC),
   CONSTRAINT `user_platform_user_id`
@@ -74,8 +76,8 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_token` (
   `user_id` BIGINT(20) NOT NULL,
   `hash` VARCHAR(255) NOT NULL,
   `expiration_date` DATETIME NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   UNIQUE INDEX `token_UNIQUE` (`hash` ASC),
   PRIMARY KEY (`hash`),
   CONSTRAINT `user_token_user_id`
@@ -93,8 +95,8 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`image` (
   `url` VARCHAR(255) NOT NULL,
   `image_type` INT NOT NULL,
   `placeholder_color` VARCHAR(45) NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
@@ -105,6 +107,8 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`image` (
 CREATE TABLE IF NOT EXISTS `vr_match`.`user_image` (
   `user_id` BIGINT(20) NOT NULL,
   `image_id` BIGINT(20) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`, `image_id`),
   UNIQUE INDEX `UNIQUE` (`user_id` ASC, `image_id` ASC),
   CONSTRAINT `user_image_user_id`
@@ -125,6 +129,8 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_image` (
 CREATE TABLE IF NOT EXISTS `vr_match`.`user_favorite` (
   `from_id` BIGINT(20) NOT NULL,
   `to_id` BIGINT(20) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`from_id`, `to_id`),
   UNIQUE INDEX `UNIQUE` (`from_id` ASC, `to_id` ASC),
   CONSTRAINT `user_favorite_from_id`
@@ -145,6 +151,8 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_favorite` (
 CREATE TABLE IF NOT EXISTS `vr_match`.`user_match` (
   `from_id` BIGINT(20) NOT NULL,
   `to_id` BIGINT(20) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`from_id`, `to_id`),
   UNIQUE INDEX `UNIQUE` (`from_id` ASC, `to_id` ASC),
   CONSTRAINT `user_match_from_id`
@@ -165,7 +173,8 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_match` (
 CREATE TABLE IF NOT EXISTS `vr_match`.`user_skip` (
   `from_id` BIGINT(20) NOT NULL,
   `to_id` BIGINT(20) NOT NULL,
-  `user_skipcol` VARCHAR(45) NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`from_id`, `to_id`),
   UNIQUE INDEX `UNIQUE` (`from_id` ASC, `to_id` ASC),
   CONSTRAINT `user_skip_from_id`
