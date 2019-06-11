@@ -8,7 +8,7 @@
                  [org.clojure/data.codec "0.1.1"]
                  [org.clojure/test.check "0.9.0"]
                  [environ "1.1.0"]
-                 [clj-time "0.15.0"]
+                 [clj-time "0.15.1"]
                  [com.stuartsierra/component "0.4.0"]
                  [ring "1.7.1"]
                  [ring/ring-json "0.4.0"]
