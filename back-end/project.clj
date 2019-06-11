@@ -14,7 +14,7 @@
                  [ring/ring-json "0.4.0"]
                  [compojure "1.6.1"]
                  [cheshire "5.8.1"]
-                 [org.clojure/tools.namespace "0.2.10"]
+                 [org.clojure/tools.namespace "0.3.0"]
                  [com.walmartlabs/lacinia "0.33.0"]
                  [vincit/venia "0.2.5"]
                  [com.layerware/hugsql "0.4.9"]
