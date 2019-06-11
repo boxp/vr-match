@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user` (
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `firebase_id_UNIQUE` (`firebase_id` ASC) VISIBLE))
+  UNIQUE INDEX `firebase_id_UNIQUE` (`firebase_id` ASC))
 ENGINE = InnoDB;
 
 
