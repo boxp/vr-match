@@ -24,12 +24,14 @@ USE `vr_match` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vr_match`.`user` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `firebase_id` VARCHAR(45) NOT NULL,
   `name` VARCHAR(190) NOT NULL,
   `introduction` TEXT NOT NULL,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `firebase_id_UNIQUE` (`firebase_id` ASC) VISIBLE))
 ENGINE = InnoDB;
 
 
