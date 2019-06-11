@@ -14,11 +14,13 @@
   [{:keys [vr-match-back-end-example-port
            vr-match-back-end-my-webapp-port
            vr-match-back-end-firebase-database-url
+           vr-match-firebase-service-account-key
            vr-match-client-origin] :as conf}]
   (component/system-map
     :example-datasource (example-datasource-component vr-match-back-end-example-port)
     :firebase-admin-datasource (map->FirebaseAdminDatasourceComponent
-                                {:database-url vr-match-back-end-firebase-database-url})
+                                {:database-url vr-match-back-end-firebase-database-url
+                                 :credential vr-match-firebase-service-account-key})
     :example-repository (component/using
                           (example-repository-component)
                           [:example-datasource])
@@ -40,7 +42,8 @@
   {:vr-match-client-origin (or (env :vr-match-client-origin) "http://localhost:8888")
    :vr-match-back-end-example-port (-> (or (env :vr-match-back-end-example-port) "8000") Integer/parseInt)
    :vr-match-back-end-my-webapp-port (-> (or (env :vr-match-back-end-my-webapp-port) "8080") Integer/parseInt)
-   :vr-match-back-end-firebase-database-url (-> (or (env :vr-match-back-end-firebase-database-url) "https://vr-match.firebaseio.com"))})
+   :vr-match-back-end-firebase-database-url (-> (or (env :vr-match-back-end-firebase-database-url) "https://vr-match.firebaseio.com"))
+   :vr-match-firebase-service-account-key (env :vr-match-firebase-service-account-key)})
 
 (defn -main []
   (component/start

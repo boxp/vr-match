@@ -11,10 +11,11 @@
 (def service-account-key-file-name "firebase-service-account-key.json")
 
 (defn- init-app
-  [database-url]
+  [{:keys [database-url
+           credential-str]}]
   (let [credential (GoogleCredentials/fromStream
                     (io/input-stream
-                     (io/resource service-account-key-file-name)))]
+                     (.getBytes credential-str)))]
     (FirebaseApp/initializeApp
      (.. (FirebaseOptions$Builder.)
          (setCredentials credential)
@@ -22,11 +23,12 @@
          build)
      (str (gensym)))))
 
-(defrecord FirebaseAdminDatasourceComponent [database-url app auth]
+(defrecord FirebaseAdminDatasourceComponent [database-url credential app auth]
   component/Lifecycle
   (start [this]
     (println ";; Starting FirebaseAdminDatasourceComponent")
-    (let [application (init-app database-url)]
+    (let [application (init-app {:database-url database-url
+                                 :credential-str credential})]
       (-> this
           (assoc :app application)
           (assoc :auth (FirebaseAuth/getInstance application)))))

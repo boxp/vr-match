@@ -21,6 +21,11 @@ spec:
             value: "8000"
           - name: VR_MATCH_CLIENT_ORIGIN
             value: "https://vr-match.boxp.tk"
+          - name: VR_MATCH_FIREBASE_SERVICE_ACCOUNT_KEY
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: FIREBASE_SERVICE_ACCOUNT_KEY
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.11
         command: ["/cloud_sql_proxy",
