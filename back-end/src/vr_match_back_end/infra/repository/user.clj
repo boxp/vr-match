@@ -42,12 +42,12 @@
                                                            to-long))
                                          build))))
 
-(s/fdef register
+(s/fdef create-new-user
   :args (s/cat :c (s/keys :req [::firebase-admin-datasource
                                 ::mysql-datasource])
                :params (s/keys :req [::id-token]))
   :ret ::euser/user)
-(defn register
+(defn create-new-user
   [{:keys [firebase-admin-datasource
            mysql-datasource] :as c}
    {:keys [id-token] :as params}]
