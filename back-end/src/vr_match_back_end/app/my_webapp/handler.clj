@@ -5,14 +5,13 @@
             [com.walmartlabs.lacinia.util :refer [attach-resolvers]]
             [com.walmartlabs.lacinia.schema :as schema]
             [com.walmartlabs.lacinia :refer [execute]]
-            [vr-match-back-end.domain.usecase.example :as example-usecase]
             [vr-match-back-end.app.my-webapp.resolvers :as resolvers]))
 
 (defn index
-  [{:keys [example-usecase] :as comp}]
+  [_]
   {:status 200
    :headers {"Content-Type" "application/json"}
-   :body (-> {:message (example-usecase/get-message example-usecase)}
+   :body (-> {:message "hello!"}
 
              generate-string)})
 
@@ -35,7 +34,7 @@
       (attach-resolvers {:resolve-approach-list resolvers/approach-list})
       schema/compile))
 
-(defrecord MyWebappHandlerComponent [example-usecase graphql-schema]
+(defrecord MyWebappHandlerComponent [graphql-schema]
   component/Lifecycle
   (start [this]
     (println ";; Starting MyWebappHandlerComponent")
