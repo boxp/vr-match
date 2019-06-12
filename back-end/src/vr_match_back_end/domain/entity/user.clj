@@ -7,9 +7,15 @@
 (s/def ::firebase_id string?)
 (s/def ::name string?)
 (s/def ::introduction string?)
+(s/def ::session_cookie string?)
 (s/def ::created_at ::t-spec/date-time)
 (s/def ::updated_at ::t-spec/date-time)
 
 (s/def ::user
-  (s/keys :req [::id ::firebase_id ::name ::introduction]
-          :opt [::created_at ::updated_at]))
+  (s/keys :req [::id
+                ::firebase_id
+                ::name
+                ::introduction
+                ::session_cookie]
+          :opt [::created_at
+                ::updated_at]))
