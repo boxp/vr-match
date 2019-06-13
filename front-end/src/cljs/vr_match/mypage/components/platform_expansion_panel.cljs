@@ -1,7 +1,7 @@
 (ns vr-match.mypage.components.platform-expansion-panel
   (:require [cljs.spec.alpha :as s]
             [reagent.core :as r]
-            [vr-match.lib.models.plat-form :as platform-model]
+            [vr-match.lib.models.platform :as platform-model]
             ["material-ui"]))
 
 (s/def ::name string?)
@@ -12,8 +12,8 @@
                    ::id
                    ::exampleUserId]))
 (s/def ::platformOptions (s/coll-of ::platformOption))
-(s/def ::platform ::platform-model/platForm)
-(s/def ::platforms (s/coll-of ::platform-model/platForm))
+(s/def ::platform ::platform-model/platform)
+(s/def ::platforms (s/coll-of ::platform-model/platform))
 
 (s/fdef platform->placeholder
   :args (s/cat :platform ::platform

@@ -3,7 +3,6 @@
             [reagent.core :as r]
             [vr-match.lib.components.material-ui :as mui]
             [vr-match.lib.component :refer [navigation-bar-layout]]
-            [vr-match.approach.components.cards :refer [cards]]
             [vr-match.approach.components.swipe-card-item :refer [swipe-card-item]]
             [vr-match.approach.components.action-buttons :refer [action-buttons]]
             [vr-match.approach.components.favorite-overlay :refer [favorite-overlay]]
@@ -274,12 +273,6 @@
         [:div {:style {:display "flex"
                        :justify-content "center"
                        :flex-direction "column"}}
-         ;; [cards {:firstItem (-> @approach-state :firstItem)
-         ;;         :secondItem (-> @approach-state :secondItem)
-         ;;         :isFavorite (-> @approach-state :isFavorite)
-         ;;         :isSwipe (-> @approach-state :isSkip)
-         ;;         :handleClickCardItem #(handleClickGoToProfile props %)
-         ;;         :handleOnExit #(handleOnExit props)}]
          [:style (cond (:isReturning @approach-state)
                        (state->return-swipe-card-animation @approach-state)
                        (:isFavorite @approach-state)

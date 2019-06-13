@@ -46,6 +46,7 @@
  ::success-renew-id-token
  (fn [{:keys [db]}
       [_ id-token]]
+   (println id-token)
    ;; TODO: ユーザー登録APIをたたく
    {}))
 

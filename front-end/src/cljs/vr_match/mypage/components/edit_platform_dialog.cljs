@@ -2,7 +2,7 @@
   (:require
    [cljs.spec.alpha :as s]
    [reagent.core :as r]
-   [vr-match.lib.models.plat-form :as platform-model]
+   [vr-match.lib.models.platform :as platform-model]
    [vr-match.mypage.components.platform-expansion-panel :as platform-expansion-panel]
    ["material-ui"]))
 
