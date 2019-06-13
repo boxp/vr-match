@@ -11,7 +11,7 @@
                 title
                 userName
                 introduction
-                platForms
+                platforms
                 image]}
         (js->clj item :keywordize-keys true)]
      [mui/card {:style {"width" "86vw"
@@ -42,7 +42,7 @@
          (map (fn [{:keys [id name]}] [mui/grid {:key id
                                                  :item true}
                                        [plat-form-chip {:name name}]])
-              platForms)]
+              platforms)]
         [mui/typo-graphy {:gutterBottom true
                           :variant "subheading"
                           :component "h2"}

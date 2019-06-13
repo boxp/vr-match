@@ -40,7 +40,7 @@
                               :userName
                               :introduction
                               :image
-                              [:platForms [:id :name]]]]]]]]]
+                              [:platforms [:id :name]]]]]]]]]
                 :success-handler ::on-success-fetch-approach-list
                 :error-handler ::events/api-error}]}))
 

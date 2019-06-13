@@ -18,7 +18,7 @@
                 ::firebase_id
                 ::name
                 ::introduction
-                ::session_cookie
-                ::platforms]
-          :opt [::created_at
+                ::session_cookie]
+          :opt [::platforms
+                ::created_at
                 ::updated_at]))
