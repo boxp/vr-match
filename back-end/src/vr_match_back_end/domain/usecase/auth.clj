@@ -8,12 +8,12 @@
 (s/def ::user-repository record?)
 (s/fdef register
   :args (s/cat :c (s/keys :req-un [::user-repository])
-               :idToken string?)
+               :id-token string?)
   :ret ::euser/user)
 (defn register
   [{:keys [user-repository] :as c}
-   idToken]
-  (ruser/create-new-user user-repository {:id-token idToken}))
+   id-token]
+  (ruser/create-new-user user-repository {:id-token id-token}))
 
 (defrecord AuthUsecaseComponent [user-repository]
   component/Lifecycle
