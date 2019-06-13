@@ -38,14 +38,13 @@
   (-> firebase-admin-datasource
       :auth
       (.createSessionCookie id-token (.. (SessionCookieOptions/builder)
-                                         (setExpiresIn (-> (t/days 5)
-                                                           to-long))
+                                         (setExpiresIn (* 5 24 60 60 1000))
                                          build))))
 
 (s/fdef create-new-user
-  :args (s/cat :c (s/keys :req [::firebase-admin-datasource
-                                ::mysql-datasource])
-               :params (s/keys :req [::id-token]))
+  :args (s/cat :c (s/keys :req-un [::firebase-admin-datasource
+                                   ::mysql-datasource])
+               :params (s/keys :req-un [::id-token]))
   :ret ::euser/user)
 (defn create-new-user
   [{:keys [firebase-admin-datasource
@@ -60,7 +59,7 @@
                         {:firebase_id firebase_id
                          :name ""
                          :introduction ""})]
-    (-> (user-by-id id)
+    (-> (user-by-id {:id id})
         (assoc :session_cookie session_cookie))))
 
 (defrecord UserRepositoryComponent [firebase-admin-datasource]

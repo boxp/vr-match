@@ -16,7 +16,7 @@
              generate-string)})
 
 (defn graphql
-  [{:keys [graphql-schema]} req]
+  [{:keys [graphql-schema my-webapp-resolvers]} req]
   (let [query (-> req
                   :body
                   slurp
@@ -24,17 +24,21 @@
                   :query)]
     {:status 200
      :headers {}
-     :body (-> (execute graphql-schema query nil nil)
+     :body (-> (execute graphql-schema
+                        query
+                        nil
+                        my-webapp-resolvers)
                generate-string)}))
 
 (defn- load-schema []
   (-> "resources/graphql-schema.edn"
       slurp
       edn/read-string
-      (attach-resolvers {:resolve-approach-list resolvers/approach-list})
+      (attach-resolvers {:resolve-approach-list resolvers/approach-list
+                         :resolve-register-user resolvers/register-user})
       schema/compile))
 
-(defrecord MyWebappHandlerComponent [graphql-schema]
+(defrecord MyWebappHandlerComponent [graphql-schema my-webapp-resolvers]
   component/Lifecycle
   (start [this]
     (println ";; Starting MyWebappHandlerComponent")

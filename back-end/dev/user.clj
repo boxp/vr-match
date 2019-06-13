@@ -35,4 +35,4 @@
    (lacinia/execute (-> system :my-webapp-handler :graphql-schema)
                     (venia/graphql-query query)
                     variables
-                    nil)))
+                    (-> system :my-webapp-resolvers))))

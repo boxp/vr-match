@@ -5,6 +5,7 @@
             [vr-match-back-end.infra.datasource.mysql :refer [map->MysqlDatasourceComponent]]
             [vr-match-back-end.infra.repository.user :refer [map->UserRepositoryComponent]]
             [vr-match-back-end.domain.usecase.auth :refer [map->AuthUsecaseComponent]]
+            [vr-match-back-end.app.my-webapp.resolvers :refer [map->MyWebappResolversComponent]]
             [vr-match-back-end.app.my-webapp.handler :refer [my-webapp-handler-component]]
             [vr-match-back-end.app.my-webapp.endpoint :refer [my-webapp-endpoint-component]])
   (:gen-class))
@@ -31,9 +32,12 @@
     :auth-usecase (component/using
                    (map->AuthUsecaseComponent {})
                    [:user-repository])
+    :my-webapp-resolvers (component/using
+                          (map->MyWebappResolversComponent {})
+                          [:auth-usecase])
     :my-webapp-handler (component/using
                          (my-webapp-handler-component)
-                         [])
+                         [:my-webapp-resolvers])
     :my-webapp-endpoint (component/using
                          (my-webapp-endpoint-component vr-match-back-end-my-webapp-port
                                                        vr-match-client-origin)

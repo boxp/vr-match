@@ -32,4 +32,9 @@
                                :optional true}
                         :before {:type String
                                  :optional true}}
-                 :resolve :resolve-approach-list}}}
+                 :resolve :resolve-approach-list}}
+ :mutations
+ {:registerUser {:type :User
+                 :description "ユーザー新規登録"
+                 :args {:idToken {:type String}}
+                 :resolve :resolve-register-user}}}

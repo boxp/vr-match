@@ -1,5 +1,9 @@
 (ns vr-match-back-end.app.my-webapp.resolvers
-  (:require [clojure.data.codec.base64 :as b64]))
+  (:require
+   [com.stuartsierra.component :as component]
+   [clojure.data.codec.base64 :as b64]
+   [vr-match-back-end.app.my-webapp.converter :refer [user->User]]
+   [vr-match-back-end.domain.usecase.auth :as uauth]))
 
 (defn approach-list
   [context arguments value]
@@ -38,3 +42,20 @@
                 :hasPreviousPage true
                 :hasNextPage true}
      :total 99999}))
+
+(defn register-user
+  [{:keys [auth-usecase] :as context}
+   {:keys [idToken] :as arguments}
+   value]
+  (-> (uauth/register auth-usecase idToken)
+      user->User
+      (assoc :platforms [])))
+
+(defrecord MyWebappResolversComponent [auth-usecase]
+  component/Lifecycle
+  (start [this]
+    (println ";; Starting MyWebappResolversComponent")
+    (-> this))
+  (stop [this]
+    (println ";; Stopping MyWebappResolversComponent")
+    (-> this)))
