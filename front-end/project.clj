@@ -72,7 +72,7 @@
                    [cider/piggieback "0.3.5"]
                    [figwheel-sidecar "0.5.18"]
                    [day8.re-frame/re-frame-10x "0.4.1"]]
-    :plugins      [[lein-figwheel "0.5.18"]
+    :plugins      [[lein-figwheel "0.5.19"]
                    [lein-cljfmt "0.6.4"]]}
    :prod {}}
 
