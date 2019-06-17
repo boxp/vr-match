@@ -53,8 +53,7 @@
  (fn [{:keys [db]} [_ {:keys [query success-handler error-handler]}]]
    {::effects/ajax-worker [{:uri (str (-> db :api-endpoint) "/graphql")
                             :method :post
-                            :params {:query (v/graphql-query
-                                             {:venia/queries query})
+                            :params {:query (v/graphql-query query)
                                      :variables {}}
                             :success-handler success-handler
                             :error-handler error-handler}]}))

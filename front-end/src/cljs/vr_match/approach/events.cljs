@@ -32,7 +32,7 @@
  ::fetch-approach-list
  (fn [{:keys [db] :as cofx} [_ {:keys [count]}]]
    {:dispatch [::events/graphql-query
-               {:query [[:approachList {:first count}
+               {:query {:venia/queries [[:approachList {:first count}
                          [[:edges
                            [:cursor
                             [:node
@@ -40,7 +40,7 @@
                               :userName
                               :introduction
                               :image
-                              [:platforms [:id :name]]]]]]]]]
+                              [:platforms [:id :name]]]]]]]]]}
                 :success-handler ::on-success-fetch-approach-list
                 :error-handler ::events/api-error}]}))
 
