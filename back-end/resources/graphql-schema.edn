@@ -9,6 +9,9 @@
             :introduction {:type String}
             :image {:type (list String)}
             :platforms {:type (list :Platforms)}}}
+  :NewUser
+  {:fields {:user {:type User}
+            :session {:type String}}}
   :UserEdge
   {:fields {:cursor {:type String}
             :node {:type :User}}}
@@ -34,7 +37,7 @@
                                  :optional true}}
                  :resolve :resolve-approach-list}}
  :mutations
- {:registerUser {:type :User
+ {:registerUser {:type :NewUser
                  :description "ユーザー新規登録"
                  :args {:idToken {:type String}}
                  :resolve :resolve-register-user}}}

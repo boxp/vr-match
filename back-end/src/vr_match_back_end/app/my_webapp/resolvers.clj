@@ -47,9 +47,11 @@
   [{:keys [auth-usecase] :as context}
    {:keys [idToken] :as arguments}
    value]
-  (-> (uauth/register auth-usecase idToken)
-      user->User
-      (assoc :platforms [])))
+  (let [user (uauth/register auth-usecase idToken)]
+    {:user (-> user
+               user->User
+               (assoc :platforms []))
+     :session (:session_cookie user)}))
 
 (defrecord MyWebappResolversComponent [auth-usecase]
   component/Lifecycle

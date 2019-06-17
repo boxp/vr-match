@@ -59,7 +59,8 @@
                         {:firebase_id firebase_id
                          :name ""
                          :introduction ""})]
-    (-> (user-by-id {:id id})
+    (-> (user-by-firebase_id (:db mysql-datasource)
+                             {:firebase_id firebase_id})
         (assoc :session_cookie session_cookie))))
 
 (defrecord UserRepositoryComponent [firebase-admin-datasource]
