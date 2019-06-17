@@ -14,11 +14,11 @@
 (s/def ::updated_at ::t-spec/date-time)
 
 (s/def ::user
-  (s/keys :req [::id
-                ::firebase_id
-                ::name
-                ::introduction
-                ::session_cookie]
-          :opt [::platforms
-                ::created_at
-                ::updated_at]))
+  (s/keys :req-un [::id
+                   ::firebase_id
+                   ::name
+                   ::introduction
+                   ::session_cookie]
+          :opt-un [::platforms
+                   ::created_at
+                   ::updated_at]))
