@@ -16,10 +16,12 @@
 
 (defn email-login
   [_]
-  (let [is-completed-send-link (re-frame/subscribe [::auth-subs/send-sign-in-link-to-email-succeed?])
+  (let [loading? (re-frame/subscribe [::auth-subs/loading-email?])
+        is-completed-send-link (re-frame/subscribe [::auth-subs/send-sign-in-link-to-email-succeed?])
         sent-email (re-frame/subscribe [::auth-subs/get-sent-email])]
     (fn [props]
-      [components/email-login {:isCompletedSendLink @is-completed-send-link
+      [components/email-login {:isLoading @loading?
+                               :isCompletedSendLink @is-completed-send-link
                                :sentEmail @sent-email
                                :handleInitialize handle-initialize
                                :handleSubmit handle-submit}])))

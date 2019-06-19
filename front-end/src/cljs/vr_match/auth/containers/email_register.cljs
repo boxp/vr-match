@@ -16,10 +16,12 @@
 
 (defn email-register
   [_]
-  (let [is-completed-send-link (re-frame/subscribe [::auth-subs/send-sign-in-link-to-email-succeed?])
+  (let [loading? (re-frame/subscribe [::auth-subs/loading-email?])
+        is-completed-send-link (re-frame/subscribe [::auth-subs/send-sign-in-link-to-email-succeed?])
         sent-email (re-frame/subscribe [::auth-subs/get-sent-email])]
     (fn [props]
       [components/email-register {:isCompletedSendLink @is-completed-send-link
+                                  :isLoading @loading?
                                   :sentEmail @sent-email
                                   :handleInitialize handle-initialize
                                   :handleSubmit handle-submit}])))

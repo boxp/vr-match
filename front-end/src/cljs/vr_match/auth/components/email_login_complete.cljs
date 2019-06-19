@@ -1,7 +1,8 @@
 (ns vr-match.auth.components.email-login-complete
   (:require
    [reagent.core :as r]
-   ["material-ui"]))
+   ["material-ui"]
+   [vr-match.auth.components.linear-progress :refer [linear-progress]]))
 
 (defn- handle-change-email
   [draft-email e]
@@ -18,11 +19,10 @@
     (r/create-class
      {:display-name "email-login-complete"
       :reagent-render
-      (fn [{:keys [isLoadingLoginUser
+      (fn [{:keys [isLoading
                    handleSubmitEmail]}]
         [:<>
-         (when isLoadingLoginUser
-          [:> js/MaterialUI.LinearProgress])
+         (when isLoading [linear-progress])
          [:div {:style {:padding 16}}
           [:> js/MaterialUI.Grid {:container true
                                   :spacing 32
@@ -42,7 +42,8 @@
                                          :auto-complete "email"
                                          :on-change #(handle-change-email draft-email %)
                                          :placeholder "sample@example.com"}]]
-           [:> js/MaterialUI.Button {:variant "contained"
+           [:> js/MaterialUI.Button {:disabled (= @draft-email "")
+                                     :variant "contained"
                                      :color "primary"
                                      :on-click #(handleSubmitEmail @draft-email)
                                      :full-width true}
