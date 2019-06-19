@@ -22,3 +22,8 @@
  ::get-sent-email
  (fn [db]
    (-> db :auth :sign-in-link :email)))
+
+(re-frame/reg-sub
+ ::register-user-loading?
+ (fn [db]
+   (-> db :fetch-status :register-user (= :loading))))

@@ -5,9 +5,9 @@
             :url {:type String}}}
   :User
   {:fields {:id {:type Int}
-            :userName {:type String}
+            :name {:type String}
             :introduction {:type String}
-            :image {:type (list String)}
+            :images {:type (list String)}
             :platforms {:type (list :Platforms)}}}
   :NewUser
   {:fields {:user {:type User}

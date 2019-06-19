@@ -1,6 +1,8 @@
 (ns vr-match.auth.effects
   (:require [firebase.app]
             [firebase.auth]
+            [cljs.reader :refer [read-string]]
+            [ajax.core :refer [ajax-request json-request-format json-response-format]]
             [re-frame.core :as re-frame]))
 
 (defonce firebase-instance (atom nil))
@@ -17,6 +19,22 @@
                                           "messagingSenderId" "431230778247"
                                           "appId" "1:431230778247:web:d195b37d884b0cc7"})
           (reset! firebase-instance)))))
+
+(re-frame/reg-fx
+ ::ajax
+ (fn [[params]]
+   (some-> params
+           (assoc :format (json-request-format))
+           (assoc :response-format (json-response-format {:keyworkds? true}))
+           (assoc :handler #(re-frame/dispatch
+                                [(if (first %)
+                                   (:success-handler params)
+                                   (:error-handler params))
+                                 (some-> %
+                                         second
+                                         .-data
+                                         read-string)]))
+           ajax-request)))
 
 (re-frame/reg-fx
  ::send-sign-in-link-to-email

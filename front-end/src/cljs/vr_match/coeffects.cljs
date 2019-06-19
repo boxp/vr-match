@@ -10,7 +10,7 @@
  (fn [coeffects key]
    (assoc coeffects
           :local-store
-          (reader/read-string (.getItem js/localStorage key)))))
+          (.getItem js/localStorage key))))
 
 (re-frame/reg-cofx
  ::route
@@ -21,3 +21,10 @@
            @re-frame-db/app-db
            :history
            pushy/get-token))))
+
+(re-frame/reg-cofx
+ ::session
+ (fn [coeffects]
+   (assoc coeffects
+          :session
+          (.getItem js/localStorage "session"))))

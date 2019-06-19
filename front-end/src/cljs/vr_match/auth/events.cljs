@@ -2,6 +2,7 @@
   (:require
    [re-frame.core :as re-frame]
    [vr-match.effects :as effects]
+   [vr-match.events :as events]
    [vr-match.coeffects :as coeffects]
    [vr-match.auth.effects :as auth-effects]))
 
@@ -43,12 +44,51 @@
               (assoc-in [:fetch-status :sign-in-link] :loading))})))
 
 (re-frame/reg-event-fx
+ ::on-error-register-user
+ (fn [{:keys [db]}
+      [_ payload]]
+   {:db (-> db
+            (assoc-in [:fetch-status :register-user] :loaded))
+    :dispatch [::events/api-error payload]}))
+
+(re-frame/reg-event-fx
+ ::on-success-register-user
+ (fn [{:keys [db]}
+      [_ {:keys [data errors] :as payload}]]
+   {:db (-> db
+            (assoc :me (-> data :registerUser :user))
+            (assoc-in [:fetch-status :register-user] :loaded))
+    :dispatch-n [[::events/set-session (-> data :registerUser :session)]
+                 [::events/push "/wizard"]]}))
+
+(re-frame/reg-event-fx
+ ::register-user
+ (fn [{:keys [db]}
+      [_ id-token]]
+   {:db (assoc-in db [:fetch-status :register-user] :loading)
+    :dispatch [::events/graphql-query
+                {:query
+                 {:venia/operation {:operation/type :mutation
+                                    :operation/name "registerUser"}
+                  :venia/queries [[:registerUser {:idToken id-token}
+                                   [:session
+                                    [:user
+                                     [:id
+                                      :name
+                                      :introduction
+                                      :images
+                                      [:platforms
+                                       [:id
+                                        :name
+                                        :url]]]]]]]}
+                  :success-handler ::on-success-register-user
+                  :error-handler ::events/api-error}]}))
+
+(re-frame/reg-event-fx
  ::success-renew-id-token
  (fn [{:keys [db]}
       [_ id-token]]
-   (println id-token)
-   ;; TODO: ユーザー登録APIをたたく
-   {}))
+   {:dispatch [::register-user id-token]}))
 
 (re-frame/reg-event-fx
  ::success-sign-in-with-email

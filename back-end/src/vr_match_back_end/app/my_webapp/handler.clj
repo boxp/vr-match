@@ -12,7 +12,6 @@
   {:status 200
    :headers {"Content-Type" "application/json"}
    :body (-> {:message "hello!"}
-
              generate-string)})
 
 (defn graphql

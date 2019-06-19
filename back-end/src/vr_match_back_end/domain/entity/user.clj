@@ -10,6 +10,7 @@
 (s/def ::introduction string?)
 (s/def ::session_cookie string?)
 (s/def ::platforms (s/coll-of ::eplatform/platform))
+(s/def ::images (s/coll-of string?))
 (s/def ::created_at ::t-spec/date-time)
 (s/def ::updated_at ::t-spec/date-time)
 
@@ -20,5 +21,6 @@
                    ::introduction
                    ::session_cookie]
           :opt-un [::platforms
+                   ::images
                    ::created_at
                    ::updated_at]))

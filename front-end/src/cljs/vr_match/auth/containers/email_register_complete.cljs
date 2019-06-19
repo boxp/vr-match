@@ -4,6 +4,7 @@
    [vr-match.util :as util]
    [vr-match.events :as events]
    [vr-match.auth.events :as auth-events]
+   [vr-match.auth.subs :as auth-subs]
    [vr-match.auth.components.email-register-complete :as component]))
 
 (defn- handle-initialize
@@ -17,7 +18,9 @@
 
 (defn email-register-complete
   [params]
-  [component/email-register-complete {:handleInitialize handle-initialize
-                                      :handleSubmitEmail handle-submit-email}])
+(let [register-user-loading? (re-frame/subscribe [::auth-subs/register-user-loading?])]
+  [component/email-register-complete {:isLoadingRegisterUser @register-user-loading?
+                                      :handleInitialize handle-initialize
+                                      :handleSubmitEmail handle-submit-email}]))
 
 (util/universal-set-loaded! :email-register-complete)

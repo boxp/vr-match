@@ -57,3 +57,9 @@
                                      :variables {}}
                             :success-handler success-handler
                             :error-handler error-handler}]}))
+
+(re-frame/reg-event-fx
+ ::set-session
+ (fn [_ [_ session]]
+   {::effects/set-localstorage {:key "session"
+                                :item session}}))
