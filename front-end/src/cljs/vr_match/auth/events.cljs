@@ -44,11 +44,45 @@
               (assoc-in [:fetch-status :sign-in-link] :loading))})))
 
 (re-frame/reg-event-fx
+ ::on-error-login-user
+ (fn [{:keys [db]}
+      [_ payload]]
+   {:db (-> db
+            (assoc-in [:fetch-status :login-user] :loaded))
+    :dispatch [::events/api-error payload]}))
+
+(re-frame/reg-event-fx
+ ::on-success-login-user
+ (fn [{:keys [db]}
+      [_ {:keys [data errors] :as payload}]]
+   {:db (-> db
+            (assoc :me (-> data :loginUser :user))
+            (assoc-in [:fetch-status :login-user] :loaded))
+    :dispatch-n [[::events/set-session (-> data :loginUser :session)]
+                 [::events/push "/approach"]]}))
+
+(re-frame/reg-event-fx
  ::login-user
  (fn [{:keys [db]}
       [_ id-token]]
-   ;; TODO: ログインAPIを叩く
-   {}))
+   {:db (assoc-in db [:fetch-status :login-user] :loading)
+    :dispatch [::events/graphql-query
+               {:query
+                {:venia/operation {:operation/type :mutation
+                                   :operation/name "loginUser"}
+                 :venia/queries [[:loginUser {:idToken id-token}
+                                  [:session
+                                   [:user
+                                    [:id
+                                     :name
+                                     :introduction
+                                     :images
+                                     [:platforms
+                                      [:id
+                                       :name
+                                       :url]]]]]]]}
+                :success-handler ::on-success-login-user
+                :error-handler ::on-error-login-user}]}))
 
 (re-frame/reg-event-fx
  ::on-error-register-user

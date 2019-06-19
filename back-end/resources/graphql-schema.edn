@@ -9,7 +9,7 @@
             :introduction {:type String}
             :images {:type (list String)}
             :platforms {:type (list :Platforms)}}}
-  :NewUser
+  :UserWithSession
   {:fields {:user {:type User}
             :session {:type String}}}
   :UserEdge
@@ -37,7 +37,11 @@
                                  :optional true}}
                  :resolve :resolve-approach-list}}
  :mutations
- {:registerUser {:type :NewUser
+ {:registerUser {:type :UserWithSession
                  :description "ユーザー新規登録"
                  :args {:idToken {:type String}}
-                 :resolve :resolve-register-user}}}
+                 :resolve :resolve-register-user}
+  :loginUser {:type :UserWithSession
+              :description "ユーザーログイン"
+              :args {:idToken {:type String}}
+              :resolve :resolve-login-user}}}

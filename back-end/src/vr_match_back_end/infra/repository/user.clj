@@ -63,6 +63,25 @@
                              {:firebase_id firebase_id})
         (assoc :session_cookie session_cookie))))
 
+(s/fdef renew-user-session
+  :args (s/cat :c (s/keys :req-un [::firebase-admin-datasource
+                                   ::mysql-datasource])
+               :params (s/keys :req-un [::id-token]))
+  :ret ::euser/user)
+(defn renew-user-session
+  [{:keys [firebase-admin-datasource
+           mysql-datasource] :as c}
+   {:keys [id-token] :as params}]
+  (let [firebase_id (get-firebase_id
+                     firebase-admin-datasource
+                     id-token)
+        session_cookie (get-session_cookie
+                        firebase-admin-datasource
+                        id-token)]
+    (-> (user-by-firebase_id (:db mysql-datasource)
+                             {:firebase_id firebase_id})
+        (assoc :session_cookie session_cookie))))
+
 (defrecord UserRepositoryComponent [firebase-admin-datasource]
   component/Lifecycle
   (start [this]

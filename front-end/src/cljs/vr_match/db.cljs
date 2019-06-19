@@ -15,5 +15,6 @@
    :drawer {:open? false}
    :fetch-status {:sign-in-link :none
                   :sign-in-with-email :none
-                  :register-user :none}
+                  :register-user :none
+                  :login-user :none}
    :history nil})

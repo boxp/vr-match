@@ -53,6 +53,17 @@
                (assoc :platforms []))
      :session (:session_cookie user)}))
 
+(defn login-user
+  [{:keys [auth-usecase] :as context}
+   {:keys [idToken] :as arguments}
+   value]
+  (let [user (uauth/login auth-usecase idToken)]
+    {:user (-> user
+               user->User
+               ;; TODO: platforms, imagesの取得
+               )
+     :session (:session_cookie user)}))
+
 (defrecord MyWebappResolversComponent [auth-usecase]
   component/Lifecycle
   (start [this]

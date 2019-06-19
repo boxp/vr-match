@@ -15,6 +15,11 @@
    id-token]
   (ruser/create-new-user user-repository {:id-token id-token}))
 
+(defn login
+  [{:keys [user-repository] :as c}
+   id-token]
+  (ruser/renew-user-session user-repository {:id-token id-token}))
+
 (defrecord AuthUsecaseComponent [user-repository]
   component/Lifecycle
   (start [this]
