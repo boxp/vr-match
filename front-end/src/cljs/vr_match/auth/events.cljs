@@ -44,6 +44,13 @@
               (assoc-in [:fetch-status :sign-in-link] :loading))})))
 
 (re-frame/reg-event-fx
+ ::login-user
+ (fn [{:keys [db]}
+      [_ id-token]]
+   ;; TODO: ログインAPIを叩く
+   {}))
+
+(re-frame/reg-event-fx
  ::on-error-register-user
  (fn [{:keys [db]}
       [_ payload]]
@@ -87,15 +94,17 @@
 (re-frame/reg-event-fx
  ::success-renew-id-token
  (fn [{:keys [db]}
-      [_ id-token]]
-   {:dispatch [::register-user id-token]}))
+      [_ is-new id-token]]
+   {:dispatch (if is-new
+                [::register-user id-token]
+                [::login-user id-token])}))
 
 (re-frame/reg-event-fx
  ::success-sign-in-with-email
  (fn [{:keys [db]}
-      [_ email]]
+      [_ email is-new]]
    {::effects/remove-localstorage {:key "emailForSignIn"}
-    ::auth-effects/renew-id-token {:callback-success [::success-renew-id-token]
+    ::auth-effects/renew-id-token {:callback-success [::success-renew-id-token is-new]
                                    :callback-error [:error-sign-in-with-email]}
     :db (-> db
             (assoc-in [:fetch-status :sign-in-with-email] :loaded)

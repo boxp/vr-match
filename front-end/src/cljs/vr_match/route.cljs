@@ -23,6 +23,10 @@
                     :module-name :email-register}
    :email-register-complete {:container #(resolve 'vr-match.auth.containers.email-register-complete/email-register-complete)
                              :module-name :email-register-complete}
+   :email-login {:container #(resolve 'vr-match.auth.containers.email-login/email-login)
+                 :module-name :email-login}
+   :email-login-complete {:container #(resolve 'vr-match.auth.containers.email-login-complete/email-login-complete)
+                          :module-name :email-login-complete}
    :wizard {:container #(resolve 'vr-match.wizard.container/wizard)
             :module-name :wizard}
    :favorite {:container #(resolve 'vr-match.favorite.container/favorite)
@@ -53,6 +57,12 @@
 
 (defroute email-register-complete-path "/email-register-complete" []
   (lazy-push :email-register-complete {}))
+
+(defroute email-login-path "/email-login" []
+  (lazy-push :email-login {}))
+
+(defroute email-login-complete-path "/email-login-complete" []
+  (lazy-push :email-login-complete {}))
 
 (defroute approach-path "/approach" []
   (lazy-push :approach {}))

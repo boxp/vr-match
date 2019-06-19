@@ -12,7 +12,7 @@
   (re-frame/dispatch [::events/push "/approach"]))
 
 (defn- handle-click-login-with-email []
-  (re-frame/dispatch [::events/push "/approach"]))
+  (re-frame/dispatch [::events/push "/email-login"]))
 
 (defn- handle-click-register []
   (re-frame/dispatch [::events/push "/register"]))

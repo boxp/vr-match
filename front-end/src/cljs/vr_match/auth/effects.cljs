@@ -61,7 +61,7 @@
            (signInWithEmailLink email location)
            (then
             (fn [result]
-              (re-frame/dispatch (conj callback-success email))))
+              (re-frame/dispatch (conj callback-success email (.. result -additionalUserInfo -isNewUser)))))
            (catch
             (fn [error]
               (re-frame/dispatch (conj callback-error error)))))))))
