@@ -37,9 +37,9 @@
                            [:cursor
                             [:node
                              [:id
-                              :userName
+                              :name
                               :introduction
-                              :image
+                              :images
                               [:platforms [:id :name]]]]]]]]]}
                 :success-handler ::on-success-fetch-approach-list
                 :error-handler ::events/api-error}]}))
@@ -56,9 +56,9 @@
                                [:cursor
                                 [:node
                                  [:id
-                                  :userName
+                                  :name
                                   :introduction
-                                  :image
+                                  :images
                                   [:platForms [:id :name]]]]]]]]]
                     :success-handler ::on-success-fetch-approach-list
                     :error-handler ::events/api-error}]}

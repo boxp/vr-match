@@ -14,26 +14,26 @@
       [{:node
         {:id 1
          :title "サンプル画像"
-         :userName "一箱"
+         :name "一箱"
          :introduction "バーチャル清楚系女子高校生Webアプリケーションエンジニアおじさんです。こっそりプログラミングしてます。"
-         :platForms [{:id 1 :name "VRChat"} {:id 2 :name "VRoidHub"} {:id 3 :name "VirtualCast"}]
-         :image ["https://storage.googleapis.com/boxp-tmp/profile_sample.png"]}
+         :platforms [{:id 1 :name "VRChat"} {:id 2 :name "VRoidHub"} {:id 3 :name "VirtualCast"}]
+         :images ["https://storage.googleapis.com/boxp-tmp/profile_sample.png"]}
         :cursor (-> 1 str .getBytes b64/encode)}
        {:node
         {:id 2
          :title "サンプル画像"
-         :userName "ヒマリ"
+         :name "ヒマリ"
          :introduction "一箱さんちのヒマリです！"
-         :platForms [{:id 1 :name "VRChat"} {:id 3 :name "VirtualCast"}]
-         :image ["https://storage.googleapis.com/boxp-tmp/profile_sample_2.jpg"]}
+         :platforms [{:id 1 :name "VRChat"} {:id 3 :name "VirtualCast"}]
+         :images ["https://storage.googleapis.com/boxp-tmp/profile_sample_2.jpg"]}
         :cursor (-> 2 str .getBytes b64/encode)}
        {:node
         {:id 3
          :title "サンプル画像"
-         :userName "アリシア・ソリッド"
+         :name "アリシア・ソリッド"
          :introduction "ニコニ立体で公式キャラクターやってます。よろしくお願いします！"
-         :platForms [{:id 3 :name "VirtualCast"}]
-         :image ["https://storage.googleapis.com/boxp-tmp/profile_sample_3.jpg"]}
+         :platforms [{:id 3 :name "VirtualCast"}]
+         :images ["https://storage.googleapis.com/boxp-tmp/profile_sample_3.jpg"]}
         :cursor (-> 3 str .getBytes b64/encode)}]
       cycle
       (take first))

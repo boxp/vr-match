@@ -9,10 +9,10 @@
     :as props}]
   (let [{:keys [id
                 title
-                userName
+                name
                 introduction
                 platforms
-                image]}
+                images]}
         (js->clj item :keywordize-keys true)]
      [mui/card {:style {"width" "86vw"
                         "height" "64vh"
@@ -30,7 +30,7 @@
                                 "flexGrow" 2}
                         :component "div"
                         :alt title
-                        :image (first image)
+                        :image (first images)
                         :title title}]
        [mui/card-content {:style {"width" "100%"
                                   "boxSizing" "border-box"
@@ -46,7 +46,7 @@
         [mui/typo-graphy {:gutterBottom true
                           :variant "subheading"
                           :component "h2"}
-         userName]
+         name]
         [mui/typo-graphy {:noWrap true
                           :style {:width "72vw"}}
          introduction]]]]))
