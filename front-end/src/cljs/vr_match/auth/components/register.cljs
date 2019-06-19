@@ -37,7 +37,7 @@
               :direction "column"
               :justify "center"
               :alignItems "center"}
-    [mui/button {:disabled "true"
+    [mui/button {:disabled true
                  :variant "contained"
                  :color "primary"
                  :on-click handleClickTwitter
