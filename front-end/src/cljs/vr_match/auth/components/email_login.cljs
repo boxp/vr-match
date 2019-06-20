@@ -28,7 +28,7 @@
                                   :component "h1"
                                   :gutterBottom true
                                   :style {:text-align "left"}}
-     "登録確認メールを送信しました"]
+     "ログイン確認メールを送信しました"]
     [:> js/MaterialUI.Grid {:container true
                             :spacing 32
                             :direction "column"
