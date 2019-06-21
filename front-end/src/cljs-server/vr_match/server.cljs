@@ -59,10 +59,10 @@
     [:meta {:charset "utf-8"}]
     [:meta {:name "viewport"
             :content "width=device-width,initial-scale=1,user-scalable=no"}]
+    [:link {:rel "preload" :href "https://fonts.googleapis.com/icon?family=Material+Icons" :as "style"}]
+    [:link {:rel "preload" :href "/static/worker/js/compiled/worker.js" :as "script"}]
     (when-not dev?
       [:link {:rel "manifest" :href "/manifest.json"}])
-    [:link {:rel "stylesheet"
-            :href "https://fonts.googleapis.com/icon?family=Material+Icons"}]
     [:style "
       body {
         font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, YuGothic, ヒラギノ角ゴ ProN W3, Hiragino Kaku Gothic ProN, Arial, メイリオ, Meiryo, sans-serif;
@@ -121,13 +121,14 @@
    [:body
     [:div#app
      {:dangerouslySetInnerHTML
-      {:__html app-html}}]
-    ]
+      {:__html app-html}}] ]
    [:div
     {:dangerouslySetInnerHTML
      {:__html  (str "<script>window.preload = '" (-> @db/app-db pr-str) "'</script>")}}]
    [:script {:src "/static/js/compiled/cljs_base.js"}]
    [:script {:src "/static/js/compiled/app.js"}]
+   [:link {:rel "stylesheet"
+           :href "https://fonts.googleapis.com/icon?family=Material+Icons"}]
    (when-not dev?
      [:div
       {:dangerouslySetInnerHTML
