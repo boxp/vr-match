@@ -59,8 +59,6 @@
     [:meta {:charset "utf-8"}]
     [:meta {:name "viewport"
             :content "width=device-width,initial-scale=1,user-scalable=no"}]
-    [:link {:rel "preload" :href "https://fonts.googleapis.com/icon?family=Material+Icons" :as "style"}]
-    [:link {:rel "preload" :href "/static/worker/js/compiled/worker.js" :as "script"}]
     (when-not dev?
       [:link {:rel "manifest" :href "/manifest.json"}])
     [:style "
