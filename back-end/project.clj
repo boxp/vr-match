@@ -20,7 +20,7 @@
                  [com.layerware/hugsql "0.4.9"]
                  [mysql/mysql-connector-java "8.0.16"]
                  [com.google.firebase/firebase-admin "6.8.1"]
-                 [com.google.auth/google-auth-library-oauth2-http "0.16.1"]]
+                 [com.google.auth/google-auth-library-oauth2-http "0.16.2"]]
   :profiles
   {:dev {:source-paths ["src" "dev"]}
    :uberjar {:main vr-match-back-end.app.my-webapp.system}})
