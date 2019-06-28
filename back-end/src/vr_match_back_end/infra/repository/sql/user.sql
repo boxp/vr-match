@@ -12,3 +12,16 @@ where firebase_id = :firebase_id
 -- :doc Userを追加
 insert into user (firebase_id, name, introduction)
 values (:firebase_id, :name, :introduction)
+
+-- :name update-user-by-id :! :n
+/* :require [clojure.string :as string] */
+update user
+set
+id = :id
+/*~
+(->> (-> params (dissoc :id))
+     (map (fn [[key value]]
+              (str "," key " = " value)))
+     (apply str))
+~*/
+where id = :id

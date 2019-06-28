@@ -82,6 +82,18 @@
                              {:firebase_id firebase_id})
         (assoc :session_cookie session_cookie))))
 
+(s/fdef update-user
+  :args (s/cat :c (s/keys :req-un [::mysql-datasource])
+               :params (s/keys :req-un [::euser/id]
+                               :opt-un [::euser/name
+                                        ::euser/introduction]))
+  :ret ::euser/user)
+(defn update-user
+  [{:keys [mysql-datasource]}
+   params]
+  (update-user-by-id (:db mysql-datasource) params)
+  (user-by-id (:db mysql-datasource) {:id (:id params)}))
+
 (defrecord UserRepositoryComponent [firebase-admin-datasource]
   component/Lifecycle
   (start [this]
