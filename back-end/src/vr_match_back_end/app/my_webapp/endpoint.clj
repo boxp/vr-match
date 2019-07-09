@@ -42,11 +42,9 @@
 (defrecord MyWebappEndpointComponent [port server client-origin my-webapp-handler]
   component/Lifecycle
   (start [this]
-    (println ";; Starting MyWebappEndpointComponent")
     (-> this
         (assoc :server (server/run-jetty (app this) {:port port :join? false}))))
   (stop [this]
-    (println ";; Stopping MyWebappEndpointComponent")
     (.stop (:server this))
     (-> this
         (dissoc :server))))

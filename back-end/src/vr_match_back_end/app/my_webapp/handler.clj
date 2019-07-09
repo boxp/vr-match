@@ -41,11 +41,9 @@
 (defrecord MyWebappHandlerComponent [graphql-schema my-webapp-resolvers]
   component/Lifecycle
   (start [this]
-    (println ";; Starting MyWebappHandlerComponent")
     (-> this
         (assoc :graphql-schema (load-schema))))
   (stop [this]
-    (println ";; Stopping MyWebappHandlerComponent")
     (-> this
         (dissoc :graphql-schema))))
 

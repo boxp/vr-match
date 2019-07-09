@@ -26,13 +26,11 @@
 (defrecord FirebaseAdminDatasourceComponent [database-url credential app auth]
   component/Lifecycle
   (start [this]
-    (println ";; Starting FirebaseAdminDatasourceComponent")
     (let [application (init-app {:database-url database-url
                                  :credential-str credential})]
       (-> this
           (assoc :app application)
           (assoc :auth (FirebaseAuth/getInstance application)))))
   (stop [this]
-    (println ";; Stopping FirebaseAdminDatasourceComponent")
     (-> this
         (dissoc :app))))

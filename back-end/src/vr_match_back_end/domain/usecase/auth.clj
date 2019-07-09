@@ -23,8 +23,6 @@
 (defrecord AuthUsecaseComponent [user-repository]
   component/Lifecycle
   (start [this]
-    (println ";; Starting AuthUsecaseComponent")
     this)
   (stop [this]
-    (println ";; Stopping AuthUsecaseComponent")
     this))

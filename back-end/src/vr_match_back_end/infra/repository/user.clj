@@ -97,8 +97,6 @@
 (defrecord UserRepositoryComponent [firebase-admin-datasource]
   component/Lifecycle
   (start [this]
-    (println ";; Starting UserRepositoryComponent")
     this)
   (stop [this]
-    (println ";; Stopping UserRepositoryComponent")
     this))

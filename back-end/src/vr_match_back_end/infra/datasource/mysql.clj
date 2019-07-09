@@ -10,12 +10,10 @@
 (defrecord MysqlDatasourceComponent [dbname user password db]
   component/Lifecycle
   (start [this]
-    (println ";; Starting MysqlDatasourceComponent")
     (-> this
         (assoc :db (init-db {:dbname dbname
                              :user user
                              :password password}))))
   (stop [this]
-    (println ";; Stopping MysqlDatasourceComponent")
     (-> this
         (dissoc :db))))

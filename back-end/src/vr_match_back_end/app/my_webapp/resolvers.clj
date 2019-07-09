@@ -67,8 +67,6 @@
 (defrecord MyWebappResolversComponent [auth-usecase]
   component/Lifecycle
   (start [this]
-    (println ";; Starting MyWebappResolversComponent")
     (-> this))
   (stop [this]
-    (println ";; Stopping MyWebappResolversComponent")
     (-> this)))
