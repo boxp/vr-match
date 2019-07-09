@@ -7,8 +7,11 @@
    [com.stuartsierra.component :as component]))
 
 (s/def ::service #(instance? Storage %))
+(s/def ::backet-name string?)
 (s/def ::cloud-storage-datasource
-  (s/keys :opt-un [::service]))
+  (s/keys
+   :req-un [::backet-name]
+   :opt-un [::service]))
 
 (s/fdef get-default-service
   :args (s/cat)
@@ -17,7 +20,7 @@
   (.. (StorageOptions/getDefaultInstance)
       getService))
 
-(defrecord CloudStorageDatasource [service]
+(defrecord CloudStorageDatasource [backet-name service]
   component/Lifecycle
   (start [this]
     (-> this
