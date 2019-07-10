@@ -19,7 +19,7 @@
            vr-match-mysql-user
            vr-match-mysql-password
            vr-match-client-origin
-           vr-match-cloud-storage-backet-name] :as conf}]
+           vr-match-cloud-storage-bucket-name] :as conf}]
   (component/system-map
     :firebase-admin-datasource (map->FirebaseAdminDatasourceComponent
                                 {:database-url vr-match-back-end-firebase-database-url
@@ -27,7 +27,7 @@
     :mysql-datasource (map->MysqlDatasourceComponent {:dbname vr-match-mysql-dbname
                                                       :user vr-match-mysql-user
                                                       :password vr-match-mysql-password})
-    :cloud-storage-datasource (map->CloudStorageDatasource {:backet-name vr-match-cloud-storage-backet-name})
+    :cloud-storage-datasource (map->CloudStorageDatasource {:bucket-name vr-match-cloud-storage-bucket-name})
     :user-repository (component/using
                       (map->UserRepositoryComponent {})
                       [:firebase-admin-datasource
@@ -55,7 +55,7 @@
    :vr-match-mysql-dbname (or (env :vr-match-mysql-dbname) "vr_match")
    :vr-match-mysql-user (or (env :vr-match-mysql-user) "root")
    :vr-match-mysql-password (env :vr-match-mysql-password)
-   :vr-match-cloud-storage-backet-name (or (env :vr-match-cloud-storage-backet-name) "vr-match-staging")})
+   :vr-match-cloud-storage-bucket-name (or (env :vr-match-cloud-storage-bucket-name) "vr-match-staging")})
 
 (defn -main []
   (component/start
