@@ -1,6 +1,7 @@
 (ns vr-match-back-end.app.my-webapp.system
   (:require [com.stuartsierra.component :as component]
             [environ.core :refer [env]]
+            [vr-match-back-end.infra.datasource.cloud-storage :refer [map->CloudStorageDatasource]]
             [vr-match-back-end.infra.datasource.firebase-admin :refer [map->FirebaseAdminDatasourceComponent]]
             [vr-match-back-end.infra.datasource.mysql :refer [map->MysqlDatasourceComponent]]
             [vr-match-back-end.infra.repository.user :refer [map->UserRepositoryComponent]]
@@ -17,7 +18,8 @@
            vr-match-mysql-dbname
            vr-match-mysql-user
            vr-match-mysql-password
-           vr-match-client-origin] :as conf}]
+           vr-match-client-origin
+           vr-match-cloud-storage-backet-name] :as conf}]
   (component/system-map
     :firebase-admin-datasource (map->FirebaseAdminDatasourceComponent
                                 {:database-url vr-match-back-end-firebase-database-url
@@ -25,10 +27,12 @@
     :mysql-datasource (map->MysqlDatasourceComponent {:dbname vr-match-mysql-dbname
                                                       :user vr-match-mysql-user
                                                       :password vr-match-mysql-password})
+    :cloud-storage-datasource (map->CloudStorageDatasource {:backet-name vr-match-cloud-storage-backet-name})
     :user-repository (component/using
                       (map->UserRepositoryComponent {})
                       [:firebase-admin-datasource
-                       :mysql-datasource])
+                       :mysql-datasource
+                       :cloud-storage-datasource])
     :auth-usecase (component/using
                    (map->AuthUsecaseComponent {})
                    [:user-repository])
@@ -50,7 +54,8 @@
    :vr-match-firebase-service-account-key (env :vr-match-firebase-service-account-key)
    :vr-match-mysql-dbname (or (env :vr-match-mysql-dbname) "vr_match")
    :vr-match-mysql-user (or (env :vr-match-mysql-user) "root")
-   :vr-match-mysql-password (env :vr-match-mysql-password)})
+   :vr-match-mysql-password (env :vr-match-mysql-password)
+   :vr-match-cloud-storage-backet-name (or (env :vr-match-cloud-storage-backet-name) "vr-match-staging")})
 
 (defn -main []
   (component/start
