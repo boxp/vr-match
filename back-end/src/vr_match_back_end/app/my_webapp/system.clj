@@ -5,6 +5,7 @@
             [vr-match-back-end.infra.datasource.firebase-admin :refer [map->FirebaseAdminDatasourceComponent]]
             [vr-match-back-end.infra.datasource.mysql :refer [map->MysqlDatasourceComponent]]
             [vr-match-back-end.infra.repository.user :refer [map->UserRepositoryComponent]]
+            [vr-match-back-end.infra.repository.image :refer [map->ImageRepository]]
             [vr-match-back-end.domain.usecase.auth :refer [map->AuthUsecaseComponent]]
             [vr-match-back-end.app.my-webapp.resolvers :refer [map->MyWebappResolversComponent]]
             [vr-match-back-end.app.my-webapp.handler :refer [my-webapp-handler-component]]
@@ -33,6 +34,9 @@
                       [:firebase-admin-datasource
                        :mysql-datasource
                        :cloud-storage-datasource])
+    :image-repository (component/using
+                       (map->ImageRepository {})
+                       [:cloud-storage-datasource])
     :auth-usecase (component/using
                    (map->AuthUsecaseComponent {})
                    [:user-repository])
