@@ -91,9 +91,8 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_token` (
 -- Table `vr_match`.`image`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vr_match`.`image` (
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `url` VARCHAR(255) NOT NULL,
-  `image_type` INT NOT NULL,
   `placeholder_color` VARCHAR(45) NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -107,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`image` (
 CREATE TABLE IF NOT EXISTS `vr_match`.`user_image` (
   `user_id` BIGINT(20) NOT NULL,
   `image_id` BIGINT(20) NOT NULL,
+  `image_type` INT NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`, `image_id`),
