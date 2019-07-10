@@ -55,12 +55,12 @@
                      id-token)
         session_cookie (get-session_cookie firebase-admin-datasource
                                            id-token)
-        id (insert-user (:db mysql-datasource)
-                        {:firebase_id firebase_id
-                         :name ""
-                         :introduction ""})]
-    (-> (user-by-firebase_id (:db mysql-datasource)
-                             {:firebase_id firebase_id})
+        [_ id] (insert-user (:db mysql-datasource)
+                            {:firebase_id firebase_id
+                             :name ""
+                             :introduction ""})]
+    (-> (user-by-id (:db mysql-datasource)
+                    {:id id})
         (assoc :session_cookie session_cookie))))
 
 (s/fdef renew-user-session

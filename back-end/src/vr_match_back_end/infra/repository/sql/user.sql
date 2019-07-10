@@ -8,7 +8,7 @@ where id = :id
 select * from user
 where firebase_id = :firebase_id
 
--- :name insert-user :! :n
+-- :name insert-user :i! :n
 -- :doc Userを追加
 insert into user (firebase_id, name, introduction)
 values (:firebase_id, :name, :introduction)
