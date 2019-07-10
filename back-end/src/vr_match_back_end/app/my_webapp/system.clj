@@ -36,7 +36,8 @@
                        :cloud-storage-datasource])
     :image-repository (component/using
                        (map->ImageRepository {})
-                       [:cloud-storage-datasource])
+                       [:mysql-datasource
+                        :cloud-storage-datasource])
     :auth-usecase (component/using
                    (map->AuthUsecaseComponent {})
                    [:user-repository])

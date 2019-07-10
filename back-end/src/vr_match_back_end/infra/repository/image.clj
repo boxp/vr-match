@@ -5,16 +5,39 @@
   (:require
    [clojure.spec.alpha :as s]
    [clojure.data.codec.base64 :as b64]
+   [clojure.java.jdbc :as jdbc]
+   [clojure.set :as set]
+   [clj-time.spec :as t-spec]
    [com.stuartsierra.component :as component]
+   [hugsql.core :refer [def-db-fns]]
    [digest]
    [pantomime.mime :refer [mime-type-of]]
    [vr-match-back-end.infra.datasource.cloud-storage :as cloud-storage]
    [vr-match-back-end.domain.entity.image :as eimage]))
 
+(s/def ::image-repository (s/keys :req-un [::cloud-storage/cloud-storage-datasource]))
+
 (def image-mime-type-white-list #{"image/jpeg" "image/png" "image/gif"})
 
+(def-db-fns "vr_match_back_end/infra/repository/sql/image.sql")
+
+(s/def :image-record/id number?)
+(s/def :image-record/url string?)
+(s/def :image-record/placeholder_color string?)
+(s/def :image-record/created_at ::t-spec/date-time)
+(s/def :image-record/updated_at ::t-spec/date-time)
+(s/def ::image-record
+  (s/keys :req-un [:image-record/id
+                   :image-record/url
+                   :image-record/placeholder_color
+                   :image-record/created_at
+                   :image-record/updated_at]))
+(s/fdef record->image
+  :args (s/cat :record ::image-record)
+  :ret ::eimage/image)
+
 (s/fdef upload-image
-  :args (s/cat :c (s/keys :req-un [::cloud-storage/cloud-storage-datasource])
+  :args (s/cat :c ::image-repository
                :base64-string string?)
   :ret ::eimage/url)
 (defn- upload-image
@@ -37,6 +60,21 @@
           .getMediaLink)
       (throw (ex-info "サポートされていない画像のファイル形式です"
                       {:image-type mime-type})))))
+
+(s/fdef add-image
+  :args (s/cat :c ::image-repository
+               :base64-string string?)
+  :ret (s/keys :req-un [::eimage/id
+                        ::eimage/url]))
+(defn add-image
+  [{:keys [mysql-datasource
+           cloud-storage-datasource] :as c}
+   base64-string]
+  (let [image-url (upload-image c base64-string)
+        [_ image-id] (insert-image (:db mysql-datasource)
+                                   {:url image-url})]
+    {:id image-id
+     :url image-url}))
 
 (defrecord ImageRepository [cloud-storage-datasource]
   component/Lifecycle
