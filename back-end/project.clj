@@ -19,9 +19,9 @@
                  [vincit/venia "0.2.5"]
                  [com.layerware/hugsql "0.4.9"]
                  [mysql/mysql-connector-java "8.0.16"]
-                 [com.google.firebase/firebase-admin "6.8.1"]
+                 [com.google.firebase/firebase-admin "6.8.1" :exclusions [io.grpc/grpc-core]]
                  [com.google.auth/google-auth-library-oauth2-http "0.16.2"]
-                 [com.google.cloud/google-cloud-storage "1.81.0"]]
+                 [com.google.cloud/google-cloud-storage "1.40.0"]]
   :profiles
   {:dev {:source-paths ["src" "dev"]}
    :uberjar {:main vr-match-back-end.app.my-webapp.system}})
