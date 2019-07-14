@@ -25,18 +25,6 @@
 ;;                    :font-weight "bold"}}
 ;;     title]])
 
-(defn- nav-repository []
-  [:a {:style {:text-decoration "none"
-               :display "flex"
-               :justify-content "center"
-               :align-items "center"
-               :height "100%"
-               :width "100%"}
-       :href "/repository"}
-   [:span {:style {:color "#222831"
-                   :font-size "28px"}}
-    [:i.fas.fa-book]]])
-
 (defn- loading []
   [:span "loading..."])
 
@@ -45,7 +33,7 @@
   [:div {:style {:position "relative"
                  :height "100%"}}
    [header {:title title}]
-   [:div {:style {:padding-top "56px"
+   [:div {:style {:margin-top "56px"
                   :box-sizing "border-box"
                   :height "100%"
                   :width "100%"}}

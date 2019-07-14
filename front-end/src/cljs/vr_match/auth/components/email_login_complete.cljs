@@ -2,7 +2,7 @@
   (:require
    [reagent.core :as r]
    ["material-ui"]
-   [vr-match.auth.components.linear-progress :refer [linear-progress]]))
+   [vr-match.lib.components.linear-progress :refer [linear-progress]]))
 
 (defn- handle-change-email
   [draft-email e]

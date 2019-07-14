@@ -3,6 +3,7 @@
    [reagent.core :as r]
    [vr-match.lib.component :refer [navigation-bar-layout]]
    [vr-match.lib.components.material-ui :as mui]
+   [vr-match.lib.components.linear-progress :refer [linear-progress]]
    [vr-match.mypage.components.edit-user-name-dialog :refer [edit-user-name-dialog]]
    [vr-match.mypage.components.edit-introduction-dialog :refer [edit-introduction-dialog]]
    [vr-match.mypage.components.edit-platform-dialog :refer [edit-platform-dialog]]))
@@ -49,10 +50,13 @@
         handle-cancel-platform #(reset! editing-platform? false)]
     (fn [{:keys [me
                  platformOptions
+                 isLoading
                  handleSubmitUserName
                  handleSubmitMainImage]}]
       [navigation-bar-layout {:title "プロフィールを編集"}
        [:div {:style {:position "relative"}}
+        (when isLoading
+            [linear-progress])
         [mui/button-base {:on-click #(handle-click-reset-image image-ref)
                           :style {:width "100vw"
                                   :height "100vw"}}

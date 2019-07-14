@@ -5,6 +5,7 @@
    [re-frame.core :as re-frame]
    [vr-match.util :as util]
    [vr-match.mypage.events :as events]
+   [vr-match.mypage.subs :as subs]
    [vr-match.mypage.component :as component]))
 
 (defn handle-submit-main-image
@@ -31,8 +32,11 @@
                              {:id 3 :name "VirtualCast" :exampleUserId "6265398"}]}))
 
 (defn mypage
-  [params]
-  [component/mypage (merge @mypage-state
-                           {:handleSubmitMainImage handle-submit-main-image})])
+  [_]
+  (let [isLoading (re-frame/subscribe [::subs/loading?])]
+    (fn [props]
+      [component/mypage (merge @mypage-state
+                               {:isLoading @isLoading
+                                :handleSubmitMainImage handle-submit-main-image})])))
 
 (util/universal-set-loaded! :mypage)
