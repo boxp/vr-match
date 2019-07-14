@@ -77,10 +77,14 @@
                      id-token)
         session_cookie (get-session_cookie
                         firebase-admin-datasource
-                        id-token)]
-    (-> (user-by-firebase_id (:db mysql-datasource)
-                             {:firebase_id firebase_id})
-        (assoc :session_cookie session_cookie))))
+                        id-token)
+        user (user-by-firebase_id (:db mysql-datasource)
+                                  {:firebase_id firebase_id})]
+    (if (seq user)
+      (assoc user :session_cookie session_cookie)
+      (throw (ex-info "未登録のユーザーです"
+                      {:type :unregisterd-user
+                       :firebase_id firebase_id})))))
 
 (s/fdef update-user
   :args (s/cat :c (s/keys :req-un [::mysql-datasource])

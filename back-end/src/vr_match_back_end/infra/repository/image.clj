@@ -59,7 +59,8 @@
            (make-array Storage$BlobTargetOption 0))
           .getMediaLink)
       (throw (ex-info "サポートされていない画像のファイル形式です"
-                      {:image-type mime-type})))))
+                      {:type :unsupported-image-type
+                       :image-type mime-type})))))
 
 (s/fdef add-image
   :args (s/cat :c ::image-repository
