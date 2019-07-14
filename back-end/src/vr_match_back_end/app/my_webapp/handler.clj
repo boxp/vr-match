@@ -16,21 +16,21 @@
 
 (defn graphql
   [{:keys [graphql-schema my-webapp-resolvers]} req]
-  (let [query (-> req
-                  :body
-                  slurp
-                  (parse-string true)
-                  :query)
-        result (execute graphql-schema
-                        query
-                        nil
-                        my-webapp-resolvers)]
-    {:status (if (-> result :errors seq)
-               400
-               200)
-     :headers {}
-     :body (-> result
-               generate-string)}))
+  (try
+    (let [session (some-> req :headers (get "session"))
+          query (-> req :body slurp (parse-string true) :query)
+          result (execute graphql-schema
+                          query
+                          nil
+                          (if (seq session)
+                            (merge my-webapp-resolvers {:session session})
+                            my-webapp-resolvers))]
+      {:status (if (-> result :errors seq)
+                 400
+                 200)
+       :headers {}
+       :body (-> result
+                 generate-string)})))
 
 (defn- load-schema []
   (-> "resources/graphql-schema.edn"

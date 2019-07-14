@@ -98,6 +98,25 @@
   (update-user-by-id (:db mysql-datasource) params)
   (user-by-id (:db mysql-datasource) {:id (:id params)}))
 
+(s/fdef get-user-id-by-session
+  :args (s/cat :c (s/keys :req-un [::firebase-admin-datasource])
+               :session ::euser/session_cookie)
+  :ret ::euser/id)
+(defn get-user-id-by-session
+  [{:keys [firebase-admin-datasource
+           mysql-datasource]}
+   session]
+  (try (user-by-firebase_id
+        (:db mysql-datasource)
+        {:firebase_id
+         (-> firebase-admin-datasource
+             :auth
+             (.verifySessionCookie session true)
+             .getUid)})
+       (catch Exception e
+         (throw (ex-info "無効なセッションです"
+                         {:type :invalid-session})))))
+
 (defrecord UserRepositoryComponent [firebase-admin-datasource]
   component/Lifecycle
   (start [this]

@@ -7,6 +7,7 @@
             [vr-match-back-end.infra.repository.user :refer [map->UserRepositoryComponent]]
             [vr-match-back-end.infra.repository.image :refer [map->ImageRepository]]
             [vr-match-back-end.domain.usecase.auth :refer [map->AuthUsecaseComponent]]
+            [vr-match-back-end.domain.usecase.image :refer [map->ImageUsecase]]
             [vr-match-back-end.app.my-webapp.resolvers :refer [map->MyWebappResolversComponent]]
             [vr-match-back-end.app.my-webapp.handler :refer [my-webapp-handler-component]]
             [vr-match-back-end.app.my-webapp.endpoint :refer [my-webapp-endpoint-component]])
@@ -41,9 +42,14 @@
     :auth-usecase (component/using
                    (map->AuthUsecaseComponent {})
                    [:user-repository])
+    :image-usecase (component/using
+                    (map->ImageUsecase {})
+                    [:user-repository
+                     :image-repository])
     :my-webapp-resolvers (component/using
                           (map->MyWebappResolversComponent {})
-                          [:auth-usecase])
+                          [:auth-usecase
+                           :image-usecase])
     :my-webapp-handler (component/using
                          (my-webapp-handler-component)
                          [:my-webapp-resolvers])

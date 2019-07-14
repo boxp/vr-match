@@ -1,7 +1,19 @@
 (ns vr-match.mypage.container
-  (:require [reagent.core :as r]
-            [vr-match.util :as util]
-            [vr-match.mypage.component :as component]))
+  (:require
+   [clojure.string :as string]
+   [reagent.core :as r]
+   [re-frame.core :as re-frame]
+   [vr-match.util :as util]
+   [vr-match.mypage.events :as events]
+   [vr-match.mypage.component :as component]))
+
+(defn handle-submit-main-image
+  [main-image-data-url]
+  (re-frame/dispatch
+   [::events/upload-image
+    {:base64-string (->> (string/split main-image-data-url
+                                       #",")
+                         last)}]))
 
 (def mypage-state
   (r/atom {:me
@@ -20,6 +32,7 @@
 
 (defn mypage
   [params]
-  [component/mypage @mypage-state])
+  [component/mypage (merge @mypage-state
+                           {:handleSubmitMainImage handle-submit-main-image})])
 
 (util/universal-set-loaded! :mypage)

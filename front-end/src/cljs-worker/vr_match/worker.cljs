@@ -20,12 +20,12 @@
 (defmethod handle-response true
   [payload res]
   (response {:handler (-> payload :success-handler)
-             :response res}))
+             :response (-> res second)}))
 
 (defmethod handle-response false
   [payload res]
   (response {:handler (-> payload :error-handler)
-             :response res}))
+             :response (-> res second :response)}))
 
 (defn on-message
   [e]

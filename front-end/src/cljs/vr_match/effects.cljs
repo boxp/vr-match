@@ -26,7 +26,7 @@
   [e]
   (when-let [payload (some-> e .-data read-string)]
     (re-frame/dispatch [(:handler payload)
-                        (-> payload :response second)])))
+                        (-> payload :response)])))
 
 (re-frame/reg-fx
  ::initialize-worker

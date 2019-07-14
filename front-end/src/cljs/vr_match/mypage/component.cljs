@@ -8,7 +8,7 @@
    [vr-match.mypage.components.edit-platform-dialog :refer [edit-platform-dialog]]))
 
 (defn- handle-change-image
-  [draft-image e]
+  [handle-submit-main-image e]
   (let [file (some-> e
                      .-target
                      .-files
@@ -19,7 +19,7 @@
             (some->> event
                      .-target
                      .-result
-                     (reset! draft-image))))
+                     handle-submit-main-image)))
     (when file
       (.readAsDataURL reader file))))
 
@@ -37,8 +37,7 @@
 
 (defn mypage
   [props]
-  (let [draft-image (r/atom (-> props :me :image first))
-        image-ref (r/atom nil)
+  (let [image-ref (r/atom nil)
         editing-user-name? (r/atom false)
         editing-introduction? (r/atom false)
         editing-platform? (r/atom false)
@@ -50,13 +49,14 @@
         handle-cancel-platform #(reset! editing-platform? false)]
     (fn [{:keys [me
                  platformOptions
-                 handleSubmitUserName]}]
+                 handleSubmitUserName
+                 handleSubmitMainImage]}]
       [navigation-bar-layout {:title "プロフィールを編集"}
        [:div {:style {:position "relative"}}
         [mui/button-base {:on-click #(handle-click-reset-image image-ref)
                           :style {:width "100vw"
                                   :height "100vw"}}
-         [:img {:src @draft-image
+         [:img {:src (some-> props :me :image first)
                 :style {:width "100vw"
                         :height "100vw"}}]]
         [mui/icon-button {:on-click #(handle-click-reset-image image-ref)
@@ -103,7 +103,7 @@
            [mui/icon-button
             [mui/icon "navigate_next"]]]]]
         [:input {:type "file"
-                 :on-change #(handle-change-image draft-image %)
+                 :on-change #(handle-change-image handleSubmitMainImage %)
                  :ref (fn [com] (reset! image-ref com))
                  :style {:display "none"}}]
         [edit-user-name-dialog {:isOpen @editing-user-name?

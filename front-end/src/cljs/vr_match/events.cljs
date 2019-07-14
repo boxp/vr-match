@@ -50,8 +50,13 @@
 
 (re-frame/reg-event-fx
  ::graphql-query
- (fn [{:keys [db]} [_ {:keys [query success-handler error-handler]}]]
+ [(re-frame/inject-cofx ::coeffects/local-store "session")]
+ (fn [{:keys [db local-store]}
+      [_ {:keys [query success-handler error-handler]}]]
    {::effects/ajax-worker [{:uri (str (-> db :api-endpoint) "/graphql")
+                            :headers (if (seq local-store)
+                                       {"Session" local-store}
+                                       {})
                             :method :post
                             :params {:query (v/graphql-query query)
                                      :variables {}}

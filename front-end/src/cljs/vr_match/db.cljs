@@ -7,6 +7,7 @@
           :sign-in-with-email {:error nil
                                :email-input-required? false}
           }
+   :myprofile {:uploaded-image nil}
    :me nil
    :router {:key :loading
             :params {}}
@@ -16,5 +17,6 @@
    :fetch-status {:sign-in-link :none
                   :sign-in-with-email :none
                   :register-user :none
-                  :login-user :none}
+                  :login-user :none
+                  :mypage :none}
    :history nil})
