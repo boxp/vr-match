@@ -20,13 +20,16 @@
                   :body
                   slurp
                   (parse-string true)
-                  :query)]
-    {:status 200
-     :headers {}
-     :body (-> (execute graphql-schema
+                  :query)
+        result (execute graphql-schema
                         query
                         nil
-                        my-webapp-resolvers)
+                        my-webapp-resolvers)]
+    {:status (if (-> result :errors seq)
+               400
+               200)
+     :headers {}
+     :body (-> result
                generate-string)}))
 
 (defn- load-schema []
@@ -35,7 +38,8 @@
       edn/read-string
       (attach-resolvers {:resolve-approach-list resolvers/approach-list
                          :resolve-register-user resolvers/register-user
-                         :resolve-login-user resolvers/login-user})
+                         :resolve-login-user resolvers/login-user
+                         :resolve-upload-image resolvers/upload-image})
       schema/compile))
 
 (defrecord MyWebappHandlerComponent [graphql-schema my-webapp-resolvers]
