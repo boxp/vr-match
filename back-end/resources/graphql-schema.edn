@@ -1,5 +1,8 @@
 {:objects
- {:Platform
+ {:Image
+  {:fields {:id {:type Int}
+            :url {:type String}}}
+  :Platform
   {:fields {:id {:type Int}
             :name {:type String}
             :url {:type String}}}
@@ -44,4 +47,8 @@
   :loginUser {:type :UserWithSession
               :description "ユーザーログイン"
               :args {:idToken {:type String}}
-              :resolve :resolve-login-user}}}
+              :resolve :resolve-login-user}
+  :uploadImage {:type :Image
+                :description "画像アップロード"
+                :args {:base64String {:type String}}
+                :resolve :resolve-upload-image}}}
