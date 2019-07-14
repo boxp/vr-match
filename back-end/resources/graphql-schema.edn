@@ -1,5 +1,5 @@
 {:objects
- {:Platforms
+ {:Platform
   {:fields {:id {:type Int}
             :name {:type String}
             :url {:type String}}}
@@ -8,7 +8,7 @@
             :name {:type String}
             :introduction {:type String}
             :images {:type (list String)}
-            :platforms {:type (list :Platforms)}}}
+            :platforms {:type (list :Platform)}}}
   :UserWithSession
   {:fields {:user {:type User}
             :session {:type String}}}
