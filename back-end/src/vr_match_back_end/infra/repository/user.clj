@@ -14,8 +14,12 @@
 (def-db-fns "vr_match_back_end/infra/repository/sql/user.sql")
 
 (s/def ::firebase-admin-datasource record?)
-(s/def ::id-token string?)
 (s/def ::mysql-datasource record?)
+(s/def ::id-token string?)
+
+(s/def ::user-repository
+  (s/keys :req-un [::firebase-admin-datasource
+                   ::mysql-datasource]))
 
 (s/fdef get-firebase_id
   :args (s/cat :firebase-admin-datasource ::firebase-admin-datasource
@@ -42,8 +46,7 @@
                                          build))))
 
 (s/fdef create-new-user
-  :args (s/cat :c (s/keys :req-un [::firebase-admin-datasource
-                                   ::mysql-datasource])
+  :args (s/cat :c ::user-repository
                :params (s/keys :req-un [::id-token]))
   :ret ::euser/user)
 (defn create-new-user
@@ -117,7 +120,8 @@
          (throw (ex-info "無効なセッションです"
                          {:type :invalid-session})))))
 
-(defrecord UserRepositoryComponent [firebase-admin-datasource]
+(defrecord UserRepositoryComponent [mysql-datasource
+                                    firebase-admin-datasource]
   component/Lifecycle
   (start [this]
     this)
