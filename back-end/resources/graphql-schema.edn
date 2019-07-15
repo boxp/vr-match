@@ -60,4 +60,4 @@
                                    :optional true}
                     :imageIds {:type (list Int)
                                :optional true}}
-             :resolve :resolve-update-m
+             :resolve :resolve-update-me}}}

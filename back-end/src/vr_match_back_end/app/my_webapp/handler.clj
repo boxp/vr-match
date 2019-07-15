@@ -1,11 +1,13 @@
 (ns vr-match-back-end.app.my-webapp.handler
-  (:require [com.stuartsierra.component :as component]
-            [cheshire.core :refer [generate-string parse-string]]
-            [clojure.edn :as edn]
-            [com.walmartlabs.lacinia.util :refer [attach-resolvers]]
-            [com.walmartlabs.lacinia.schema :as schema]
-            [com.walmartlabs.lacinia :refer [execute]]
-            [vr-match-back-end.app.my-webapp.resolvers :as resolvers]))
+  (:require
+   [clojure.edn :as edn]
+   [clojure.stacktrace :refer [print-stack-trace]]
+   [com.stuartsierra.component :as component]
+   [cheshire.core :refer [generate-string parse-string]]
+   [com.walmartlabs.lacinia.util :refer [attach-resolvers]]
+   [com.walmartlabs.lacinia.schema :as schema]
+   [com.walmartlabs.lacinia :refer [execute]]
+   [vr-match-back-end.app.my-webapp.resolvers :as resolvers]))
 
 (defn index
   [_]
@@ -30,7 +32,12 @@
                  200)
        :headers {}
        :body (-> result
-                 generate-string)})))
+                 generate-string)})
+    (catch Exception e
+      (print-stack-trace e)
+      {:status 400
+       :headers {}
+       :body "Something has wrong."})))
 
 (defn- load-schema []
   (-> "resources/graphql-schema.edn"

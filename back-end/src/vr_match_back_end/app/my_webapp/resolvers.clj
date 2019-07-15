@@ -101,7 +101,8 @@
   [{:keys [user-usecase session] :as context}
    {:keys [name
            introduction
-           imageIds] :as params}]
+           imageIds] :as params}
+   value]
   (try
     (do
       (uuser/update-me

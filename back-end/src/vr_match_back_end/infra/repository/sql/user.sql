@@ -14,7 +14,6 @@ insert into user (firebase_id, name, introduction)
 values (:firebase_id, :name, :introduction)
 
 -- :name update-user-by-id :! :n
-/* :require [clojure.string :as string] */
 update user
 set
 id = :id

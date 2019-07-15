@@ -120,7 +120,7 @@
                :image-ids (s/coll-of ::eimage/id))
   :ret ::euser/images)
 (defn- update-user-image
-  [{:keys [mysql-datasource]}
+  [{:keys [mysql-datasource] :as c}
    user-id
    image-ids]
   (let [last-images (->> (user_image-by-user_id (:db mysql-datasource)
@@ -137,11 +137,13 @@
           (insert-user_image
            tx
            {:image_id (-> image-ids first)
-            :user_id user-id}))
+            :user_id user-id
+            :image_type 1}))
         (insert-user_image
          tx
          {:image_id (-> image-ids first)
-          :user_id user-id})))))
+          :user_id user-id
+          :image_type 1})))))
 
 (s/def :update-user-params/image-ids (s/coll-of ::eimage/id))
 (s/fdef update-user
@@ -156,7 +158,7 @@
    {:keys [image-ids] :as params}]
   (when (seq image-ids)
     (update-user-image c (:id params) image-ids))
-  (when (seq (-> params (dissoc :image-ids) keys))
+  (when (seq (->> (keys params) (remove #{:id :image-ids})))
     (update-user-by-id
      (:db mysql-datasource)
      (select-keys params [:id :name :introduction])))
@@ -170,13 +172,14 @@
   [{:keys [firebase-admin-datasource
            mysql-datasource]}
    session]
-  (try (user-by-firebase_id
-        (:db mysql-datasource)
-        {:firebase_id
-         (-> firebase-admin-datasource
-             :auth
-             (.verifySessionCookie session true)
-             .getUid)})
+  (try (-> (user-by-firebase_id
+            (:db mysql-datasource)
+            {:firebase_id
+             (-> firebase-admin-datasource
+                 :auth
+                 (.verifySessionCookie session true)
+                 .getUid)})
+           :id)
        (catch Exception e
          (throw (ex-info "無効なセッションです"
                          {:type :invalid-session})))))
