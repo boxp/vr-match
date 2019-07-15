@@ -3,10 +3,12 @@
    [com.stuartsierra.component :as component]
    [clojure.data.codec.base64 :as b64]
    [clojure.stacktrace :refer [print-stack-trace]]
+   [clojure.set :as set]
    [com.walmartlabs.lacinia.resolve :refer [resolve-as]]
    [vr-match-back-end.app.my-webapp.converter :refer [user->User]]
    [vr-match-back-end.domain.usecase.auth :as uauth]
-   [vr-match-back-end.domain.usecase.image :as uimage]))
+   [vr-match-back-end.domain.usecase.image :as uimage]
+   [vr-match-back-end.domain.usecase.user :as uuser]))
 
 (defmulti handle-error #(some-> % ex-data :type))
 
@@ -95,7 +97,21 @@
           :base64-string base64String}))
     (catch Exception e (handle-error e))))
 
-(defrecord MyWebappResolversComponent [auth-usecase image-usecase]
+(defn update-me
+  [{:keys [user-usecase session] :as context}
+   {:keys [name
+           introduction
+           imageIds] :as params}]
+  (try
+    (do
+      (uuser/update-me
+       user-usecase
+       session
+       (set/rename-keys params {:imageIds :image-ids}))
+      true)
+    (catch Exception e (handle-error e))))
+
+(defrecord MyWebappResolversComponent [auth-usecase image-usecase user-usecase]
   component/Lifecycle
   (start [this]
     (-> this))

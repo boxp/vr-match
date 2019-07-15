@@ -21,21 +21,6 @@
 
 (def-db-fns "vr_match_back_end/infra/repository/sql/image.sql")
 
-(s/def :image-record/id number?)
-(s/def :image-record/url string?)
-(s/def :image-record/placeholder_color string?)
-(s/def :image-record/created_at ::t-spec/date-time)
-(s/def :image-record/updated_at ::t-spec/date-time)
-(s/def ::image-record
-  (s/keys :req-un [:image-record/id
-                   :image-record/url
-                   :image-record/placeholder_color
-                   :image-record/created_at
-                   :image-record/updated_at]))
-(s/fdef record->image
-  :args (s/cat :record ::image-record)
-  :ret ::eimage/image)
-
 (s/fdef upload-image
   :args (s/cat :c ::image-repository
                :base64-string string?)

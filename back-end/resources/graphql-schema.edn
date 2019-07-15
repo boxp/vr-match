@@ -51,4 +51,10 @@
   :uploadImage {:type :Image
                 :description "画像アップロード"
                 :args {:base64String {:type String}}
-                :resolve :resolve-upload-image}}}
+                :resolve :resolve-upload-image}
+  :updateMe {:type Boolean
+             :description "自分のプロフィールをアップデート"
+             :args {:name {:type String}
+                    :introduction {:type String}
+                    :imageIds {:type (list Int)}}
+             :resolve :resolve-update-me}}}

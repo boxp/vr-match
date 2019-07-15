@@ -39,7 +39,8 @@
       (attach-resolvers {:resolve-approach-list resolvers/approach-list
                          :resolve-register-user resolvers/register-user
                          :resolve-login-user resolvers/login-user
-                         :resolve-upload-image resolvers/upload-image})
+                         :resolve-upload-image resolvers/upload-image
+                         :resolve-update-me resolvers/update-me})
       schema/compile))
 
 (defrecord MyWebappHandlerComponent [graphql-schema my-webapp-resolvers]
