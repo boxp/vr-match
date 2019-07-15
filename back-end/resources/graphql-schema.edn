@@ -54,7 +54,10 @@
                 :resolve :resolve-upload-image}
   :updateMe {:type Boolean
              :description "自分のプロフィールをアップデート"
-             :args {:name {:type String}
-                    :introduction {:type String}
-                    :imageIds {:type (list Int)}}
-             :resolve :resolve-update-me}}}
+             :args {:name {:type String
+                           :optional true}
+                    :introduction {:type String
+                                   :optional true}
+                    :imageIds {:type (list Int)
+                               :optional true}}
+             :resolve :resolve-update-m
