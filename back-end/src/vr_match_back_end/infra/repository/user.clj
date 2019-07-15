@@ -126,13 +126,13 @@
   (let [last-images (->> (user_image-by-user_id (:db mysql-datasource)
                                                 {:user_id user-id})
                          (map record->image)
-                         (filter nil?))]
+                         (filter #(not (nil? %))))]
     (jdbc/with-db-transaction [tx (:db mysql-datasource)]
       (if (seq last-images)
         (do
           (delete-user_image
            tx
-           {:image_id (->> last-images first :image_id)
+           {:image_id (->> last-images first :id)
             :user_id user-id})
           (insert-user_image
            tx
