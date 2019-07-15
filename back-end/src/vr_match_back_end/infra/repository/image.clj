@@ -77,7 +77,7 @@
     {:id image-id
      :url image-url}))
 
-(defrecord ImageRepository [cloud-storage-datasource]
+(defrecord ImageRepository [cloud-storage-datasource mysql-datasource]
   component/Lifecycle
   (start [this] this)
   (stop [this] this))
