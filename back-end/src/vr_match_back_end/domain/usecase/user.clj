@@ -14,7 +14,8 @@
 (s/def :update-user/params
   (s/keys :opt-un [::euser/name
                    ::euser/introduction
-                   :update-user-params/image-ids]))
+                   :update-user-params/image-ids
+                   ::euser/platforms]))
 (s/fdef update-user
   :args (s/cat :c ::user-usecase
                :session ::session

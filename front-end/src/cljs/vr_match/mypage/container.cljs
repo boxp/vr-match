@@ -20,6 +20,15 @@
   (re-frame/dispatch
    [::mypage-events/update-me {:introduction introduction}]))
 
+(defn handle-submit-platforms
+  [platforms]
+  (re-frame/dispatch
+   [::mypage-events/update-me {:platforms
+                               {:platforms
+                                (->> platforms
+                                     (map #(-> %
+                                               (dissoc :url))))}}]))
+
 (defn handle-submit-main-image
   [main-image-data-url]
   (re-frame/dispatch
@@ -44,6 +53,7 @@
                                 :handleInitialize handle-initialize
                                 :handleSubmitUserName handle-submit-user-name
                                 :handleSubmitIntroduction handle-submit-introduction
-                                :handleSubmitMainImage handle-submit-main-image})])))
+                                :handleSubmitMainImage handle-submit-main-image
+                                :handleSubmitPlatforms handle-submit-platforms})])))
 
 (util/universal-set-loaded! :mypage)

@@ -108,29 +108,35 @@
   [{:keys [user-usecase session] :as context}
    {:keys [name
            introduction
-           imageIds] :as params}
+           imageIds
+           platforms] :as params}
    value]
   (try
     (do
       (uuser/update-me
        user-usecase
        session
-       (set/rename-keys params {:imageIds :image-ids}))
+       (-> params
+           (set/rename-keys {:imageIds :image-ids})
+           (update :platforms
+                   (fn [platforms]
+                     (->> (:platforms platforms)
+                          (map #(set/rename-keys % {:platformUserId :platform-user-id})))))))
       true)
     (catch Exception e (handle-error e))))
 
 (defn me
   [{:keys [user-usecase session] :as context} _ _]
-   (try
-     (->
-      (uuser/get-me
-       user-usecase
-       session
-       (executor/selects-field? context :User/images)
-       (executor/selects-field? context :User/platforms))
-      (update :platforms #(map (fn [platform]
-                                 (set/rename-keys platform {:platform-user-id :platformUserId})) %)))
-     (catch Exception e (handle-error e))))
+  (try
+    (->
+     (uuser/get-me
+      user-usecase
+      session
+      (executor/selects-field? context :User/images)
+      (executor/selects-field? context :User/platforms))
+     (update :platforms #(map (fn [platform]
+                                (set/rename-keys platform {:platform-user-id :platformUserId})) %)))
+    (catch Exception e (handle-error e))))
 
 (defn platform-options
   [{:keys [platform-usecase]} _ _]

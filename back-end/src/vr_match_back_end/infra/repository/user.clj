@@ -148,20 +148,44 @@
           :user_id user-id
           :image_type 1})))))
 
+(s/fdef update-user-platforms
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id
+               :platforms ::euser/platforms)
+  :ret nil?)
+(defn update-user-platforms
+  [{:keys [mysql-datasource]}
+   user-id
+   platforms]
+  (jdbc/with-db-transaction [tx (:db mysql-datasource)]
+    (delete-user_platform-by-user_id
+     tx
+     {:user_id user-id})
+    (when (seq platforms)
+      (insert-user_platform-tuple
+       tx
+       {:platforms (->> platforms
+                        (map (fn [{:keys [id platform-user-id]}]
+                               [user-id id (or platform-user-id "")]))
+                        vec)}))))
+
 (s/def :update-user-params/image-ids (s/coll-of ::eimage/id))
 (s/fdef update-user
   :args (s/cat :c (s/keys :req-un [::mysql-datasource])
                :params (s/keys :req-un [::euser/id]
                                :opt-un [::euser/name
                                         ::euser/introduction
-                                        :update-user-params/image-ids]))
+                                        :update-user-params/image-ids
+                                        ::euser/platforms]))
   :ret nil?)
 (defn update-user
   [{:keys [mysql-datasource] :as c}
-   {:keys [image-ids] :as params}]
+   {:keys [image-ids platforms] :as params}]
   (when (seq image-ids)
     (update-user-image c (:id params) image-ids))
-  (when (seq (->> (keys params) (remove #{:id :image-ids})))
+  (when-not (nil? platforms)
+    (update-user-platforms c (:id params) platforms))
+  (when (seq (->> (keys params) (remove #{:id :image-ids :platforms})))
     (update-user-by-id
      (:db mysql-datasource)
      (select-keys params [:id :name :introduction])))

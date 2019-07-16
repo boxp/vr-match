@@ -94,7 +94,7 @@
   [props]
   (let [draft-platforms (r/atom (-> props :platforms))]
     (r/create-class
-     {:display-name "mypage"
+     {:display-name "edit-platform-dialog"
       :component-did-update
       (fn [this [_ old-props]]
         (let [{:keys [platforms]} (r/props this)
@@ -163,6 +163,6 @@
                                                 (handleCancel)
                                                 (reset! draft-platforms platforms))}
            "キャンセル"]
-          [:> js/MaterialUI.Button {:on-click handleSubmit
+          [:> js/MaterialUI.Button {:on-click #(handleSubmit @draft-platforms)
                                     :color "primary"}
            "決定"]]])})))

@@ -35,6 +35,14 @@
                     :description "取得可能なお相手の総人数"}
             :edges {:type (list UserEdge)}
             :pageInfo {:type :PageInfo}}}}
+ :input-objects
+ {:PlatformInput
+  {:fields {:id {:type Int}
+            :name {:type String}
+            :platformUserId {:type String
+                             :optional true}}}
+  :PlatformInputs
+  {:fields {:platforms {:type (list :PlatformInput)}}}}
  :queries
  {:approachList {:type :ApproachList
                  :args {:first {:type Int
@@ -70,5 +78,7 @@
                     :introduction {:type String
                                    :optional true}
                     :imageIds {:type (list Int)
-                               :optional true}}
+                               :optional true}
+                    :platforms {:type :PlatformInputs
+                                :optional true}}
              :resolve :resolve-update-me}}}

@@ -60,7 +60,8 @@
                    handleInitialize
                    handleSubmitUserName
                    handleSubmitIntroduction
-                   handleSubmitMainImage]
+                   handleSubmitMainImage
+                   handleSubmitPlatforms]
             :as props}]
         [navigation-bar-layout {:title "プロフィールを編集"}
          [:div {:style {:position "relative"}}
@@ -136,5 +137,7 @@
           [edit-platform-dialog {:isOpen @editing-platform?
                                  :platforms (-> me :platforms)
                                  :platformOptions platformOptions
-                                 :handleClickSubmit handle-close-platform
+                                 :handleSubmit (fn [platforms]
+                                                      (handleSubmitPlatforms platforms)
+                                                      (handle-close-platform))
                                  :handleCancel handle-close-platform}]]])})))
