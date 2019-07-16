@@ -10,8 +10,10 @@
   {:fields {:id {:type Int}
             :name {:type String}
             :introduction {:type String}
-            :images {:type (list String)}
-            :platforms {:type (list :Platform)}}}
+            :images {:type (list :Image)
+                     :optional true}
+            :platforms {:type (list :Platform)
+                        :optional true}}}
   :UserWithSession
   {:fields {:user {:type User}
             :session {:type String}}}
@@ -38,7 +40,9 @@
                                :optional true}
                         :before {:type String
                                  :optional true}}
-                 :resolve :resolve-approach-list}}
+                 :resolve :resolve-approach-list}
+  :me {:type :User
+       :resolve :resolve-me}}
  :mutations
  {:registerUser {:type :UserWithSession
                  :description "ユーザー新規登録"

@@ -18,5 +18,6 @@
                   :sign-in-with-email :none
                   :register-user :none
                   :login-user :none
+                  :me :none
                   :mypage :none}
    :history nil})

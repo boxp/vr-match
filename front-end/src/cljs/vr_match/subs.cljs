@@ -21,3 +21,8 @@
  ::open-drawer?
  (fn [db]
    (-> db :drawer :open?)))
+
+(re-frame/reg-sub
+ ::me
+ (fn [db]
+   (-> db :me)))

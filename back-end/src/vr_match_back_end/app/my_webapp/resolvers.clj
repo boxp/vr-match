@@ -5,6 +5,7 @@
    [clojure.stacktrace :refer [print-stack-trace]]
    [clojure.set :as set]
    [com.walmartlabs.lacinia.resolve :refer [resolve-as]]
+   [com.walmartlabs.lacinia.executor :as executor]
    [vr-match-back-end.app.my-webapp.converter :refer [user->User]]
    [vr-match-back-end.domain.usecase.auth :as uauth]
    [vr-match-back-end.domain.usecase.image :as uimage]
@@ -13,6 +14,11 @@
 (defmulti handle-error #(some-> % ex-data :type))
 
 (defmethod handle-error :invalid-session [error]
+  (resolve-as nil
+              {:message (.getMessage error)
+               :type (-> error ex-data :type)}))
+
+(defmethod handle-error :unregistered-user [error]
   (resolve-as nil
               {:message (.getMessage error)
                :type (-> error ex-data :type)}))
@@ -34,7 +40,7 @@
            :name "一箱"
            :introduction "バーチャル清楚系女子高校生Webアプリケーションエンジニアおじさんです。こっそりプログラミングしてます。"
            :platforms [{:id 1 :name "VRChat"} {:id 2 :name "VRoidHub"} {:id 3 :name "VirtualCast"}]
-           :images ["https://storage.googleapis.com/boxp-tmp/profile_sample.png"]}
+           :images [{:id 1 :url "https://storage.googleapis.com/boxp-tmp/profile_sample.png"}]}
           :cursor (-> 1 str .getBytes b64/encode)}
          {:node
           {:id 2
@@ -42,7 +48,7 @@
            :name "ヒマリ"
            :introduction "一箱さんちのヒマリです！"
            :platforms [{:id 1 :name "VRChat"} {:id 3 :name "VirtualCast"}]
-           :images ["https://storage.googleapis.com/boxp-tmp/profile_sample_2.jpg"]}
+           :images [{:id 2 :url "https://storage.googleapis.com/boxp-tmp/profile_sample_2.jpg"}]}
           :cursor (-> 2 str .getBytes b64/encode)}
          {:node
           {:id 3
@@ -50,7 +56,7 @@
            :name "アリシア・ソリッド"
            :introduction "ニコニ立体で公式キャラクターやってます。よろしくお願いします！"
            :platforms [{:id 3 :name "VirtualCast"}]
-           :images ["https://storage.googleapis.com/boxp-tmp/profile_sample_3.jpg"]}
+           :images [{:id 3 :url "https://storage.googleapis.com/boxp-tmp/profile_sample_3.jpg"}]}
           :cursor (-> 3 str .getBytes b64/encode)}]
         cycle
         (take first))
@@ -111,6 +117,15 @@
        (set/rename-keys params {:imageIds :image-ids}))
       true)
     (catch Exception e (handle-error e))))
+
+(defn me
+  [{:keys [user-usecase session] :as context} _ _]
+   (try
+     (uuser/get-me
+      user-usecase
+      session
+      (executor/selects-field? context :User/images))
+     (catch Exception e (handle-error e))))
 
 (defrecord MyWebappResolversComponent [auth-usecase image-usecase user-usecase]
   component/Lifecycle

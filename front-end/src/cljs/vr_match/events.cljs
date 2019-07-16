@@ -68,3 +68,45 @@
  (fn [_ [_ session]]
    {::effects/set-localstorage {:key "session"
                                 :item session}}))
+
+(re-frame/reg-event-fx
+ ::on-success-fetch-me
+ (fn [{:keys [db]}
+      [_ {:keys [data]}]]
+   {:db
+    (-> db
+        (assoc-in [:fetch-status :me] :loaded)
+        (update :me #(merge % (-> data :me))))}))
+
+(re-frame/reg-event-fx
+ ::on-error-fetch-me
+ (fn [{:keys [db]}
+      [_ {:keys [errors]}]]
+   {:db (assoc-in db [:fetch-status :me] :loaded)
+    :dispatch [::api-error errors]}))
+
+(re-frame/reg-event-fx
+ ::on-error-fetch-me
+ (fn [{:keys [db]}
+      [_ me]]
+   {:db
+    (-> db
+        (assoc-in [:fetch-status :me] :loaded)
+        (update :me #(merge % me)))
+    :dispatch [::push "/"]}))
+
+(re-frame/reg-event-fx
+ ::fetch-me
+ (fn [{:keys [db]}
+      [_ with-images?]]
+   (when (-> db :fetch-status :me (not= :loading))
+     (let [me-props (vec (cond->> [:id :name :introduction]
+                           with-images? (concat [[:images [:id :url]]])
+                           :always identity))]
+       {:db (assoc-in db [:fetch-status :me] :loading)
+        :dispatch [::graphql-query
+                   {:query
+                    {:venia/queries [[:me
+                                      me-props]]}
+                    :success-handler ::on-success-fetch-me
+                    :error-handler ::on-error-fetch-me}]}))))

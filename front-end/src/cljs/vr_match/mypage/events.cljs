@@ -9,8 +9,7 @@
  (fn [{:keys [db]}
       [_ {:keys [data]}]]
    {:db (assoc-in db [:fetch-status :mypage] :loaded)
-    ;; TODO: meの取得
-    }))
+    :dispatch [::events/fetch-me true]}))
 
 (re-frame/reg-event-fx
  ::on-error-update-me

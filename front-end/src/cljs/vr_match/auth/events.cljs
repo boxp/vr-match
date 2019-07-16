@@ -76,7 +76,9 @@
                                     [:id
                                      :name
                                      :introduction
-                                     :images
+                                     [:images
+                                      [:id
+                                       :url]]
                                      [:platforms
                                       [:id
                                        :name
@@ -117,7 +119,9 @@
                                      [:id
                                       :name
                                       :introduction
-                                      :images
+                                      [:images
+                                       [:id
+                                        :url]]
                                       [:platforms
                                        [:id
                                         :name

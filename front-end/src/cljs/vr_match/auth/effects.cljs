@@ -25,7 +25,7 @@
  (fn [[params]]
    (some-> params
            (assoc :format (json-request-format))
-           (assoc :response-format (json-response-format {:keyworkds? true}))
+           (assoc :response-format (json-response-format {:keywords? true}))
            (assoc :handler #(re-frame/dispatch
                                 [(if (first %)
                                    (:success-handler params)
