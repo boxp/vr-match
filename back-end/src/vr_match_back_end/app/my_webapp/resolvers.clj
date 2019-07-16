@@ -9,7 +9,8 @@
    [vr-match-back-end.app.my-webapp.converter :refer [user->User]]
    [vr-match-back-end.domain.usecase.auth :as uauth]
    [vr-match-back-end.domain.usecase.image :as uimage]
-   [vr-match-back-end.domain.usecase.user :as uuser]))
+   [vr-match-back-end.domain.usecase.user :as uuser]
+   [vr-match-back-end.domain.usecase.platform :as uplatform]))
 
 (defmulti handle-error #(some-> % ex-data :type))
 
@@ -126,6 +127,13 @@
       session
       (executor/selects-field? context :User/images))
      (catch Exception e (handle-error e))))
+
+(defn platform-options
+  [{:keys [platform-usecase]} _ _]
+  (try
+    (->> (uplatform/get-platform-masters platform-usecase)
+         (map #(set/rename-keys % {:example-platform-user-id :exampleUserId})))
+    (catch Exception e (handle-error e))))
 
 (defrecord MyWebappResolversComponent [auth-usecase image-usecase user-usecase]
   component/Lifecycle

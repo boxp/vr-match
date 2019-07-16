@@ -6,6 +6,10 @@
   {:fields {:id {:type Int}
             :name {:type String}
             :url {:type String}}}
+  :PlatformOption
+  {:fields {:id {:type Int}
+            :name {:type String}
+            :exampleUserId {:type String}}}
   :User
   {:fields {:id {:type Int}
             :name {:type String}
@@ -42,7 +46,9 @@
                                  :optional true}}
                  :resolve :resolve-approach-list}
   :me {:type :User
-       :resolve :resolve-me}}
+       :resolve :resolve-me}
+  :platformOptions {:type (list :PlatformOption)
+                    :resolve :resolve-platform-options}}
  :mutations
  {:registerUser {:type :UserWithSession
                  :description "ユーザー新規登録"

@@ -83,17 +83,8 @@
  (fn [{:keys [db]}
       [_ {:keys [errors]}]]
    {:db (assoc-in db [:fetch-status :me] :loaded)
-    :dispatch [::api-error errors]}))
-
-(re-frame/reg-event-fx
- ::on-error-fetch-me
- (fn [{:keys [db]}
-      [_ me]]
-   {:db
-    (-> db
-        (assoc-in [:fetch-status :me] :loaded)
-        (update :me #(merge % me)))
-    :dispatch [::push "/"]}))
+    :dispatch-n [[::api-error errors]
+                 [::push "/"]]}))
 
 (re-frame/reg-event-fx
  ::fetch-me

@@ -15,9 +15,9 @@
                    ::url]
           :opt-un [::platform_user_id]))
 
-(s/def ::example_platform_user_id ::platform_user_id)
+(s/def ::example-platform-user-id ::platform_user_id)
 
 (s/def ::platform-master
   (s/keys :req-un [::id
                    ::name
-                   ::example_platform_user_id]))
+                   ::example-platform-user-id]))

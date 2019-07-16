@@ -4,5 +4,11 @@
 (re-frame/reg-sub
  ::loading?
  (fn [db]
-   (-> db :fetch-status :mypage (= :loading))))
+   (or
+    (-> db :fetch-status :mypage (= :loading))
+    (-> db :fetch-status :me (= :loading)))))
 
+(re-frame/reg-sub
+ ::platform-options
+ (fn [db]
+   (-> db :mypage :platform-options)))

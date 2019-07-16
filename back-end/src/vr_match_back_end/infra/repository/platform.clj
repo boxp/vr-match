@@ -14,7 +14,7 @@
 
 (def-db-fns "vr_match_back_end/infra/repository/sql/platform.sql")
 
-(s/def :platform-record/id string?)
+(s/def :platform-record/id number?)
 (s/def :platform-record/name string?)
 (s/def :platform-record/url_template string?)
 (s/def :platform-record/example_user_id string?)
@@ -30,7 +30,7 @@
   [record]
   (-> record
       (select-keys [:id :name :example_user_id])
-      (set/rename-keys {:example_user_id :example_platform_user_id})))
+      (set/rename-keys {:example_user_id :example-platform-user-id})))
 
 (s/fdef get-platform-masters
   :args (s/cat :c ::platform-repository)

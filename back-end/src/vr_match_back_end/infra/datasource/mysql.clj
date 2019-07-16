@@ -4,12 +4,13 @@
    [clj-time.jdbc]
    [com.stuartsierra.component :as component]))
 
-(s/def ::dbname string?)
 (s/def ::user string?)
 (s/def ::password string?)
-(s/def :db/dbtype string?)
+(s/def :db/classname string?)
+(s/def :db/subprotocol string?)
+(s/def :db/subname string?)
 (s/def ::db
-  (s/keys :req-un [::dbname ::user ::password :db/dbtype]))
+  (s/keys :req-un [::user ::password :db/classname :db/subprotocol :db/subprotocol]))
 (s/def ::mysql-datasource
   (s/keys :req-un [::dbname ::user ::password]
           :opt-un [::db]))

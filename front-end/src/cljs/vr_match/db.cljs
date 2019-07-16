@@ -5,8 +5,8 @@
    :auth {:sign-in-link {:error nil
                          :email ""}
           :sign-in-with-email {:error nil
-                               :email-input-required? false}
-          }
+                               :email-input-required? false}}
+   :mypage {:platform-options nil}
    :myprofile {:uploaded-image nil}
    :me nil
    :router {:key :loading

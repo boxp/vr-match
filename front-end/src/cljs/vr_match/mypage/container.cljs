@@ -30,20 +30,16 @@
 
 (defn handle-initialize []
   (re-frame/dispatch
-   [::events/fetch-me true]))
-
-(def mypage-state
-  (r/atom {:platformOptions [{:id 1 :name "VRChat" :exampleUserId "usr_3b6403c3-be9f-432c-ab1f-446778946421"}
-                             {:id 2 :name "YouTube" :exampleUserId "BOXPKETARO"}
-                             {:id 3 :name "VirtualCast" :exampleUserId "6265398"}]}))
+   [::mypage-events/initialize]))
 
 (defn mypage
   [_]
   (let [isLoading (re-frame/subscribe [::mypage-subs/loading?])
+        platformOptions (re-frame/subscribe [::mypage-subs/platform-options])
         me (re-frame/subscribe [::subs/me])]
     (fn [props]
-      [component/mypage (merge @mypage-state
-                               {:me @me
+      [component/mypage (merge {:me @me
+                                :platformOptions @platformOptions
                                 :isLoading @isLoading
                                 :handleInitialize handle-initialize
                                 :handleSubmitUserName handle-submit-user-name
