@@ -10,12 +10,15 @@
    [clj-time.coerce :refer [to-long]]
    [com.stuartsierra.component :as component]
    [hugsql.core :refer [def-db-fns]]
+   [cljstache.core :refer [render]]
    [vr-match-back-end.domain.entity.user :as euser]
    [vr-match-back-end.domain.entity.image :as eimage]
+   [vr-match-back-end.domain.entity.platform :as eplatform]
    [vr-match-back-end.infra.datasource.firebase-admin :as firebase-admin]))
 
 (def-db-fns "vr_match_back_end/infra/repository/sql/user.sql")
 (def-db-fns "vr_match_back_end/infra/repository/sql/user_image.sql")
+(def-db-fns "vr_match_back_end/infra/repository/sql/user_platform.sql")
 
 (s/def ::firebase-admin-datasource record?)
 (s/def ::mysql-datasource record?)
@@ -194,6 +197,40 @@
   (->> (user_image-by-user_id (:db mysql-datasource)
                               {:user_id  user-id})
        (map record->image)))
+
+(s/def :user-platform-record/id number?)
+(s/def :user-platform-record/name string?)
+(s/def :user-platform-record/url_template string?)
+(s/def :user-platform-record/platform_user_id string?)
+(s/def ::user-platform-record
+  (s/keys :req-un [:user-platform-record/id
+                   :user-platform-record/name
+                   :user-platform-record/url_template
+                   :user-platform-record/platform_user_id]))
+(s/fdef record->platform
+  :args (s/cat :record ::user-platform-record)
+  :ret ::eplatform/platform)
+(defn- record->platform
+  [record]
+  (cond-> record
+    (= (:platform_user_id record) "")
+    (-> (dissoc :url_template)
+        (dissoc :platform_user_id))
+    :always
+    (-> (dissoc :url_template)
+        (assoc :url (render (:url_template record)
+                            {:user_id (:platform_user_id record)}))
+        (set/rename-keys {:platform_user_id :platform-user-id}))))
+
+(s/fdef get-platforms-by-user-id
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id)
+  :ret (s/coll-of ::eplatform/platform))
+(defn get-platforms-by-user-id
+  [{:keys [mysql-datasource]}
+   user-id]
+  (->> (user_platform-by-user_id (:db mysql-datasource) {:user_id user-id})
+       (map record->platform)))
 
 (s/fdef get-user-by-id
   :args (s/cat :c ::user-repository
