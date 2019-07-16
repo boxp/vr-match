@@ -8,6 +8,11 @@
    [vr-match.mypage.subs :as subs]
    [vr-match.mypage.component :as component]))
 
+(defn handle-submit-user-name
+  [user-name]
+  (re-frame/dispatch
+   [::events/update-me {:name user-name}]))
+
 (defn handle-submit-main-image
   [main-image-data-url]
   (re-frame/dispatch
@@ -37,6 +42,7 @@
     (fn [props]
       [component/mypage (merge @mypage-state
                                {:isLoading @isLoading
+                                :handleSubmitUserName handle-submit-user-name
                                 :handleSubmitMainImage handle-submit-main-image})])))
 
 (util/universal-set-loaded! :mypage)

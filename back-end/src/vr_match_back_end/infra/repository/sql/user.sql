@@ -14,13 +14,15 @@ insert into user (firebase_id, name, introduction)
 values (:firebase_id, :name, :introduction)
 
 -- :name update-user-by-id :! :n
+-- :doc Userをparamsを元に更新
+/* :require [hugsql.parameters :refer [identifier-param-quote]] */
 update user
 set
 id = :id
 /*~
 (->> (-> params (dissoc :id))
-     (map (fn [[key value]]
-              (str "," key " = " value)))
+     (map (fn [[key _]]
+              (str "," (identifier-param-quote (name key) options) " = :" (name key))))
      (apply str))
 ~*/
 where id = :id

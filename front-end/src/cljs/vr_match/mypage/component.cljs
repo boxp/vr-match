@@ -43,11 +43,11 @@
         editing-introduction? (r/atom false)
         editing-platform? (r/atom false)
         handle-click-user-name #(reset! editing-user-name? true)
-        handle-cancel-user-name #(reset! editing-user-name? false)
+        handle-close-user-name #(reset! editing-user-name? false)
         handle-click-introduction #(reset! editing-introduction? true)
-        handle-cancel-introduction #(reset! editing-introduction? false)
+        handle-close-introduction #(reset! editing-introduction? false)
         handle-click-platform #(reset! editing-platform? true)
-        handle-cancel-platform #(reset! editing-platform? false)]
+        handle-close-platform #(reset! editing-platform? false)]
     (fn [{:keys [me
                  platformOptions
                  isLoading
@@ -112,14 +112,16 @@
                  :style {:display "none"}}]
         [edit-user-name-dialog {:isOpen @editing-user-name?
                                 :userName (-> me :userName)
-                                :handleClickSubmit handle-cancel-user-name
-                                :handleCancel handle-cancel-user-name}]
+                                :handleSubmit (fn [user-name]
+                                                (handleSubmitUserName user-name)
+                                                (handle-close-user-name))
+                                :handleCancel handle-close-user-name}]
         [edit-introduction-dialog {:isOpen @editing-introduction?
                                    :introduction (-> me :introduction)
-                                   :handleClickSubmit handle-cancel-introduction
-                                   :handleCancel handle-cancel-introduction}]
+                                   :handleClickSubmit handle-close-introduction
+                                   :handleCancel handle-close-introduction}]
         [edit-platform-dialog {:isOpen @editing-platform?
                                :platforms (-> me :platForms)
                                :platformOptions platformOptions
-                               :handleClickSubmit handle-cancel-platform
-                               :handleCancel handle-cancel-platform}]]])))
+                               :handleClickSubmit handle-close-platform
+                               :handleCancel handle-close-platform}]]])))

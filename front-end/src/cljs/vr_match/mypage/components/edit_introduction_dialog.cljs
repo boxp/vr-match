@@ -6,12 +6,12 @@
 
 (s/def ::isOpen boolean?)
 (s/def ::introduction string?)
-(s/def ::handleClickSubmit fn?)
+(s/def ::handleSubmit fn?)
 (s/def ::handleCancel fn?)
 (s/fdef edit-introduction-dialog
   :args (s/cat :props (s/keys :req-un [::isOpen
                                        ::introduction
-                                       ::handleClickSubmit
+                                       ::handleSubmit
                                        ::handleCancel]))
   :ret vector?)
 (defn edit-introduction-dialog

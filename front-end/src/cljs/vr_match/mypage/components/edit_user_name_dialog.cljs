@@ -36,6 +36,6 @@
        [mui/dialog-actions
         [mui/button {:on-click handleCancel}
          "キャンセル"]
-        [mui/button {:on-click handleSubmit
+        [mui/button {:on-click #(handleSubmit @draft-user-name)
                      :color "primary"}
          "決定"]]])))
