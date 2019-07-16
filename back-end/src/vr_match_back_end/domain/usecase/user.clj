@@ -32,6 +32,23 @@
      (-> params
          (assoc :id user-id)))))
 
+(s/fdef get-me
+  :args (s/cat :c ::user-usecase
+               :session ::session
+               :with-images? boolean?)
+  :ret ::euser/user)
+(defn get-me
+  [{:keys [user-repository]}
+   session
+   with-images?]
+  (let [user-id (ruser/get-user-id-by-session
+                 user-repository
+                 session)]
+    (ruser/get-user-by-id
+     user-repository
+     user-id
+     with-images?)))
+
 (defrecord UserUsecase [user-repository]
   component/Lifecycle
   (start [this] this)
