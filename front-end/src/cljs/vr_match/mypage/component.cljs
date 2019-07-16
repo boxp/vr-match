@@ -52,6 +52,7 @@
                  platformOptions
                  isLoading
                  handleSubmitUserName
+                 handleSubmitIntroduction
                  handleSubmitMainImage]}]
       [navigation-bar-layout {:title "プロフィールを編集"}
        [:div {:style {:position "relative"}}
@@ -118,7 +119,9 @@
                                 :handleCancel handle-close-user-name}]
         [edit-introduction-dialog {:isOpen @editing-introduction?
                                    :introduction (-> me :introduction)
-                                   :handleClickSubmit handle-close-introduction
+                                   :handleSubmit (fn [introduction]
+                                                   (handleSubmitIntroduction introduction)
+                                                   (handle-close-introduction))
                                    :handleCancel handle-close-introduction}]
         [edit-platform-dialog {:isOpen @editing-platform?
                                :platforms (-> me :platForms)

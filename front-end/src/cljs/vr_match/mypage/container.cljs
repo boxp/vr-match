@@ -13,6 +13,11 @@
   (re-frame/dispatch
    [::events/update-me {:name user-name}]))
 
+(defn handle-submit-introduction
+  [introduction]
+  (re-frame/dispatch
+   [::events/update-me {:introduction introduction}]))
+
 (defn handle-submit-main-image
   [main-image-data-url]
   (re-frame/dispatch
@@ -43,6 +48,7 @@
       [component/mypage (merge @mypage-state
                                {:isLoading @isLoading
                                 :handleSubmitUserName handle-submit-user-name
+                                :handleSubmitIntroduction handle-submit-introduction
                                 :handleSubmitMainImage handle-submit-main-image})])))
 
 (util/universal-set-loaded! :mypage)
