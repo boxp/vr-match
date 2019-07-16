@@ -16,7 +16,10 @@
   :ret vector?)
 (defn edit-introduction-dialog
   [props]
-  (let [draft-introduction (r/atom (-> props :introduction))]
+  (let [draft-introduction (r/atom (-> props :introduction))
+        handle-change (fn [e]
+                        (reset! draft-introduction
+                          (.. e -target -value)))]
     (fn [{:keys [isOpen
                  introduction
                  handleSubmit
@@ -27,7 +30,8 @@
                    :full-screen true}
        [mui/dialog-title "自己紹介を編集"]
        [mui/dialog-content
-        [mui/text-field {:autoFocus true
+        [mui/text-field {:on-change handle-change
+                         :autoFocus true
                          :full-width true
                          :multiline true
                          :margin "dense"
