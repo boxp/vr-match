@@ -184,6 +184,30 @@
          (throw (ex-info "無効なセッションです"
                          {:type :invalid-session})))))
 
+(s/fdef get-images-by-user-id
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id)
+  :ret (s/coll-of ::eimage/id))
+(defn- get-images-by-user-id
+  [{:keys [mysql-datasource]}
+   user-id]
+  (->> (user_image-by-user_id (:db mysql-datasource)
+                              {:user_id  user-id})
+       (map record->image)))
+
+(s/fdef get-user-by-id
+  :args (s/cat :c ::user-repository
+               :id ::euser/id
+               :with-images? boolean?)
+  :ret ::euser/user)
+(defn get-user-by-id
+  [{:keys [mysql-datasource] :as c}
+   id
+   with-images?]
+  (cond-> (user-by-id (:db mysql-datasource) {:id id})
+    with-images? (assoc :images (get-images-by-user-id c id))
+    :always identity))
+
 (defrecord UserRepositoryComponent [mysql-datasource
                                     firebase-admin-datasource]
   component/Lifecycle
