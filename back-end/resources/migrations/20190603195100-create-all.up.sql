@@ -11,11 +11,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema vr_match
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `vr_match` ;
-
--- -----------------------------------------------------
--- Schema vr_match
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `vr_match` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin ;
 USE `vr_match` ;
 
@@ -31,8 +26,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user` (
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `firebase_id_UNIQUE` (`firebase_id` ASC))
-ENGINE = InnoDB;
+  UNIQUE INDEX `firebase_id_UNIQUE` (`firebase_id` ASC)) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -46,8 +40,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`platform` (
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
-
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC)) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- -----------------------------------------------------
 -- Table `vr_match`.`user_platform`
@@ -69,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_platform` (
     FOREIGN KEY (`platform_id`)
     REFERENCES `vr_match`.`platform` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -87,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_token` (
     FOREIGN KEY (`user_id`)
     REFERENCES `vr_match`.`user` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -100,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`image` (
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC)) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -123,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_image` (
     FOREIGN KEY (`image_id`)
     REFERENCES `vr_match`.`image` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -145,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_favorite` (
     FOREIGN KEY (`to_id`)
     REFERENCES `vr_match`.`user` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -167,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_match` (
     FOREIGN KEY (`to_id`)
     REFERENCES `vr_match`.`user` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -189,8 +182,7 @@ CREATE TABLE IF NOT EXISTS `vr_match`.`user_skip` (
     FOREIGN KEY (`to_id`)
     REFERENCES `vr_match`.`user` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

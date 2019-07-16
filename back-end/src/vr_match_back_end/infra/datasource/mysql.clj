@@ -16,7 +16,12 @@
 
 (defn init-db
   [{:keys [dbname user password] :as params}]
-  (assoc params :dbtype "mysql"))
+  (-> {}
+      (assoc :classname "com.mysql.jdbc.Driver")
+      (assoc :subprotocol "mysql")
+      (assoc :subname (str "//127.0.0.1:3306/" dbname "?connectionCollation=utf8mb4_bin"))
+      (assoc :user user)
+      (assoc :password password)))
 
 (defrecord MysqlDatasourceComponent [dbname user password db]
   component/Lifecycle
