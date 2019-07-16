@@ -28,7 +28,7 @@
      {:status 200
       :headers {"Access-Control-Allow-Methods" "POST, GET, OPTIONS"
                 "Access-Control-Allow-Credentials" "true"
-                "Access-Control-Allow-Headers" "Content-Type"}})
+                "Access-Control-Allow-Headers" "Content-Type, Session"}})
    (route/not-found {:status 404
                      :headers {}
                      :body "<h1>404 page not found</h1>"})))

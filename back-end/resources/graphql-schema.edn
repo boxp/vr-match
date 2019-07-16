@@ -1,14 +1,24 @@
 {:objects
- {:Platforms
+ {:Image
+  {:fields {:id {:type Int}
+            :url {:type String}}}
+  :Platform
   {:fields {:id {:type Int}
             :name {:type String}
-            :url {:type String}}}
+            :url {:type String}
+            :platformUserId {:type String}}}
+  :PlatformOption
+  {:fields {:id {:type Int}
+            :name {:type String}
+            :exampleUserId {:type String}}}
   :User
   {:fields {:id {:type Int}
             :name {:type String}
             :introduction {:type String}
-            :images {:type (list String)}
-            :platforms {:type (list :Platforms)}}}
+            :images {:type (list :Image)
+                     :optional true}
+            :platforms {:type (list :Platform)
+                        :optional true}}}
   :UserWithSession
   {:fields {:user {:type User}
             :session {:type String}}}
@@ -25,6 +35,14 @@
                     :description "取得可能なお相手の総人数"}
             :edges {:type (list UserEdge)}
             :pageInfo {:type :PageInfo}}}}
+ :input-objects
+ {:PlatformInput
+  {:fields {:id {:type Int}
+            :name {:type String}
+            :platformUserId {:type String
+                             :optional true}}}
+  :PlatformInputs
+  {:fields {:platforms {:type (list :PlatformInput)}}}}
  :queries
  {:approachList {:type :ApproachList
                  :args {:first {:type Int
@@ -35,7 +53,11 @@
                                :optional true}
                         :before {:type String
                                  :optional true}}
-                 :resolve :resolve-approach-list}}
+                 :resolve :resolve-approach-list}
+  :me {:type :User
+       :resolve :resolve-me}
+  :platformOptions {:type (list :PlatformOption)
+                    :resolve :resolve-platform-options}}
  :mutations
  {:registerUser {:type :UserWithSession
                  :description "ユーザー新規登録"
@@ -44,4 +66,19 @@
   :loginUser {:type :UserWithSession
               :description "ユーザーログイン"
               :args {:idToken {:type String}}
-              :resolve :resolve-login-user}}}
+              :resolve :resolve-login-user}
+  :uploadImage {:type :Image
+                :description "画像アップロード"
+                :args {:base64String {:type String}}
+                :resolve :resolve-upload-image}
+  :updateMe {:type Boolean
+             :description "自分のプロフィールをアップデート"
+             :args {:name {:type String
+                           :optional true}
+                    :introduction {:type String
+                                   :optional true}
+                    :imageIds {:type (list Int)
+                               :optional true}
+                    :platforms {:type :PlatformInputs
+                                :optional true}}
+             :resolve :resolve-update-me}}}

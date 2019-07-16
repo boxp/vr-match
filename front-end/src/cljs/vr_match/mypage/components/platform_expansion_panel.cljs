@@ -53,8 +53,9 @@
       [:> js/MaterialUI.Typography
        (-> platform :name)]]
      [:> js/MaterialUI.ExpansionPanelDetails
-      [:form
+      [:form {:style {:width "100%"}}
        [:> js/MaterialUI.FormControl
+        {:full-width true}
         [:> js/MaterialUI.InputLabel
          {:html-for (str "platform-selector-" platformIdx)}
          "活動場所"]
@@ -77,7 +78,7 @@
           :type "text"
           :full-width true
           :on-change handleChangePlatformUserId
-          :default-value (:userId platform)
+          :default-value (:platformUserId platform)
           :placeholder (platform->placeholder
                         platform
                         platformOptions)}]]]]

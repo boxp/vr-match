@@ -2,6 +2,7 @@
   (:require
    [clojure.spec.alpha :as s]
    [clj-time.spec :as t-spec]
+   [vr-match-back-end.domain.entity.platform :as eimage]
    [vr-match-back-end.domain.entity.platform :as eplatform]))
 
 (s/def ::id number?)
@@ -10,7 +11,7 @@
 (s/def ::introduction string?)
 (s/def ::session_cookie string?)
 (s/def ::platforms (s/coll-of ::eplatform/platform))
-(s/def ::images (s/coll-of string?))
+(s/def ::images (s/coll-of ::eimage/image))
 (s/def ::created_at ::t-spec/date-time)
 (s/def ::updated_at ::t-spec/date-time)
 

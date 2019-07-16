@@ -5,8 +5,9 @@
    :auth {:sign-in-link {:error nil
                          :email ""}
           :sign-in-with-email {:error nil
-                               :email-input-required? false}
-          }
+                               :email-input-required? false}}
+   :mypage {:platform-options nil}
+   :myprofile {:uploaded-image nil}
    :me nil
    :router {:key :loading
             :params {}}
@@ -16,5 +17,7 @@
    :fetch-status {:sign-in-link :none
                   :sign-in-with-email :none
                   :register-user :none
-                  :login-user :none}
+                  :login-user :none
+                  :me :none
+                  :mypage :none}
    :history nil})

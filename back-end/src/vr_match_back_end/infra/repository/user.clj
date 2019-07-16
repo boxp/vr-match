@@ -4,18 +4,29 @@
    (com.google.firebase.auth SessionCookieOptions))
   (:require
    [clojure.spec.alpha :as s]
+   [clojure.set :as set]
+   [clojure.java.jdbc :as jdbc]
    [clj-time.core :as t]
    [clj-time.coerce :refer [to-long]]
    [com.stuartsierra.component :as component]
    [hugsql.core :refer [def-db-fns]]
+   [cljstache.core :refer [render]]
    [vr-match-back-end.domain.entity.user :as euser]
+   [vr-match-back-end.domain.entity.image :as eimage]
+   [vr-match-back-end.domain.entity.platform :as eplatform]
    [vr-match-back-end.infra.datasource.firebase-admin :as firebase-admin]))
 
 (def-db-fns "vr_match_back_end/infra/repository/sql/user.sql")
+(def-db-fns "vr_match_back_end/infra/repository/sql/user_image.sql")
+(def-db-fns "vr_match_back_end/infra/repository/sql/user_platform.sql")
 
 (s/def ::firebase-admin-datasource record?)
-(s/def ::id-token string?)
 (s/def ::mysql-datasource record?)
+(s/def ::id-token string?)
+
+(s/def ::user-repository
+  (s/keys :req-un [::firebase-admin-datasource
+                   ::mysql-datasource]))
 
 (s/fdef get-firebase_id
   :args (s/cat :firebase-admin-datasource ::firebase-admin-datasource
@@ -42,8 +53,7 @@
                                          build))))
 
 (s/fdef create-new-user
-  :args (s/cat :c (s/keys :req-un [::firebase-admin-datasource
-                                   ::mysql-datasource])
+  :args (s/cat :c ::user-repository
                :params (s/keys :req-un [::id-token]))
   :ret ::euser/user)
 (defn create-new-user
@@ -77,24 +87,193 @@
                      id-token)
         session_cookie (get-session_cookie
                         firebase-admin-datasource
-                        id-token)]
-    (-> (user-by-firebase_id (:db mysql-datasource)
-                             {:firebase_id firebase_id})
-        (assoc :session_cookie session_cookie))))
+                        id-token)
+        user (user-by-firebase_id (:db mysql-datasource)
+                                  {:firebase_id firebase_id})]
+    (if (seq user)
+      (assoc user :session_cookie session_cookie)
+      (throw (ex-info "未登録のユーザーです"
+                      {:type :unregisterd-user
+                       :firebase_id firebase_id})))))
 
+
+(s/def :image-record/id number?)
+(s/def :image-record/url string?)
+(s/def :image-record/image_type number?)
+(s/def ::image-record
+  (s/keys :req-un [:image-record/id
+                   :image-record/url
+                   :image-record/image_type]))
+(s/fdef record->image
+  :args (s/cat :record ::image-record)
+  :ret (s/nilable ::eimage/image))
+(defn- record->image
+  [record]
+  (when (#{1 2} (:image_type record))
+    (-> record
+        (set/rename-keys {:image_type :type})
+        (update :type #(case %
+                         1 :main
+                         2 :sub
+                         nil)))))
+
+(s/fdef update-user-image
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id
+               :image-ids (s/coll-of ::eimage/id))
+  :ret ::euser/images)
+(defn- update-user-image
+  [{:keys [mysql-datasource] :as c}
+   user-id
+   image-ids]
+  (let [last-images (->> (user_image-by-user_id (:db mysql-datasource)
+                                                {:user_id user-id})
+                         (map record->image)
+                         (filter #(not (nil? %))))]
+    (jdbc/with-db-transaction [tx (:db mysql-datasource)]
+      (if (seq last-images)
+        (do
+          (delete-user_image
+           tx
+           {:image_id (->> last-images first :id)
+            :user_id user-id})
+          (insert-user_image
+           tx
+           {:image_id (-> image-ids first)
+            :user_id user-id
+            :image_type 1}))
+        (insert-user_image
+         tx
+         {:image_id (-> image-ids first)
+          :user_id user-id
+          :image_type 1})))))
+
+(s/fdef update-user-platforms
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id
+               :platforms ::euser/platforms)
+  :ret nil?)
+(defn update-user-platforms
+  [{:keys [mysql-datasource]}
+   user-id
+   platforms]
+  (jdbc/with-db-transaction [tx (:db mysql-datasource)]
+    (delete-user_platform-by-user_id
+     tx
+     {:user_id user-id})
+    (when (seq platforms)
+      (insert-user_platform-tuple
+       tx
+       {:platforms (->> platforms
+                        (map (fn [{:keys [id platform-user-id]}]
+                               [user-id id (or platform-user-id "")]))
+                        vec)}))))
+
+(s/def :update-user-params/image-ids (s/coll-of ::eimage/id))
 (s/fdef update-user
   :args (s/cat :c (s/keys :req-un [::mysql-datasource])
                :params (s/keys :req-un [::euser/id]
                                :opt-un [::euser/name
-                                        ::euser/introduction]))
-  :ret ::euser/user)
+                                        ::euser/introduction
+                                        :update-user-params/image-ids
+                                        ::euser/platforms]))
+  :ret nil?)
 (defn update-user
-  [{:keys [mysql-datasource]}
-   params]
-  (update-user-by-id (:db mysql-datasource) params)
-  (user-by-id (:db mysql-datasource) {:id (:id params)}))
+  [{:keys [mysql-datasource] :as c}
+   {:keys [image-ids platforms] :as params}]
+  (when (seq image-ids)
+    (update-user-image c (:id params) image-ids))
+  (when-not (nil? platforms)
+    (update-user-platforms c (:id params) platforms))
+  (when (seq (->> (keys params) (remove #{:id :image-ids :platforms})))
+    (update-user-by-id
+     (:db mysql-datasource)
+     (select-keys params [:id :name :introduction])))
+  nil)
 
-(defrecord UserRepositoryComponent [firebase-admin-datasource]
+(s/fdef get-user-id-by-session
+  :args (s/cat :c (s/keys :req-un [::firebase-admin-datasource])
+               :session ::euser/session_cookie)
+  :ret ::euser/id)
+(defn get-user-id-by-session
+  [{:keys [firebase-admin-datasource
+           mysql-datasource]}
+   session]
+  (try (-> (user-by-firebase_id
+            (:db mysql-datasource)
+            {:firebase_id
+             (-> firebase-admin-datasource
+                 :auth
+                 (.verifySessionCookie session true)
+                 .getUid)})
+           :id)
+       (catch Exception e
+         (throw (ex-info "無効なセッションです"
+                         {:type :invalid-session})))))
+
+(s/fdef get-images-by-user-id
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id)
+  :ret (s/coll-of ::eimage/id))
+(defn- get-images-by-user-id
+  [{:keys [mysql-datasource]}
+   user-id]
+  (->> (user_image-by-user_id (:db mysql-datasource)
+                              {:user_id  user-id})
+       (map record->image)))
+
+(s/def :user-platform-record/id number?)
+(s/def :user-platform-record/name string?)
+(s/def :user-platform-record/url_template string?)
+(s/def :user-platform-record/platform_user_id string?)
+(s/def ::user-platform-record
+  (s/keys :req-un [:user-platform-record/id
+                   :user-platform-record/name
+                   :user-platform-record/url_template
+                   :user-platform-record/platform_user_id]))
+(s/fdef record->platform
+  :args (s/cat :record ::user-platform-record)
+  :ret ::eplatform/platform)
+(defn- record->platform
+  [record]
+  (cond-> record
+    (= (:platform_user_id record) "")
+    (-> (dissoc :url_template)
+        (dissoc :platform_user_id))
+    :always
+    (-> (dissoc :url_template)
+        (assoc :url (render (:url_template record)
+                            {:user_id (:platform_user_id record)}))
+        (set/rename-keys {:platform_user_id :platform-user-id}))))
+
+(s/fdef get-platforms-by-user-id
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id)
+  :ret (s/coll-of ::eplatform/platform))
+(defn- get-platforms-by-user-id
+  [{:keys [mysql-datasource]}
+   user-id]
+  (->> (user_platform-by-user_id (:db mysql-datasource) {:user_id user-id})
+       (map record->platform)))
+
+(s/fdef get-user-by-id
+  :args (s/cat :c ::user-repository
+               :id ::euser/id
+               :with-images? boolean?
+               :with-platforms? boolean?)
+  :ret ::euser/user)
+(defn get-user-by-id
+  [{:keys [mysql-datasource] :as c}
+   id
+   with-images?
+   with-platforms?]
+  (cond-> (user-by-id (:db mysql-datasource) {:id id})
+    with-images? (assoc :images (get-images-by-user-id c id))
+    with-platforms? (assoc :platforms (get-platforms-by-user-id c id))
+    :always identity))
+
+(defrecord UserRepositoryComponent [mysql-datasource
+                                    firebase-admin-datasource]
   component/Lifecycle
   (start [this]
     this)

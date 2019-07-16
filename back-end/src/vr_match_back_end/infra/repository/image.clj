@@ -21,21 +21,6 @@
 
 (def-db-fns "vr_match_back_end/infra/repository/sql/image.sql")
 
-(s/def :image-record/id number?)
-(s/def :image-record/url string?)
-(s/def :image-record/placeholder_color string?)
-(s/def :image-record/created_at ::t-spec/date-time)
-(s/def :image-record/updated_at ::t-spec/date-time)
-(s/def ::image-record
-  (s/keys :req-un [:image-record/id
-                   :image-record/url
-                   :image-record/placeholder_color
-                   :image-record/created_at
-                   :image-record/updated_at]))
-(s/fdef record->image
-  :args (s/cat :record ::image-record)
-  :ret ::eimage/image)
-
 (s/fdef upload-image
   :args (s/cat :c ::image-repository
                :base64-string string?)
@@ -59,7 +44,8 @@
            (make-array Storage$BlobTargetOption 0))
           .getMediaLink)
       (throw (ex-info "サポートされていない画像のファイル形式です"
-                      {:image-type mime-type})))))
+                      {:type :unsupported-image-type
+                       :image-type mime-type})))))
 
 (s/fdef add-image
   :args (s/cat :c ::image-repository
@@ -76,7 +62,7 @@
     {:id image-id
      :url image-url}))
 
-(defrecord ImageRepository [cloud-storage-datasource]
+(defrecord ImageRepository [cloud-storage-datasource mysql-datasource]
   component/Lifecycle
   (start [this] this)
   (stop [this] this))

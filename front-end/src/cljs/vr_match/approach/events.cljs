@@ -39,7 +39,7 @@
                              [:id
                               :name
                               :introduction
-                              :images
+                              [:images [:id :url]]
                               [:platforms [:id :name]]]]]]]]]}
                 :success-handler ::on-success-fetch-approach-list
                 :error-handler ::events/api-error}]}))
@@ -58,7 +58,7 @@
                                  [:id
                                   :name
                                   :introduction
-                                  :images
+                                  [:images [:id :url]]
                                   [:platForms [:id :name]]]]]]]]]
                     :success-handler ::on-success-fetch-approach-list
                     :error-handler ::events/api-error}]}

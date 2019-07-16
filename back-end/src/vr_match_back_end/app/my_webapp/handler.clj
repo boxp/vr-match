@@ -1,11 +1,13 @@
 (ns vr-match-back-end.app.my-webapp.handler
-  (:require [com.stuartsierra.component :as component]
-            [cheshire.core :refer [generate-string parse-string]]
-            [clojure.edn :as edn]
-            [com.walmartlabs.lacinia.util :refer [attach-resolvers]]
-            [com.walmartlabs.lacinia.schema :as schema]
-            [com.walmartlabs.lacinia :refer [execute]]
-            [vr-match-back-end.app.my-webapp.resolvers :as resolvers]))
+  (:require
+   [clojure.edn :as edn]
+   [clojure.stacktrace :refer [print-stack-trace]]
+   [com.stuartsierra.component :as component]
+   [cheshire.core :refer [generate-string parse-string]]
+   [com.walmartlabs.lacinia.util :refer [attach-resolvers]]
+   [com.walmartlabs.lacinia.schema :as schema]
+   [com.walmartlabs.lacinia :refer [execute]]
+   [vr-match-back-end.app.my-webapp.resolvers :as resolvers]))
 
 (defn index
   [_]
@@ -16,18 +18,26 @@
 
 (defn graphql
   [{:keys [graphql-schema my-webapp-resolvers]} req]
-  (let [query (-> req
-                  :body
-                  slurp
-                  (parse-string true)
-                  :query)]
-    {:status 200
-     :headers {}
-     :body (-> (execute graphql-schema
-                        query
-                        nil
-                        my-webapp-resolvers)
-               generate-string)}))
+  (try
+    (let [session (some-> req :headers (get "session"))
+          query (-> req :body slurp (parse-string true) :query)
+          result (execute graphql-schema
+                          query
+                          nil
+                          (if (seq session)
+                            (merge my-webapp-resolvers {:session session})
+                            my-webapp-resolvers))]
+      {:status (if (-> result :errors seq)
+                 400
+                 200)
+       :headers {}
+       :body (-> result
+                 generate-string)})
+    (catch Exception e
+      (print-stack-trace e)
+      {:status 400
+       :headers {}
+       :body "Something has wrong."})))
 
 (defn- load-schema []
   (-> "resources/graphql-schema.edn"
@@ -35,7 +45,11 @@
       edn/read-string
       (attach-resolvers {:resolve-approach-list resolvers/approach-list
                          :resolve-register-user resolvers/register-user
-                         :resolve-login-user resolvers/login-user})
+                         :resolve-login-user resolvers/login-user
+                         :resolve-upload-image resolvers/upload-image
+                         :resolve-update-me resolvers/update-me
+                         :resolve-me resolvers/me
+                         :resolve-platform-options resolvers/platform-options})
       schema/compile))
 
 (defrecord MyWebappHandlerComponent [graphql-schema my-webapp-resolvers]
