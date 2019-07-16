@@ -19,7 +19,7 @@
                  [cljstache "2.0.4"]
                  [org.clojure/tools.namespace "0.3.0"]
                  [com.walmartlabs/lacinia "0.33.0"]
-                 [vincit/venia "0.2.5"]
+                 [e85th/venia "0.2.5-1"]
                  [com.layerware/hugsql "0.4.9"]
                  [mysql/mysql-connector-java "8.0.16"]
                  [com.google.firebase/firebase-admin "6.8.1" :exclusions [io.grpc/grpc-core]]

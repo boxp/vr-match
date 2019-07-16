@@ -59,7 +59,7 @@
                  [kibu/pushy "0.3.8"]
                  [cljsjs/material-ui "3.9.3-0"]
                  [cljsjs/firebase "5.7.3-1"]
-                 [vincit/venia "0.2.5"]
+                 [e85th/venia "0.2.5-1"]
                  [cljs-ajax "0.8.0"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]]
