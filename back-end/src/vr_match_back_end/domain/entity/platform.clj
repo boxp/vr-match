@@ -7,15 +7,15 @@
 (s/def ::id number?)
 (s/def ::name string?)
 (s/def ::url string?)
-(s/def ::platform_user_id string?)
+(s/def ::platform-user-id string?)
 
 (s/def ::platform
   (s/keys :req-un [::id
                    ::name
                    ::url]
-          :opt-un [::platform_user_id]))
+          :opt-un [::platform-user-id]))
 
-(s/def ::example-platform-user-id ::platform_user_id)
+(s/def ::example-platform-user-id ::platform-user-id)
 
 (s/def ::platform-master
   (s/keys :req-un [::id
