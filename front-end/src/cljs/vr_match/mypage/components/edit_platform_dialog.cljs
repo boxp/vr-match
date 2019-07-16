@@ -96,7 +96,7 @@
     (r/create-class
      {:display-name "mypage"
       :component-did-update
-      (fn [this old-props]
+      (fn [this [_ old-props]]
         (let [{:keys [platforms]} (r/props this)
               old-platforms (:platforms old-props)]
           (when (and (nil? old-platforms)

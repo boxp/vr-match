@@ -94,8 +94,6 @@
                  with-platforms?]}]]
    (when (-> db :fetch-status :me (not= :loading))
      (let [me-props (vec (cond->> [:id :name :introduction]
-                           (and with-images? with-platforms?) (concat [[:images [:id :url]]
-                                                                       [:platforms [:id :name :url :platformUserId]]])
                            with-images? (concat [[:images [:id :url]]])
                            with-platforms? (concat [[:platforms [:id :name :url :platformUserId]]])
                            :always identity))]
