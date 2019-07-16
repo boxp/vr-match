@@ -9,7 +9,8 @@
  (fn [{:keys [db]}
       [_ {:keys [data]}]]
    {:db (assoc-in db [:fetch-status :mypage] :loaded)
-    :dispatch [::events/fetch-me true]}))
+    :dispatch [::events/fetch-me {:with-images? true
+                                  :with-platforms? true}]}))
 
 (re-frame/reg-event-fx
  ::on-error-update-me
@@ -105,5 +106,6 @@
 (re-frame/reg-event-fx
  ::initialize
  (fn [_ _]
-   {:dispatch-n [[::events/fetch-me true]
+   {:dispatch-n [[::events/fetch-me {:with-images? true
+                                     :with-platforms? true}]
                  [::fetch-platform-options]]}))

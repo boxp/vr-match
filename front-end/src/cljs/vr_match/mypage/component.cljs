@@ -134,7 +134,7 @@
                                                      (handle-close-introduction))
                                      :handleCancel handle-close-introduction}]
           [edit-platform-dialog {:isOpen @editing-platform?
-                                 :platforms (-> me :platForms)
+                                 :platforms (-> me :platforms)
                                  :platformOptions platformOptions
                                  :handleClickSubmit handle-close-platform
                                  :handleCancel handle-close-platform}]]])})))

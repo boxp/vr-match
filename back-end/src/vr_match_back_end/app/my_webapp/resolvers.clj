@@ -122,10 +122,14 @@
 (defn me
   [{:keys [user-usecase session] :as context} _ _]
    (try
-     (uuser/get-me
-      user-usecase
-      session
-      (executor/selects-field? context :User/images))
+     (->
+      (uuser/get-me
+       user-usecase
+       session
+       (executor/selects-field? context :User/images)
+       (executor/selects-field? context :User/platforms))
+      (update :platforms #(map (fn [platform]
+                                 (set/rename-keys platform {:platform-user-id :platformUserId})) %)))
      (catch Exception e (handle-error e))))
 
 (defn platform-options

@@ -5,7 +5,8 @@
   :Platform
   {:fields {:id {:type Int}
             :name {:type String}
-            :url {:type String}}}
+            :url {:type String}
+            :platformUserId {:type String}}}
   :PlatformOption
   {:fields {:id {:type Int}
             :name {:type String}

@@ -83,16 +83,21 @@
  (fn [{:keys [db]}
       [_ {:keys [errors]}]]
    {:db (assoc-in db [:fetch-status :me] :loaded)
-    :dispatch-n [[::api-error errors]
-                 [::push "/"]]}))
+    :dispatch (case (-> errors first :extensions :type)
+                "invalid-session" [::push "/"]
+                [::api-error errors])}))
 
 (re-frame/reg-event-fx
  ::fetch-me
  (fn [{:keys [db]}
-      [_ with-images?]]
+      [_ {:keys [with-images?
+                 with-platforms?]}]]
    (when (-> db :fetch-status :me (not= :loading))
      (let [me-props (vec (cond->> [:id :name :introduction]
+                           (and with-images? with-platforms?) (concat [[:images [:id :url]]
+                                                                       [:platforms [:id :name :url :platformUserId]]])
                            with-images? (concat [[:images [:id :url]]])
+                           with-platforms? (concat [[:platforms [:id :name :url :platformUserId]]])
                            :always identity))]
        {:db (assoc-in db [:fetch-status :me] :loading)
         :dispatch [::graphql-query

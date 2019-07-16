@@ -226,7 +226,7 @@
   :args (s/cat :c ::user-repository
                :user-id ::euser/id)
   :ret (s/coll-of ::eplatform/platform))
-(defn get-platforms-by-user-id
+(defn- get-platforms-by-user-id
   [{:keys [mysql-datasource]}
    user-id]
   (->> (user_platform-by-user_id (:db mysql-datasource) {:user_id user-id})
@@ -235,14 +235,17 @@
 (s/fdef get-user-by-id
   :args (s/cat :c ::user-repository
                :id ::euser/id
-               :with-images? boolean?)
+               :with-images? boolean?
+               :with-platforms? boolean?)
   :ret ::euser/user)
 (defn get-user-by-id
   [{:keys [mysql-datasource] :as c}
    id
-   with-images?]
+   with-images?
+   with-platforms?]
   (cond-> (user-by-id (:db mysql-datasource) {:id id})
     with-images? (assoc :images (get-images-by-user-id c id))
+    with-platforms? (assoc :platforms (get-platforms-by-user-id c id))
     :always identity))
 
 (defrecord UserRepositoryComponent [mysql-datasource

@@ -35,19 +35,22 @@
 (s/fdef get-me
   :args (s/cat :c ::user-usecase
                :session ::session
-               :with-images? boolean?)
+               :with-images? boolean?
+               :with-platforms? boolean?)
   :ret ::euser/user)
 (defn get-me
   [{:keys [user-repository]}
    session
-   with-images?]
+   with-images?
+   with-platforms?]
   (let [user-id (ruser/get-user-id-by-session
                  user-repository
                  session)]
     (ruser/get-user-by-id
      user-repository
      user-id
-     with-images?)))
+     with-images?
+     with-platforms?)))
 
 (defrecord UserUsecase [user-repository]
   component/Lifecycle
