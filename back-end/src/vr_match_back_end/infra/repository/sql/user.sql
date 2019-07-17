@@ -28,7 +28,7 @@ id = :id
 where id = :id
 
 -- :name recommended-user-by-user_id :? :*
--- :doc user_idのuserに対しておすすめ順にユーザーを取得
+-- :doc user_idのuserに対してまだお気に入りもスキップもしていないユーザーをおすすめ順に取得
 select user.id, user.name, user.introduction
 from user
 left join user_platform on user.id = user_platform.user_id and user_platform.platform_id in (
@@ -38,7 +38,9 @@ left join user_platform on user.id = user_platform.user_id and user_platform.pla
   where user.id = :user_id
 )
 left join user_image on user.id = user_image.user_id
+left join user_skip on user.id = user_skip.to_id and user_skip.from_id = :user_id
 where user.id != :user_id
+and user_skip.to_id is null
 group by user.id, user.name, user.introduction, user_platform.user_id, user_image.user_id
 order by count(user_platform.platform_id) desc, count(user_image.image_id) desc, user.created_at desc
 limit :offset, :limit
