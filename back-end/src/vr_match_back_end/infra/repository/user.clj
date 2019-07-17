@@ -214,7 +214,7 @@
 (s/fdef get-images-by-user-id
   :args (s/cat :c ::user-repository
                :user-id ::euser/id)
-  :ret (s/coll-of ::eimage/id))
+  :ret (s/coll-of ::eimage/image))
 (defn- get-images-by-user-id
   [{:keys [mysql-datasource]}
    user-id]
@@ -271,6 +271,24 @@
     with-images? (assoc :images (get-images-by-user-id c id))
     with-platforms? (assoc :platforms (get-platforms-by-user-id c id))
     :always identity))
+
+(s/fdef get-recommended-user-by-user-id
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id
+               :with-images? boolean?
+               :with-platforms? boolean?)
+  :ret (s/coll-of ::euser/user))
+(defn get-recommended-user-by-user-id
+  [{:keys [mysql-datasource] :as c}
+   user-id
+   with-images?
+   with-platforms?]
+  (->> (recommended-user-by-user_id
+        (:db mysql-datasource)
+        {:user_id user-id})
+       (pmap #(cond-> %
+                with-images? (assoc :images (get-images-by-user-id c (:id %)))
+                with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %)))))))
 
 (defrecord UserRepositoryComponent [mysql-datasource
                                     firebase-admin-datasource]
