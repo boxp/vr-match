@@ -31,9 +31,7 @@
             :hasPreviousPage {:type Boolean}
             :hasNextPage {:type Boolean}}}
   :ApproachList
-  {:fields {:total {:type Int
-                    :description "取得可能なお相手の総人数"}
-            :edges {:type (list UserEdge)}
+  {:fields {:edges {:type (list UserEdge)}
             :pageInfo {:type :PageInfo}}}}
  :input-objects
  {:PlatformInput
