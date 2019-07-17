@@ -3,6 +3,7 @@
             [re-frame.core :as re-frame]
             [vr-match.events :as events]
             [vr-match.util :as util]
+            [vr-match.welcome.events :as welcome-events]
             [vr-match.welcome.component :as component]))
 
 ;; TODO: re-frameつなぎ込み
@@ -17,7 +18,8 @@
 (defn- handle-click-register []
   (re-frame/dispatch [::events/push "/register"]))
 
-(defn- handle-initialize [])
+(defn- handle-initialize []
+  (re-frame/dispatch [::welcome-events/initialize]))
 
 (defn welcome
   [params]
