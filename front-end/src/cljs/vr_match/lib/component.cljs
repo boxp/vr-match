@@ -33,7 +33,7 @@
   [:div {:style {:position "relative"
                  :height "100%"}}
    [header {:title title}]
-   [:div {:style {:margin-top "56px"
+   [:div {:style {:padding-top "56px"
                   :box-sizing "border-box"
                   :height "100%"
                   :width "100%"}}
