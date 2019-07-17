@@ -1,0 +1,31 @@
+(ns vr-match-back-end.domain.usecase.approach
+  (:require
+   [clojure.spec.alpha :as s]
+   [com.stuartsierra.component :as component]
+   [vr-match-back-end.domain.entity.user :as euser]
+   [vr-match-back-end.infra.repository.user :as ruser]))
+
+(s/def ::approach-usecase
+  (s/keys :req-un [::ruser/user-repository]))
+
+(s/def ::session ::euser/session_cookie)
+(s/fdef skip
+  :args (s/cat :c ::approach-usecase
+               :session ::session
+               :partner-id ::euser/id))
+(defn skip
+  [{:keys [user-repository]}
+   session
+   partner-id]
+  (let [me-id (ruser/get-user-id-by-session
+               user-repository
+               session)]
+    (ruser/skip-partner user-repository
+                        me-id
+                        partner-id)))
+
+(defrecord ApproachUsecase [user-repository]
+  component/Lifecycle
+  (start [this] this)
+  (stop [this] this))
+

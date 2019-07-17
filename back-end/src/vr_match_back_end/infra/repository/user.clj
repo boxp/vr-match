@@ -19,6 +19,7 @@
 (def-db-fns "vr_match_back_end/infra/repository/sql/user.sql")
 (def-db-fns "vr_match_back_end/infra/repository/sql/user_image.sql")
 (def-db-fns "vr_match_back_end/infra/repository/sql/user_platform.sql")
+(def-db-fns "vr_match_back_end/infra/repository/sql/user_skip.sql")
 
 (s/def ::firebase-admin-datasource record?)
 (s/def ::mysql-datasource record?)
@@ -309,6 +310,20 @@
                                (pmap #(cond-> %
                                         with-images? (assoc :images (get-images-by-user-id c (:id %)))
                                         with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %)))))))))
+
+(s/fdef skip-partner
+  :args (s/cat :c ::user-repository
+               :me-id ::euser/id
+               :partner-id ::euser/id)
+  :ret nil?)
+(defn skip-partner
+  [{:keys [mysql-datasource]}
+   me-id
+   partner-id]
+  (insert-user_skip (:db mysql-datasource)
+                    {:from_id me-id
+                     :to_id partner-id})
+  nil)
 
 (defrecord UserRepositoryComponent [mysql-datasource
                                     firebase-admin-datasource]

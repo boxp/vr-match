@@ -49,6 +49,7 @@
                          :resolve-upload-image resolvers/upload-image
                          :resolve-update-me resolvers/update-me
                          :resolve-me resolvers/me
+                         :resolve-skip resolvers/skip
                          :resolve-platform-options resolvers/platform-options})
       schema/compile))
 

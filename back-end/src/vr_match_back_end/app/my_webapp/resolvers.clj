@@ -11,7 +11,8 @@
    [vr-match-back-end.domain.usecase.auth :as uauth]
    [vr-match-back-end.domain.usecase.image :as uimage]
    [vr-match-back-end.domain.usecase.user :as uuser]
-   [vr-match-back-end.domain.usecase.platform :as uplatform]))
+   [vr-match-back-end.domain.usecase.platform :as uplatform]
+   [vr-match-back-end.domain.usecase.approach :as uapproach]))
 
 (defmulti handle-error #(some-> % ex-data :type))
 
@@ -166,6 +167,19 @@
                                 (set/rename-keys platform {:platform-user-id :platformUserId})) %)))
     (catch Exception e (handle-error e))))
 
+(defn skip
+  [{:keys [approach-usecase session]}
+   {:keys [partnerId]}
+   _]
+  (try
+    (do
+      (uapproach/skip
+       approach-usecase
+       session
+       partnerId)
+      true)
+    (catch Exception e (handle-error e))))
+
 (defn platform-options
   [{:keys [platform-usecase]} _ _]
   (try
@@ -173,7 +187,7 @@
          (map #(set/rename-keys % {:example-platform-user-id :exampleUserId})))
     (catch Exception e (handle-error e))))
 
-(defrecord MyWebappResolversComponent [auth-usecase image-usecase user-usecase]
+(defrecord MyWebappResolversComponent [auth-usecase image-usecase user-usecase approach-usecase]
   component/Lifecycle
   (start [this]
     (-> this))
