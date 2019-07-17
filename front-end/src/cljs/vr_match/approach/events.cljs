@@ -32,15 +32,16 @@
  ::fetch-approach-list
  (fn [{:keys [db] :as cofx} [_ {:keys [count]}]]
    {:dispatch [::events/graphql-query
-               {:query {:venia/queries [[:approachList {:first count}
-                         [[:edges
-                           [:cursor
-                            [:node
-                             [:id
-                              :name
-                              :introduction
-                              [:images [:id :url]]
-                              [:platforms [:id :name]]]]]]]]]}
+               {:query {:venia/queries
+                        [[:approachList {:first count}
+                          [[:edges
+                            [:cursor
+                             [:node
+                              [:id
+                               :name
+                               :introduction
+                               [:images [:id :url]]
+                               [:platforms [:id :name]]]]]]]]]}
                 :success-handler ::on-success-fetch-approach-list
                 :error-handler ::events/api-error}]}))
 
@@ -50,16 +51,17 @@
    (let [after (some-> db :approach :list :edges last :cursor)]
      (if after
        {:dispatch [::events/graphql-query
-                   {:query [[:approachList {:first count
-                                            :after after}
-                             [[:edges
-                               [:cursor
-                                [:node
-                                 [:id
-                                  :name
-                                  :introduction
-                                  [:images [:id :url]]
-                                  [:platForms [:id :name]]]]]]]]]
+                   {:query {:venia/queries
+                            [[:approachList {:first count
+                                             :after after}
+                              [[:edges
+                                [:cursor
+                                 [:node
+                                  [:id
+                                   :name
+                                   :introduction
+                                   [:images [:id :url]]
+                                   [:platforms [:id :name]]]]]]]]]}
                     :success-handler ::on-success-fetch-approach-list
                     :error-handler ::events/api-error}]}
        {}))))

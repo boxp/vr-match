@@ -91,7 +91,9 @@
        :pageInfo {:startCursor (->> edges first :cursor)
                   :endCursor (->> edges last :cursor)
                   :hasPreviousPage (> (or offset 0) 0)
-                  :hasNextPage (< (->> edges last :cursor cursor->int) total)}})
+                  :hasNextPage (if (seq edges)
+                                 (< (some->> edges last :cursor cursor->int) total)
+                                 false)}})
     (catch Exception e (handle-error e))))
 
 (defn register-user
