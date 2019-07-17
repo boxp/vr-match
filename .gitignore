@@ -19,3 +19,4 @@ nashorn_code_cache
 target
 .#*
 *.log
+.envrc

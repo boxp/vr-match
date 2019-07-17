@@ -79,4 +79,8 @@
                                :optional true}
                     :platforms {:type :PlatformInputs
                                 :optional true}}
-             :resolve :resolve-update-me}}}
+             :resolve :resolve-update-me}
+  :skip {:type Boolean
+         :description "お相手をスキップ"
+         :args {:partnerId {:type Int}}
+         :resolve :resolve-skip}}}
