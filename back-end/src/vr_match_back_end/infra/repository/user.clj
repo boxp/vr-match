@@ -214,7 +214,7 @@
 (s/fdef get-images-by-user-id
   :args (s/cat :c ::user-repository
                :user-id ::euser/id)
-  :ret (s/coll-of ::eimage/id))
+  :ret (s/coll-of ::eimage/image))
 (defn- get-images-by-user-id
   [{:keys [mysql-datasource]}
    user-id]
@@ -271,6 +271,44 @@
     with-images? (assoc :images (get-images-by-user-id c id))
     with-platforms? (assoc :platforms (get-platforms-by-user-id c id))
     :always identity))
+
+(s/def :paging-parameters/offset number?)
+(s/def :paging-parameters/limit number?)
+(s/def ::paging-parameters
+  (s/keys :opt-un [:paging-parameters/offset :paging-parameters/limit]))
+(s/def :get-recommended-users-by-user-id-result/total number?)
+(s/def :get-recommended-users-by-user-id-result/users (s/coll-of ::euser/user))
+(s/def ::get-recommended-users-by-user-id-result
+  (s/keys :req-un [:get-recommended-users-by-user-id-result/users]
+          :opt-un [:get-recommended-users-by-user-id-result/total]))
+(s/fdef get-recommended-users-by-user-id
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id
+               :with-images? boolean?
+               :with-platforms? boolean?
+               :with-total? boolean?
+               :paging-parameters ::paging-parameters)
+  :ret (s/coll-of ::euser/user))
+(defn get-recommended-users-by-user-id
+  [{:keys [mysql-datasource] :as c}
+   user-id
+   with-images?
+   with-platforms?
+   with-total?
+   {:keys [limit offset]}]
+  (cond-> {}
+    with-total? (assoc :total (:total
+                               (count-recommended-user-by-user_id
+                                (:db mysql-datasource)
+                                {:user_id user-id})))
+    :always (assoc :users (->> (recommended-user-by-user_id
+                                (:db mysql-datasource)
+                                {:user_id user-id
+                                 :offset (or offset 0)
+                                 :limit (or limit 10)})
+                               (pmap #(cond-> %
+                                        with-images? (assoc :images (get-images-by-user-id c (:id %)))
+                                        with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %)))))))))
 
 (defrecord UserRepositoryComponent [mysql-datasource
                                     firebase-admin-datasource]

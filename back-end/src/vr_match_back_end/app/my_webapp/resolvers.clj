@@ -1,9 +1,10 @@
 (ns vr-match-back-end.app.my-webapp.resolvers
   (:require
-   [com.stuartsierra.component :as component]
+   [clojure.spec.alpha :as s]
    [clojure.data.codec.base64 :as b64]
    [clojure.stacktrace :refer [print-stack-trace]]
    [clojure.set :as set]
+   [com.stuartsierra.component :as component]
    [com.walmartlabs.lacinia.resolve :refer [resolve-as]]
    [com.walmartlabs.lacinia.executor :as executor]
    [vr-match-back-end.app.my-webapp.converter :refer [user->User]]
@@ -28,44 +29,71 @@
   (print-stack-trace error)
   (resolve-as nil {:message "Something has wrong."}))
 
+(s/fdef int->cursor
+  :args (s/cat :n int?)
+  :ret string?)
+(defn int->cursor
+  [n]
+  (-> n str .getBytes b64/encode String.))
+
+(s/fdef cursor->int
+  :args (s/cat :cursor string?)
+  :ret int?)
+(defn cursor->int
+  [cursor]
+  (-> cursor .getBytes b64/decode String. Integer.))
+
+(s/def :paging-arguments/first number?)
+(s/def :paging-arguments/after string?)
+(s/def :paging-arguments/last number?)
+(s/def :paging-arguments/before string?)
+(s/def ::paging-arguments
+  (s/keys :opt-un [:paging-arguments/first
+                   :paging-arguments/after
+                   :paging-arguments/last
+                   :paging-arguments/before]))
+(s/fdef paging-arguments->paging-params
+  :args (s/cat :paging-arguments ::paging-arguments)
+  :ret ::uuser/paging-params)
+(defn- paging-arguments->paging-params
+  [paging-arguments]
+  (let [first (:first paging-arguments)
+        after (some-> paging-arguments :after cursor->int)
+        last (:last paging-arguments)
+        before (some-> paging-arguments :before cursor->int)]
+    (cond
+      (or first after) (cond-> {}
+                         after (assoc :offset after)
+                         first (assoc :limit first))
+      (and last before) {:offset (- before last)
+                         :limit last}
+      before {:limit before}
+      :else {})))
+
 (defn approach-list
-  [context arguments value]
+  [{:keys [user-usecase session]}
+   arguments
+   value]
   (try
-    (let [{:keys [first after last before]} arguments
-          cursor (-> 1 str .getBytes b64/encode)]
-      {:edges
-       (->>
-        [{:node
-          {:id 1
-           :title "サンプル画像"
-           :name "一箱"
-           :introduction "バーチャル清楚系女子高校生Webアプリケーションエンジニアおじさんです。こっそりプログラミングしてます。"
-           :platforms [{:id 1 :name "VRChat"} {:id 2 :name "VRoidHub"} {:id 3 :name "VirtualCast"}]
-           :images [{:id 1 :url "https://storage.googleapis.com/boxp-tmp/profile_sample.png"}]}
-          :cursor (-> 1 str .getBytes b64/encode)}
-         {:node
-          {:id 2
-           :title "サンプル画像"
-           :name "ヒマリ"
-           :introduction "一箱さんちのヒマリです！"
-           :platforms [{:id 1 :name "VRChat"} {:id 3 :name "VirtualCast"}]
-           :images [{:id 2 :url "https://storage.googleapis.com/boxp-tmp/profile_sample_2.jpg"}]}
-          :cursor (-> 2 str .getBytes b64/encode)}
-         {:node
-          {:id 3
-           :title "サンプル画像"
-           :name "アリシア・ソリッド"
-           :introduction "ニコニ立体で公式キャラクターやってます。よろしくお願いします！"
-           :platforms [{:id 3 :name "VirtualCast"}]
-           :images [{:id 3 :url "https://storage.googleapis.com/boxp-tmp/profile_sample_3.jpg"}]}
-          :cursor (-> 3 str .getBytes b64/encode)}]
-        cycle
-        (take first))
-       :pageInfo {:startCursor cursor
-                  :endCursor cursor
-                  :hasPreviousPage true
-                  :hasNextPage true}
-       :total 99999})
+    (let [{:keys [offset limit]} (paging-arguments->paging-params arguments)
+          {:keys [total users]} (uuser/get-my-recommended-users
+                                 user-usecase
+                                 session
+                                 true
+                                 true
+                                 true
+                                 (paging-arguments->paging-params arguments))
+          edges (seq (map-indexed
+                      (fn [idx user]
+                        {:node user
+                         :cursor (int->cursor (+ (or offset 0) idx 1))}) users))]
+      {:edges edges
+       :pageInfo {:startCursor (->> edges first :cursor)
+                  :endCursor (->> edges last :cursor)
+                  :hasPreviousPage (> (or offset 0) 0)
+                  :hasNextPage (if (seq edges)
+                                 (< (some->> edges last :cursor cursor->int) total)
+                                 false)}})
     (catch Exception e (handle-error e))))
 
 (defn register-user

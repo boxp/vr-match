@@ -53,6 +53,41 @@
      with-images?
      with-platforms?)))
 
+(s/def :paging-params/offset number?)
+(s/def :paging-params/limit number?)
+(s/def ::paging-params
+  (s/keys :opt-un [:paging-params/offset :paging-params/limit]))
+(s/def :get-my-recommended-users-result/total number?)
+(s/def :get-my-recommended-users-result/users (s/coll-of ::euser/user))
+(s/def ::get-my-recommended-users-result
+  (s/keys :req-un [:get-my-recommended-users-result/users]
+          :opt-un [:get-my-recommended-users-result/total]))
+(s/fdef get-my-recommended-users
+  :args (s/cat :c ::user-usecase
+               :session ::session
+               :with-images? boolean?
+               :with-platforms? boolean?
+               :with-total? boolean?
+               :paging-params ::paging-params)
+  :ret ::get-my-recommended-users-result)
+(defn get-my-recommended-users
+  [{:keys [user-repository]}
+   session
+   with-images?
+   with-platforms?
+   with-total?
+   paging-params]
+  (let [user-id (ruser/get-user-id-by-session
+                 user-repository
+                 session)]
+    (ruser/get-recommended-users-by-user-id
+     user-repository
+     user-id
+     with-images?
+     with-platforms?
+     with-total?
+     paging-params)))
+
 (defrecord UserUsecase [user-repository]
   component/Lifecycle
   (start [this] this)
