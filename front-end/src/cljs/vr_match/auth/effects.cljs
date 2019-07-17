@@ -9,15 +9,9 @@
 
 (re-frame/reg-fx
  ::initialize-firebase
- (fn []
+ (fn [config]
    (when-not @firebase-instance
-     (->> (js/firebase.initializeApp #js {"apiKey" "AIzaSyB43RXz3nt_ihJxRuElcCdUW7QOACsP-xc"
-                                          "authDomain" "vr-match.firebaseapp.com"
-                                          "databaseURL" "https://vr-match.firebaseio.com"
-                                          "projectId" "vr-match"
-                                          "storageBucket" "vr-match.appspot.com"
-                                          "messagingSenderId" "431230778247"
-                                          "appId" "1:431230778247:web:d195b37d884b0cc7"})
+     (->> (js/firebase.initializeApp config)
           (reset! firebase-instance)))))
 
 (re-frame/reg-fx

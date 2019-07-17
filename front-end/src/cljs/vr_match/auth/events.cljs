@@ -8,8 +8,9 @@
 
 (re-frame/reg-event-fx
  ::initialize
- (fn [{:keys [db]} _]
-   {::auth-effects/initialize-firebase {}}))
+ [(re-frame/inject-cofx ::coeffects/firebase-config)]
+ (fn [{:keys [db firebase-config]} _]
+   {::auth-effects/initialize-firebase (clj->js firebase-config)}))
 
 (re-frame/reg-event-fx
  ::success-send-sign-in-link-to-email

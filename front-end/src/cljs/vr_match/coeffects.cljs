@@ -28,3 +28,11 @@
    (assoc coeffects
           :session
           (.getItem js/localStorage "session"))))
+
+(re-frame/reg-cofx
+ ::firebase-config
+ (fn [coeffects]
+   (assoc coeffects
+          :firebase-config
+          (some-> js/firebaseConfig
+                  reader/read-string))))

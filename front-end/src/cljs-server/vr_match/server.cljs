@@ -32,6 +32,15 @@
 
 (def api-endpoint (or js/process.env.API_ENDPOINT "http://localhost:8080"))
 
+(def firebase-config
+  {:apiKey js/process.env.FIREBASE_API_KEY
+   :authDomain js/process.env.FIREBASE_AUTH_DOMAIN
+   :databaseURL js/process.env.FIREBASE_DATABASE_URL
+   :projectId js/process.env.FIREBASE_PROJECT_ID
+   :storageBucket js/process.env.FIREBASE_STORAGE_BUCKET
+   :messagingSenderId js/process.env.FIREBASE_MESSAGING_SENDER_ID
+   :appId js/process.env.FIREBASE_APP_ID})
+
 (def JssProvider (-> (js/require "react-jss/lib/JssProvider") .-default adapt-react-class))
 (def jss (js/require "react-jss/lib/jss"))
 (def sheets-registry (.-SheetsRegistry jss))
@@ -123,6 +132,9 @@
    [:div
     {:dangerouslySetInnerHTML
      {:__html  (str "<script>window.preload = '" (-> @db/app-db pr-str) "'</script>")}}]
+   [:div
+    {:dangerouslySetInnerHTML
+     {:__html  (str "<script>window.firebaseConfig = '" (-> firebase-config pr-str) "'</script>")}}]
    [:script {:src "/static/js/compiled/cljs_base.js"}]
    [:script {:src "/static/js/compiled/app.js"}]
    [:link {:rel "stylesheet"
