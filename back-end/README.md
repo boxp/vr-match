@@ -6,12 +6,6 @@ FIXME
 
 - Leiningen(https://leiningen.org/)
 
-### 開発環境に必要な環境変数
-
-```sh
-export VR_MATCH_FIREBASE_SERVICE_ACCOUNT_KEY="$(cat /path/to/credential.json)"
-```
-
 ### Optionals(For GKE Cluster)
 
 - Google Cloud SDK(https://cloud.google.com/sdk/)

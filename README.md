@@ -20,6 +20,24 @@ front-end
     └── cljs-worker: WebWorkerのエントリーポイント
 ```
 
+## 必要な環境変数
+
+```
+export VR_MATCH_FIREBASE_SERVICE_ACCOUNT_KEY="$(cat /path/to/credential.json)"
+
+export FIREBASE_API_KEY="DUMMY_API_KEY"
+export FIREBASE_AUTH_DOMAIN="DUMMY_AUTH_DOMAIN"
+export FIREBASE_DATABASE_URL="DUMMY_DATABASE_URL"
+export FIREBASE_PROJECT_ID="DUMMY_PROJECT_ID"
+export FIREBASE_STORAGE_BUCKET="DUMMY_STORAGE_BUDKET"
+export FIREBASE_MESSAGING_SENDER_ID="DUMMY_MESSAGING_SENDER_ID"
+export FIREBASE_APP_ID="DUMMY_APP_ID"
+
+export API_ENDPOINT="http://localhost:8080"
+```
+
+[direnv](https://github.com/direnv/direnv)などで適宜設定してください。
+
 ## 参考技術スタック
 
 - Clojure, ClojureScript
