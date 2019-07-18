@@ -14,9 +14,6 @@
    [vr-match-back-end.domain.entity.user :as euser]
    [vr-match-back-end.domain.entity.image :as eimage]
    [vr-match-back-end.domain.entity.platform :as eplatform]
-   [vr-match-back-end.domain.entity.wizard :as ewizard]
-   [vr-match-back-end.infra.repository.wizard :as rwizard]
-   [vr-match-back-end.infra.repository.converter.wizard :as cwizard]
    [vr-match-back-end.infra.datasource.firebase-admin :as firebase-admin]))
 
 (def-db-fns "vr_match_back_end/infra/repository/sql/user.sql")
@@ -75,10 +72,6 @@
                               {:firebase_id firebase_id
                                :name ""
                                :introduction ""})]
-      (rwizard/insert-user_wizard tx
-                                  {:user_id id
-                                   :wizard_step (cwizard/wizard-step->wizard_step :nickname)
-                                   :wizard_complete (cwizard/wizard-complete?->wizard_complete true)})
       (-> (user-by-id tx
                       {:id id})
           (assoc :session_cookie session_cookie)))))
