@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: vr-match
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -27,3 +27,38 @@ spec:
         env:
           - name: API_ENDPOINT
             value: "https://api-hito-hub.boxp.tk"
+          - name: FIREBASE_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: FIREBASE_API_KEY
+          - name: FIREBASE_AUTH_DOMAIN
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: FIREBASE_AUTH_DOMAIN
+          - name: FIREBASE_DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: FIREBASE_DATABASE_URL
+          - name: FIREBASE_PROJECT_ID
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: FIREBASE_PROJECT_ID
+          - name: FIREBASE_STORAGE_BUCKET
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: FIREBASE_STORAGE_BUCKET
+          - name: FIREBASE_MESSAGING_SENDER_ID
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: FIREBASE_MESSAGING_SENDER_ID
+          - name: FIREBASE_APP_ID
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-staging-secrets
+                key: FIREBASE_APP_ID
