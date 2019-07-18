@@ -7,6 +7,7 @@
             [vr-match-back-end.infra.repository.user :refer [map->UserRepositoryComponent]]
             [vr-match-back-end.infra.repository.image :refer [map->ImageRepository]]
             [vr-match-back-end.infra.repository.platform :refer [map->PlatformRepository]]
+            [vr-match-back-end.infra.repository.wizard :refer [map->WizardRepository]]
             [vr-match-back-end.domain.usecase.auth :refer [map->AuthUsecaseComponent]]
             [vr-match-back-end.domain.usecase.image :refer [map->ImageUsecase]]
             [vr-match-back-end.domain.usecase.user :refer [map->UserUsecase]]
@@ -46,6 +47,9 @@
    :platform-repository (component/using
                          (map->PlatformRepository {})
                          [:mysql-datasource])
+   :wizard-repository (component/using
+                       (map->WizardRepository {})
+                       [:mysql-datasource])
    :auth-usecase (component/using
                   (map->AuthUsecaseComponent {})
                   [:user-repository])
