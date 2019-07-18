@@ -180,6 +180,19 @@
       true)
     (catch Exception e (handle-error e))))
 
+(defn favorite
+  [{:keys [approach-usecase session]}
+   {:keys [partnerId]}
+   _]
+  (try
+    (do
+      (uapproach/favorite
+       approach-usecase
+       session
+       partnerId)
+      true)
+    (catch Exception e (handle-error e))))
+
 (defn platform-options
   [{:keys [platform-usecase]} _ _]
   (try

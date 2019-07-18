@@ -83,4 +83,8 @@
   :skip {:type Boolean
          :description "お相手をスキップ"
          :args {:partnerId {:type (non-null Int)}}
-         :resolve :resolve-skip}}}
+         :resolve :resolve-skip}
+  :favorite {:type Boolean
+             :description "お相手をお気に入りにする"
+             :args {:partnerId {:type (non-null Int)}}
+             :resolve :resolve-favorite}}}

@@ -20,6 +20,7 @@
 (def-db-fns "vr_match_back_end/infra/repository/sql/user_image.sql")
 (def-db-fns "vr_match_back_end/infra/repository/sql/user_platform.sql")
 (def-db-fns "vr_match_back_end/infra/repository/sql/user_skip.sql")
+(def-db-fns "vr_match_back_end/infra/repository/sql/user_favorite.sql")
 
 (s/def ::firebase-admin-datasource record?)
 (s/def ::mysql-datasource record?)
@@ -323,6 +324,20 @@
   (insert-user_skip (:db mysql-datasource)
                     {:from_id me-id
                      :to_id partner-id})
+  nil)
+
+(s/fdef favorite-partner
+  :args (s/cat :c ::user-repository
+               :me-id ::euser/id
+               :partner-id ::euser/id)
+  :ret nil?)
+(defn favorite-partner
+  [{:keys [mysql-datasource]}
+   me-id
+   partner-id]
+  (insert-user_favorite (:db mysql-datasource)
+                        {:from_id me-id
+                         :to_id partner-id})
   nil)
 
 (defrecord UserRepositoryComponent [mysql-datasource
