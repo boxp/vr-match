@@ -6,7 +6,7 @@
 (s/def ::id number?)
 (s/def ::name string?)
 (s/def ::url string?)
-(s/def ::platform-user-id string?)
+(s/def ::platform-user-id (s/nilable string?))
 
 (s/def ::platform
   (s/keys :req-un [::id

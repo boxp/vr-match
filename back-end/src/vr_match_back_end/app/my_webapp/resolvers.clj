@@ -145,12 +145,12 @@
       (uuser/update-me
        user-usecase
        session
-       (-> params
-           (set/rename-keys {:imageIds :image-ids})
-           (update :platforms
-                   (fn [platforms]
-                     (->> (:platforms platforms)
-                          (map #(set/rename-keys % {:platformUserId :platform-user-id})))))))
+       (cond-> params
+         (:platforms params) (update :platforms
+                                     (fn [platforms]
+                                       (->> (:platforms platforms)
+                                            (map #(set/rename-keys % {:platformUserId :platform-user-id})))))
+         :always (set/rename-keys {:imageIds :image-ids})))
       true)
     (catch Exception e (handle-error e))))
 
