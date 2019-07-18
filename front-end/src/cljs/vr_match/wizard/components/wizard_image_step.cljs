@@ -9,7 +9,7 @@
   [{:keys [me
            handleClickNext
            handleResetImage]}]
-  (let [draft-image (r/atom (:image me))
+  (let [draft-image (r/atom nil)
         image-ref (r/atom nil)
         handle-change-image
         (fn [e]
@@ -50,7 +50,8 @@
                                 :height "240px"}}]]]
          [mui/grid {:container true
                     :direction "column"}
-          [mui/button {:variant "contained"
+          [mui/button {:disabled (nil? @draft-image)
+                       :variant "contained"
                        :color "primary"
                        :on-click handle-click-next}
            "次へ"]

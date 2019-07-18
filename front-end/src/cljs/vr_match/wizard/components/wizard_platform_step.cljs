@@ -41,6 +41,10 @@
                                                                          :onChange #(handleChange id)}])}])
         platforms)])
 
+(defn platformChoices->platforms
+  [platformChoices]
+  (map #(assoc % :selected? false) platformChoices))
+
 (s/def ::props
   (s/keys :req [::platforms]))
 (s/fdef wizard-platform-step
@@ -49,23 +53,33 @@
   [{:keys [me
            platforms
            platformChoices
-           handleClickNext
-           handleClickSkip]}]
-  (let [draft-platforms (r/atom (map #(assoc % :selected? false) platformChoices))
+           handleClickNext]}]
+  (let [draft-platforms (r/atom (platformChoices->platforms platformChoices))
         handle-change (fn [id value]
                         (swap! draft-platforms #(platform-select % id)))
         handle-click-next (fn []
                             (->> @draft-platforms
                                  (filter #(:selected? %))
-                                 (map #(:id %))
+                                 (map #(select-keys % [:id :name]))
                                  handleClickNext))]
-    (fn []
-      [wizard-step {:title [:<>
-                            "活動中の場所を"
-                            [:br]
-                            "教えてください"]
-                    :form [platform-form {:platforms @draft-platforms
-                                          :handleChange handle-change}]
-                    :me me
-                    :handleClickNext handle-click-next
-                    :handleClickSkip handleClickSkip}])))
+    (r/create-class
+     {:display-name "wizard-platform-step"
+      :component-did-update
+      (fn [this [_ old-props]]
+        (let [{:keys [platformChoices]} (r/props this)
+              old-platformChoices (:platformChoices old-props)]
+          (when (and (nil? old-platformChoices)
+                     (seq platformChoices))
+            (reset! draft-platforms
+                    (platformChoices->platforms platformChoices)))))
+      :reagent-render
+      (fn []
+        [wizard-step {:title [:<>
+                              "活動中の場所を"
+                              [:br]
+                              "教えてください"]
+                      :form [platform-form {:platforms @draft-platforms
+                                            :handleChange handle-change}]
+                      :me me
+                      :isNextDisabled false
+                      :handleClickNext handle-click-next}])})))

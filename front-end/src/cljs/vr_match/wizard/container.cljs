@@ -1,50 +1,58 @@
 (ns vr-match.wizard.container
   (:require
+   [clojure.string :as string]
    [reagent.core :as reagent]
    [re-frame.core :as re-frame]
    [vr-match.util :as util]
    [vr-match.events :as events]
+   [vr-match.subs :as subs]
+   [vr-match.wizard.events :as wizard-events]
+   [vr-match.wizard.subs :as wizard-subs]
    [vr-match.wizard.component :as component]))
 
 ;; TODO: re-frameとつなぎこんで消す
 (def mock-wizard-state
-  (reagent/atom {:me {:id 1
-                      :userName "一箱"
-                      :introduction "バーチャル清楚系女子高校生Webアプリケーションエンジニアおじさんです。こっそりプログラミングしてます。"
-                      :platForms []
-                      :image "https://storage.googleapis.com/boxp-tmp/profile_sample.jpg"}
-                 :platformChoices [{:id 1 :name "VRChat"} {:id 2 :name "VRoidHub"} {:id 3 :name "VirtualCast"}]
-                 :step :nickname}))
+  (reagent/atom {:step :nickname}))
+
+(defn- handle-initialize []
+  (re-frame/dispatch [::wizard-events/initialize]))
 
 (defn- handle-next-nickname-step
   [nickname]
-  (println nickname)
+  (re-frame/dispatch [::wizard-events/update-me {:name nickname}])
   (swap! mock-wizard-state
          (fn [state]
            (assoc state :step :platform))))
 
 (defn- handle-next-platform-step
   [platforms]
-  (println platforms)
+  (re-frame/dispatch
+   [::wizard-events/update-me {:platforms
+                               {:platforms
+                                (->> platforms
+                                     (map #(select-keys % [:id :name])))}}])
   (swap! mock-wizard-state
          (fn [state]
            (assoc state :step :image))))
 
 (defn- handle-next-image-step
   [image]
-  (println image)
-  (re-frame/dispatch [::events/push "/approach"]))
-
-(defn- handle-click-skip []
-  (println "Skip!")
+  (re-frame/dispatch [::wizard-events/upload-image
+                      {:base64-string (->> (string/split image #",")
+                                           last)}])
   (re-frame/dispatch [::events/push "/approach"]))
 
 (defn wizard
   [params]
-  [component/wizard (merge @mock-wizard-state
-                           {:handleNextNicknameStep handle-next-nickname-step
-                            :handleNextPlatformStep handle-next-platform-step
-                            :handleNextImageStep handle-next-image-step
-                            :handleClickSkip handle-click-skip})])
+  (let [me (re-frame/subscribe [::subs/me])
+        platformChoices (re-frame/subscribe [::wizard-subs/platform-options])]
+    (fn [params]
+      [component/wizard (merge @mock-wizard-state
+                               {:me @me
+                                :platformChoices @platformChoices
+                                :handleInitialize handle-initialize
+                                :handleNextNicknameStep handle-next-nickname-step
+                                :handleNextPlatformStep handle-next-platform-step
+                                :handleNextImageStep handle-next-image-step})])))
 
 (util/universal-set-loaded! :wizard)
