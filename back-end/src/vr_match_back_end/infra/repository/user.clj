@@ -94,9 +94,7 @@
                                   {:firebase_id firebase_id})]
     (if (seq user)
       (assoc user :session_cookie session_cookie)
-      (throw (ex-info "未登録のユーザーです"
-                      {:type :unregisterd-user
-                       :firebase_id firebase_id})))))
+      (create-new-user c params))))
 
 
 (s/def :image-record/id number?)
