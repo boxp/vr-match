@@ -51,4 +51,8 @@ limit :offset, :limit
 -- :doc user_idのuserに対しておすすめのユーザーの人数を取得
 select count(*) as total
 from user
+left join user_skip on user.id = user_skip.to_id and user_skip.from_id = :user_id
+left join user_favorite on user.id = user_favorite.to_id and user_favorite.from_id = :user_id
 where user.id != :user_id
+and user_skip.to_id is null
+and user_favorite.to_id is null
