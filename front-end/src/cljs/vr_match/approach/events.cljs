@@ -18,7 +18,10 @@
  ::on-error-skip
  (fn [{:keys [db]}
       [_ {:keys [errors]}]]
-   {:dispatch [::events/api-error errors]}))
+   {:dispatch-n (case (-> errors first :extensions :type)
+                  "invalid-session" [[::events/push "/"]
+                                     [::events/clear-session]]
+                  [[::events/api-error errors]])}))
 
 (re-frame/reg-event-fx
  ::skip
@@ -42,7 +45,10 @@
  ::on-error-favorite
  (fn [{:keys [db]}
       [_ {:keys [errors]}]]
-   {:dispatch [::events/api-error errors]}))
+   {:dispatch-n (case (-> errors first :extensions :type)
+                  "invalid-session" [[::events/push "/"]
+                                     [::events/clear-session]]
+                  [[::events/api-error errors]])}))
 
 (re-frame/reg-event-fx
  ::favorite
@@ -65,6 +71,15 @@
                                       :approachList))))
 
 (re-frame/reg-event-fx
+ ::on-error-fetch-approach-list
+ (fn [{:keys [db]}
+      [_ {:keys [errors] :as payload}]]
+   {:dispatch-n (case (-> errors first :extensions :type)
+                  "invalid-session" [[::events/push "/"]
+                                     [::events/clear-session]]
+                  [[::events/api-error errors]])}))
+
+(re-frame/reg-event-fx
  ::fetch-approach-list
  (fn [{:keys [db] :as cofx} [_ {:keys [count]}]]
    {:dispatch [::events/graphql-query
@@ -79,7 +94,7 @@
                                [:images [:id :url]]
                                [:platforms [:id :name]]]]]]]]]}
                 :success-handler ::on-success-fetch-approach-list
-                :error-handler ::events/api-error}]}))
+                :error-handler ::on-error-fetch-approach-list}]}))
 
 (re-frame/reg-event-db
  ::on-success-fetch-next-approach-list
@@ -87,6 +102,15 @@
    (update-in db [:approach :list] #(concat % (-> payload
                                                   :data
                                                   :approachList)))))
+
+(re-frame/reg-event-fx
+ ::on-error-fetch-next-approach-list
+ (fn [{:keys [db]}
+      [_ {:keys [errors] :as payload}]]
+   {:dispatch-n (case (-> errors first :extensions :type)
+                  "invalid-session" [[::events/push "/"]
+                                     [::events/clear-session]]
+                  [[::events/api-error errors]])}))
 
 (re-frame/reg-event-fx
  ::fetch-next-approach-list
@@ -103,5 +127,5 @@
                                [:images [:id :url]]
                                [:platforms [:id :name]]]]]]]]]}
                 :success-handler ::on-success-fetch-next-approach-list
-                :error-handler ::events/api-error}]}
+                :error-handler ::on-error-fetch-next-approach-list}]}
    {}))

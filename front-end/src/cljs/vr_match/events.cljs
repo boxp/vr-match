@@ -70,6 +70,11 @@
                                 :item session}}))
 
 (re-frame/reg-event-fx
+ ::clear-session
+ (fn [_ [_ session]]
+   {::effects/remove-localstorage {:key "session"}}))
+
+(re-frame/reg-event-fx
  ::on-success-fetch-me
  (fn [{:keys [db]}
       [_ {:keys [data]}]]

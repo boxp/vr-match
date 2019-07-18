@@ -18,9 +18,10 @@
       [_ {:keys [errors] :as payload}]]
    {:db (-> db
             (assoc-in [:fetch-status :mypage] :loaded))
-    :dispatch (case (-> errors first :extensions :type)
-                "invalid-session" [::events/push "/"]
-                [::events/api-error errors])}))
+    :dispatch-n (case (-> errors first :extensions :type)
+                  "invalid-session" [[::events/push "/"]
+                                     [::events/clear-session]]
+                  [[::events/api-error errors]])}))
 
 (re-frame/reg-event-fx
  ::update-me
@@ -42,9 +43,10 @@
       [_ {:keys [errors] :as payload}]]
    {:db (-> db
             (assoc-in [:fetch-status :mypage] :loaded))
-    :dispatch (case (-> errors first :extensions :type)
-                "invalid-session" [::events/push "/"]
-                [::events/api-error errors])}))
+    :dispatch-n (case (-> errors first :extensions :type)
+                  "invalid-session" [[::events/push "/"]
+                                     [::events/clear-session]]
+                  [[::events/api-error errors]])}))
 
 (re-frame/reg-event-fx
  ::on-success-upload-image
