@@ -18,7 +18,7 @@
 
 (defn email-login-complete
   [params]
-(let [loading? (re-frame/subscribe [::auth-subs/loading-email-complete?])]
+(let [loading? (re-frame/subscribe [::auth-subs/loading?])]
   [component/email-login-complete {:isLoading @loading?
                                    :handleInitialize handle-initialize
                                    :handleSubmitEmail handle-submit-email}]))

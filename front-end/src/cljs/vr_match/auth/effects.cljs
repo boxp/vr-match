@@ -9,10 +9,11 @@
 
 (re-frame/reg-fx
  ::initialize-firebase
- (fn [config]
+ (fn [{:keys [config on-success]}]
    (when-not @firebase-instance
      (->> (js/firebase.initializeApp config)
-          (reset! firebase-instance)))))
+          (reset! firebase-instance)))
+   (re-frame/dispatch [on-success])))
 
 (re-frame/reg-fx
  ::ajax

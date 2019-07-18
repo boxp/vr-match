@@ -19,5 +19,6 @@
                   :register-user :none
                   :login-user :none
                   :me :none
-                  :mypage :none}
+                  :mypage :none
+                  :firebase :none}
    :history nil})

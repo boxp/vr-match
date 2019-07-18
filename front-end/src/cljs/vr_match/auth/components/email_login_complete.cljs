@@ -41,8 +41,10 @@
             [:> js/MaterialUI.TextField {:type "email"
                                          :auto-complete "email"
                                          :on-change #(handle-change-email draft-email %)
-                                         :placeholder "sample@example.com"}]]
-           [:> js/MaterialUI.Button {:disabled (= @draft-email "")
+                                         :placeholder "sample@example.com"
+                                         :disabled isLoading}]]
+           [:> js/MaterialUI.Button {:disabled (or (= @draft-email "")
+                                                   isLoading)
                                      :variant "contained"
                                      :color "primary"
                                      :on-click #(handleSubmitEmail @draft-email)

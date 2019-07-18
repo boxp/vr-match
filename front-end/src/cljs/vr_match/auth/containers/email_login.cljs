@@ -16,7 +16,7 @@
 
 (defn email-login
   [_]
-  (let [loading? (re-frame/subscribe [::auth-subs/loading-email?])
+  (let [loading? (re-frame/subscribe [::auth-subs/loading?])
         is-completed-send-link (re-frame/subscribe [::auth-subs/send-sign-in-link-to-email-succeed?])
         sent-email (re-frame/subscribe [::auth-subs/get-sent-email])]
     (fn [props]

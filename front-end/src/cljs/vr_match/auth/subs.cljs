@@ -24,15 +24,10 @@
    (-> db :auth :sign-in-link :email)))
 
 (re-frame/reg-sub
- ::loading-email?
+ ::loading?
  (fn [db]
    (or
-     (-> db :fetch-status :sign-in-link (= :loading)))))
-
-(re-frame/reg-sub
- ::loading-email-complete?
- (fn [db]
-   (or
-     (-> db :fetch-status :sign-in-with-email (= :loading))
-     (-> db :fetch-status :login-user (= :loading))
-     (-> db :fetch-status :register-user (= :loading)))))
+    (-> db :fetch-status :sign-in-with-email (= :loading))
+    (-> db :fetch-status :login-user (= :loading))
+    (-> db :fetch-status :register-user (= :loading))
+    (-> db :fetch-status :firebase (= :loading)))))

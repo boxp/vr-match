@@ -7,10 +7,18 @@
    [vr-match.auth.effects :as auth-effects]))
 
 (re-frame/reg-event-fx
+ ::on-success-initialize
+ (fn [{:keys [db]} _]
+   {:db (assoc-in db [:fetch-status :firebase] :loaded)}))
+
+(re-frame/reg-event-fx
  ::initialize
  [(re-frame/inject-cofx ::coeffects/firebase-config)]
  (fn [{:keys [db firebase-config]} _]
-   {::auth-effects/initialize-firebase (clj->js firebase-config)}))
+   (when (not= (-> db :fetch-status :firebase) :loading)
+     {:db (assoc-in db [:fetch-status :firebase] :loading)
+      ::auth-effects/initialize-firebase {:config (clj->js firebase-config)
+                                          :on-success ::on-success-initialize}})))
 
 (re-frame/reg-event-fx
  ::success-send-sign-in-link-to-email
