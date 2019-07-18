@@ -34,10 +34,28 @@
                 :error-handler ::on-error-skip}]}))
 
 (re-frame/reg-event-fx
+ ::on-success-favorite
+ (fn [{:keys [db]} _]
+   {}))
+
+(re-frame/reg-event-fx
+ ::on-error-favorite
+ (fn [{:keys [db]}
+      [_ {:keys [errors]}]]
+   {:dispatch [::events/api-error errors]}))
+
+(re-frame/reg-event-fx
  ::favorite
- (fn [{:keys [db] :as cofx} [_ {:keys [id]}]]
+ (fn [{:keys [db] :as cofx} [_ id]]
    {:db (-> db
-            (update-in [:approach :list :edges] rest))}))
+            (update-in [:approach :list :edges] rest))
+    :dispatch [::events/graphql-query
+               {:query
+                {:venia/operation {:operation/type :mutation
+                                   :operation/name "favorite"}
+                 :venia/queries [[:favorite {:partnerId id}]]}
+                :success-handler ::on-success-favorite
+                :error-handler ::on-error-favorite}]}))
 
 (re-frame/reg-event-db
  ::on-success-fetch-approach-list
@@ -63,23 +81,27 @@
                 :success-handler ::on-success-fetch-approach-list
                 :error-handler ::events/api-error}]}))
 
+(re-frame/reg-event-db
+ ::on-success-fetch-next-approach-list
+ (fn [db [_ {:keys [data errors] :as payload}]]
+   (update-in db [:approach :list] #(concat % (-> payload
+                                                  :data
+                                                  :approachList)))))
+
 (re-frame/reg-event-fx
  ::fetch-next-approach-list
  (fn [{:keys [db] :as cofx} [_ {:keys [count]}]]
-   (let [after (some-> db :approach :list :edges last :cursor)]
-     (if after
-       {:dispatch [::events/graphql-query
-                   {:query {:venia/queries
-                            [[:approachList {:first count
-                                             :after after}
-                              [[:edges
-                                [:cursor
-                                 [:node
-                                  [:id
-                                   :name
-                                   :introduction
-                                   [:images [:id :url]]
-                                   [:platforms [:id :name]]]]]]]]]}
-                    :success-handler ::on-success-fetch-approach-list
-                    :error-handler ::events/api-error}]}
-       {}))))
+   {:dispatch [::events/graphql-query
+               {:query {:venia/queries
+                        [[:approachList {:first count}
+                          [[:edges
+                            [:cursor
+                             [:node
+                              [:id
+                               :name
+                               :introduction
+                               [:images [:id :url]]
+                               [:platforms [:id :name]]]]]]]]]}
+                :success-handler ::on-success-fetch-next-approach-list
+                :error-handler ::events/api-error}]}
+   {}))

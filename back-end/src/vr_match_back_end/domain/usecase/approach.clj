@@ -24,6 +24,21 @@
                         me-id
                         partner-id)))
 
+(s/fdef favorite
+  :args (s/cat :c ::approach-usecase
+               :session ::session
+               :partner-id ::euser/id))
+(defn favorite
+  [{:keys [user-repository]}
+   session
+   partner-id]
+  (let [me-id (ruser/get-user-id-by-session
+               user-repository
+               session)]
+    (ruser/favorite-partner user-repository
+                            me-id
+                            partner-id)))
+
 (defrecord ApproachUsecase [user-repository]
   component/Lifecycle
   (start [this] this)

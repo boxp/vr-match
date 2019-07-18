@@ -82,5 +82,9 @@
              :resolve :resolve-update-me}
   :skip {:type Boolean
          :description "お相手をスキップ"
-         :args {:partnerId {:type Int}}
-         :resolve :resolve-skip}}}
+         :args {:partnerId {:type (non-null Int)}}
+         :resolve :resolve-skip}
+  :favorite {:type Boolean
+             :description "お相手をお気に入りにする"
+             :args {:partnerId {:type (non-null Int)}}
+             :resolve :resolve-favorite}}}
