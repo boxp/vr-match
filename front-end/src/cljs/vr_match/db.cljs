@@ -9,6 +9,8 @@
    :mypage {:platform-options nil}
    :myprofile {:uploaded-image nil}
    :me nil
+   :wizard {:uploaded-image nil
+            :platform-options nil}
    :router {:key :loading
             :params {}}
    :api-endpoint ""
@@ -20,5 +22,6 @@
                   :login-user :none
                   :me :none
                   :mypage :none
-                  :firebase :none}
+                  :firebase :none
+                  :wizard :none}
    :history nil})

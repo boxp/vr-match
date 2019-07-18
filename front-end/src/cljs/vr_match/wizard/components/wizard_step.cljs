@@ -6,6 +6,7 @@
   [{:keys [title
            form
            me
+           isNextDisabled
            handleClickNext
            handleClickSkip] :as props}]
   [mui/fade {:in true}
@@ -24,8 +25,6 @@
                 :direction "column"}
       [mui/button {:variant "contained"
                    :color "primary"
-                   :on-click handleClickNext}
-       "次へ"]
-      [mui/button {:style {:margin-top 16}
-                   :on-click handleClickSkip}
-       "スキップ"]]]]])
+                   :on-click handleClickNext
+                   :disabled isNextDisabled}
+       "次へ"]]]]])

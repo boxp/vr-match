@@ -17,21 +17,30 @@
 
 (defn wizard-nickname-step
   [{:keys [me
-           handleClickNext
-           handleClickSkip]}]
-  (let [draft-nickname (r/atom (:userName me))
+           handleClickNext]}]
+  (let [draft-nickname (r/atom (or (:name me) ""))
         handle-change-input (fn [e]
-                              (println (.. e -target -value))
                               (reset! draft-nickname (.. e -target -value)))
         handle-click-next (fn [] (handleClickNext @draft-nickname))]
-    (fn []
-      [wizard-step {:title [:<>
-                            "ニックネームを"
-                            [:br]
-                            "教えてください"]
-                    :form [nickname-form {:isDuplicatedNickName false
-                                          :nickname @draft-nickname
-                                          :handleChangeInput handle-change-input}]
-                    :me me
-                    :handleClickNext handle-click-next
-                    :handleClickSkip handleClickSkip}])))
+    (r/create-class
+     {:display-name "wizard-nickname-step"
+      :component-did-update
+      (fn [this [_ old-props]]
+        (let [{:keys [me]} (r/props this)
+              nickname (:name me)
+              old-nickname (-> old-props :me :name)]
+          (when (and (= old-nickname "")
+                     (seq nickname))
+            (reset! draft-nickname nickname))))
+      :reagent-render
+      (fn []
+        [wizard-step {:title [:<>
+                              "ニックネームを"
+                              [:br]
+                              "教えてください"]
+                      :form [nickname-form {:isDuplicatedNickName false
+                                            :nickname @draft-nickname
+                                            :handleChangeInput handle-change-input}]
+                      :me me
+                      :isNextDisabled (= @draft-nickname "")
+                      :handleClickNext handle-click-next}])})))

@@ -62,18 +62,19 @@
   [{:keys [firebase-admin-datasource
            mysql-datasource] :as c}
    {:keys [id-token] :as params}]
-  (let [firebase_id (get-firebase_id
-                     firebase-admin-datasource
-                     id-token)
-        session_cookie (get-session_cookie firebase-admin-datasource
-                                           id-token)
-        [_ id] (insert-user (:db mysql-datasource)
-                            {:firebase_id firebase_id
-                             :name ""
-                             :introduction ""})]
-    (-> (user-by-id (:db mysql-datasource)
-                    {:id id})
-        (assoc :session_cookie session_cookie))))
+  (jdbc/with-db-transaction [tx (:db mysql-datasource)]
+    (let [firebase_id (get-firebase_id
+                       firebase-admin-datasource
+                       id-token)
+          session_cookie (get-session_cookie firebase-admin-datasource
+                                             id-token)
+          [_ id] (insert-user tx
+                              {:firebase_id firebase_id
+                               :name ""
+                               :introduction ""})]
+      (-> (user-by-id tx
+                      {:id id})
+          (assoc :session_cookie session_cookie)))))
 
 (s/fdef renew-user-session
   :args (s/cat :c (s/keys :req-un [::firebase-admin-datasource

@@ -19,12 +19,12 @@
 (defn graphql
   [{:keys [graphql-schema my-webapp-resolvers]} req]
   (try
-    (let [session (some-> req :headers (get "session"))
+    (let [session (or (some-> req :headers (get "session")) "")
           query (-> req :body slurp (parse-string true) :query)
           result (execute graphql-schema
                           query
                           nil
-                          (if (seq session)
+                          (if-not (nil? session)
                             (merge my-webapp-resolvers {:session session})
                             my-webapp-resolvers))]
       {:status (if (-> result :errors seq)
