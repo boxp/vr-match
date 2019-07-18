@@ -82,5 +82,5 @@
              :resolve :resolve-update-me}
   :skip {:type Boolean
          :description "お相手をスキップ"
-         :args {:partnerId {:type Int}}
+         :args {:partnerId {:type (non-null Int)}}
          :resolve :resolve-skip}}}

@@ -63,23 +63,27 @@
                 :success-handler ::on-success-fetch-approach-list
                 :error-handler ::events/api-error}]}))
 
+(re-frame/reg-event-db
+ ::on-success-fetch-next-approach-list
+ (fn [db [_ {:keys [data errors] :as payload}]]
+   (update-in db [:approach :list] #(concat % (-> payload
+                                                  :data
+                                                  :approachList)))))
+
 (re-frame/reg-event-fx
  ::fetch-next-approach-list
  (fn [{:keys [db] :as cofx} [_ {:keys [count]}]]
-   (let [after (some-> db :approach :list :edges last :cursor)]
-     (if after
-       {:dispatch [::events/graphql-query
-                   {:query {:venia/queries
-                            [[:approachList {:first count
-                                             :after after}
-                              [[:edges
-                                [:cursor
-                                 [:node
-                                  [:id
-                                   :name
-                                   :introduction
-                                   [:images [:id :url]]
-                                   [:platforms [:id :name]]]]]]]]]}
-                    :success-handler ::on-success-fetch-approach-list
-                    :error-handler ::events/api-error}]}
-       {}))))
+   {:dispatch [::events/graphql-query
+               {:query {:venia/queries
+                        [[:approachList {:first count}
+                          [[:edges
+                            [:cursor
+                             [:node
+                              [:id
+                               :name
+                               :introduction
+                               [:images [:id :url]]
+                               [:platforms [:id :name]]]]]]]]]}
+                :success-handler ::on-success-fetch-next-approach-list
+                :error-handler ::events/api-error}]}
+   {}))
