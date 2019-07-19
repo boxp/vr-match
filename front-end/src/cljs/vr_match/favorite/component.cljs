@@ -19,13 +19,13 @@
       [navigation-bar-layout {:title "お気に入りに登録したアバター"}
        [:div {:style {:padding "8px"}}
         [mui/list
-         (map (fn [{:keys [id userName platForms image introduction]}]
+         (map (fn [{:keys [id name platform images introduction]}]
                 ^{:key id}
                 [:div {:style {:margin-bottom "16px"}}
                  [user-list-item {:id id
-                                  :image image
-                                  :platForms platForms
-                                  :nickname userName
+                                  :image (->> images first :url)
+                                  :platForms platforms
+                                  :nickname name
                                   :introduction introduction
                                   :handleClick handleClickItem}]])
               items)]]])
