@@ -13,6 +13,8 @@
    :me nil
    :favorite {:favorited-from-me-list {:edges []
                                        :pageInfo nil}}
+   :matching {:list {:edges []
+                     :pageInfo nil}}
    :wizard {:uploaded-image nil
             :platform-options nil}
    :router {:key :loading
@@ -28,5 +30,6 @@
                   :mypage :none
                   :firebase :none
                   :wizard :none
-                  :favorite :none}
+                  :favorite :none
+                  :matching :none}
    :history nil})

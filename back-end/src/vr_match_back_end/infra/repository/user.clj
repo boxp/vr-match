@@ -393,6 +393,53 @@
             :partner_id partner-id})
           :total)))
 
+(s/def :get-matched-users-by-user-id-paging-params/after (s/nilable ::t-spec/date-time))
+(s/def :get-matched-users-by-user-id-paging-params/first (s/nilable number?))
+(s/def ::get-matched-users-by-user-id-paging-params
+  (s/keys :opt-un [:get-matched-users-by-user-id-paging-params/after
+                   :get-matched-users-by-user-id-paging-params/first]))
+(s/def :get-matched-users-by-user-id-result/users (s/coll-of ::euser/user))
+(s/def :get-matched-users-by-user-id-result/has-next? boolean?)
+(s/def ::get-matched-users-by-user-id-result
+  (s/keys :req-un [:get-matched-users-by-user-id-result/users]
+          :opt-un [:get-matched-users-by-user-id-result/has-next?]))
+(s/fdef get-matched-users-by-user-id
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id
+               :with-images? boolean?
+               :with-platforms? boolean?
+               :with-has-next? boolean?
+               :paging-params ::get-matched-users-by-user-id-paging-params)
+  :ret ::get-matched-users-by-user-id-result)
+(defn get-matched-users-by-user-id
+  [{:keys [mysql-datasource] :as c}
+   user-id
+   with-images?
+   with-platforms?
+   with-has-next?
+   paging-params]
+  (if with-has-next?
+    (let [limit (inc (or (:first paging-params) 1000))
+          users (matched-user-by-user_id
+                      (:db mysql-datasource)
+                      {:user_id user-id
+                       :after (or (:after paging-params) (t/now))
+                       :limit limit})
+          has-next? (>= (count users) limit)]
+      {:users (->> (if has-next? (drop-last users) users)
+                   (pmap #(cond-> %
+                            with-images? (assoc :images (get-images-by-user-id c (:id %)))
+                            with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))
+       :has-next? has-next?})
+    {:users (->> (matched-user-by-user_id
+                  (:db mysql-datasource)
+                  {:user_id user-id
+                   :after (or (:after paging-params) (t/now))
+                   :limit (or (:first paging-params) 1000)})
+                  (pmap #(cond-> %
+                           with-images? (assoc :images (get-images-by-user-id c (:id %)))
+                           with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))}))
+
 (defrecord UserRepositoryComponent [mysql-datasource
                                     firebase-admin-datasource]
   component/Lifecycle

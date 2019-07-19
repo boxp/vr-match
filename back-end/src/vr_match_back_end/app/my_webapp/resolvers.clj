@@ -216,6 +216,34 @@
                                    (or (:first paging-params) 1000))}})
     (catch Exception e (handle-error e))))
 
+(defn matched-users
+  [{:keys [user-usecase session]} arguments _]
+  (try
+    (let [paging-params {:after (some-> arguments
+                                        :after
+                                        converter/decode-cursor
+                                        converter/string->date-time)
+                         :first (:first arguments)}
+          {:keys [users has-next?]} (uuser/get-my-matched-users
+                                     user-usecase
+                                     session
+                                     true
+                                     true
+                                     true
+                                     paging-params)
+          edges (map (fn [user]
+                       {:node user
+                        :cursor (-> user
+                                    :created_at
+                                    converter/date-time->string
+                                    converter/encode-cursor)}) users)]
+      {:edges edges
+       :pageInfo {:startCursor (some->> edges first :cursor)
+                  :endCursor (some->> edges last :cursor)
+                  :hasPreviousPage false
+                  :hasNextPage has-next?}})
+    (catch Exception e (handle-error e))))
+
 (defn platform-options
   [{:keys [platform-usecase]} _ _]
   (try

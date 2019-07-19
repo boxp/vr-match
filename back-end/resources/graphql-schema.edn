@@ -36,6 +36,9 @@
   :FavoritedUsers
   {:fields {:edges {:type (list UserEdge)}
             :pageInfo {:type :PageInfo}}}
+  :MatchedUsers
+  {:fields {:edges {:type (list UserEdge)}
+            :pageInfo {:type :PageInfo}}}
   :UserMatch
   {:fields {:isMatched {:type Boolean}}}}
  :input-objects
@@ -63,6 +66,12 @@
                            :after {:type String
                                    :optional true}}
                     :resolve :resolve-favorited-users}
+  :matchedUsers {:type :MatchedUsers
+                 :args {:first {:type Int
+                                :optional true}
+                        :after {:type String
+                                :optional true}}
+                 :resolve :resolve-matched-users}
   :me {:type :User
        :resolve :resolve-me}
   :platformOptions {:type (list :PlatformOption)
