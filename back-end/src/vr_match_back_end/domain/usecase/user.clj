@@ -88,6 +88,32 @@
      with-total?
      paging-params)))
 
+(s/fdef get-favorited-users-from-me
+  :args (s/cat :c ::user-usecase
+               :session ::session
+               :with-images? boolean?
+               :with-platforms? boolean?
+               :with-total? boolean?
+               :paging-params ::ruser/get-favorited-users-from-user-id-paging-params)
+  :ret ::ruser/get-favorited-users-from-user-id-result)
+(defn get-favorited-users-from-me
+  [{:keys [user-repository]}
+   session
+   with-images?
+   with-platforms?
+   with-total?
+   paging-params]
+  (let [user-id (ruser/get-user-id-by-session
+                 user-repository
+                 session)]
+    (ruser/get-favorited-users-from-user-id
+     user-repository
+     user-id
+     with-images?
+     with-platforms?
+     with-total?
+     paging-params)))
+
 (defrecord UserUsecase [user-repository]
   component/Lifecycle
   (start [this] this)

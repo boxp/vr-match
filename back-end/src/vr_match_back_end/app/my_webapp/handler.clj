@@ -51,7 +51,8 @@
                          :resolve-me resolvers/me
                          :resolve-skip resolvers/skip
                          :resolve-favorite resolvers/favorite
-                         :resolve-platform-options resolvers/platform-options})
+                         :resolve-platform-options resolvers/platform-options
+                         :resolve-favorited-users resolvers/favorited-users})
       schema/compile))
 
 (defrecord MyWebappHandlerComponent [graphql-schema my-webapp-resolvers]

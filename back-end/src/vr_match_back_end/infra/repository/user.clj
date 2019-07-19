@@ -7,7 +7,8 @@
    [clojure.set :as set]
    [clojure.java.jdbc :as jdbc]
    [clj-time.core :as t]
-   [clj-time.coerce :refer [to-long]]
+   [clj-time.coerce :refer [from-long to-long]]
+   [clj-time.spec :as t-spec]
    [com.stuartsierra.component :as component]
    [hugsql.core :refer [def-db-fns]]
    [cljstache.core :refer [render]]
@@ -338,6 +339,45 @@
                         {:from_id me-id
                          :to_id partner-id})
   nil)
+
+(s/def :get-favorited-users-from-user-id-paging-params/start (s/nilable ::t-spec/date-time))
+(s/def :get-favorited-users-from-user-id-paging-params/first (s/nilable number?))
+(s/def ::get-favorited-users-from-user-id-paging-params
+  (s/keys :opt-un [:get-favorited-users-from-user-id-paging-params/start
+                   :get-favorited-users-from-user-id-paging-params/first]))
+(s/def :get-favorited-users-from-user-id-result/total number?)
+(s/def :get-favorited-users-from-user-id-result/users (s/coll-of ::euser/user))
+(s/def ::get-favorited-users-from-user-id-result
+  (s/keys :req-un [:get-favorited-users-from-user-id-result/users]
+          :opt-un [:get-favorited-users-from-user-id-result/total]))
+(s/fdef get-favorited-users-from-user-id
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id
+               :with-images? boolean?
+               :with-platforms? boolean?
+               :with-total? boolean?
+               :paging-parameters ::get-favorited-users-from-user-id-paging-params)
+  :ret (s/coll-of ::euser/user))
+(defn get-favorited-users-from-user-id
+  [{:keys [mysql-datasource] :as c}
+   user-id
+   with-images?
+   with-platforms?
+   with-total?
+   {:keys [start first]}]
+  (cond-> {}
+    with-total? (assoc :total (:total
+                               (count-favorited-user-by-user_id
+                                (:db mysql-datasource)
+                                {:user_id user-id})))
+    :always (assoc :users (->> (favorited-user-by-user_id
+                                (:db mysql-datasource)
+                                {:user_id user-id
+                                 :start (or start (from-long 0))
+                                 :limit (or first 1000)})
+                               (pmap #(cond-> %
+                                        with-images? (assoc :images (get-images-by-user-id c (:id %)))
+                                        with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %)))))))))
 
 (defrecord UserRepositoryComponent [mysql-datasource
                                     firebase-admin-datasource]

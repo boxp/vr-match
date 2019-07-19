@@ -32,6 +32,9 @@
             :hasNextPage {:type Boolean}}}
   :ApproachList
   {:fields {:edges {:type (list UserEdge)}
+            :pageInfo {:type :PageInfo}}}
+  :FavoritedUsers
+  {:fields {:edges {:type (list UserEdge)}
             :pageInfo {:type :PageInfo}}}}
  :input-objects
  {:PlatformInput
@@ -52,6 +55,12 @@
                         :before {:type String
                                  :optional true}}
                  :resolve :resolve-approach-list}
+  :favoritedUsers {:type :FavoritedUsers
+                    :args {:first {:type Int
+                                   :optional true}
+                           :after {:type String
+                                   :optional true}}
+                    :resolve :resolve-favorited-users}
   :me {:type :User
        :resolve :resolve-me}
   :platformOptions {:type (list :PlatformOption)
