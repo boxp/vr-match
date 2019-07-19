@@ -7,7 +7,7 @@
    [com.stuartsierra.component :as component]
    [com.walmartlabs.lacinia.resolve :refer [resolve-as]]
    [com.walmartlabs.lacinia.executor :as executor]
-   [vr-match-back-end.app.my-webapp.converter :refer [user->User]]
+   [vr-match-back-end.app.my-webapp.converter :as converter]
    [vr-match-back-end.domain.usecase.auth :as uauth]
    [vr-match-back-end.domain.usecase.image :as uimage]
    [vr-match-back-end.domain.usecase.user :as uuser]
@@ -104,7 +104,7 @@
   (try
     (let [user (uauth/register auth-usecase idToken)]
       {:user (-> user
-                 user->User
+                 converter/user->User
                  (assoc :platforms []))
        :session (:session_cookie user)})
     (catch Exception e (handle-error e))))
@@ -116,7 +116,7 @@
   (try
     (let [user (uauth/login auth-usecase idToken)]
       {:user (-> user
-                 user->User
+                 converter/user->User
                  ;; TODO: platforms, imagesの取得
                  )
        :session (:session_cookie user)})
@@ -191,6 +191,30 @@
        session
        partnerId)
       true)
+    (catch Exception e (handle-error e))))
+
+(defn favorited-users
+  [{:keys [user-usecase session]} arguments _]
+  (try
+    (let [paging-params {:after (some-> arguments :after converter/decode-cursor converter/string->date-time)
+                         :first (:first arguments)}
+          {:keys [users]} (uuser/get-favorited-users-from-me
+                           user-usecase
+                           session
+                           true
+                           true
+                           false
+                           paging-params)
+          edges (map (fn [user]
+                       {:node user
+                        :cursor (-> user :created_at converter/date-time->string converter/encode-cursor)}) users)]
+      {:edges edges
+       :pageInfo {:startCursor (some->> edges first :cursor)
+                  :endCursor (some->> edges last :cursor)
+                  :hasPreviousPage false
+                  ;; FIXME: (= (count edges) first)の時嘘になる可能性があるがひとまずとしてこの実装にしている
+                  :hasNextPage (>= (count edges)
+                                   (or (:first paging-params) 1000))}})
     (catch Exception e (handle-error e))))
 
 (defn platform-options

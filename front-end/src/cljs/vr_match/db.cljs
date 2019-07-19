@@ -9,6 +9,8 @@
    :mypage {:platform-options nil}
    :myprofile {:uploaded-image nil}
    :me nil
+   :favorite {:favorited-from-me-list {:edges []
+                                       :pageInfo nil}}
    :wizard {:uploaded-image nil
             :platform-options nil}
    :router {:key :loading
@@ -23,5 +25,6 @@
                   :me :none
                   :mypage :none
                   :firebase :none
-                  :wizard :none}
+                  :wizard :none
+                  :favorite :none}
    :history nil})
