@@ -30,3 +30,30 @@ select count(*) as total
 from user_favorite
 where (from_id = :partner_id and to_id = :me_id)
 or (from_id = :me_id and to_id = :partner_id)
+
+-- :name matched-user-by-user_id :? :*
+-- :doc user_idのユーザーとマッチングしているユーザーを取得
+select
+user_with_favorite_num.id,
+user_with_favorite_num.name,
+user_with_favorite_num.introduction,
+user_favorite.created_at
+from (
+     select
+     user.id as id,
+     user.name as name,
+     user.introduction as introduction,
+     COUNT(user.id) as num
+     from `user`
+     left join user_favorite
+     on (user_favorite.from_id = user.id and user_favorite.to_id = :user_id)
+     or (user_favorite.to_id = user.id and user_favorite.from_id = :user_id)
+     group by user.id
+) as user_with_favorite_num
+inner join user_favorite
+on user_with_favorite_num.id = user_favorite.to_id
+and user_favorite.from_id = :user_id
+where user_with_favorite_num.num >= 2
+and user_favorite.created_at < :after
+order by user_favorite.created_at desc
+limit :limit
