@@ -13,7 +13,6 @@
    {:display-name "login-component"
     :reagent-render
     (fn [{:keys [backgroundImage
-                 handleClickLoginWithTwitter
                  handleClickLoginWithEmail
                  handleClickRegister
                  handleInitialize] :as props}]
@@ -45,28 +44,10 @@
                   :direction "column"
                   :justify "center"
                   :alignItems "center"}
-        [mui/button {:disabled true
-                     :variant "contained"
-                     :color "primary"
-                     :on-click handleClickLoginWithTwitter
-                     :style {:width "100%"}}
-         "Twitterアカウントでログイン"]
         [mui/button {:variant "contained"
                      :color "primary"
                      :on-click handleClickLoginWithEmail
                      :style {:width "100%"
                              :margin-top "16px"}}
-         "Emailでログイン"]]
-       [mui/grid {:style {:margin-top 24}
-                  :container true
-                  :direction "row"
-                  :justify "center"
-                  :align-items "center"}
-        [mui/typo-graphy {:component "p1"
-                          :variant "body2"}
-         "はじめての方は"]
-        [mui/button {:color "primary"
-                     :size "small"
-                     :on-click handleClickRegister}
-         "こちらから新規登録"]]])
+         "Emailでログイン"]]])
     :component-did-mount component-did-mount}))

@@ -9,9 +9,6 @@
 ;; TODO: re-frameつなぎ込み
 (def welcome-state (r/atom {:backgroundImage "https://storage.googleapis.com/boxp-tmp/profile_sample.jpg"}))
 
-(defn- handle-click-login-with-twitter []
-  (re-frame/dispatch [::events/push "/approach"]))
-
 (defn- handle-click-login-with-email []
   (re-frame/dispatch [::events/push "/email-login"]))
 
@@ -25,8 +22,7 @@
   [params]
   [component/welcome
    (merge @welcome-state
-          {:handleClickLoginWithTwitter handle-click-login-with-twitter
-           :handleClickLoginWithEmail handle-click-login-with-email
+          {:handleClickLoginWithEmail handle-click-login-with-email
            :handleClickRegister handle-click-register
            :handleInitialize handle-initialize})])
 
