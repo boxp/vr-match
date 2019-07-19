@@ -8,7 +8,7 @@
  (fn [_ _]
    {:dispatch [::fetch-favorited-from-me]}))
 
-(def favorited-from-me-count 2)
+(def favorited-from-me-count 12)
 
 (re-frame/reg-event-fx
  ::on-success-fetch-favorited-from-me
