@@ -2,7 +2,8 @@
   (:require
    [reagent.core :as r]
    [vr-match.lib.component :refer [navigation-bar-layout]]
-   [vr-match.lib.components.material-ui :as mui]
+   [vr-match.lib.components.progress-button :refer [progress-button]]
+   ["material-ui"]
    [vr-match.lib.components.user-list-item :refer [user-list-item]]))
 
 (defn- component-did-mount
@@ -14,12 +15,15 @@
   (with-meta
     (fn
       [{:keys [items
+               hasNext
+               isLoading
                handleClickItem
-               handleDidMount]}]
+               handleDidMount
+               handleFetchNext]}]
       [navigation-bar-layout {:title "お気に入りに登録したアバター"}
        [:div {:style {:padding "8px"}}
-        [mui/list
-         (map (fn [{:keys [id name platform images introduction]}]
+        [:> js/MaterialUI.List
+         (map (fn [{:keys [id name platforms images introduction]}]
                 ^{:key id}
                 [:div {:style {:margin-bottom "16px"}}
                  [user-list-item {:id id
@@ -28,5 +32,12 @@
                                   :nickname name
                                   :introduction introduction
                                   :handleClick handleClickItem}]])
-              items)]]])
+              items)]
+        (when hasNext
+          [progress-button {:loading? isLoading
+                            :color "primary"
+                            :variant "contained"
+                            :full-width true
+                            :on-click handleFetchNext}
+             "もっと見る"])]])
     {:component-did-mount component-did-mount}))

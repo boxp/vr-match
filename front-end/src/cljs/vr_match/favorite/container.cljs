@@ -15,12 +15,20 @@
   [id]
   (re-frame/dispatch [::events/push (str "/profile/" id)]))
 
+(defn handle-fetch-next []
+  (re-frame/dispatch [::favorite-events/fetch-next-favorited-from-me]))
+
 (defn favorite
   [params]
-  (let [items (re-frame/subscribe [::favorite-subs/favorited-users-from-me])]
+  (let [items (re-frame/subscribe [::favorite-subs/favorited-users-from-me])
+        hasNext (re-frame/subscribe [::favorite-subs/has-next-favorited-users?])
+        isLoading (re-frame/subscribe [::favorite-subs/is-loading?])]
     (fn []
-      [favorite-component (merge {:items @items
-                                  :handleDidMount handle-did-mount
-                                  :handleClickItem handle-go-to-profile})])))
+      [favorite-component {:items @items
+                           :hasNext @hasNext
+                           :isLoading @isLoading
+                           :handleDidMount handle-did-mount
+                           :handleClickItem handle-go-to-profile
+                           :handleFetchNext handle-fetch-next}])))
 
 (util/universal-set-loaded! :favorite)
