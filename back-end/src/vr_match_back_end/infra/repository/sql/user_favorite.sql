@@ -13,7 +13,7 @@ user_favorite.created_at as created_at
 from user_favorite
 inner join user on user_favorite.to_id = user.id
 where user_favorite.from_id = :user_id
-and user_favorite.created_at > :start
+and user_favorite.created_at < :after
 order by user_favorite.created_at desc
 limit :limit
 

@@ -196,7 +196,7 @@
 (defn favorited-users
   [{:keys [user-usecase session]} arguments _]
   (try
-    (let [paging-params {:start (some-> arguments :start converter/decode-cursor)
+    (let [paging-params {:after (some-> arguments :after converter/decode-cursor converter/string->date-time)
                          :first (:first arguments)}
           {:keys [users]} (uuser/get-favorited-users-from-me
                            user-usecase

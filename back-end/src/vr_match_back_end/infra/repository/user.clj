@@ -7,7 +7,7 @@
    [clojure.set :as set]
    [clojure.java.jdbc :as jdbc]
    [clj-time.core :as t]
-   [clj-time.coerce :refer [from-long to-long]]
+   [clj-time.coerce :refer [to-long]]
    [clj-time.spec :as t-spec]
    [com.stuartsierra.component :as component]
    [hugsql.core :refer [def-db-fns]]
@@ -340,10 +340,10 @@
                          :to_id partner-id})
   nil)
 
-(s/def :get-favorited-users-from-user-id-paging-params/start (s/nilable ::t-spec/date-time))
+(s/def :get-favorited-users-from-user-id-paging-params/after (s/nilable ::t-spec/date-time))
 (s/def :get-favorited-users-from-user-id-paging-params/first (s/nilable number?))
 (s/def ::get-favorited-users-from-user-id-paging-params
-  (s/keys :opt-un [:get-favorited-users-from-user-id-paging-params/start
+  (s/keys :opt-un [:get-favorited-users-from-user-id-paging-params/after
                    :get-favorited-users-from-user-id-paging-params/first]))
 (s/def :get-favorited-users-from-user-id-result/total number?)
 (s/def :get-favorited-users-from-user-id-result/users (s/coll-of ::euser/user))
@@ -364,7 +364,7 @@
    with-images?
    with-platforms?
    with-total?
-   {:keys [start first]}]
+   {:keys [after first]}]
   (cond-> {}
     with-total? (assoc :total (:total
                                (count-favorited-user-by-user_id
@@ -373,7 +373,7 @@
     :always (assoc :users (->> (favorited-user-by-user_id
                                 (:db mysql-datasource)
                                 {:user_id user-id
-                                 :start (or start (from-long 0))
+                                 :after (or after (t/now))
                                  :limit (or first 1000)})
                                (pmap #(cond-> %
                                         with-images? (assoc :images (get-images-by-user-id c (:id %)))
