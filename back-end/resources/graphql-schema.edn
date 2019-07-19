@@ -35,7 +35,9 @@
             :pageInfo {:type :PageInfo}}}
   :FavoritedUsers
   {:fields {:edges {:type (list UserEdge)}
-            :pageInfo {:type :PageInfo}}}}
+            :pageInfo {:type :PageInfo}}}
+  :UserMatch
+  {:fields {:isMatched {:type Boolean}}}}
  :input-objects
  {:PlatformInput
   {:fields {:id {:type Int}
@@ -93,7 +95,7 @@
          :description "お相手をスキップ"
          :args {:partnerId {:type (non-null Int)}}
          :resolve :resolve-skip}
-  :favorite {:type Boolean
+  :favorite {:type UserMatch
              :description "お相手をお気に入りにする"
              :args {:partnerId {:type (non-null Int)}}
              :resolve :resolve-favorite}}}

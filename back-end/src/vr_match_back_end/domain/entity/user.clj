@@ -12,6 +12,7 @@
 (s/def ::session_cookie string?)
 (s/def ::platforms (s/coll-of ::eplatform/platform))
 (s/def ::images (s/coll-of ::eimage/image))
+(s/def ::matched? boolean?)
 (s/def ::created_at ::t-spec/date-time)
 (s/def ::updated_at ::t-spec/date-time)
 
@@ -23,5 +24,6 @@
                    ::session_cookie]
           :opt-un [::platforms
                    ::images
+                   ::matched?
                    ::created_at
                    ::updated_at]))

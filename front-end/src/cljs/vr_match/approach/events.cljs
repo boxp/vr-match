@@ -3,6 +3,14 @@
    [re-frame.core :as re-frame]
    [vr-match.events :as events]))
 
+(def user-per-page 12)
+
+(re-frame/reg-event-fx
+ ::initialize
+ (fn [_ _]
+   {:dispatch-n [[::fetch-approach-list]
+                 [::events/fetch-me {:with-images? true}]]}))
+
 (defn- remove-edge-by-id
   [db id]
   (update-in db [:approach :list :edges]
@@ -38,8 +46,9 @@
 
 (re-frame/reg-event-fx
  ::on-success-favorite
- (fn [{:keys [db]} _]
-   {}))
+ (fn [{:keys [db]} [_ {:keys [data]}]]
+   {:db (-> db
+            (assoc-in [:approach :show-matching-dialog] (-> data :favorite :isMatched)))}))
 
 (re-frame/reg-event-fx
  ::on-error-favorite
@@ -52,14 +61,16 @@
 
 (re-frame/reg-event-fx
  ::favorite
- (fn [{:keys [db] :as cofx} [_ id]]
+ (fn [{:keys [db] :as cofx} [_ {:keys [id] :as user}]]
    {:db (-> db
-            (update-in [:approach :list :edges] rest))
+            (update-in [:approach :list :edges] rest)
+            (assoc-in [:approach :in-favorite-user] user))
     :dispatch [::events/graphql-query
                {:query
                 {:venia/operation {:operation/type :mutation
                                    :operation/name "favorite"}
-                 :venia/queries [[:favorite {:partnerId id}]]}
+                 :venia/queries [[:favorite {:partnerId id}
+                                  [:isMatched]]]}
                 :success-handler ::on-success-favorite
                 :error-handler ::on-error-favorite}]}))
 
@@ -81,10 +92,10 @@
 
 (re-frame/reg-event-fx
  ::fetch-approach-list
- (fn [{:keys [db] :as cofx} [_ {:keys [count]}]]
+ (fn [{:keys [db] :as cofx} _]
    {:dispatch [::events/graphql-query
                {:query {:venia/queries
-                        [[:approachList {:first count}
+                        [[:approachList {:first user-per-page}
                           [[:edges
                             [:cursor
                              [:node
@@ -114,10 +125,10 @@
 
 (re-frame/reg-event-fx
  ::fetch-next-approach-list
- (fn [{:keys [db] :as cofx} [_ {:keys [count]}]]
+ (fn [{:keys [db] :as cofx} _]
    {:dispatch [::events/graphql-query
                {:query {:venia/queries
-                        [[:approachList {:first count}
+                        [[:approachList {:first user-per-page}
                           [[:edges
                             [:cursor
                              [:node
@@ -129,3 +140,9 @@
                 :success-handler ::on-success-fetch-next-approach-list
                 :error-handler ::on-error-fetch-next-approach-list}]}
    {}))
+
+(re-frame/reg-event-fx
+ ::close-matching-dialog
+ (fn [{:keys [db]}]
+   {:db (-> db
+            (assoc-in [:approach :show-matching-dialog] false))}))
