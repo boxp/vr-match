@@ -329,8 +329,7 @@
 (s/fdef favorite-partner
   :args (s/cat :c ::user-repository
                :me-id ::euser/id
-               :partner-id ::euser/id)
-  :ret nil?)
+               :partner-id ::euser/id))
 (defn favorite-partner
   [{:keys [mysql-datasource]}
    me-id
@@ -378,6 +377,21 @@
                                (pmap #(cond-> %
                                         with-images? (assoc :images (get-images-by-user-id c (:id %)))
                                         with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %)))))))))
+
+(s/fdef get-user-matched?
+  :args (s/cat :c ::user-repository
+               :me-id ::euser/id
+               :partner-id ::euser/id))
+(defn get-user-matched?
+  [{:keys [mysql-datasource]}
+   me-id
+   partner-id]
+  (<= 2
+      (-> (count-user_favorite-by-each-other-id
+           (:db mysql-datasource)
+           {:me_id me-id
+            :partner_id partner-id})
+          :total)))
 
 (defrecord UserRepositoryComponent [mysql-datasource
                                     firebase-admin-datasource]

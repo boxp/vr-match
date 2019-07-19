@@ -185,12 +185,11 @@
    {:keys [partnerId]}
    _]
   (try
-    (do
-      (uapproach/favorite
-       approach-usecase
-       session
-       partnerId)
-      true)
+    (-> (uapproach/favorite
+         approach-usecase
+         session
+         partnerId)
+        (set/rename-keys {:matched? :isMatched}))
     (catch Exception e (handle-error e))))
 
 (defn favorited-users

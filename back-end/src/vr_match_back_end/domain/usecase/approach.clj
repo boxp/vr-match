@@ -27,7 +27,8 @@
 (s/fdef favorite
   :args (s/cat :c ::approach-usecase
                :session ::session
-               :partner-id ::euser/id))
+               :partner-id ::euser/id)
+  :ret (s/keys :req-un [::euser/matched?]))
 (defn favorite
   [{:keys [user-repository]}
    session
@@ -37,7 +38,10 @@
                session)]
     (ruser/favorite-partner user-repository
                             me-id
-                            partner-id)))
+                            partner-id)
+    {:matched? (ruser/get-user-matched? user-repository
+                                        me-id
+                                        partner-id)}))
 
 (defrecord ApproachUsecase [user-repository]
   component/Lifecycle
