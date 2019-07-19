@@ -426,13 +426,10 @@
                        :after (or (:after paging-params) (t/now))
                        :limit limit})
           has-next? (>= (count users) limit)]
-      {:users (if has-next?
-                (->> users
-                     drop-last
-                     (pmap #(cond-> %
-                              with-images? (assoc :images (get-images-by-user-id c (:id %)))
-                              with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))
-                users)
+      {:users (->> (if has-next? (drop-last users) users)
+                   (pmap #(cond-> %
+                            with-images? (assoc :images (get-images-by-user-id c (:id %)))
+                            with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))
        :has-next? has-next?})
     {:users (->> (matched-user-by-user_id
                   (:db mysql-datasource)
