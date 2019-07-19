@@ -14,12 +14,10 @@
 (def approach-state
   (r/atom {:firstCard nil
            :secondCard nil
-           :matchingPartner nil
            :isDragging false
            :isSkip false
            :isFavorite false
            :isReturning false
-           :isOpenMatchingDialog false
            :swipeStartPosition {:x 0
                                 :y 0}
            :swipeCurrentPosition {:x 0
@@ -36,9 +34,7 @@
   [props]
   (swap! approach-state
          #(-> %
-              (assoc :isFavorite true)
-              (assoc :isOpenMatchingDialog true)
-              (assoc :matchingPartner (-> @approach-state :firstItem)))))
+              (assoc :isFavorite true))))
 
 (defn- onSwipeCardTouchStart
   [event]
@@ -89,17 +85,17 @@
            handleClickSkip
            cardItems] :as props}]
   (let [should-fetch-next? (<= (-> cardItems count) 4)
-        current-card-id (-> @approach-state :firstItem :id)
+        current-card (-> @approach-state :firstItem)
         shift-card-items (fn [state]
                            (-> state
                                (assoc :firstItem (-> cardItems second))
                                (assoc :secondItem (-> cardItems (nth 3 nil)))))]
     (cond (:isSkip @approach-state)
-          (do (handleClickSkip current-card-id)
+          (do (handleClickSkip (:id current-card))
               (swap! approach-state shift-card-items)
               (when should-fetch-next? (handleFetchNext)))
           (:isFavorite @approach-state)
-          (do (handleClickFavorite current-card-id)
+          (do (handleClickFavorite current-card)
               (swap! approach-state shift-card-items)
               (when should-fetch-next? (handleFetchNext))))
     (swap! approach-state
@@ -113,10 +109,6 @@
 (defn- handleClickGoToProfile
   [props id]
   ((:handleClickGoToProfile props) id))
-
-(defn- handleCloseMatchingDialog []
-  (swap! approach-state
-         #(-> % (assoc :isOpenMatchingDialog false))))
 
 (defn- state->current-swipe-card-transform
   [state]
@@ -216,8 +208,7 @@
     (swap! approach-state
            #(-> %
                 (assoc :firstItem (-> props :cardItems first))
-                (assoc :secondItem (-> props :cardItems second))
-                (assoc :isOpenMatchingDialog false)))
+                (assoc :secondItem (-> props :cardItems second))))
     (some-> @card-ref
             (.addEventListener "touchstart" onSwipeCardTouchStart))
     (some-> @card-ref
@@ -261,8 +252,11 @@
     (fn [{:keys [me
                  classes
                  cardItems
+                 isShowMatchingDialog
+                 matchingPartner
                  handleClickSkip
                  handleClickFavorite
+                 handleClickMatchingDialogBack
                  handleFetchNext] :as props}]
       [navigation-bar-layout {:title "アバターをさがす"}
        [:div {:style {:height "100%"
@@ -324,11 +318,11 @@
                        :width "100%"}}
          [action-buttons {:onClickSkip #(onClickSkip props)
                           :onClickFavorite #(onClickFavorite props)}]]
-        [matching-dialog {:isOpen (:isOpenMatchingDialog @approach-state)
-                          :me (js->clj me :keywordize-keys true)
-                          :partner (-> @approach-state :matchingPartner (js->clj :keywordize-keys true))
+        [matching-dialog {:isOpen isShowMatchingDialog
+                          :me me
+                          :partner matchingPartner
                           :handleClickGoToProfile #(handleClickGoToProfile props %)
-                          :handleClickBack handleCloseMatchingDialog}]]])
+                          :handleClickBack handleClickMatchingDialogBack}]]])
     :component-did-mount component-did-mount
     :component-did-update component-did-update
     :component-will-unmount component-will-unmount}))

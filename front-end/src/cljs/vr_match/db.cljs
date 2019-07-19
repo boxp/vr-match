@@ -1,7 +1,9 @@
 (ns vr-match.db)
 
 (def default-db
-  {:approach {:list []}
+  {:approach {:list []
+              :in-favorite-user nil
+              :show-matching-dialog false}
    :auth {:sign-in-link {:error nil
                          :email ""}
           :sign-in-with-email {:error nil

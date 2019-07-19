@@ -9,7 +9,7 @@
            handleClickBack] :as props}]
   [mui/dialog {:full-screen true
                :open isOpen
-               :on-close #(println "close")
+               :on-close handleClickBack
                :aria-labelledby "matching-dialog"}
    [mui/dialog-title {:variant "h1"
                       :component "h2"
@@ -29,8 +29,8 @@
       [mui/grid {:item true}
        [mui/slide {:direction "right"
                    :in isOpen}
-        [mui/avatar {:alt (:userName me)
-                     :src (:image me)
+        [mui/avatar {:alt (:name me)
+                     :src (-> me :images first :url)
                      :style {:width 112
                              :height 112}}]]]
       [mui/grid {:item true}
@@ -41,8 +41,8 @@
       [mui/grid {:item true}
        [mui/slide {:direction "left"
                    :in isOpen}
-        [mui/avatar {:alt (:userName partner)
-                     :src (-> partner :image first)
+        [mui/avatar {:alt (:name partner)
+                     :src (-> partner :images first :url)
                      :style {:width 112
                              :height 112}}]]]]]]
    [mui/dialog-actions
