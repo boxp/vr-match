@@ -49,5 +49,6 @@
                         :variant "subheading"
                         :component "h2"}
        name]
-      [mui/typo-graphy {:component "p"}
+      [mui/typo-graphy {:component "p"
+                        :style {:word-break "break-word"}}
        introduction]]]]])
