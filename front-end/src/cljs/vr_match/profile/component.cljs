@@ -6,12 +6,17 @@
             [vr-match.lib.components.profile :as lib-profile]
             [vr-match.lib.component :refer [navigation-bar-layout]]))
 
-(defn profile
-  [{:keys [image
-           platForms
-           userName
-           introduction
-           isMatched] :as props}]
-  [navigation-bar-layout {:title "プロフィール"}
-   [lib-profile/profile props]])
+(defn component-did-mount
+  [this]
+  ((:handleInitialize (r/props this))))
+
+(def profile
+  (with-meta
+    (fn [{:keys [partner
+                 handleInitialize] :as props}]
+      [navigation-bar-layout {:title "プロフィール"}
+       [lib-profile/profile
+        (merge partner
+               {:isShowPlatformLink (:isMatched partner)})]])
+    {:component-did-mount component-did-mount}))
 

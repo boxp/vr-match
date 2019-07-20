@@ -1,18 +1,23 @@
 (ns vr-match.profile.container
   (:require [reagent.core :as r]
+            [re-frame.core :as re-frame]
             [vr-match.profile.component :as component]
-            [vr-match.util :as util]))
-
-(def profile-state (r/atom {:id 1
-                            :title "サンプル画像"
-                            :userName "一箱"
-                            :introduction "バーチャル清楚系女子高校生Webアプリケーションエンジニアおじさんです。こっそりプログラミングしてます。"
-                            :platForms [{:id 1 :name "VRChat" :link "https://vrchat.net/home/user/usr_3b6403c3-be9f-432c-ab1f-446778946421"} {:id 2 :name "YouTube" :link "https://www.youtube.com/user/BOXPKETARO/about"} {:id 3 :name "VirtualCast" :link ""}]
-                            :image "https://storage.googleapis.com/boxp-tmp/profile_sample.png"
-                            :isMatched true}))
+            [vr-match.profile.events :as profile-events]
+            [vr-match.profile.subs :as profile-subs]
+            [vr-match.util :as util]
+            [vr-match.events :as events]))
 
 (defn profile
   [params]
-  [component/profile @profile-state])
+  (let [id (-> params :id (js/parseInt 10))
+        partner (re-frame/subscribe [::profile-subs/partner])
+        isLoading (re-frame/subscribe [::profile-subs/loading?])
+        handleInitialize (fn []
+                           (re-frame/dispatch [::profile-events/fetch-partner {:id id}])
+                           (re-frame/dispatch [::events/fetch-me]))]
+    (fn [params]
+      [component/profile {:partner @partner
+                          :isLoading @isLoading
+                          :handleInitialize handleInitialize}])))
 
 (util/universal-set-loaded! :profile)
