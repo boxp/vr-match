@@ -305,14 +305,16 @@
                          :height "100%"
                          :width "100%"
                          :top 0
-                         :opacity (state->favorite-overlay-opacity @approach-state)}}
+                         :opacity (state->favorite-overlay-opacity @approach-state)
+                         :pointer-events "none"}}
            [favorite-overlay]]
           [:div {:style {:will-change "opacity"
                          :position "absolute"
                          :height "100%"
                          :width "100%"
                          :top 0
-                         :opacity (state->skip-overlay-opacity @approach-state)}}
+                         :opacity (state->skip-overlay-opacity @approach-state)
+                         :pointer-events "none"}}
            [skip-overlay]]]]
         [:div {:style {:will-change "transform"
                        :width "100%"}}

@@ -9,7 +9,8 @@
    [:div {:style {:padding "8px"
                   :color "white"
                   :font-size "48px"}}
-    [mui/icon {:fontSize "inherit"}
+    [mui/icon {:fontSize "inherit"
+               :style {:font-size "48px"}}
      "favorite"]
     [:div {:style {:margin-top "8px"}}
     [mui/typo-graphy {:fontSize "inherit"
