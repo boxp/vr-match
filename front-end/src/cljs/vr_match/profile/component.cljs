@@ -3,6 +3,7 @@
             [reagent.core :as r]
             [clojure.string :as string]
             [vr-match.lib.components.material-ui :as mui]
+            [vr-match.lib.components.linear-progress :refer [linear-progress]]
             [vr-match.lib.components.profile :as lib-profile]
             [vr-match.lib.component :refer [navigation-bar-layout]]))
 
@@ -12,11 +13,15 @@
 
 (def profile
   (with-meta
-    (fn [{:keys [partner
+    (fn [{:keys [isLoading
+                 partner
                  handleInitialize] :as props}]
       [navigation-bar-layout {:title "プロフィール"}
-       [lib-profile/profile
-        (merge partner
-               {:isShowPlatformLink (:isMatched partner)})]])
+       [:<>
+        (when isLoading
+          [linear-progress])
+        [lib-profile/profile
+         (merge partner
+                {:isShowPlatformLink (:isMatched partner)})]]])
     {:component-did-mount component-did-mount}))
 

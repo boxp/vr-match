@@ -2,6 +2,7 @@
   (:require
    [reagent.core :as r]
    [vr-match.lib.component :refer [navigation-bar-layout]]
+   [vr-match.lib.components.linear-progress :refer [linear-progress]]
    [vr-match.lib.components.material-ui :as mui]
    [vr-match.lib.components.profile :refer [profile]]))
 
@@ -11,10 +12,13 @@
 
 (def myprofile
   (with-meta
-    (fn [{:keys [me
+    (fn [{:keys [isLoading
+                 me
                  handleClickEditMyProfile] :as props}]
       [navigation-bar-layout {:title "プロフィール"}
        [:div {:style {:position "relative"}}
+        (when isLoading
+          [linear-progress])
         [profile (merge me {:isShowPlatformLink true})]
         [:div {:style {:position "fixed"
                        :right 0

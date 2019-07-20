@@ -26,3 +26,8 @@
  ::me
  (fn [db]
    (-> db :me)))
+
+(re-frame/reg-sub
+ ::loading-me?
+ (fn [db]
+   (= (-> db :fetch-status :me) :loading)))

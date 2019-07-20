@@ -16,9 +16,11 @@
 
 (defn myprofile
   [params]
-  (let [me (re-frame/subscribe [::subs/me])]
+  (let [me (re-frame/subscribe [::subs/me])
+        isLoading (re-frame/subscribe [::subs/loading-me?])]
     (fn [_]
-      [component/myprofile {:me @me
+      [component/myprofile {:isLoading @isLoading
+                            :me @me
                             :handleInitialize handle-initialize
                             :handleClickEditMyProfile handle-click-edit-my-profile}])))
 
