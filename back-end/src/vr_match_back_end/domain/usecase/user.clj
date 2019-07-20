@@ -146,7 +146,8 @@
                :user-id ::euser/id
                :with-images? boolean?
                :with-platforms? boolean?
-               :with-matched? boolean?))
+               :with-matched? boolean?)
+  :ret ::euser/user)
 (defn get-partner
   [{:keys [user-repository]}
    session

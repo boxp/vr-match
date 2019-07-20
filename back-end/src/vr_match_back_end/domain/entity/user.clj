@@ -2,7 +2,7 @@
   (:require
    [clojure.spec.alpha :as s]
    [clj-time.spec :as t-spec]
-   [vr-match-back-end.domain.entity.platform :as eimage]
+   [vr-match-back-end.domain.entity.image :as eimage]
    [vr-match-back-end.domain.entity.platform :as eplatform]))
 
 (s/def ::id number?)

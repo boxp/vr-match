@@ -13,7 +13,7 @@
 (defn platform->Platform
   [platform]
   (-> platform
-      (set/rename-keys platform {:platform-user-id :platformUserId})))
+      (set/rename-keys {:platform-user-id :platformUserId})))
 
 (s/fdef user->User
   :args (s/cat :user ::euser/user)
