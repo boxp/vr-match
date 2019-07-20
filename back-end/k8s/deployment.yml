@@ -40,6 +40,11 @@ spec:
               secretKeyRef:
                 name: vr-match-${_ENVIRONMENT}-secrets
                 key: MYSQL_PASSWORD
+          - name: VR_MATCH_CLOUD_STORAGE_BUCKET_NAME
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-${_ENVIRONMENT}-secrets
+                key: CLOUD_STORAGE_BUCKET_NAME
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.11
         command: ["/cloud_sql_proxy",

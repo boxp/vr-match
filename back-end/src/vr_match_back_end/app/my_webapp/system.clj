@@ -85,7 +85,7 @@
    :vr-match-mysql-dbname (or (env :vr-match-mysql-dbname) "vr_match")
    :vr-match-mysql-user (or (env :vr-match-mysql-user) "root")
    :vr-match-mysql-password (or (env :vr-match-mysql-password) "")
-   :vr-match-cloud-storage-bucket-name (or (env :vr-match-cloud-storage-bucket-name) "vr-match-staging")})
+   :vr-match-cloud-storage-bucket-name (or (env :vr-match-cloud-storage-bucket-name) "")})
 
 (defn -main []
   (component/start
