@@ -2,6 +2,7 @@
   (:require
    [reagent.core :as r]
    [vr-match.lib.component :refer [navigation-bar-layout]]
+   [vr-match.lib.components.linear-progress :refer [linear-progress]]
    [vr-match.lib.components.progress-button :refer [progress-button]]
    ["material-ui"]
    [vr-match.lib.components.user-list-item :refer [user-list-item]]))
@@ -22,6 +23,8 @@
                handleFetchNext]}]
       [navigation-bar-layout {:title "マッチングしたアバター"}
        [:div {:style {:padding "8px"}}
+        (when isLoading
+          [linear-progress])
         [:> js/MaterialUI.List
          (map (fn [{:keys [id name platforms images introduction]}]
                 ^{:key id}
