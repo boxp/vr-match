@@ -45,10 +45,12 @@
 (defn wizard
   [params]
   (let [me (re-frame/subscribe [::subs/me])
-        platformChoices (re-frame/subscribe [::wizard-subs/platform-options])]
+        platformChoices (re-frame/subscribe [::wizard-subs/platform-options])
+        isLoading (re-frame/subscribe [::wizard-subs/loading?])]
     (fn [params]
       [component/wizard (merge @mock-wizard-state
                                {:me @me
+                                :isLoading @isLoading
                                 :platformChoices @platformChoices
                                 :handleInitialize handle-initialize
                                 :handleNextNicknameStep handle-next-nickname-step

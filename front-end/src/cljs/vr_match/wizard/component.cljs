@@ -14,6 +14,7 @@
       ((:handleInitialize (r/props this))))
     :reagent-render
     (fn [{:keys [me
+                 isLoading
                  step
                  platformChoices
                  handleInitialize
@@ -27,5 +28,6 @@
                                          :platformChoices platformChoices
                                          :handleClickNext handleNextPlatformStep}]
         :image [wizard-image-step {:me me
+                                   :isLoading isLoading
                                    :handleClickNext handleNextImageStep}]
         nil))}))

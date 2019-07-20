@@ -2,6 +2,7 @@
   (:require
    [reagent.core :as r]
    [vr-match.lib.components.material-ui :as mui]
+   [vr-match.lib.components.linear-progress :refer [linear-progress]]
    [vr-match.wizard.components.wizard-step :refer [wizard-step]]
    [vr-match.wizard.components.wizard-title :refer [wizard-title]]))
 
@@ -28,9 +29,11 @@
         handle-click-next (fn [] (handleClickNext @draft-image))
         handle-click-reset-image (fn [e]
                                    (some-> @image-ref .click))]
-    (fn []
+    (fn [{:keys [isLoading]}]
       [mui/fade {:in true}
        [:div {:style {:padding 16}}
+        (when isLoading
+          [linear-progress])
         [mui/grid {:container true
                    :spacing 32
                    :direction "column"

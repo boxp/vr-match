@@ -7,3 +7,7 @@
  (fn [db]
    (-> db :wizard :platform-options)))
 
+(re-frame/reg-sub
+ ::loading?
+ (fn [db]
+   (= (-> db :fetch-status :wizard) :loading)))
