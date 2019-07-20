@@ -72,7 +72,7 @@
           [_ id] (insert-user tx
                               {:firebase_id firebase_id
                                :name ""
-                               :introduction ""})]
+                               :introduction "はじめまして！"})]
       (-> (user-by-id tx
                       {:id id})
           (assoc :session_cookie session_cookie)))))
