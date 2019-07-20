@@ -27,6 +27,7 @@
  ::loading?
  (fn [db]
    (or
+    (-> db :fetch-status :sign-in-link (= :loading))
     (-> db :fetch-status :sign-in-with-email (= :loading))
     (-> db :fetch-status :login-user (= :loading))
     (-> db :fetch-status :register-user (= :loading))

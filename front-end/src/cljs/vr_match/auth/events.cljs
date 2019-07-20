@@ -164,7 +164,8 @@
    {:db (-> db
             (assoc-in [:api-error] error)
             (assoc-in [:auth :sign-in-with-email :error] error)
-            (assoc-in [:fetch-status :sign-in-link] :loaded))}))
+            (assoc-in [:fetch-status :sign-in-with-email] :loaded))
+    :dispatch [::events/push "/email-login"]}))
 
 (re-frame/reg-event-fx
  ::sign-in-with-email
