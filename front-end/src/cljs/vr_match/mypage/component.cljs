@@ -83,8 +83,9 @@
                              :top "calc(100vw - 40px)"
                              :right "16px"
                              :background-color mui/primary-color}}
-           [mui/icon {:font-size "large"
-                      :style {:color "white"}}
+           [mui/icon {:font-size "inherit"
+                      :style {:color "white"
+                              :font-size "32px"}}
             "edit"]]
           [mui/list {:subheader (r/as-element [mui/list-subheader "ユーザー名"])}
            [mui/list-item {:key "user-name"
