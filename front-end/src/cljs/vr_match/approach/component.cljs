@@ -299,7 +299,7 @@
                              :else nil)
                 :ref (fn [ref] (reset! card-ref ref))}
           [swipe-card-item {:item (-> @approach-state :firstItem)
-                            :handleClickCard #()}]
+                            :handleClickCard #(handleClickGoToProfile props %)}]
           [:div {:style {:will-change "opacity"
                          :position "absolute"
                          :height "100%"

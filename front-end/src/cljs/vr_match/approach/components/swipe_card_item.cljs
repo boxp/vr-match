@@ -1,6 +1,7 @@
 (ns vr-match.approach.components.swipe-card-item
   (:require [reagent.core :as r]
             [vr-match.lib.components.material-ui :as mui]
+            [vr-match.lib.components.elevation :as elevation]
             [vr-match.lib.components.plat-form-chip :refer [plat-form-chip]]))
 
 (defn swipe-card-item
@@ -35,6 +36,19 @@
        [mui/card-content {:style {"width" "100%"
                                   "boxSizing" "border-box"
                                   "flexGrow" 1}}
+        [mui/icon-button {:style {:width "64px"
+                                  :height "64px"
+                                  :margin-top "-88px"
+                                  :margin-left "auto"
+                                  :margin-right "-24px"
+                                  :margin-botton "16px"
+                                  :display "block"
+                                  :box-sizing "unset"
+                                  :z-index elevation/swipe-card-information}
+                          :on-click #(handleClickCard id)}
+         [mui/icon {:font-size "inherit"
+                    :style {:font-size "36px"}}
+          "info"]]
         [mui/grid {:container true
                    :justify "flex-start"
                    :style {"marginBottom" "0.35em"}
