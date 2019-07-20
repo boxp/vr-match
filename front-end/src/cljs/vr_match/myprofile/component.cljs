@@ -19,7 +19,8 @@
        [:div {:style {:position "relative"}}
         (when isLoading
           [linear-progress])
-        [profile (merge me {:isShowPlatformLink true})]
+        [:div {:style {:margin-bottom "36px"}}
+         [profile (merge me {:isShowPlatformLink true})]]
         [:div {:style {:position "fixed"
                        :right 0
                        :left 0
