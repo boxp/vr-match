@@ -14,7 +14,8 @@
         isLoading (re-frame/subscribe [::profile-subs/loading?])
         handleInitialize (fn []
                            (re-frame/dispatch [::profile-events/fetch-partner {:id id}])
-                           (re-frame/dispatch [::events/fetch-me]))]
+                           (re-frame/dispatch [::events/fetch-me {:with-images? true
+                                                                  :with-platforms? true}]))]
     (fn [params]
       [component/profile {:partner @partner
                           :isLoading @isLoading
