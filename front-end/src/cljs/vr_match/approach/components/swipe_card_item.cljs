@@ -39,7 +39,7 @@
                                 :box-sizing "unset"}
                         :on-click #(handleClickCard id)}
        [mui/icon {:font-size "inherit"
-                  :style {:font-size "36px"}}
+                  :style {:font-size "40px"}}
         "info"]]
       [mui/grid {:container true
                  :justify "flex-start"
