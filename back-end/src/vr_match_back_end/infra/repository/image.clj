@@ -7,6 +7,8 @@
    [clojure.data.codec.base64 :as b64]
    [clojure.java.jdbc :as jdbc]
    [clojure.set :as set]
+   [clj-time.core :as t]
+   [clj-time.coerce :refer [to-long]]
    [clj-time.spec :as t-spec]
    [com.stuartsierra.component :as component]
    [hugsql.core :refer [def-db-fns]]
@@ -28,7 +30,7 @@
 (defn- upload-image
   [{:keys [cloud-storage-datasource] :as c}
    base64-string]
-  (let [bytes (-> base64-string
+  (let [bytes (-> (str base64-string (to-long (t/now)))
                   .getBytes
                   b64/decode)
         mime-type (mime-type-of bytes)
