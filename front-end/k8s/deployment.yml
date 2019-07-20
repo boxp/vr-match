@@ -1,13 +1,13 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: vr-match
+  name: vr-match-${_ENVIRONMENT}
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: vr-match
+        app: vr-match-${_ENVIRONMENT}
     spec:
       affinity:
         podAntiAffinity:
@@ -17,48 +17,51 @@ spec:
               - key: app
                 operator: In
                 values:
-                - vr-match
+                - vr-match-${_ENVIRONMENT}
             topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: vr-match
-        image: gcr.io/${PROJECT_ID}/vr-match:${REVISION_ID}
+      - name: vr-match-${_ENVIRONMENT}
+        image: gcr.io/${PROJECT_ID}/vr-match-${_ENVIRONMENT}:${REVISION_ID}
         ports:
         - containerPort: 3000
         env:
           - name: API_ENDPOINT
-            value: "https://api-hito-hub.boxp.tk"
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-${_ENVIRONMENT}-secrets
+                key: VR_MATCH_API_ENDPOINT
           - name: FIREBASE_API_KEY
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: FIREBASE_API_KEY
           - name: FIREBASE_AUTH_DOMAIN
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: FIREBASE_AUTH_DOMAIN
           - name: FIREBASE_DATABASE_URL
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: FIREBASE_DATABASE_URL
           - name: FIREBASE_PROJECT_ID
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: FIREBASE_PROJECT_ID
           - name: FIREBASE_STORAGE_BUCKET
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: FIREBASE_STORAGE_BUCKET
           - name: FIREBASE_MESSAGING_SENDER_ID
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: FIREBASE_MESSAGING_SENDER_ID
           - name: FIREBASE_APP_ID
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: FIREBASE_APP_ID

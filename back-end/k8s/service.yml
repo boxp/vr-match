@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: vr-match-back-end
+  name: vr-match-back-end-${_ENVIRONMENT}
 spec:
   selector:
-    app: vr-match-back-end
+    app: vr-match-back-end-${_ENVIRONMENT}
   type: NodePort
   ports:
     - protocol: TCP

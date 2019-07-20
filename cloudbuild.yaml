@@ -3,21 +3,21 @@ steps:
 
 # Build
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/vr-match:$REVISION_ID', '-f', './front-end/Dockerfile', './front-end' ]
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/vr-match-${_ENVIRONMENT}:$REVISION_ID', '-f', './front-end/Dockerfile', './front-end' ]
   id: 'build-front-end'
   waitFor: ['-']
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/vr-match-back-end:$REVISION_ID', '-f', './back-end/Dockerfile', './back-end' ]
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/vr-match-back-end-${_ENVIRONMENT}:$REVISION_ID', '-f', './back-end/Dockerfile', './back-end' ]
   id: 'build-back-end'
   waitFor: ['-']
 
 # Push
 - name: 'gcr.io/cloud-builders/docker'
-  args: ["push", "gcr.io/$PROJECT_ID/vr-match:$REVISION_ID"]
+  args: ["push", "gcr.io/$PROJECT_ID/vr-match-${_ENVIRONMENT}:$REVISION_ID"]
   id: 'push-front-end'
   waitFor: ['build-front-end']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ["push", "gcr.io/$PROJECT_ID/vr-match-back-end:$REVISION_ID"]
+  args: ["push", "gcr.io/$PROJECT_ID/vr-match-back-end-${_ENVIRONMENT}:$REVISION_ID"]
   id: 'push-back-end'
   waitFor: ['build-back-end']
 
@@ -27,6 +27,7 @@ steps:
   env:
   - "REVISION_ID=$REVISION_ID"
   - "PROJECT_ID=$PROJECT_ID"
+  - "_ENVIRONMENT=$_ENVIRONMENT"
   id: 'apply-env'
   waitFor: ['push-front-end', 'push-back-end']
   args:

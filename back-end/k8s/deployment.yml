@@ -1,59 +1,58 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: vr-match-back-end
+  name: vr-match-back-end-${_ENVIRONMENT}
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: vr-match-back-end
+        app: vr-match-back-end-${_ENVIRONMENT}
     spec:
       containers:
-      - name: vr-match-back-end
-        image: gcr.io/${PROJECT_ID}/vr-match-back-end:${REVISION_ID}
+      - name: vr-match-back-end-${_ENVIRONMENT}
+        image: gcr.io/${PROJECT_ID}/vr-match-back-end-${_ENVIRONMENT}:${REVISION_ID}
         ports:
         - containerPort: 8080
         env:
-          - name: VR_MATCH_BACK_END_MY_WEBAPP_PORT
-            value: "8080"
-          - name: VR_MATCH_BACK_END_EXAMPLE_PORT
-            value: "8000"
           - name: VR_MATCH_CLIENT_ORIGIN
-            value: "https://vr-match.boxp.tk"
+            valueFrom:
+              secretKeyRef:
+                name: vr-match-${_ENVIRONMENT}-secrets
+                key: VR_MATCH_CLIENT_ORIGIN
           - name: VR_MATCH_FIREBASE_SERVICE_ACCOUNT_KEY
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: FIREBASE_SERVICE_ACCOUNT_KEY
           - name: VR_MATCH_MYSQL_DBNAME
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: MYSQL_DBNAME
           - name: VR_MATCH_MYSQL_USER
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: MYSQL_USER
           - name: VR_MATCH_MYSQL_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: vr-match-staging-secrets
+                name: vr-match-${_ENVIRONMENT}-secrets
                 key: MYSQL_PASSWORD
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.11
         command: ["/cloud_sql_proxy",
-                  "-instances=boxp-tk:asia-northeast1:vr-match-staging=tcp:3306",
+                  "-instances=boxp-tk:asia-northeast1:vr-match-${_ENVIRONMENT}=tcp:3306",
                   "-credential_file=/secrets/cloudsql/credentials.json"]
         securityContext:
           runAsUser: 2 # non-root user
           allowPrivilegeEscalation: false
         volumeMounts:
-          - name: cloudsql-instance-credentials
+          - name: cloudsql-instance-credentials-${_ENVIRONMENT}
             mountPath: /secrets/cloudsql
             readOnly: true
       volumes:
-        - name: cloudsql-instance-credentials
+        - name: cloudsql-instance-credentials-${_ENVIRONMENT}
           secret:
-            secretName: vr-match-staging-cloudsql-instance-credentials
+            secretName: vr-match-${_ENVIRONMENT}-cloudsql-instance-credentials
