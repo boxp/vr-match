@@ -56,3 +56,12 @@ left join user_favorite on user.id = user_favorite.to_id and user_favorite.from_
 where user.id != :user_id
 and user_skip.to_id is null
 and user_favorite.to_id is null
+
+-- :name user-with-is_matched :? :1
+-- :doc parnter_idからme_idに対してのマッチング情報を含むUser一件取得
+select user.id as id, user.name as name, user.introduction as introduction, count(user.id) >= 2 as is_matched
+from `user`
+inner join user_favorite
+on (user.id = user_favorite.to_id and :me_id = user_favorite.from_id)
+or (user.id = user_favorite.from_id and :me_id = user_favorite.to_id)
+where user.id = :partner_id

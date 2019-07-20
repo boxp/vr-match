@@ -140,6 +140,36 @@
      with-has-next?
      paging-params)))
 
+(s/fdef get-partner
+  :args (s/cat :c ::user-usecase
+               :session ::session
+               :user-id ::euser/id
+               :with-images? boolean?
+               :with-platforms? boolean?
+               :with-matched? boolean?))
+(defn get-partner
+  [{:keys [user-repository]}
+   session
+   user-id
+   with-images?
+   with-platforms?
+   with-matched?]
+  (let [me-id (ruser/get-user-id-by-session
+                 user-repository
+                 session)]
+    (if with-matched?
+      (ruser/get-user
+       user-repository
+       user-id
+       with-images?
+       with-platforms?
+       me-id)
+      (ruser/get-user
+       user-repository
+       user-id
+       with-images?
+       with-platforms?))))
+
 (defrecord UserUsecase [user-repository]
   component/Lifecycle
   (start [this] this)
