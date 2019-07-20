@@ -70,6 +70,7 @@
             :content "width=device-width,initial-scale=1,user-scalable=no"}]
     (when-not dev?
       [:link {:rel "manifest" :href "/manifest.json"}])
+    [:title "Hito Hub"]
     [:style "
       body {
         font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, YuGothic, ヒラギノ角ゴ ProN W3, Hiragino Kaku Gothic ProN, Arial, メイリオ, Meiryo, sans-serif;
