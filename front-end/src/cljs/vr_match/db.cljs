@@ -9,8 +9,8 @@
           :sign-in-with-email {:error nil
                                :email-input-required? false}}
    :mypage {:platform-options nil}
-   :myprofile {:uploaded-image nil}
-   :me nil
+   :myprofile {}
+   :profile {:partner nil}
    :favorite {:favorited-from-me-list {:edges []
                                        :pageInfo nil}}
    :matching {:list {:edges []
@@ -19,6 +19,7 @@
             :platform-options nil}
    :router {:key :loading
             :params {}}
+   :me nil
    :api-endpoint ""
    :api-error nil
    :drawer {:open? false}
@@ -31,5 +32,6 @@
                   :firebase :none
                   :wizard :none
                   :favorite :none
-                  :matching :none}
+                  :matching :none
+                  :profile :none}
    :history nil})

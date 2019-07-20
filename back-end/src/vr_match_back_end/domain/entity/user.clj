@@ -2,7 +2,7 @@
   (:require
    [clojure.spec.alpha :as s]
    [clj-time.spec :as t-spec]
-   [vr-match-back-end.domain.entity.platform :as eimage]
+   [vr-match-back-end.domain.entity.image :as eimage]
    [vr-match-back-end.domain.entity.platform :as eplatform]))
 
 (s/def ::id number?)
@@ -18,11 +18,11 @@
 
 (s/def ::user
   (s/keys :req-un [::id
-                   ::firebase_id
                    ::name
-                   ::introduction
-                   ::session_cookie]
-          :opt-un [::platforms
+                   ::introduction]
+          :opt-un [::session_cookie
+                   ::firebase_id
+                   ::platforms
                    ::images
                    ::matched?
                    ::created_at

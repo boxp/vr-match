@@ -163,8 +163,7 @@
       session
       (executor/selects-field? context :User/images)
       (executor/selects-field? context :User/platforms))
-     (update :platforms #(map (fn [platform]
-                                (set/rename-keys platform {:platform-user-id :platformUserId})) %)))
+     (update :platforms #(map converter/platform->Platform %)))
     (catch Exception e (handle-error e))))
 
 (defn skip
@@ -242,6 +241,22 @@
                   :endCursor (some->> edges last :cursor)
                   :hasPreviousPage false
                   :hasNextPage has-next?}})
+    (catch Exception e (handle-error e))))
+
+(defn partner
+  [{:keys [user-usecase session] :as context}
+   {:keys [id] :as arguments}
+   _]
+  (try
+    (-> (uuser/get-partner
+         user-usecase
+         session
+         id
+         (executor/selects-field? context :User/images)
+         (executor/selects-field? context :User/platforms)
+         (executor/selects-field? context :User/isMatched))
+        converter/user->User
+        (update :platforms #(map converter/platform->Platform %)))
     (catch Exception e (handle-error e))))
 
 (defn platform-options

@@ -18,6 +18,8 @@
             :images {:type (list :Image)
                      :optional true}
             :platforms {:type (list :Platform)
+                        :optional true}
+            :isMatched {:type Boolean
                         :optional true}}}
   :UserWithSession
   {:fields {:user {:type User}
@@ -74,6 +76,9 @@
                  :resolve :resolve-matched-users}
   :me {:type :User
        :resolve :resolve-me}
+  :partner {:type :User
+            :args {:id {:type Int}}
+            :resolve :resolve-partner}
   :platformOptions {:type (list :PlatformOption)
                     :resolve :resolve-platform-options}}
  :mutations

@@ -440,6 +440,35 @@
                            with-images? (assoc :images (get-images-by-user-id c (:id %)))
                            with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))}))
 
+(s/fdef get-user
+  :args (s/cat :c ::user-repository
+               :partner-id ::euser/id
+               :with-images? boolean?
+               :with-platforms? boolean?
+               :me-id (s/nilable ::euser/id))
+  :ret ::euser/user)
+(defn get-user
+  ([{:keys [mysql-datasource] :as c}
+    partner-id
+    with-images?
+    with-platforms?]
+   (cond-> (user-by-id (:db mysql-datasource)
+                       {:id partner-id})
+     with-images? (assoc :images (get-images-by-user-id c partner-id))
+     with-platforms? (assoc :platforms (get-platforms-by-user-id c partner-id))))
+  ([{:keys [mysql-datasource] :as c}
+    partner-id
+    with-images?
+    with-platforms?
+    me-id]
+   (cond-> (user-with-is_matched (:db mysql-datasource)
+                                 {:partner_id partner-id
+                                  :me_id me-id})
+     with-images? (assoc :images (get-images-by-user-id c partner-id))
+     with-platforms? (assoc :platforms (get-platforms-by-user-id c partner-id))
+     :always (-> (set/rename-keys {:is_matched :matched?})
+                 (update :matched? #(= % 1))))))
+
 (defrecord UserRepositoryComponent [mysql-datasource
                                     firebase-admin-datasource]
   component/Lifecycle
