@@ -249,6 +249,7 @@
    _]
   (try
     (-> (uuser/get-partner
+         user-usecase
          session
          id
          (executor/selects-field? context :User/images)

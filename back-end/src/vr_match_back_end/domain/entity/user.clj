@@ -18,11 +18,11 @@
 
 (s/def ::user
   (s/keys :req-un [::id
-                   ::firebase_id
                    ::name
-                   ::introduction
-                   ::session_cookie]
-          :opt-un [::platforms
+                   ::introduction]
+          :opt-un [::session_cookie
+                   ::firebase_id
+                   ::platforms
                    ::images
                    ::matched?
                    ::created_at
