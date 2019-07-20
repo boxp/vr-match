@@ -43,11 +43,26 @@
          [mui/grid {:container true
                     :justify "center"
                     :align-items "center"}
-          [:a {:role "button"
-               :style {:position "relative"}}
-           [mui/avatar {:src @draft-image
-                        :style {:width "240px"
-                                :height "240px"}}]]]
+          [:div {:style {:width "240px"
+                         :height "240px"
+                         :position "relative"}}
+           [mui/button-base {:on-click handle-click-reset-image
+                             :style {:border-radius "100%"}}
+            [mui/avatar {:src @draft-image
+                         :style {:width "240px"
+                                 :height "240px"}}]]
+           [mui/icon-button {:on-click handle-click-reset-image
+                             :style
+                             {:position "absolute"
+                              :width "64px"
+                              :height "64px"
+                              :bottom "8px"
+                              :right "8px"
+                              :background-color mui/primary-color}}
+            [mui/icon {:font-size "inherit"
+                       :style {:color "white"
+                               :font-size "32px"}}
+             "edit"]]]]
          [mui/grid {:container true
                     :direction "column"}
           [mui/button {:disabled (nil? @draft-image)
@@ -59,7 +74,4 @@
                    :id "js-select-file"
                    :on-change handle-change-image
                    :ref (fn [com] (reset! image-ref com))
-                   :style {:display "none"}}]
-          [mui/button {:style {:margin-top 16}
-                       :on-click handle-click-reset-image}
-           "画像を再設定する"]]]]])))
+                   :style {:display "none"}}]]]]])))
