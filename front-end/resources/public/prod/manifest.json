@@ -6,7 +6,7 @@
   "display": "standalone",
   "orientation": "portrait-primary",
   "icons": [{
-    "src": "/static/img/clojure_logo.png",
+    "src": "/static/img/logo.png",
     "type": "image/png",
     "sizes": "256x256"
   }],
