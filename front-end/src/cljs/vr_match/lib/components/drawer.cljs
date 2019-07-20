@@ -21,9 +21,9 @@
                      :button true
                      :on-click handleClickMyProfile}
       [mui/list-item-avatar
-       [mui/avatar {:alt (:userName me)
-                    :src (-> me :image first)}]]
-      [mui/list-item-text {:primary (:userName me)}]]
+       [mui/avatar {:alt (:name me)
+                    :src (-> me :images first :url)}]]
+      [mui/list-item-text {:primary (:name me)}]]
      [mui/divider]
      [mui/list-item {:key "search"
                      :button true

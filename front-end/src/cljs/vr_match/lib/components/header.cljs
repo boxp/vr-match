@@ -93,15 +93,10 @@
 (defn header
   [{:keys [title] :as props}]
   (let [open-drawer? (re-frame/subscribe [::subs/open-drawer?])
-        me {:id 1
-            :title "サンプル画像"
-            :userName "一箱"
-            :introduction "バーチャル清楚系女子高校生Webアプリケーションエンジニアおじさんです。こっそりプログラミングしてます。"
-            :platForms [{:id 1 :name "VRChat"} {:id 2 :name "VRoidHub"} {:id 3 :name "VirtualCast"}]
-            :image ["https://storage.googleapis.com/boxp-tmp/profile_sample.png"]}]
+        me (re-frame/subscribe [::subs/me])]
     [header-component {:title title
                        :isOpen @open-drawer?
-                       :me me
+                       :me @me
                        :handleClickClose handle-close-drawer
                        :handleOpenDrawer handle-open-drawer
                        :handleClickMyProfile handle-click-my-profile
