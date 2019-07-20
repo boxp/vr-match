@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: vr-match-back-end-${_ENVIRONMENT}
 spec:
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
