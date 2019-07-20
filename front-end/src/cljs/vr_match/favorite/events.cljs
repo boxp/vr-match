@@ -6,7 +6,9 @@
 (re-frame/reg-event-fx
  ::initialize
  (fn [_ _]
-   {:dispatch [::fetch-favorited-from-me]}))
+   {:dispatch [[::fetch-favorited-from-me]
+               [::events/fetch-me {:with-images true
+                                   :with-platforms true}]]}))
 
 (def favorited-from-me-count 12)
 
