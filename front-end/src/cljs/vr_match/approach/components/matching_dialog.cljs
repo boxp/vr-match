@@ -51,5 +51,7 @@
      "戻る"]
     [mui/button {:color "primary"
                  :size "large"
-                 :on-click #(handleClickGoToProfile (:id partner))}
+                 :on-click (fn []
+                             (handleClickBack)
+                             (handleClickGoToProfile (:id partner)))}
      "相手のプロフィールを見る"]]])
