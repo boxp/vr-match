@@ -18,6 +18,7 @@
     [vr-match.auth.containers.email-login-complete]
     [vr-match.wizard.container]
     [vr-match.favorite.container]
+    [vr-match.matching.container]
     [vr-match.myprofile.container]
     [vr-match.mypage.container]
     [vr-match.lib.component :as component]
