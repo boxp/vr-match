@@ -108,11 +108,13 @@
                 :error-handler ::on-error-fetch-approach-list}]}))
 
 (re-frame/reg-event-db
- ::on-success-fetch-next-approach-list
- (fn [db [_ {:keys [data errors] :as payload}]]
-   (update-in db [:approach :list] #(concat % (-> payload
-                                                  :data
-                                                  :approachList)))))
+  ::on-success-fetch-next-approach-list
+  (fn [db [_ {:keys [data errors] :as payload}]]
+    (-> db
+        (update-in [:approach :list :edges] #(concat % (-> payload
+                                                           :data
+                                                           :approachList
+                                                           :edges))))))
 
 (re-frame/reg-event-fx
  ::on-error-fetch-next-approach-list
@@ -138,8 +140,7 @@
                                [:images [:id :url]]
                                [:platforms [:id :name]]]]]]]]]}
                 :success-handler ::on-success-fetch-next-approach-list
-                :error-handler ::on-error-fetch-next-approach-list}]}
-   {}))
+                :error-handler ::on-error-fetch-next-approach-list}]}))
 
 (re-frame/reg-event-fx
  ::close-matching-dialog
