@@ -84,7 +84,7 @@
            handleClickFavorite
            handleClickSkip
            cardItems] :as props}]
-  (let [should-fetch-next? (<= (-> cardItems count) 4)
+  (let [should-fetch-next? (<= (-> cardItems count) 1)
         current-card (-> @approach-state :firstItem)
         shift-card-items (fn [state]
                            (-> state
