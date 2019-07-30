@@ -43,3 +43,9 @@
            .-worker
            (.postMessage (pr-str params)))))
 
+(re-frame/reg-fx
+  ::ga-page-view
+  (fn [[path]]
+    (when js/ga
+      (js/ga "set" "page" path)
+      (js/ga "send" "pageview"))))
