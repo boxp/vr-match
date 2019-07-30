@@ -42,6 +42,8 @@
    :messagingSenderId js/process.env.FIREBASE_MESSAGING_SENDER_ID
    :appId js/process.env.FIREBASE_APP_ID})
 
+(def google-analytics-tracking-id js/process.env.GOOGLE_ANALYTICS_TRACKING_ID)
+
 (def JssProvider (-> (js/require "react-jss/lib/JssProvider") .-default adapt-react-class))
 (def jss (js/require "react-jss/lib/jss"))
 (def sheets-registry (.-SheetsRegistry jss))
@@ -141,6 +143,21 @@
    [:script {:src "/static/js/compiled/app.js"}]
    [:link {:rel "stylesheet"
            :href "https://fonts.googleapis.com/icon?family=Material+Icons"}]
+   (when google-analytics-tracking-id
+     [:div
+      {:dangerouslySetInnerHTML
+       {:__html
+        (str "
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src='https://www.googletagmanager.com/gtag/js?id=" google-analytics-tracking-id "'></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '" google-analytics-tracking-id "');
+        </script>
+        ")}}])
    (when-not dev?
      [:div
       {:dangerouslySetInnerHTML
