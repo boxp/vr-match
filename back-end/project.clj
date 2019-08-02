@@ -17,7 +17,7 @@
                  [compojure "1.6.1"]
                  [cheshire "5.8.1"]
                  [cljstache "2.0.4"]
-                 [org.clojure/tools.namespace "0.3.0"]
+                 [org.clojure/tools.namespace "0.3.1"]
                  [com.walmartlabs/lacinia "0.33.0"]
                  [e85th/venia "0.2.5-1"]
                  [com.layerware/hugsql "0.4.9"]
