@@ -73,6 +73,8 @@
             :content "width=device-width,initial-scale=1,user-scalable=no"}]
     (when-not dev?
       [:link {:rel "manifest" :href "/manifest.json"}])
+    (when-not dev?
+      [:link {:rel "apple-touch-icon" :href "/static/img/logo.png"}])
     [:title "Hito Hub"]
     [:style "
       body {
