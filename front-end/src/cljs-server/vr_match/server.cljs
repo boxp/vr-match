@@ -21,7 +21,6 @@
     [vr-match.matching.container]
     [vr-match.myprofile.container]
     [vr-match.mypage.container]
-    [vr-match.privacy-policy.container]
     [vr-match.lib.component :as component]
     [vr-match.lib.components.material-ui :as mui]
     [vr-match.config :as config]
@@ -74,8 +73,6 @@
             :content "width=device-width,initial-scale=1,user-scalable=no"}]
     (when-not dev?
       [:link {:rel "manifest" :href "/manifest.json"}])
-    (when-not dev?
-      [:link {:rel "apple-touch-icon" :href "/static/img/logo.png"}])
     [:title "Hito Hub"]
     [:style "
       body {

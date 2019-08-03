@@ -36,9 +36,7 @@
    :myprofile {:container #(resolve 'vr-match.myprofile.container/myprofile)
                :module-name :myprofile}
    :mypage {:container #(resolve 'vr-match.mypage.container/mypage)
-            :module-name :mypage}
-   :privacy-policy {:container #(resolve 'vr-match.privacy-policy.container/privacy-policy)
-                    :module-name :privacy-policy}})
+            :module-name :mypage}})
 
 (defn- lazy-push
   [key params]
@@ -83,9 +81,6 @@
 
 (defroute mypage-path "/mypage" []
   (lazy-push :mypage {}))
-
-(defroute privacy-policy "/privacy-policy" []
-  (lazy-push :privacy-policy {}))
 
 (defroute not-found-path "*" []
   (lazy-push :approach {}))
