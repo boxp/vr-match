@@ -42,6 +42,9 @@
    :mypage {:entries #{"vr-match.mypage.container"}
             :output-to (str output-dir "/mypage.js")
             :depends-on #{:client}}
+   :privacy-policy {:entries #{"vr-match.privacy-policy.container"}
+                    :output-to (str output-dir "/privacy_policy.js")
+                    :depends-on #{:client}}
    ;; 分割されたモジュールをロードするために最低限必要なモジュール
    ;; モジュールの分割を行うと必ずこのモジュールが分割されるので出力先ファイル名だけ変更している
    :cljs-base {:output-to (str output-dir "/cljs_base.js")}
