@@ -49,4 +49,5 @@ module.exports = {
       },
   ],
   "skipWaiting": true,
+  "clientsClaim": true,
 };
