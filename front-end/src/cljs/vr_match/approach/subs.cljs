@@ -25,6 +25,14 @@
        :in-favorite-user)))
 
 (re-frame/reg-sub
+  ::loading?
+  (fn [db]
+    (= :loading
+       (-> db
+           :fetch-status
+           :approach))))
+
+(re-frame/reg-sub
   ::loaded?
   (fn [db]
     (= :loaded

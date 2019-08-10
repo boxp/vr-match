@@ -119,6 +119,7 @@
   ::on-success-fetch-next-approach-list
   (fn [db [_ {:keys [data errors] :as payload}]]
     (-> db
+        (assoc-in [:fetch-status :approach] :loaded)
         (update-in [:approach :list :edges] #(concat % (-> payload
                                                            :data
                                                            :approachList
@@ -131,26 +132,30 @@
    {:dispatch-n (case (-> errors first :extensions :type)
                   "invalid-session" [[::events/push "/"]
                                      [::events/clear-session]]
-                  [[::events/api-error errors]])}))
+                  [[::events/api-error errors]])
+    :db (-> db
+            (assoc-in [:fetch-status :approach] :loaded))}))
 
 (re-frame/reg-event-fx
- ::fetch-next-approach-list
- (fn [{:keys [db] :as cofx} _]
-   {:dispatch [::events/graphql-query
-               {:query {:venia/queries
-                        [[:approachList {:first user-per-page}
-                          [[:edges
-                            [:cursor
-                             [:node
-                              [:id
-                               :name
-                               :introduction
-                               [:images [:id :url]]
-                               [:platforms [:id :name]]]]]]
-                           [:pageInfo
+  ::fetch-next-approach-list
+  (fn [{:keys [db] :as cofx} _]
+    (when-not (= :loading (-> db :fetch-status :approach))
+      {:dispatch [::events/graphql-query
+                  {:query {:venia/queries
+                           [[:approachList {:first user-per-page}
+                             [[:edges
+                               [:cursor
+                                [:node
+                                 [:id
+                                  :name
+                                  :introduction
+                                  [:images [:id :url]]
+                                  [:platforms [:id :name]]]]]]
+                              [:pageInfo
                                [:hasNextPage]]]]]}
-                :success-handler ::on-success-fetch-next-approach-list
-                :error-handler ::on-error-fetch-next-approach-list}]}))
+                   :success-handler ::on-success-fetch-next-approach-list
+                   :error-handler ::on-error-fetch-next-approach-list}]
+       :db (assoc-in db [:fetch-status :approach] :loading)})))
 
 (re-frame/reg-event-fx
  ::close-matching-dialog

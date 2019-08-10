@@ -3,6 +3,7 @@
             [reagent.core :as r]
             [vr-match.lib.components.material-ui :as mui]
             [vr-match.lib.component :refer [navigation-bar-layout]]
+            [vr-match.lib.components.linear-progress :refer [linear-progress]]
             [vr-match.approach.components.swipe-card-item :refer [swipe-card-item]]
             [vr-match.approach.components.action-buttons :refer [action-buttons]]
             [vr-match.approach.components.favorite-overlay :refer [favorite-overlay]]
@@ -248,90 +249,94 @@
 
 (def approach
   (r/create-class
-   {:display-name "approach-component"
-    :reagent-render
-    (fn [{:keys [me
-                 classes
-                 cardItems
-                 isLoaded
-                 isShowMatchingDialog
-                 hasNextPage
-                 matchingPartner
-                 handleClickSkip
-                 handleClickFavorite
-                 handleClickMatchingDialogBack
-                 handleFetchNext] :as props}]
-      [navigation-bar-layout {:title "アバターをさがす"}
-       (if (and isLoaded
-                (empty? cardItems)
-                (not hasNextPage))
-         [swipe-cards-empty]
-         [:div {:style {:height "100%"
-                        :display "flex"
-                        :flex-direction "column"
-                        :align-items "center"
-                        :justify-content "space-around"}}
-          [:div {:style {:display "flex"
-                         :justify-content "center"
-                         :flex-direction "column"}}
-           [:style (cond (:isReturning @approach-state)
-                         (state->return-swipe-card-animation @approach-state)
-                         (:isFavorite @approach-state)
-                         (state->favorite-swipe-card-animation @approach-state)
-                         (:isSkip @approach-state)
-                         (state->skip-swipe-card-animation @approach-state)
-                         :else nil)]
-           [:div {:style {:margin-bottom "-64vh"
-                          :z-index "1000"
-                          :position "relative"
-                          :will-change "transform"}}
-            [swipe-card-item {:item (-> @approach-state :secondItem)
-                              :handleClickCard #()}]]
-           [:div {:style {:will-change "transform"
-                          :transform (when (:isDragging @approach-state)
-                                       (state->current-swipe-card-transform @approach-state))
-                          :animation-play-state (when
-                                                  (or (:isReturning @approach-state)
-                                                      (:isFavorite @approach-state)
-                                                      (:isSkip @approach-state))
-                                                  "running")
-                          :position "relative"
-                          :z-index "1200"}
-                  :class (cond (:isReturning @approach-state)
-                               "return-animation"
-                               (:isFavorite @approach-state)
-                               "favorite-animation"
-                               (:isSkip @approach-state)
-                               "skip-animation"
-                               :else nil)
-                  :ref (fn [ref] (reset! card-ref ref))}
-            [swipe-card-item {:item (-> @approach-state :firstItem)
-                              :handleClickCard #(handleClickGoToProfile props %)}]
-            [:div {:style {:will-change "opacity"
-                           :position "absolute"
-                           :height "100%"
-                           :width "100%"
-                           :top 0
-                           :opacity (state->favorite-overlay-opacity @approach-state)
-                           :pointer-events "none"}}
-             [favorite-overlay]]
-            [:div {:style {:will-change "opacity"
-                           :position "absolute"
-                           :height "100%"
-                           :width "100%"
-                           :top 0
-                           :opacity (state->skip-overlay-opacity @approach-state)
-                           :pointer-events "none"}}
-             [skip-overlay]]]]
-          [:div {:style {:will-change "transform"
-                         :width "100%"}}
-           [action-buttons {:onClickSkip #(onClickSkip props)
-                            :onClickFavorite #(onClickFavorite props)}]]
-          [matching-dialog {:isOpen isShowMatchingDialog
-                            :me me
-                            :partner matchingPartner
-                            :handleClickGoToProfile #(handleClickGoToProfile props %)
-                            :handleClickBack handleClickMatchingDialogBack}]])])
-    :component-did-mount component-did-mount
-    :component-did-update component-did-update
-    :component-will-unmount component-will-unmount}))
+    {:display-name "approach-component"
+     :reagent-render
+     (fn [{:keys [me
+                  classes
+                  cardItems
+                  isLoaded
+                  isLoading
+                  isShowMatchingDialog
+                  hasNextPage
+                  matchingPartner
+                  handleClickSkip
+                  handleClickFavorite
+                  handleClickMatchingDialogBack
+                  handleFetchNext] :as props}]
+       [navigation-bar-layout {:title "アバターをさがす"}
+        [:<>
+         (when isLoading
+           [linear-progress])
+         (if (and isLoaded
+                  (empty? cardItems)
+                  (not hasNextPage))
+           [swipe-cards-empty]
+           [:div {:style {:height "100%"
+                          :display "flex"
+                          :flex-direction "column"
+                          :align-items "center"
+                          :justify-content "space-around"}}
+            [:div {:style {:display "flex"
+                           :justify-content "center"
+                           :flex-direction "column"}}
+             [:style (cond (:isReturning @approach-state)
+                           (state->return-swipe-card-animation @approach-state)
+                           (:isFavorite @approach-state)
+                           (state->favorite-swipe-card-animation @approach-state)
+                           (:isSkip @approach-state)
+                           (state->skip-swipe-card-animation @approach-state)
+                           :else nil)]
+             [:div {:style {:margin-bottom "-64vh"
+                            :z-index "1000"
+                            :position "relative"
+                            :will-change "transform"}}
+              [swipe-card-item {:item (-> @approach-state :secondItem)
+                                :handleClickCard #()}]]
+             [:div {:style {:will-change "transform"
+                            :transform (when (:isDragging @approach-state)
+                                         (state->current-swipe-card-transform @approach-state))
+                            :animation-play-state (when
+                                                    (or (:isReturning @approach-state)
+                                                        (:isFavorite @approach-state)
+                                                        (:isSkip @approach-state))
+                                                    "running")
+                            :position "relative"
+                            :z-index "1200"}
+                    :class (cond (:isReturning @approach-state)
+                                 "return-animation"
+                                 (:isFavorite @approach-state)
+                                 "favorite-animation"
+                                 (:isSkip @approach-state)
+                                 "skip-animation"
+                                 :else nil)
+                    :ref (fn [ref] (reset! card-ref ref))}
+              [swipe-card-item {:item (-> @approach-state :firstItem)
+                                :handleClickCard #(handleClickGoToProfile props %)}]
+              [:div {:style {:will-change "opacity"
+                             :position "absolute"
+                             :height "100%"
+                             :width "100%"
+                             :top 0
+                             :opacity (state->favorite-overlay-opacity @approach-state)
+                             :pointer-events "none"}}
+               [favorite-overlay]]
+              [:div {:style {:will-change "opacity"
+                             :position "absolute"
+                             :height "100%"
+                             :width "100%"
+                             :top 0
+                             :opacity (state->skip-overlay-opacity @approach-state)
+                             :pointer-events "none"}}
+               [skip-overlay]]]]
+            [:div {:style {:will-change "transform"
+                           :width "100%"}}
+             [action-buttons {:onClickSkip #(onClickSkip props)
+                              :onClickFavorite #(onClickFavorite props)}]]
+            [matching-dialog {:isOpen isShowMatchingDialog
+                              :me me
+                              :partner matchingPartner
+                              :handleClickGoToProfile #(handleClickGoToProfile props %)
+                              :handleClickBack handleClickMatchingDialogBack}]])]])
+     :component-did-mount component-did-mount
+     :component-did-update component-did-update
+     :component-will-unmount component-will-unmount}))
