@@ -75,11 +75,13 @@
                 :error-handler ::on-error-favorite}]}))
 
 (re-frame/reg-event-db
- ::on-success-fetch-approach-list
- (fn [db [_ {:keys [data errors] :as payload}]]
-   (assoc-in db [:approach :list] (-> payload
-                                      :data
-                                      :approachList))))
+  ::on-success-fetch-approach-list
+  (fn [db [_ {:keys [data errors] :as payload}]]
+    (-> db
+        (assoc-in [:approach :list] (-> payload
+                                        :data
+                                        :approachList))
+        (assoc-in [:fetch-status :approach] :loaded))))
 
 (re-frame/reg-event-fx
  ::on-error-fetch-approach-list
@@ -88,24 +90,30 @@
    {:dispatch-n (case (-> errors first :extensions :type)
                   "invalid-session" [[::events/push "/"]
                                      [::events/clear-session]]
-                  [[::events/api-error errors]])}))
+                  [[::events/api-error errors]])
+    :db (-> db
+            (assoc-in [:fetch-status :approach] :loaded))}))
 
 (re-frame/reg-event-fx
- ::fetch-approach-list
- (fn [{:keys [db] :as cofx} _]
-   {:dispatch [::events/graphql-query
-               {:query {:venia/queries
-                        [[:approachList {:first user-per-page}
-                          [[:edges
-                            [:cursor
-                             [:node
-                              [:id
-                               :name
-                               :introduction
-                               [:images [:id :url]]
-                               [:platforms [:id :name]]]]]]]]]}
-                :success-handler ::on-success-fetch-approach-list
-                :error-handler ::on-error-fetch-approach-list}]}))
+  ::fetch-approach-list
+  (fn [{:keys [db] :as cofx} _]
+    (when-not (= :loading (-> db :fetch-status :approach))
+      {:dispatch [::events/graphql-query
+                  {:query {:venia/queries
+                           [[:approachList {:first user-per-page}
+                             [[:edges
+                               [:cursor
+                                [:node
+                                 [:id
+                                  :name
+                                  :introduction
+                                  [:images [:id :url]]
+                                  [:platforms [:id :name]]]]]]
+                              [:pageInfo
+                               [:hasNextPage]]]]]}
+                   :success-handler ::on-success-fetch-approach-list
+                   :error-handler ::on-error-fetch-approach-list}]
+       :db (assoc-in db [:fetch-status :approach] :loading)})))
 
 (re-frame/reg-event-db
   ::on-success-fetch-next-approach-list
@@ -138,7 +146,9 @@
                                :name
                                :introduction
                                [:images [:id :url]]
-                               [:platforms [:id :name]]]]]]]]]}
+                               [:platforms [:id :name]]]]]]
+                           [:pageInfo
+                               [:hasNextPage]]]]]}
                 :success-handler ::on-success-fetch-next-approach-list
                 :error-handler ::on-error-fetch-next-approach-list}]}))
 

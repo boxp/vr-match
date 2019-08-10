@@ -23,3 +23,20 @@
    (-> db
        :approach
        :in-favorite-user)))
+
+(re-frame/reg-sub
+  ::loaded?
+  (fn [db]
+    (= :loaded
+       (-> db
+           :fetch-status
+           :approach))))
+
+(re-frame/reg-sub
+  ::has-next-page?
+  (fn [db]
+    (-> db
+        :approach
+        :list
+        :pageInfo
+        :hasNextPage)))

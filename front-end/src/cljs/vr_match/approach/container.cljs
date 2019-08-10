@@ -37,9 +37,13 @@
   (let [me (re-frame/subscribe [::subs/me])
         card-items (re-frame/subscribe [::approach-subs/approach-list])
         isShowMatchingDialog (re-frame/subscribe [::approach-subs/show-matching-dialog?])
-        matchingPartner (re-frame/subscribe [::approach-subs/in-favorite-user])]
+        matchingPartner (re-frame/subscribe [::approach-subs/in-favorite-user])
+        isLoaded (re-frame/subscribe [::approach-subs/loaded?])
+        hasNextPage (re-frame/subscribe [::approach-subs/has-next-page?])]
     [component/approach {:me @me
                          :isShowMatchingDialog @isShowMatchingDialog
+                         :isLoaded @isLoaded
+                         :hasNextPage @hasNextPage
                          :matchingPartner @matchingPartner
                          :cardItems @card-items
                          :handleClickSkip handle-click-skip
