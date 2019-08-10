@@ -31,3 +31,12 @@
        (-> db
            :fetch-status
            :approach))))
+
+(re-frame/reg-sub
+  ::has-next-page?
+  (fn [db]
+    (-> db
+        :approach
+        :list
+        :pageInfo
+        :hasNextPage)))

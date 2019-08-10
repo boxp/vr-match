@@ -108,7 +108,9 @@
                                   :name
                                   :introduction
                                   [:images [:id :url]]
-                                  [:platforms [:id :name]]]]]]]]]}
+                                  [:platforms [:id :name]]]]]]
+                              [:pageInfo
+                               [:hasNextPage]]]]]}
                    :success-handler ::on-success-fetch-approach-list
                    :error-handler ::on-error-fetch-approach-list}]
        :db (assoc-in db [:fetch-status :approach] :loading)})))
@@ -144,7 +146,9 @@
                                :name
                                :introduction
                                [:images [:id :url]]
-                               [:platforms [:id :name]]]]]]]]]}
+                               [:platforms [:id :name]]]]]]
+                           [:pageInfo
+                               [:hasNextPage]]]]]}
                 :success-handler ::on-success-fetch-next-approach-list
                 :error-handler ::on-error-fetch-next-approach-list}]}))
 
