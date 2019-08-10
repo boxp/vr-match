@@ -265,8 +265,6 @@
                   handleFetchNext] :as props}]
        [navigation-bar-layout {:title "アバターをさがす"}
         [:<>
-         (when isLoading
-           [linear-progress])
          (if (and isLoaded
                   (empty? cardItems)
                   (not hasNextPage))
@@ -336,7 +334,9 @@
                               :me me
                               :partner matchingPartner
                               :handleClickGoToProfile #(handleClickGoToProfile props %)
-                              :handleClickBack handleClickMatchingDialogBack}]])]])
+                              :handleClickBack handleClickMatchingDialogBack}]])
+         (when isLoading
+           [linear-progress])]])
      :component-did-mount component-did-mount
      :component-did-update component-did-update
      :component-will-unmount component-will-unmount}))
