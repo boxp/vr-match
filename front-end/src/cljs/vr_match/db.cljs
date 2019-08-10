@@ -27,6 +27,7 @@
                   :sign-in-with-email :none
                   :register-user :none
                   :login-user :none
+                  :approach :none
                   :me :none
                   :mypage :none
                   :firebase :none
