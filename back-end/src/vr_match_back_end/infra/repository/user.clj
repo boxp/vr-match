@@ -469,6 +469,17 @@
      :always (-> (set/rename-keys {:is_matched :matched?})
                  (update :matched? #(= % 1))))))
 
+(s/fdef delete-all-skip-from-user
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id)
+  :ret nil?)
+(defn delete-all-skip-from-user
+  [{:keys [mysql-datasource] :as c}
+   user-id]
+  (delete-all-user_skip-by-user_id (:db mysql-datasource)
+                                   {:user_id user-id})
+  nil)
+
 (defrecord UserRepositoryComponent [mysql-datasource
                                     firebase-admin-datasource]
   component/Lifecycle

@@ -112,4 +112,7 @@
   :favorite {:type UserMatch
              :description "お相手をお気に入りにする"
              :args {:partnerId {:type (non-null Int)}}
-             :resolve :resolve-favorite}}}
+             :resolve :resolve-favorite}
+  :resetAllSkip {:type Boolean
+                 :description "スキップしたお相手をすべて再表示させる"
+                 :resolve :resolve-reset-all-skip}}}

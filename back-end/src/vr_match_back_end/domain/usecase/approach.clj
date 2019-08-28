@@ -43,6 +43,18 @@
                                         me-id
                                         partner-id)}))
 
+(s/fdef reset-all-skip
+  :args (s/cat :c ::approach-usecase
+               :session ::session)
+  :ret nil?)
+(defn reset-all-skip
+  [{:keys [user-repository]}
+   session]
+  (let [me-id (ruser/get-user-id-by-session
+               user-repository
+               session)]
+    (ruser/delete-all-skip-from-user me-id)))
+
 (defrecord ApproachUsecase [user-repository]
   component/Lifecycle
   (start [this] this)

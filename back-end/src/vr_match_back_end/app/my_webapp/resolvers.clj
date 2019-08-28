@@ -259,6 +259,16 @@
         (update :platforms #(map converter/platform->Platform %)))
     (catch Exception e (handle-error e))))
 
+(defn reset-all-skip
+  [{:keys [approach-usecase session]} _ _]
+  (try
+    (do
+      (uapproach/reset-all-skip
+       approach-usecase
+       session)
+      true)
+    (catch Exception e (handle-error e))))
+
 (defn platform-options
   [{:keys [platform-usecase]} _ _]
   (try
