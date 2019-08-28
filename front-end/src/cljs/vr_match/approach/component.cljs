@@ -204,6 +204,25 @@
                  (-> state :swipeStartPosition :x))]
     (/ (- add-x) swipe-return-limit)))
 
+(defn- empty-cards?
+  [isLoaded cardItems hasNextPage]
+  (and isLoaded
+       (empty? cardItems)
+       (not hasNextPage)))
+
+(defn- register-card-event-handlers
+  [card-ref this]
+  (some-> card-ref
+          (.addEventListener "touchstart" onSwipeCardTouchStart))
+  (some-> card-ref
+          (.addEventListener "touchmove"
+                             onSwipeCardTouchMoved
+                             #js {"passive" false}))
+  (some-> card-ref
+          (.addEventListener "touchend" onSwipeCardTouchEnd))
+  (some-> card-ref
+          (.addEventListener "animationend" #(-> this r/props handleOnExit))))
+
 (defn- component-did-mount
   [this]
   (let [props (r/props this)]
@@ -211,22 +230,19 @@
            #(-> %
                 (assoc :firstItem (-> props :cardItems first))
                 (assoc :secondItem (-> props :cardItems second))))
-    (some-> @card-ref
-            (.addEventListener "touchstart" onSwipeCardTouchStart))
-    (some-> @card-ref
-            (.addEventListener "touchmove"
-                               onSwipeCardTouchMoved
-                               #js {"passive" false}))
-    (some-> @card-ref
-            (.addEventListener "touchend" onSwipeCardTouchEnd))
-    (some-> @card-ref
-            (.addEventListener "animationend" #(-> this r/props handleOnExit)))
+    (register-card-event-handlers @card-ref this)
     (when (= (-> props :cardItems count) 0)
       ((:handleDidMount props)))))
 
 (defn- component-did-update
   [this [_ old-props]]
-  (let [new-props (r/props this)]
+  (let [new-props (r/props this)
+        new-empty-cards? (empty-cards? (:isLoaded new-props)
+                                       (:cardItems new-props)
+                                       (:hasNextPage new-props))
+        old-empty-cards? (empty-cards? (:isLoaded old-props)
+                                       (:cardItems old-props)
+                                       (:hasNextPage old-props))]
     (when (and (not= (some-> new-props :cardItems first :id)
                      (some-> old-props :cardItems first :id))
                (not (-> @approach-state :isSkip))
@@ -236,7 +252,10 @@
       (swap! approach-state
              #(-> %
                   (assoc :firstItem (-> new-props :cardItems first))
-                  (assoc :secondItem (-> new-props :cardItems second)))))))
+                  (assoc :secondItem (-> new-props :cardItems second)))))
+    (when (and (not new-empty-cards?)
+               old-empty-cards?)
+      (register-card-event-handlers @card-ref this))))
 
 (defn- component-will-unmount
   [this]
@@ -266,9 +285,7 @@
                   handleResetAllSkip] :as props}]
        [navigation-bar-layout {:title "アバターをさがす"}
         [:<>
-         (if (and isLoaded
-                  (empty? cardItems)
-                  (not hasNextPage))
+         (if (empty-cards? isLoaded cardItems hasNextPage)
            [swipe-cards-empty {:handleResetAllSkip handleResetAllSkip}]
            [:div {:style {:height "100%"
                           :display "flex"
