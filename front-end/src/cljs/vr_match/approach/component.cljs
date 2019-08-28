@@ -262,13 +262,14 @@
                   handleClickSkip
                   handleClickFavorite
                   handleClickMatchingDialogBack
-                  handleFetchNext] :as props}]
+                  handleFetchNext
+                  handleResetAllSkip] :as props}]
        [navigation-bar-layout {:title "アバターをさがす"}
         [:<>
          (if (and isLoaded
                   (empty? cardItems)
                   (not hasNextPage))
-           [swipe-cards-empty]
+           [swipe-cards-empty {:handleResetAllSkip handleResetAllSkip}]
            [:div {:style {:height "100%"
                           :display "flex"
                           :flex-direction "column"

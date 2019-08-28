@@ -77,7 +77,9 @@
 (re-frame/reg-event-fx
  ::on-success-reset-all-skip
  (fn [{:keys [db]} _]
-   {}))
+   {:dispatch [::fetch-approach-list]
+    :db (-> db
+            (assoc-in [:fetch-status :approach] :loaded))}))
 
 (re-frame/reg-event-fx
  ::on-error-reset-all-skip
@@ -86,7 +88,9 @@
    {:dispatch-n (case (-> errors first :extensions :type)
                   "invalid-session" [[::events/push "/"]
                                      [::events/clear-session]]
-                  [[::events/api-error errors]])}))
+                  [[::events/api-error errors]])
+    :db (-> db
+            (assoc-in [:fetch-status :approach] :loaded))}))
 
 (re-frame/reg-event-fx
  ::reset-all-skip
@@ -97,7 +101,8 @@
                                    :operation/name "resetAllSkip"}
                  :venia/queries [[:resetAllSkip]]}
                 :success-handler ::on-success-reset-all-skip
-                :error-handler ::on-error-reset-all-skip}]}))
+                :error-handler ::on-error-reset-all-skip}]
+    :db (assoc-in db [:fetch-status :approach] :loading)}))
 
 (re-frame/reg-event-db
   ::on-success-fetch-approach-list

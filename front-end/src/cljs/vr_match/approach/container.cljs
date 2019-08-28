@@ -32,6 +32,9 @@
   [id]
   (re-frame/dispatch [::events/push (str "/profile/" id)]))
 
+(defn handle-reset-all-skip []
+  (re-frame/dispatch [::approach-events/reset-all-skip]))
+
 (defn approach
   [params]
   (let [me (re-frame/subscribe [::subs/me])
@@ -53,6 +56,7 @@
                          :handleClickGoToProfile handle-click-go-to-profile
                          :handleClickMatchingDialogBack handle-click-matching-dialog-back
                          :handleDidMount handle-did-mount
-                         :handleFetchNext handle-fetch-next}]))
+                         :handleFetchNext handle-fetch-next
+                         :handleResetAllSkip handle-reset-all-skip}]))
 
 (util/universal-set-loaded! :approach)
