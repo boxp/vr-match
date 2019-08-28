@@ -74,6 +74,31 @@
                 :success-handler ::on-success-favorite
                 :error-handler ::on-error-favorite}]}))
 
+(re-frame/reg-event-fx
+ ::on-success-reset-all-skip
+ (fn [{:keys [db]} _]
+   {}))
+
+(re-frame/reg-event-fx
+ ::on-error-reset-all-skip
+ (fn [{:keys [db]}
+      [_ {:keys [errors]}]]
+   {:dispatch-n (case (-> errors first :extensions :type)
+                  "invalid-session" [[::events/push "/"]
+                                     [::events/clear-session]]
+                  [[::events/api-error errors]])}))
+
+(re-frame/reg-event-fx
+ ::reset-all-skip
+ (fn [{:keys [db] :as cofx} [_ id]]
+   {:dispatch [::events/graphql-query
+               {:query
+                {:venia/operation {:operation/type :mutation
+                                   :operation/name "resetAllSkip"}
+                 :venia/queries [[:resetAllSkip]]}
+                :success-handler ::on-success-reset-all-skip
+                :error-handler ::on-error-reset-all-skip}]}))
+
 (re-frame/reg-event-db
   ::on-success-fetch-approach-list
   (fn [db [_ {:keys [data errors] :as payload}]]
