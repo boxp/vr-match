@@ -53,7 +53,7 @@
   (let [me-id (ruser/get-user-id-by-session
                user-repository
                session)]
-    (ruser/delete-all-skip-from-user me-id)))
+    (ruser/delete-all-skip-from-user user-repository me-id)))
 
 (defrecord ApproachUsecase [user-repository]
   component/Lifecycle
