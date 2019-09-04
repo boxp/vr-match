@@ -82,11 +82,13 @@
                           (assoc :isDragging false)))))))
 
 (defn- handleOnExit
-  [{:keys [handleFetchNext
+  [{:keys [cardItems
+           hasNextPage
+           handleFetchNext
            handleClickFavorite
-           handleClickSkip
-           cardItems] :as props}]
-  (let [should-fetch-next? (<= (-> cardItems count) 6)
+           handleClickSkip] :as props}]
+  (let [should-fetch-next? (and (<= (-> cardItems count) 6)
+                                hasNextPage)
         current-card (-> @approach-state :firstItem)
         shift-card-items (fn [state]
                            (-> state
