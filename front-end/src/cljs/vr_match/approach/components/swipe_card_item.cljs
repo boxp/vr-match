@@ -45,10 +45,11 @@
                  :justify "flex-start"
                  :style {"marginBottom" "0.35em"}
                  :spacing 8}
-       (map (fn [{:keys [id name]}] [mui/grid {:key id
+       (->> platforms
+            (take 3)
+            (map (fn [{:keys [id name]}] [mui/grid {:key id
                                                :item true}
-                                     [plat-form-chip {:name name}]])
-            platforms)]
+                                     [plat-form-chip {:name name}]])))]
       [mui/typo-graphy {:gutterBottom true
                         :variant "subheading"
                         :component "h2"}
