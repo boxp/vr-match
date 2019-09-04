@@ -3,7 +3,7 @@
    [re-frame.core :as re-frame]
    [vr-match.events :as events]))
 
-(def user-per-page 12)
+(def user-per-page 20)
 
 (re-frame/reg-event-fx
  ::initialize
@@ -148,15 +148,17 @@
 (re-frame/reg-event-db
   ::on-success-fetch-next-approach-list
   (fn [db [_ {:keys [data errors] :as payload}]]
-    (-> db
-        (assoc-in [:fetch-status :approach] :loaded)
-        (update-in [:approach :list :edges] #(concat % (-> payload
-                                                           :data
-                                                           :approachList
-                                                           :edges)))
-        (assoc-in [:approach :list :pageInfo] (-> data
-                                                  :approachList
-                                                  :pageInfo)))))
+    (let [current-edge-cursors (->> (-> db :approach :list :edges)
+                                    (map #(-> % :cursor))
+                                    set)
+          next-edges (->> (-> payload :data :approachList :edges)
+                          (remove #(current-edge-cursors (-> % :cursor))))]
+      (-> db
+          (assoc-in [:fetch-status :approach] :loaded)
+          (update-in [:approach :list :edges] #(concat % next-edges))
+          (assoc-in [:approach :list :pageInfo] (-> data
+                                                    :approachList
+                                                    :pageInfo))))))
 
 (re-frame/reg-event-fx
  ::on-error-fetch-next-approach-list
