@@ -153,7 +153,10 @@
         (update-in [:approach :list :edges] #(concat % (-> payload
                                                            :data
                                                            :approachList
-                                                           :edges))))))
+                                                           :edges)))
+        (assoc-in [:approach :list :pageInfo] (-> data
+                                                  :approachList
+                                                  :pageInfo)))))
 
 (re-frame/reg-event-fx
  ::on-error-fetch-next-approach-list
