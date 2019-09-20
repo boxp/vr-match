@@ -35,12 +35,14 @@
                        :bottom 0
                        :z-index -1}}]
        [mui/typo-graphy {:component "h1"
-                         :gutterBottom true
                          :variant "display3"}
         "Hito Hub"]
-       [mui/typo-graphy {:component "h2"
-                         :variant "subtitle1"}
-        "Friendや好みのアバターをみつけよう"]
+       [:div {:style {:margin "48px 0 0"}}
+        [mui/typo-graphy {:component "h2"
+                          :variant "subtitle1"
+                          :align "center"
+                          :color "textPrimary"}
+         "Friendや好みのアバターをみつけよう。"]]
        [mui/grid {:style {:margin-top 208
                           :width "296px"}
                   :container true
