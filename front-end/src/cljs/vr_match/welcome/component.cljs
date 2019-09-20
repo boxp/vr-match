@@ -42,7 +42,13 @@
                           :variant "subtitle1"
                           :align "center"
                           :color "textPrimary"}
-         "Friendや好みのアバターをみつけよう。"]]
+         "必要なのはスワイプ操作だけ。"]
+        [mui/typo-graphy {:component "h2"
+                          :variant "subtitle1"
+                          :align "center"
+                          :color "textPrimary"}
+         "Friendや好みのアバターをみつけよう。"]
+        ]
        [mui/grid {:style {:margin-top 208
                           :width "296px"}
                   :container true
