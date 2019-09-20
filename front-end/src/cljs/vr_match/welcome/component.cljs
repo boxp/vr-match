@@ -38,6 +38,9 @@
                          :gutterBottom true
                          :variant "display3"}
         "Hito Hub"]
+       [mui/typo-graphy {:component "h2"
+                         :variant "subtitle1"}
+        "Friendや好みのアバターをみつけよう"]
        [mui/grid {:style {:margin-top 208
                           :width "296px"}
                   :container true
