@@ -60,7 +60,9 @@
                         :last {:type Int
                                :optional true}
                         :before {:type String
-                                 :optional true}}
+                                 :optional true}
+                        :excludeIds {:type (list Int)
+                                     :optional true}}
                  :resolve :resolve-approach-list}
   :favoritedUsers {:type :FavoritedUsers
                     :args {:first {:type Int

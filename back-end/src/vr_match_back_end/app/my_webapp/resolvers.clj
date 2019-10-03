@@ -73,7 +73,7 @@
 
 (defn approach-list
   [{:keys [user-usecase session]}
-   arguments
+   {:keys [excludeIds] :as arguments}
    value]
   (try
     (let [{:keys [offset limit]} (paging-arguments->paging-params arguments)
@@ -83,7 +83,8 @@
                                  true
                                  true
                                  true
-                                 (paging-arguments->paging-params arguments))
+                                 (paging-arguments->paging-params arguments)
+                                 (or excludeIds [-1]))
           edges (seq (map-indexed
                       (fn [idx user]
                         {:node user

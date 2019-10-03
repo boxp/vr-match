@@ -148,11 +148,7 @@
 (re-frame/reg-event-db
   ::on-success-fetch-next-approach-list
   (fn [db [_ {:keys [data errors] :as payload}]]
-    (let [current-edge-cursors (->> (-> db :approach :list :edges)
-                                    (map #(-> % :cursor))
-                                    set)
-          next-edges (->> (-> payload :data :approachList :edges)
-                          (remove #(current-edge-cursors (-> % :cursor))))]
+    (let [next-edges (-> payload :data :approachList :edges)]
       (-> db
           (assoc-in [:fetch-status :approach] :loaded)
           (update-in [:approach :list :edges] #(concat % next-edges))
@@ -174,10 +170,15 @@
 (re-frame/reg-event-fx
   ::fetch-next-approach-list
   (fn [{:keys [db] :as cofx} _]
+    (let [exclude-ids (->> (-> db :approach :list :edges)
+                           (map #(-> % :node :id))
+                           set
+                           vec)]
     (when-not (= :loading (-> db :fetch-status :approach))
       {:dispatch [::events/graphql-query
                   {:query {:venia/queries
-                           [[:approachList {:first user-per-page}
+                           [[:approachList {:first user-per-page
+                                            :excludeIds exclude-ids}
                              [[:edges
                                [:cursor
                                 [:node
@@ -190,7 +191,7 @@
                                [:hasNextPage]]]]]}
                    :success-handler ::on-success-fetch-next-approach-list
                    :error-handler ::on-error-fetch-next-approach-list}]
-       :db (assoc-in db [:fetch-status :approach] :loading)})))
+       :db (assoc-in db [:fetch-status :approach] :loading)}))))
 
 (re-frame/reg-event-fx
  ::close-matching-dialog
