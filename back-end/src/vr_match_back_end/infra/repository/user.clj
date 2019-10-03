@@ -289,7 +289,8 @@
                :with-images? boolean?
                :with-platforms? boolean?
                :with-total? boolean?
-               :paging-parameters ::paging-parameters)
+               :paging-parameters ::paging-parameters
+               :exclude-ids (s/coll-of ::euser/id))
   :ret (s/coll-of ::euser/user))
 (defn get-recommended-users-by-user-id
   [{:keys [mysql-datasource] :as c}
@@ -297,17 +298,20 @@
    with-images?
    with-platforms?
    with-total?
-   {:keys [limit offset]}]
+   {:keys [limit offset]}
+   exclude-ids]
   (cond-> {}
     with-total? (assoc :total (:total
                                (count-recommended-user-by-user_id
                                 (:db mysql-datasource)
-                                {:user_id user-id})))
+                                {:user_id user-id
+                                 :exclude_ids exclude-ids})))
     :always (assoc :users (->> (recommended-user-by-user_id
                                 (:db mysql-datasource)
                                 {:user_id user-id
                                  :offset (or offset 0)
-                                 :limit (or limit 10)})
+                                 :limit (or limit 10)
+                                 :exclude_ids exclude-ids})
                                (pmap #(cond-> %
                                         with-images? (assoc :images (get-images-by-user-id c (:id %)))
                                         with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %)))))))))

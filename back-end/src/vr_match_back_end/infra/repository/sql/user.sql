@@ -43,6 +43,7 @@ left join user_favorite on user.id = user_favorite.to_id and user_favorite.from_
 where user.id != :user_id
 and user_skip.to_id is null
 and user_favorite.to_id is null
+and user.id not in (:v*:exclude_ids)
 group by user.id, user.name, user.introduction, user_platform.user_id, user_image.user_id
 order by count(user_platform.platform_id) desc, count(user_image.image_id) desc, user.created_at desc
 limit :offset, :limit
@@ -56,6 +57,7 @@ left join user_favorite on user.id = user_favorite.to_id and user_favorite.from_
 where user.id != :user_id
 and user_skip.to_id is null
 and user_favorite.to_id is null
+and user.id not in (:v*:exclude_ids)
 
 -- :name user-with-is_matched :? :1
 -- :doc parnter_idからme_idに対してのマッチング情報を含むUser一件取得

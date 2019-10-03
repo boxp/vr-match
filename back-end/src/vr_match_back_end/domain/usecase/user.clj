@@ -68,7 +68,8 @@
                :with-images? boolean?
                :with-platforms? boolean?
                :with-total? boolean?
-               :paging-params ::paging-params)
+               :paging-params ::paging-params
+               :exclude-ids (s/coll-of ::euser/id))
   :ret ::get-my-recommended-users-result)
 (defn get-my-recommended-users
   [{:keys [user-repository]}
@@ -76,7 +77,8 @@
    with-images?
    with-platforms?
    with-total?
-   paging-params]
+   paging-params
+   exclude-ids]
   (let [user-id (ruser/get-user-id-by-session
                  user-repository
                  session)]
@@ -86,7 +88,8 @@
      with-images?
      with-platforms?
      with-total?
-     paging-params)))
+     paging-params
+     exclude-ids)))
 
 (s/fdef get-favorited-users-from-me
   :args (s/cat :c ::user-usecase
