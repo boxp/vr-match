@@ -45,6 +45,9 @@
    :setting-top {:entries #{"vr-match.setting.containers.top"}
                  :output-to (str output-dir "/setting_top.js")
                  :depends-on #{:client}}
+   :setting-third-party-authorization {:entries #{"vr-match.setting.containers.third-party-authorization"}
+                                       :output-to (str output-dir "/setting_third_party_authorization.js")
+                                       :depends-on #{:client}}
    ;; 分割されたモジュールをロードするために最低限必要なモジュール
    ;; モジュールの分割を行うと必ずこのモジュールが分割されるので出力先ファイル名だけ変更している
    :cljs-base {:output-to (str output-dir "/cljs_base.js")}

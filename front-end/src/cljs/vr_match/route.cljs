@@ -38,7 +38,9 @@
    :mypage {:container #(resolve 'vr-match.mypage.container/mypage)
             :module-name :mypage}
    :setting-top {:container #(resolve 'vr-match.setting.containers.top/top)
-                 :module-name :setting-top}})
+                 :module-name :setting-top}
+   :setting-third-party-authorization {:container #(resolve 'vr-match.setting.containers.third-party-authorization/third-party-authorization)
+                                       :module-name :setting-third-party-authorization}})
 
 (defn- lazy-push
   [key params]
@@ -86,6 +88,9 @@
 
 (defroute setting-top-path "/setting/top" []
   (lazy-push :setting-top {}))
+
+  (defroute setting-third-party-authorization-path "/setting/third-party-authorization" []
+    (lazy-push :setting-third-party-authorization {}))
 
 (defroute not-found-path "*" []
   (lazy-push :approach {}))
