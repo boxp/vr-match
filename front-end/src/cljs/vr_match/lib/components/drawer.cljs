@@ -11,7 +11,8 @@
            handleClickMyProfile
            handleClickSearch
            handleClickFavorite
-           handleClickMatching] :as props}]
+           handleClickMatching
+           handleClickSetting] :as props}]
   [mui/drawer {:open isOpen
                :onClose handleClickClose
                :style {:z-index elevation/drawer}}
@@ -42,4 +43,10 @@
                      :on-click handleClickMatching}
       [mui/list-item-icon
        [mui/icon "people"]]
-      [mui/list-item-text "マッチング"]]]]])
+      [mui/list-item-text "マッチング"]]
+     [mui/list-item {:key "setting"
+                     :button true
+                     :on-click handleClickSetting}
+      [mui/list-item-icon
+       [mui/icon "settings_applications"]]
+      [mui/list-item-text "各種設定"]]]]])
