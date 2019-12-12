@@ -42,6 +42,9 @@
    :mypage {:entries #{"vr-match.mypage.container"}
             :output-to (str output-dir "/mypage.js")
             :depends-on #{:client}}
+   :setting-top {:entries #{"vr-match.setting.containers.top"}
+                 :output-to (str output-dir "/setting_top.js")
+                 :depends-on #{:client}}
    ;; 分割されたモジュールをロードするために最低限必要なモジュール
    ;; モジュールの分割を行うと必ずこのモジュールが分割されるので出力先ファイル名だけ変更している
    :cljs-base {:output-to (str output-dir "/cljs_base.js")}

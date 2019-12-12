@@ -36,7 +36,9 @@
    :myprofile {:container #(resolve 'vr-match.myprofile.container/myprofile)
                :module-name :myprofile}
    :mypage {:container #(resolve 'vr-match.mypage.container/mypage)
-            :module-name :mypage}})
+            :module-name :mypage}
+   :setting-top {:container #(resolve 'vr-match.setting.containers.top/top)
+                 :module-name :setting-top}})
 
 (defn- lazy-push
   [key params]
@@ -81,6 +83,9 @@
 
 (defroute mypage-path "/mypage" []
   (lazy-push :mypage {}))
+
+(defroute setting-top-path "/setting/top" []
+  (lazy-push :setting-top {}))
 
 (defroute not-found-path "*" []
   (lazy-push :approach {}))
