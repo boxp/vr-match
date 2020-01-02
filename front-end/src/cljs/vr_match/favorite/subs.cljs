@@ -26,3 +26,11 @@
       (-> db
           :fetch-status
           :favorite))))
+
+(re-frame/reg-sub
+ ::is-fetched?
+ (fn [db]
+   (not= :none
+         (-> db
+             :fetch-status
+             :favorite))))

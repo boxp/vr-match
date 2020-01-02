@@ -10,7 +10,8 @@
 (defn- component-did-mount
   [this]
   (let [props (r/props this)]
-    ((:handleDidMount props))))
+    (when-not (:isFetched props)
+      ((:handleDidMount props)))))
 
 (def favorite-component
   (with-meta
@@ -18,6 +19,7 @@
       [{:keys [items
                hasNext
                isLoading
+               isFetched
                handleClickItem
                handleDidMount
                handleFetchNext]}]

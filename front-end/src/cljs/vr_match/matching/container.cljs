@@ -22,11 +22,13 @@
   [params]
   (let [items (re-frame/subscribe [::matching-subs/matching-users])
         hasNext (re-frame/subscribe [::matching-subs/has-next-matching-users?])
-        isLoading (re-frame/subscribe [::matching-subs/is-loading?])]
+        isLoading (re-frame/subscribe [::matching-subs/is-loading?])
+        isFetched (re-frame/subscribe [::matching-subs/is-fetched?])]
     (fn []
       [matching-component {:items @items
                            :hasNext @hasNext
                            :isLoading @isLoading
+                           :isFetched @isFetched
                            :handleDidMount handle-did-mount
                            :handleClickItem handle-go-to-profile
                            :handleFetchNext handle-fetch-next}])))

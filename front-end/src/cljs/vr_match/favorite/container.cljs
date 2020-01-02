@@ -22,11 +22,13 @@
   [params]
   (let [items (re-frame/subscribe [::favorite-subs/favorited-users-from-me])
         hasNext (re-frame/subscribe [::favorite-subs/has-next-favorited-users?])
-        isLoading (re-frame/subscribe [::favorite-subs/is-loading?])]
+        isLoading (re-frame/subscribe [::favorite-subs/is-loading?])
+        isFetched (re-frame/subscribe [::favorite-subs/is-fetched?])]
     (fn []
       [favorite-component {:items @items
                            :hasNext @hasNext
                            :isLoading @isLoading
+                           :isFetched @isFetched
                            :handleDidMount handle-did-mount
                            :handleClickItem handle-go-to-profile
                            :handleFetchNext handle-fetch-next}])))

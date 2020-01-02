@@ -27,3 +27,11 @@
       (-> db
           :fetch-status
           :matching))))
+
+(re-frame/reg-sub
+ ::is-fetched?
+ (fn [db]
+   (not= :none
+         (-> db
+             :fetch-status
+             :matching))))

@@ -10,7 +10,8 @@
 (defn- component-did-mount
   [this]
   (let [props (r/props this)]
-    ((:handleDidMount props))))
+    (when-not (:isFetched props)
+      ((:handleDidMount props)))))
 
 (def matching-component
   (with-meta
