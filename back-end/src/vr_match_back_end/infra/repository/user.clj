@@ -52,7 +52,7 @@
   (-> firebase-admin-datasource
       :auth
       (.createSessionCookie id-token (.. (SessionCookieOptions/builder)
-                                         (setExpiresIn (* 180 24 60 60 1000))
+                                         (setExpiresIn (* 14 24 60 60 1000))
                                          build))))
 
 (s/fdef create-new-user
