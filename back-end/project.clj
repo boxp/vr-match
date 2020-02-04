@@ -15,7 +15,7 @@
                  [ring "1.7.1"]
                  [ring/ring-json "0.4.0"]
                  [compojure "1.6.1"]
-                 [cheshire "5.8.1"]
+                 [cheshire "5.10.0"]
                  [cljstache "2.0.4"]
                  [org.clojure/tools.namespace "0.3.0"]
                  [com.walmartlabs/lacinia "0.33.0"]
