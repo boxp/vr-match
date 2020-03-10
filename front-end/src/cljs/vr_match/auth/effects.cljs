@@ -78,25 +78,24 @@
 (re-frame/reg-fx
  ::sign-in-with-twitter
  (fn [_]
-   (let [provider (@firebase-instance.auth.TwitterAuthProvider.)]
+   (let [provider (.. @firebase-instance -auth TwitterAuthProvider.)]
      (.. @firebase-instance auth (signInWithRedirect provider)))))
 
 (re-frame/reg-fx
  ::link-with-twitter
  (fn [_]
-   (let [provider (@firebase-instance.auth.TwitterAuthProvider.)]
+   (let [provider (.. @firebase-instance -auth TwitterAuthProvider.)]
      (.. @firebase-instance auth -currentUser (linkWithRedirect provider)))))
 
 (re-frame/reg-fx
- ::liked-with-provider-id?
- (fn [{:keys [provider-id]}]
-   (some->> @firebase-instance
-            .auth
-            .-currentUser
-            .-providerData
-            println
-            ;; (some #(= provider-id (.-providerId %)))
-            )))
+ ::get-linked-provider-ids
+ (fn [{:keys [callback]}]
+   (re-frame/dispatch
+    (conj callback
+          (some->> @firebase-instance
+                   .auth
+                   .-currentUser
+                   .-providerData)))))
 
 (re-frame/reg-fx
  ::get-redirect-result

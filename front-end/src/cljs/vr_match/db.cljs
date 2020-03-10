@@ -23,6 +23,7 @@
    :api-endpoint ""
    :api-error nil
    :drawer {:open? false}
+   :setting {:linked-provider-ids #{}}
    :fetch-status {:sign-in-link :none
                   :sign-in-with-email :none
                   :register-user :none
