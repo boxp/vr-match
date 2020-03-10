@@ -90,12 +90,11 @@
 (re-frame/reg-fx
  ::get-linked-provider-ids
  (fn [{:keys [callback]}]
-   (re-frame/dispatch
-    (conj callback
-          (some->> @firebase-instance
-                   .auth
-                   .-currentUser
-                   .-providerData)))))
+   (some-> @firebase-instance
+           .auth
+           (.onAuthStateChanged
+            (fn [user]
+              (re-frame/dispatch (conj callback (.. user -providerData))))))))
 
 (re-frame/reg-fx
  ::get-redirect-result
