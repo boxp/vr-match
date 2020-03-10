@@ -74,3 +74,39 @@
        (catch
         (fn [error]
           (re-frame/dispatch (conj callback-error error)))))))
+
+(re-frame/reg-fx
+ ::sign-in-with-twitter
+ (fn [_]
+   (let [provider (@firebase-instance.auth.TwitterAuthProvider.)]
+     (.. @firebase-instance auth (signInWithRedirect provider)))))
+
+(re-frame/reg-fx
+ ::link-with-twitter
+ (fn [_]
+   (let [provider (@firebase-instance.auth.TwitterAuthProvider.)]
+     (.. @firebase-instance auth -currentUser (linkWithRedirect provider)))))
+
+(re-frame/reg-fx
+ ::liked-with-provider-id?
+ (fn [{:keys [provider-id]}]
+   (some->> @firebase-instance
+            .auth
+            .-currentUser
+            .-providerData
+            println
+            ;; (some #(= provider-id (.-providerId %)))
+            )))
+
+(re-frame/reg-fx
+ ::get-redirect-result
+ (fn [{:keys [callback-success callback-error]}]
+   (.. @firebase-instance
+       auth
+       getRedirectResult
+       (then
+        (fn [result]
+          (re-frame/dispatch (conj callback-success (.. result -additionalUserInfo -isNewUser)))))
+       (catch
+        (fn [error]
+          (re-frame/dispatch (conj callback-error error)))))))
