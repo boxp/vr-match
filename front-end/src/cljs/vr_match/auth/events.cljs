@@ -196,9 +196,18 @@
                            (map :providerId)
                            set)]
      {:db (-> db
-              (assoc-in [:setting :linked-provider-ids] provider-ids))})))
+              (assoc-in [:auth :linked-provider-ids] provider-ids)
+              (assoc-in [:fetch-status :linked-provider-ids] :loaded))})))
 
 (re-frame/reg-event-fx
  ::fetch-linked-provider-ids
  (fn [{:keys [db]}]
-   {::auth-effects/get-linked-provider-ids {:callback [::success-fetch-linked-provider-ids]}}))
+   (when (not= :loading (-> db :fetch-status :linked-provider-ids))
+     {:db (-> db
+              (assoc-in [:fetch-status :linked-provider-ids] :loading))
+      ::auth-effects/get-linked-provider-ids {:callback [::success-fetch-linked-provider-ids]}})))
+
+(re-frame/reg-event-fx
+ ::link-with-twitter
+ (fn [_]
+   {::auth-effects/link-with-twitter {}}))

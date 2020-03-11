@@ -78,13 +78,13 @@
 (re-frame/reg-fx
  ::sign-in-with-twitter
  (fn [_]
-   (let [provider (.. @firebase-instance -auth TwitterAuthProvider.)]
+   (let [provider (new (.. js/firebase -auth -TwitterAuthProvider))]
      (.. @firebase-instance auth (signInWithRedirect provider)))))
 
 (re-frame/reg-fx
  ::link-with-twitter
  (fn [_]
-   (let [provider (.. @firebase-instance -auth TwitterAuthProvider.)]
+   (let [provider (new (.. js/firebase -auth -TwitterAuthProvider))]
      (.. @firebase-instance auth -currentUser (linkWithRedirect provider)))))
 
 (re-frame/reg-fx
