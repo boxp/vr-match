@@ -100,7 +100,7 @@
             (re-frame/dispatch callback-success)))
          (catch
           (fn [error]
-            (re-frame/dispatch (con callback-error error))))))))
+            (re-frame/dispatch (conj callback-error error))))))))
 
 (re-frame/reg-fx
  ::get-linked-provider-ids
