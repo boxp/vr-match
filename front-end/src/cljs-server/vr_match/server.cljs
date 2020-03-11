@@ -21,6 +21,8 @@
     [vr-match.matching.container]
     [vr-match.myprofile.container]
     [vr-match.mypage.container]
+    [vr-match.setting.containers.top]
+    [vr-match.setting.containers.third-party-authorization]
     [vr-match.lib.component :as component]
     [vr-match.lib.components.material-ui :as mui]
     [vr-match.config :as config]

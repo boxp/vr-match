@@ -74,3 +74,52 @@
        (catch
         (fn [error]
           (re-frame/dispatch (conj callback-error error)))))))
+
+(re-frame/reg-fx
+ ::sign-in-with-twitter
+ (fn [_]
+   (let [provider (new (.. js/firebase -auth -TwitterAuthProvider))]
+     (.. @firebase-instance auth (signInWithRedirect provider)))))
+
+(re-frame/reg-fx
+ ::link-with-twitter
+ (fn [_]
+   (let [provider (new (.. js/firebase -auth -TwitterAuthProvider))]
+     (.. @firebase-instance auth -currentUser (linkWithRedirect provider)))))
+
+(re-frame/reg-fx
+ ::unlink-with-twitter
+ (fn [{:keys [callback-success callback-error]}]
+   (let [provider (new (.. js/firebase -auth -TwitterAuthProvider))]
+     (.. @firebase-instance
+         auth
+         -currentUser
+         (unlink "twitter.com")
+         (then
+          (fn []
+            (re-frame/dispatch callback-success)))
+         (catch
+          (fn [error]
+            (re-frame/dispatch (con callback-error error))))))))
+
+(re-frame/reg-fx
+ ::get-linked-provider-ids
+ (fn [{:keys [callback]}]
+   (some-> @firebase-instance
+           .auth
+           (.onAuthStateChanged
+            (fn [user]
+              (re-frame/dispatch (conj callback (.. user -providerData))))))))
+
+(re-frame/reg-fx
+ ::get-redirect-result
+ (fn [{:keys [callback-success callback-error]}]
+   (.. @firebase-instance
+       auth
+       getRedirectResult
+       (then
+        (fn [result]
+          (re-frame/dispatch (conj callback-success (.. result -additionalUserInfo -isNewUser)))))
+       (catch
+        (fn [error]
+          (re-frame/dispatch (conj callback-error error)))))))

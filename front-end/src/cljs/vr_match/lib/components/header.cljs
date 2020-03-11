@@ -41,7 +41,8 @@
            handleClickMyProfile
            handleClickSearch
            handleClickFavorite
-           handleClickMatching] :as props}]
+           handleClickMatching
+           handleClickSetting] :as props}]
   [:<>
    [:div {:style {:flex-grow 1}}
     [mui/app-bar {:position "fixed"
@@ -85,6 +86,10 @@
   (re-frame/dispatch [::events/push "/matching"])
   (handle-close-drawer))
 
+(defn- handle-click-setting []
+  (re-frame/dispatch [::events/push "/setting/top"])
+  (handle-close-drawer))
+
 (s/def ::header-props
   (s/keys :req-un [::title]))
 (s/fdef header
@@ -102,4 +107,5 @@
                        :handleClickMyProfile handle-click-my-profile
                        :handleClickSearch handle-click-search
                        :handleClickFavorite handle-click-favorite
-                       :handleClickMatching handle-click-matching}]))
+                       :handleClickMatching handle-click-matching
+                       :handleClickSetting handle-click-setting}]))

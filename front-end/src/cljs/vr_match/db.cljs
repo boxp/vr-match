@@ -7,7 +7,8 @@
    :auth {:sign-in-link {:error nil
                          :email ""}
           :sign-in-with-email {:error nil
-                               :email-input-required? false}}
+                               :email-input-required? false}
+          :linked-provider-ids #{}}
    :mypage {:platform-options nil}
    :myprofile {}
    :profile {:partner nil}
@@ -25,6 +26,8 @@
    :drawer {:open? false}
    :fetch-status {:sign-in-link :none
                   :sign-in-with-email :none
+                  :linked-provider-ids :none
+                  :unlink-twitter :none
                   :register-user :none
                   :login-user :none
                   :approach :none

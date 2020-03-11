@@ -187,3 +187,47 @@
      {:dispatch [::sign-in-with-email {:email local-store}]}
      {:db (-> db
               (assoc-in [:auth :sign-in-with-email :email-input-required?] true))})))
+
+(re-frame/reg-event-fx
+ ::success-fetch-linked-provider-ids
+ (fn [{:keys [db]}
+      [_ providers]]
+   (let [provider-ids (->> (js->clj providers :keywordize-keys true)
+                           (map :providerId)
+                           set)]
+     {:db (-> db
+              (assoc-in [:auth :linked-provider-ids] provider-ids)
+              (assoc-in [:fetch-status :linked-provider-ids] :loaded))})))
+
+(re-frame/reg-event-fx
+ ::fetch-linked-provider-ids
+ (fn [{:keys [db]}]
+   (when (not= :loading (-> db :fetch-status :linked-provider-ids))
+     {:db (-> db
+              (assoc-in [:fetch-status :linked-provider-ids] :loading))
+      ::auth-effects/get-linked-provider-ids {:callback [::success-fetch-linked-provider-ids]}})))
+
+(re-frame/reg-event-fx
+ ::link-with-twitter
+ (fn [_]
+   {::auth-effects/link-with-twitter {}}))
+
+(re-frame/reg-event-db
+ ::success-unlink-with-twitter
+ (fn [{:keys [db]}]
+   {:db (-> db
+            (assoc-in [:fetch-status :unlink-twitter] :loaded))}))
+
+(re-frame/reg-event-db
+ ::error-unlink-with-twitter
+ (fn [{:keys [db]}
+      [_ error]]
+   {:db (-> db
+            (assoc-in [:fetch-status :unlink-twitter] :loaded)
+            (assoc :api-error error))}))
+
+(re-frame/reg-event-fx
+ ::unlink-with-twitter
+ (fn [_]
+   {::auth-effects/unlink-with-twitter {:callback-success [::success-unlink-with-twitter]
+                                        :callback-error [::error-unlink-with-twitter]}}))
