@@ -88,6 +88,21 @@
      (.. @firebase-instance auth -currentUser (linkWithRedirect provider)))))
 
 (re-frame/reg-fx
+ ::unlink-with-twitter
+ (fn [{:keys [callback-success callback-error]}]
+   (let [provider (new (.. js/firebase -auth -TwitterAuthProvider))]
+     (.. @firebase-instance
+         auth
+         -currentUser
+         (unlink "twitter.com")
+         (then
+          (fn []
+            (re-frame/dispatch callback-success)))
+         (catch
+          (fn [error]
+            (re-frame/dispatch (con callback-error error))))))))
+
+(re-frame/reg-fx
  ::get-linked-provider-ids
  (fn [{:keys [callback]}]
    (some-> @firebase-instance

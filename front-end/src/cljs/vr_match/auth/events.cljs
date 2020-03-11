@@ -211,3 +211,23 @@
  ::link-with-twitter
  (fn [_]
    {::auth-effects/link-with-twitter {}}))
+
+(re-frame/reg-event-db
+ ::success-unlink-with-twitter
+ (fn [{:keys [db]}]
+   {:db (-> db
+            (assoc-in [:fetch-status :unlink-twitter] :loaded))}))
+
+(re-frame/reg-event-db
+ ::error-unlink-with-twitter
+ (fn [{:keys [db]}
+      [_ error]]
+   {:db (-> db
+            (assoc-in [:fetch-status :unlink-twitter] :loaded)
+            (assoc :api-error error))}))
+
+(re-frame/reg-event-fx
+ ::unlink-with-twitter
+ (fn [_]
+   {::auth-effects/unlink-with-twitter {:callback-success [::success-unlink-with-twitter]
+                                        :callback-error [::error-unlink-with-twitter]}}))

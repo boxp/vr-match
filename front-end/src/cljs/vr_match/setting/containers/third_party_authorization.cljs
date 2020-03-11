@@ -14,9 +14,11 @@
   (re-frame/dispatch-sync [::auth-events/initialize])
   (re-frame/dispatch [::auth-events/fetch-linked-provider-ids]))
 
-(defn- handle-change-twitter []
-  (re-frame/dispatch [::auth-events/link-with-twitter])
-  (swap! fake-state #(update % :isTwitterEnabled not)))
+(defn- handle-link-twitter []
+  (re-frame/dispatch [::auth-events/link-with-twitter]))
+
+(defn- handle-unlink-twitter []
+  (re-frame/dispatch [::auth-events/unlink-with-twitter]))
 
 (defn third-party-authorization []
   (let [twitter-enabled? (re-frame/subscribe [::auth-subs/linked-twitter?])
@@ -24,6 +26,7 @@
     [components/third-party-authorization {:isLoading @loading?
                                            :isTwitterEnabled @twitter-enabled?
                                            :handleInitialize handle-initialize
-                                           :handleChangeTwitter handle-change-twitter}]))
+                                           :handleLinkTwitter handle-link-twitter
+                                           :handleUnlinkTwitter handle-unlink-twitter}]))
 
 (util/universal-set-loaded! :setting-third-party-authorization)
