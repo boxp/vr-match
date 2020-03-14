@@ -208,6 +208,32 @@
       ::auth-effects/get-linked-provider-ids {:callback [::success-fetch-linked-provider-ids]}})))
 
 (re-frame/reg-event-fx
+ ::sign-in-with-twitter
+ (fn [{:keys [db]}]
+   {::auth-effects/sign-in-with-twitter {}}))
+
+(re-frame/reg-event-fx
+ ::error-check-twitter-redirect-result
+ (fn [{:keys [db]}
+      [_ error]]
+   {:db (-> db
+            (assoc-in [:api-error] error))
+    :dispatch [::sign-in-with-twitter]}))
+
+(re-frame/reg-event-fx
+ ::success-check-twitter-redirect-result
+ (fn [{:keys [db]}
+      [_ new-user?]]
+   {::auth-effects/renew-id-token {:callback-success [::success-renew-id-token new-user?]
+                                   :callback-error [::error-check-twitter-redirect-result]}}))
+
+(re-frame/reg-event-fx
+ ::check-twitter-redirect-result
+ (fn [{:keys [db]}]
+   {::auth-effects/get-redirect-result {:callback-success [::success-check-twitter-redirect-result]
+                                        :callback-error [::error-check-twitter-redirect-result]}}))
+
+(re-frame/reg-event-fx
  ::link-with-twitter
  (fn [_]
    {::auth-effects/link-with-twitter {}}))

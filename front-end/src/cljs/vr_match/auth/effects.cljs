@@ -119,7 +119,9 @@
        getRedirectResult
        (then
         (fn [result]
-          (re-frame/dispatch (conj callback-success (.. result -additionalUserInfo -isNewUser)))))
+          (if (. result -additionalUserInfo)
+            (re-frame/dispatch (conj callback-success (.. result -additionalUserInfo -isNewUser)))
+            (re-frame/dispatch (conj callback-error nil)))))
        (catch
         (fn [error]
           (re-frame/dispatch (conj callback-error error)))))))

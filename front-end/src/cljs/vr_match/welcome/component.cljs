@@ -14,6 +14,7 @@
     :reagent-render
     (fn [{:keys [backgroundImage
                  handleClickLoginWithEmail
+                 handleClickLoginWithTwitter
                  handleClickRegister
                  handleInitialize] :as props}]
       [mui/grid {:style {:height "100%"
@@ -47,14 +48,21 @@
                           :variant "subtitle1"
                           :align "center"
                           :color "textPrimary"}
-         "Friendや好みのアバターをみつけよう。"]
-        ]
+         "Friendや好みのアバターをみつけよう。"]]
        [mui/grid {:style {:margin-top 208
                           :width "296px"}
                   :container true
                   :direction "column"
                   :justify "center"
                   :alignItems "center"}
+        [mui/button {:variant "contained"
+                     :color "inherit"
+                     :on-click handleClickLoginWithTwitter
+                     :style {:width "100%"
+                             :margin-top "16px"
+                             :color "white"
+                             :background-color "#1DA1F2"}}
+         "Twitterでログイン"]
         [mui/button {:variant "contained"
                      :color "primary"
                      :on-click handleClickLoginWithEmail
