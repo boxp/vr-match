@@ -1,6 +1,7 @@
 (ns vr-match.setting.containers.third-party-authorization
   (:require [re-frame.core :as re-frame]
             [reagent.core :as r]
+            [vr-match.events :as events]
             [vr-match.auth.events :as auth-events]
             [vr-match.auth.subs :as auth-subs]
             [vr-match.setting.subs :as setting-subs]
@@ -11,6 +12,7 @@
   (r/atom {:isTwitterEnabled false}))
 
 (defn- handle-initialize []
+  (re-frame/dispatch [::events/fetch-me])
   (re-frame/dispatch-sync [::auth-events/initialize])
   (re-frame/dispatch [::auth-events/fetch-linked-provider-ids]))
 

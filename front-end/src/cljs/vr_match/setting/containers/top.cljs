@@ -9,8 +9,16 @@
 (defn- handle-click-third-party-setting []
   (re-frame/dispatch [::events/push "/setting/third-party-authorization"]))
 
+(defn- handle-initialize []
+  (re-frame/dispatch [::events/fetch-me]))
+
 (defn top
   [_]
-  [components/top {:handleClickThirdPartySetting handle-click-third-party-setting}])
+  (r/create-class
+   {:display-name "top"
+    :component-did-mount handle-initialize
+    :reagent-render
+    (fn [_]
+      [components/top {:handleClickThirdPartySetting handle-click-third-party-setting}])}))
 
 (util/universal-set-loaded! :setting-top)
