@@ -4,10 +4,11 @@
 
 (defn unlink-confirmation-alert
   [{:keys [isOpen
-           thirdPartyName
+           thirdPartyId
            handleClose
            handleSubmit] :as props}]
-  (let [title (str thirdPartyName "との連携を解除しますか？")]
+  (let [title (get {"twitter.com" "Twitterとの連携を解除しますか？"
+                    "password" "登録されたEmailアドレスを削除し、認証を無効化しますか？"} thirdPartyId)]
     [:> js/MaterialUI.Dialog {:open isOpen
                               :onClose handleClose
                               :aria-labelledby title}
