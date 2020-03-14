@@ -61,7 +61,7 @@
 (defproject vr-match "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/clojurescript "1.10.520"]
-                 [org.clojure/test.check "0.9.0"]
+                 [org.clojure/test.check "0.10.0"]
                  [reagent "0.8.1"]
                  [re-frame "0.10.8"]
                  [clj-commons/secretary "1.2.4"]
