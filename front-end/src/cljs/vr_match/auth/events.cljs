@@ -239,21 +239,35 @@
    {::auth-effects/link-with-twitter {}}))
 
 (re-frame/reg-event-db
- ::success-unlink-with-twitter
+ ::success-unlink-provider
  (fn [{:keys [db]}]
    {:db (-> db
-            (assoc-in [:fetch-status :unlink-twitter] :loaded))}))
+            (assoc-in [:fetch-status :unlink-provider] :loaded))}))
 
 (re-frame/reg-event-db
- ::error-unlink-with-twitter
+ ::error-unlink-provider
  (fn [{:keys [db]}
       [_ error]]
    {:db (-> db
-            (assoc-in [:fetch-status :unlink-twitter] :loaded)
+            (assoc-in [:fetch-status :unlink-provider] :loaded)
             (assoc :api-error error))}))
 
 (re-frame/reg-event-fx
  ::unlink-with-twitter
- (fn [_]
-   {::auth-effects/unlink-with-twitter {:callback-success [::success-unlink-with-twitter]
-                                        :callback-error [::error-unlink-with-twitter]}}))
+ (fn [{:keys [db]}
+      _]
+   (when-not (= :loading (-> db :fetch-status :unlink-provider))
+     {:db (-> db (assoc-in [:fetch-status :unlink-provider] :loading))
+      ::auth-effects/unlink-provider {:provider-id "twitter.com"
+                                     :callback-success [::success-unlink-provider]
+                                     :callback-error [::error-unlink-provider]}})))
+
+(re-frame/reg-event-fx
+ ::unlink-with-email
+ (fn [{:keys [db]}
+      _]
+   (when-not (= :loading (-> db :fetch-status :unlink-provider))
+     {:db (-> db (assoc-in [:fetch-status :unlink-provider] :loading))
+      ::auth-effects/unlink-provider {:provider-id "password"
+                                      :callback-success [::success-unlink-provider]
+                                      :callback-error [::error-unlink-provider]}})))
