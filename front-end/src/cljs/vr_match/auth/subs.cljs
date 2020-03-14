@@ -34,6 +34,15 @@
     (-> db :fetch-status :firebase (= :loading)))))
 
 (re-frame/reg-sub
+ ::loading-twitter-login?
+ (fn [db]
+   (or
+    (-> db :fetch-status :firebase (not= :loaded))
+    (-> db :fetch-status :check-twitter-redirect-result (not= :loaded))
+    (-> db :fetch-status :login-user (= :loading))
+    (-> db :fetch-status :register-user (= :loading)))))
+
+(re-frame/reg-sub
  ::linked-twitter?
  (fn [db]
    (contains? (-> db :auth :linked-provider-ids) "twitter.com")))

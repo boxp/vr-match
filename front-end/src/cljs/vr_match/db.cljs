@@ -28,6 +28,7 @@
                   :sign-in-with-email :none
                   :linked-provider-ids :none
                   :unlink-provider :none
+                  :check-twitter-redirect-result :none
                   :register-user :none
                   :login-user :none
                   :approach :none
