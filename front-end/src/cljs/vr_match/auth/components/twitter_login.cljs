@@ -11,16 +11,16 @@
    [:> js/MaterialUI.Grid {:container true
                            :spacing 32
                            :direction "column"
-                           :justify "flex-start"
+                           :justify "space-between"
                            :align-items "flex-start"
                            :style {:height "100%"
                                    :width "100vw"
                                    :padding 32}}
-    [:> js/MaterialUI.Typography {:variant "display"
+    [:> js/MaterialUI.Typography {:variant "display1"
                                   :component "h1"
                                   :gutterBottom true
                                   :style {:text-align "left"}}
-     "Twitterの認証ページへ移動しています..."]
+     "Twitterの認証準備中..."]
     [:> js/MaterialUI.Button {:disabled isLoading
                               :variant "contained"
                               :color "primary"
