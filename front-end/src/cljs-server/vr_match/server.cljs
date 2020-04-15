@@ -16,7 +16,6 @@
     [vr-match.auth.containers.email-register-complete]
     [vr-match.auth.containers.email-login]
     [vr-match.auth.containers.email-login-complete]
-    [vr-match.auth.containers.twitter-login]
     [vr-match.wizard.container]
     [vr-match.favorite.container]
     [vr-match.matching.container]
