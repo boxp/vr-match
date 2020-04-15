@@ -12,9 +12,6 @@
 (defn- handle-click-login-with-email []
   (re-frame/dispatch [::events/push "/email-login"]))
 
-(defn- handle-click-login-with-twitter []
-  (re-frame/dispatch [::events/push "/twitter-login"]))
-
 (defn- handle-click-register []
   (re-frame/dispatch [::events/push "/register"]))
 
@@ -26,7 +23,6 @@
   [component/welcome
    (merge @welcome-state
           {:handleClickLoginWithEmail handle-click-login-with-email
-           :handleClickLoginWithTwitter handle-click-login-with-twitter
            :handleClickRegister handle-click-register
            :handleInitialize handle-initialize})])
 

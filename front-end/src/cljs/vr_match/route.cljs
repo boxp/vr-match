@@ -23,8 +23,6 @@
                     :module-name :email-register}
    :email-register-complete {:container #(resolve 'vr-match.auth.containers.email-register-complete/email-register-complete)
                              :module-name :email-register-complete}
-   :twitter-login {:container #(resolve 'vr-match.auth.containers.twitter-login/twitter-login)
-                 :module-name :twitter-login}
    :email-login {:container #(resolve 'vr-match.auth.containers.email-login/email-login)
                  :module-name :email-login}
    :email-login-complete {:container #(resolve 'vr-match.auth.containers.email-login-complete/email-login-complete)
@@ -63,9 +61,6 @@
 
 (defroute email-register-complete-path "/email-register-complete" []
   (lazy-push :email-register-complete {}))
-
-(defroute twitter-login-path "/twitter-login" []
-  (lazy-push :twitter-login {}))
 
 (defroute email-login-path "/email-login" []
   (lazy-push :email-login {}))

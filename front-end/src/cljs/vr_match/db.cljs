@@ -27,7 +27,7 @@
    :fetch-status {:sign-in-link :none
                   :sign-in-with-email :none
                   :linked-provider-ids :none
-                  :unlink-provider :none
+                  :unlink-twitter :none
                   :register-user :none
                   :login-user :none
                   :approach :none
