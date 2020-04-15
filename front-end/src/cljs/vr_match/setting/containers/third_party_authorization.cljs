@@ -22,13 +22,19 @@
 (defn- handle-unlink-twitter []
   (re-frame/dispatch [::auth-events/unlink-with-twitter]))
 
+(defn- handle-unlink-email []
+  (re-frame/dispatch [::auth-events/unlink-with-email]))
+
 (defn third-party-authorization []
   (let [twitter-enabled? (re-frame/subscribe [::auth-subs/linked-twitter?])
+        email-enabled? (re-frame/subscribe [::auth-subs/linked-email?])
         loading? (re-frame/subscribe [::setting-subs/third-party-authorization-loading?])]
     [components/third-party-authorization {:isLoading @loading?
                                            :isTwitterEnabled @twitter-enabled?
+                                           :isEmailEnabled @email-enabled?
                                            :handleInitialize handle-initialize
                                            :handleLinkTwitter handle-link-twitter
-                                           :handleUnlinkTwitter handle-unlink-twitter}]))
+                                           :handleUnlinkTwitter handle-unlink-twitter
+                                           :handleUnlinkEmail handle-unlink-email}]))
 
 (util/universal-set-loaded! :setting-third-party-authorization)

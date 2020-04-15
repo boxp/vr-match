@@ -39,6 +39,11 @@
    (contains? (-> db :auth :linked-provider-ids) "twitter.com")))
 
 (re-frame/reg-sub
+ ::linked-email?
+ (fn [db]
+   (contains? (-> db :auth :linked-provider-ids) "password")))
+
+(re-frame/reg-sub
  ::linked-provider-ids-loaded?
  (fn [db]
    (= :loaded (-> db :fetch-status :linked-provider-ids))))

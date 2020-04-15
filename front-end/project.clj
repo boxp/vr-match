@@ -21,6 +21,9 @@
    :email-register-complete {:entries #{"vr-match.auth.containers.email-register-complete"}
                              :output-to (str output-dir "/email_register_complete.js")
                              :depends-on #{:client}}
+   :twitter-login {:entries #{"vr-match.auth.containers.twitter-login"}
+                 :output-to (str output-dir "/twitter_login.js")
+                 :depends-on #{:client}}
    :email-login {:entries #{"vr-match.auth.containers.email-login"}
                     :output-to (str output-dir "/email_login.js")
                     :depends-on #{:client}}
