@@ -217,28 +217,21 @@
  (fn [{:keys [db]}
       [_ error]]
    {:db (-> db
-            (assoc-in [:api-error] error)
-            (assoc-in [:fetch-status :check-twitter-redirect-result] :loaded))
+            (assoc-in [:api-error] error))
     :dispatch [::sign-in-with-twitter]}))
 
 (re-frame/reg-event-fx
  ::success-check-twitter-redirect-result
  (fn [{:keys [db]}
       [_ new-user?]]
-   {:db (-> db
-            (assoc-in [:fetch-status :check-twitter-redirect-result] :loaded))
-    ::auth-effects/renew-id-token {:callback-success [::success-renew-id-token new-user?]
+   {::auth-effects/renew-id-token {:callback-success [::success-renew-id-token new-user?]
                                    :callback-error [::error-check-twitter-redirect-result]}}))
 
 (re-frame/reg-event-fx
  ::check-twitter-redirect-result
- (when-not
-   (= :loading (-> db :fetch-status :check-twitter-redirect-result))
-   (fn [{:keys [db]}]
-     {:db (-> db
-              (assoc-in [:fetch-status :check-twitter-redirect-result] :loading))
-      ::auth-effects/get-redirect-result {:callback-success [::success-check-twitter-redirect-result]
-                                          :callback-error [::error-check-twitter-redirect-result]}})))
+ (fn [{:keys [db]}]
+   {::auth-effects/get-redirect-result {:callback-success [::success-check-twitter-redirect-result]
+                                        :callback-error [::error-check-twitter-redirect-result]}}))
 
 (re-frame/reg-event-fx
  ::link-with-twitter

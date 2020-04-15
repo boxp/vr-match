@@ -14,7 +14,7 @@
   (re-frame/dispatch [::auth-events/sign-in-with-twitter]))
 
 (defn twitter-login []
-  (let [loading? (re-frame/subscribe [::auth-subs/loading-twitter-login?])]
+  (let [loading? (re-frame/subscribe [::auth-subs/loading?])]
     (r/create-class
      {:display-name "twitter-login"
       :component-did-mount handle-initialize
