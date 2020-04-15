@@ -189,9 +189,7 @@
         sheets-manager (new js/Map)
         generate-class-name (mui/create-generate-class-name)
         theme (mui/theme)]
-    (re-frame/dispatch-sync [::events/initialize {:api-endpoint api-endpoint
-                                                  :preload nil
-                                                  :history nil}])
+    (re-frame/dispatch-sync [::events/initialize {:api-endpoint api-endpoint}])
     (secretary/dispatch! request-path)
     (.format res #js {"text/html" #(.send res (render-index sheets-registry
                                                             generate-class-name
