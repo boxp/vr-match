@@ -15,4 +15,4 @@
  (fn []
    [(re-frame/subscribe [::auth-subs/provider-counts])])
  (fn [[provider-counts] _]
-   (> providercounts 0)))
+   (> provider-counts 0)))
