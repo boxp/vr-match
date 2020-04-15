@@ -28,10 +28,12 @@
 (defn third-party-authorization []
   (let [twitter-enabled? (re-frame/subscribe [::auth-subs/linked-twitter?])
         email-enabled? (re-frame/subscribe [::auth-subs/linked-email?])
-        loading? (re-frame/subscribe [::setting-subs/third-party-authorization-loading?])]
+        loading? (re-frame/subscribe [::setting-subs/third-party-authorization-loading?])
+        canUnlink (re-frame/subscribe [::setting-subs/can-unlink?])]
     [components/third-party-authorization {:isLoading @loading?
                                            :isTwitterEnabled @twitter-enabled?
                                            :isEmailEnabled @email-enabled?
+                                           :canUnlink @canUnlink
                                            :handleInitialize handle-initialize
                                            :handleLinkTwitter handle-link-twitter
                                            :handleUnlinkTwitter handle-unlink-twitter
