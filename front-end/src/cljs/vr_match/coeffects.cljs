@@ -10,7 +10,8 @@
  (fn [coeffects key]
    (assoc coeffects
           :local-store
-          (.getItem js/localStorage key))))
+          (some-> js/localStorage
+                  (.getItem key)))))
 
 (re-frame/reg-cofx
  ::route
@@ -27,7 +28,8 @@
  (fn [coeffects]
    (assoc coeffects
           :session
-          (.getItem js/localStorage "session"))))
+          (some-> js/localStorage
+                  (.getItem "session")))))
 
 (re-frame/reg-cofx
  ::firebase-config
