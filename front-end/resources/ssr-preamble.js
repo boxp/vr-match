@@ -14,7 +14,6 @@ global.createReactClass = createReactClass;
 global.window = global;
 global.window.navigator = {};
 global.window.navigator.userAgent = "";
-global.window.localStorage = null;
 
 // SSRサーバーを :optimization :simple でビルドする時、モジュール解決に失敗して以下のエラーが出るので無理やり補完する
 // TypeError: Cannot read property 'renderToString' of undefined
