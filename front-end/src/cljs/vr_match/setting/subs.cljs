@@ -10,9 +10,3 @@
  (fn [[linked-provider-ids-loaded?] _]
    (not linked-provider-ids-loaded?)))
 
-(re-frame/reg-sub
- ::can-unlink?
- (fn []
-   [(re-frame/subscribe [::auth-subs/provider-counts])])
- (fn [[provider-counts] _]
-   (> providercounts 0)))

@@ -44,11 +44,6 @@
    (contains? (-> db :auth :linked-provider-ids) "password")))
 
 (re-frame/reg-sub
- ::provider-counts
- (fn [db]
-   (count (-> db :auth :linked-provider-ids))))
-
-(re-frame/reg-sub
  ::linked-provider-ids-loaded?
  (fn [db]
    (= :loaded (-> db :fetch-status :linked-provider-ids))))
