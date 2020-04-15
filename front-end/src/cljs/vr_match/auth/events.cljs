@@ -232,8 +232,9 @@
 
 (re-frame/reg-event-fx
  ::check-twitter-redirect-result
- (fn [{:keys [db]}]
-   (when-not (= :loading (-> db :fetch-status :check-twitter-redirect-result))
+ (when-not
+   (= :loading (-> db :fetch-status :check-twitter-redirect-result))
+   (fn [{:keys [db]}]
      {:db (-> db
               (assoc-in [:fetch-status :check-twitter-redirect-result] :loading))
       ::auth-effects/get-redirect-result {:callback-success [::success-check-twitter-redirect-result]
