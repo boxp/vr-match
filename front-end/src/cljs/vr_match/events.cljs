@@ -12,7 +12,7 @@
                             preload
                             api-endpoint]}]]
    (as-> {:db db/default-db} $
-     (if preload (update $ :db #(merge % preload)))
+     (if preload (update $ :db #(merge % preload)) $)
      (if history (assoc-in $ [:db :history] history) $)
      (if api-endpoint (assoc-in $ [:db :api-endpoint] api-endpoint) $))))
 
