@@ -40,7 +40,7 @@
                            :disabled isLoading
                            :checked isTwitterEnabled
                            :onChange (cond
-                                       (not canUnlink) open-cannot-unlink-third-party-alert
+                                       (and (not canUnlink) isTwitterEnabled) open-cannot-unlink-third-party-alert
                                        isTwitterEnabled handle-unlink-twitter
                                        :else handleLinkTwitter)}]]]
             [mui/list-item {:key "email"}
