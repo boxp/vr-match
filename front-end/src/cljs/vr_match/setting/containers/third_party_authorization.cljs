@@ -12,7 +12,8 @@
   (r/atom {:isTwitterEnabled false}))
 
 (defn- handle-initialize []
-  (re-frame/dispatch [::events/fetch-me])
+  (re-frame/dispatch [::events/fetch-me {:with-images? true
+                                         :with-platforms? true}])
   (re-frame/dispatch-sync [::auth-events/initialize])
   (re-frame/dispatch [::auth-events/fetch-linked-provider-ids]))
 
