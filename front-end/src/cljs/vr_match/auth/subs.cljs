@@ -34,9 +34,33 @@
     (-> db :fetch-status :firebase (= :loading)))))
 
 (re-frame/reg-sub
+ ::loading-twitter-login?
+ (fn [db]
+   (or
+    (-> db :fetch-status :firebase (not= :loaded))
+    (-> db :fetch-status :check-twitter-redirect-result (not= :loaded))
+    (-> db :fetch-status :login-user (= :loading))
+    (-> db :fetch-status :register-user (= :loading)))))
+
+;; 何故かsubscriptionsが特定の数になるとエラーになるようなので置いている…
+(re-frame/reg-sub
+ ::dummy
+ (fn [db] db))
+
+(re-frame/reg-sub
  ::linked-twitter?
  (fn [db]
    (contains? (-> db :auth :linked-provider-ids) "twitter.com")))
+
+(re-frame/reg-sub
+ ::linked-email?
+ (fn [db]
+   (contains? (-> db :auth :linked-provider-ids) "password")))
+
+(re-frame/reg-sub
+ ::provider-counts
+ (fn [db]
+   (count (-> db :auth :linked-provider-ids))))
 
 (re-frame/reg-sub
  ::linked-provider-ids-loaded?

@@ -88,19 +88,18 @@
      (.. @firebase-instance auth -currentUser (linkWithRedirect provider)))))
 
 (re-frame/reg-fx
- ::unlink-with-twitter
- (fn [{:keys [callback-success callback-error]}]
-   (let [provider (new (.. js/firebase -auth -TwitterAuthProvider))]
-     (.. @firebase-instance
-         auth
-         -currentUser
-         (unlink "twitter.com")
-         (then
-          (fn []
-            (re-frame/dispatch callback-success)))
-         (catch
-          (fn [error]
-            (re-frame/dispatch (conj callback-error error))))))))
+ ::unlink-provider
+ (fn [{:keys [provider-id callback-success callback-error]}]
+   (.. @firebase-instance
+       auth
+       -currentUser
+       (unlink provider-id)
+       (then
+        (fn []
+          (re-frame/dispatch callback-success)))
+       (catch
+           (fn [error]
+             (re-frame/dispatch (conj callback-error error)))))))
 
 (re-frame/reg-fx
  ::get-linked-provider-ids
@@ -119,7 +118,9 @@
        getRedirectResult
        (then
         (fn [result]
-          (re-frame/dispatch (conj callback-success (.. result -additionalUserInfo -isNewUser)))))
+          (if (. result -additionalUserInfo)
+            (re-frame/dispatch (conj callback-success (.. result -additionalUserInfo -isNewUser)))
+            (re-frame/dispatch (conj callback-error nil)))))
        (catch
         (fn [error]
           (re-frame/dispatch (conj callback-error error)))))))

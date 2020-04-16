@@ -10,7 +10,8 @@
   (re-frame/dispatch [::events/push "/setting/third-party-authorization"]))
 
 (defn- handle-initialize []
-  (re-frame/dispatch [::events/fetch-me]))
+  (re-frame/dispatch [::events/fetch-me {:with-images? true
+                                         :with-platforms? true}]))
 
 (defn top
   [_]

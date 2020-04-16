@@ -16,6 +16,7 @@
     [vr-match.auth.containers.email-register-complete]
     [vr-match.auth.containers.email-login]
     [vr-match.auth.containers.email-login-complete]
+    [vr-match.auth.containers.twitter-login]
     [vr-match.wizard.container]
     [vr-match.favorite.container]
     [vr-match.matching.container]
@@ -189,7 +190,9 @@
         sheets-manager (new js/Map)
         generate-class-name (mui/create-generate-class-name)
         theme (mui/theme)]
-    (re-frame/dispatch-sync [::events/initialize {:api-endpoint api-endpoint}])
+    (re-frame/dispatch-sync [::events/initialize {:api-endpoint api-endpoint
+                                                  :preload nil
+                                                  :history nil}])
     (secretary/dispatch! request-path)
     (.format res #js {"text/html" #(.send res (render-index sheets-registry
                                                             generate-class-name

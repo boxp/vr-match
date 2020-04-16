@@ -18,9 +18,10 @@
 
 (defn email-register-complete
   [params]
-(let [loading? (re-frame/subscribe [::auth-subs/loading?])]
-  [component/email-register-complete {:isLoading @loading?
-                                      :handleInitialize handle-initialize
-                                      :handleSubmitEmail handle-submit-email}]))
+  (let [loading? (re-frame/subscribe [::auth-subs/loading?])]
+    (fn [_]
+      [component/email-register-complete {:isLoading @loading?
+                                          :handleInitialize handle-initialize
+                                          :handleSubmitEmail handle-submit-email}])))
 
 (util/universal-set-loaded! :email-register-complete)
