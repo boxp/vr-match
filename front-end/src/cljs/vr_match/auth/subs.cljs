@@ -42,6 +42,11 @@
     (-> db :fetch-status :login-user (= :loading))
     (-> db :fetch-status :register-user (= :loading)))))
 
+;; 何故かsubscriptionsが特定の数になるとエラーになるようなので置いている…
+(re-frame/reg-sub
+ ::dummy
+ (fn [db] db))
+
 (re-frame/reg-sub
  ::linked-twitter?
  (fn [db]
