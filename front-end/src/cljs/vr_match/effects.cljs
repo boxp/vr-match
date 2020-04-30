@@ -46,6 +46,6 @@
 (re-frame/reg-fx
   ::ga-page-view
   (fn [[path]]
-    (when (exists? js/gtag)
-      (js/gtag "set" "page" path)
-      (js/gtag "send" "pageview"))))
+    (when (exists? js/ga)
+      (js/ga "set" "page" path)
+      (js/ga "send" "pageview"))))
