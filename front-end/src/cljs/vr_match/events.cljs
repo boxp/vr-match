@@ -31,8 +31,12 @@
 (re-frame/reg-event-fx
  ::push
  (fn [_ [_ path]]
-   {::effects/route [path]
-    ::effects/ga-page-view [path]}))
+   {::effects/route [path]}))
+
+(re-frame/reg-event-fx
+ ::send-pageview
+ (fn [_ [_ path]]
+   {::effects/ga-page-view [path]}))
 
 (re-frame/reg-event-fx
  ::api-error

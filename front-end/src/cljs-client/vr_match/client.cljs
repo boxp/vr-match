@@ -44,7 +44,9 @@
 
 (def history
   (pushy/pushy secretary/dispatch!
-               (fn [x] (when (secretary/locate-route x) x))))
+               (fn [x] (when (secretary/locate-route x)
+                         (re-frame/dispatch [::events/send-pageview x])
+                           x))))
 
 ;; https://github.com/kibu-australia/pushy#routing-libraries から輸入
 (defn hook-history []
