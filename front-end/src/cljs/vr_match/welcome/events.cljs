@@ -9,4 +9,4 @@
  [(re-frame/inject-cofx ::coeffects/local-store "session")]
  (fn [{:keys [db local-store]} _]
    (when (seq local-store)
-     {:dispatch [::events/push "/search"]})))
+     {:dispatch [::events/push "/approach"]})))
