@@ -456,17 +456,17 @@
   (s/keys :req-un [:get-favorited-from-users-by-without-matched-by-me-result/users]
           :opt-un [:get-favorited-from-users-by-without-matched-by-me-result/has-next?]))
 
-(s/fdef get-favorited-from-users-by-without-matched-by-me
+(s/fdef get-favorited-from-users-by-without-matched-by-user
   :args (s/cat :c ::user-repository
-               :me-id ::euser/id
+               :user-id ::euser/id
                :with-images? boolean?
                :with-platforms? boolean?
                :with-has-next? boolean?
                :paging-params ::get-favorited-from-users-by-without-matched-by-me-paging-params)
   :ret ::get-favorited-from-users-by-without-matched-by-me-result)
-(defn get-favorited-from-users-by-without-matched-by-me
+(defn get-favorited-from-users-by-without-matched-by-user
   [{:keys [mysql-datasource] :as c}
-   me-id
+   user-id
    with-images?
    with-platforms?
    with-has-next?
@@ -475,7 +475,7 @@
     (let [limit (inc (or (:first paging-params) 1000))
           users (favorited-from-user-without-matched-user-by-user_id
                       (:db mysql-datasource)
-                      {:user_id me-id
+                      {:user_id user-id
                        :after (or (:after paging-params) (t/now))
                        :limit limit})
           has-next? (>= (count users) limit)]
@@ -486,7 +486,7 @@
        :has-next? has-next?})
     {:users (->> (favorited-from-user-without-matched-user-by-user_id
                   (:db mysql-datasource)
-                  {:user_id me-id
+                  {:user_id user-id
                    :after (or (:after paging-params) (t/now))
                    :limit (or (:first paging-params) 1000)})
                   (pmap #(cond-> %
