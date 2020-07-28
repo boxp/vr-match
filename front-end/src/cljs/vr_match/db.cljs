@@ -11,7 +11,8 @@
           :linked-provider-ids #{}}
    :mypage {:platform-options nil}
    :myprofile {}
-   :profile {:partner nil}
+   :profile {:partner nil
+             :show-matching-dialog false}
    :favorite {:favorited-from-me-list {:edges []
                                        :pageInfo nil}
               :favorited-from-users-list {:edges []
