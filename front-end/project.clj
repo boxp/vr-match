@@ -36,6 +36,9 @@
    :favorite {:entries #{"vr-match.favorite.container"}
               :output-to (str output-dir "/favorite.js")
               :depends-on #{:client}}
+   :favorited-from-users {:entries #{"vr-match.favorited-from-users.container"}
+                          :output-to (str output-dir "/favorited-from-users.js")
+                          :depends-on #{:client}}
    :matching {:entries #{"vr-match.matching.container"}
               :output-to (str output-dir "/matching.js")
               :depends-on #{:client}}
