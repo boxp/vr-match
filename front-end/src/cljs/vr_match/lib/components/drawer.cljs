@@ -11,6 +11,7 @@
            handleClickMyProfile
            handleClickSearch
            handleClickFavorite
+           handleClickFavoritedFromUsers
            handleClickMatching
            handleClickSetting] :as props}]
   [mui/drawer {:open isOpen
@@ -38,6 +39,12 @@
       [mui/list-item-icon
        [mui/icon "favorite"]]
       [mui/list-item-text {:primary "お気に入り"}]]
+     [mui/list-item {:key "favorited-from-users"
+                     :button true
+                     :on-click handleClickFavoritedFromUsers}
+      [mui/list-item-icon
+       [mui/icon "favorite_border"]]
+      [mui/list-item-text {:primary "受け取ったお気に入り"}]]
      [mui/list-item {:key "matching"
                      :button true
                      :on-click handleClickMatching}

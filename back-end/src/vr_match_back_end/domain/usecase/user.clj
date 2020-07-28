@@ -143,6 +143,32 @@
      with-has-next?
      paging-params)))
 
+(s/fdef get-my-favorited-users
+  :args (s/cat :c ::user-usecase
+               :session ::session
+               :with-images? boolean?
+               :with-platforms? boolean?
+               :with-has-next? boolean?
+               :paging-params ::ruser/get-favorited-from-users-by-without-matched-by-me-paging-params)
+  :ret ::ruser/get-favorited-from-users-by-without-matched-by-me-result)
+(defn get-my-favorited-users
+  [{:keys [user-repository]}
+   session
+   with-images?
+   with-platforms?
+   with-has-next?
+   paging-params]
+  (let [user-id (ruser/get-user-id-by-session
+                 user-repository
+                 session)]
+    (ruser/get-favorited-from-users-by-without-matched-by-user
+     user-repository
+     user-id
+     with-images?
+     with-platforms?
+     with-has-next?
+     paging-params)))
+
 (s/fdef get-partner
   :args (s/cat :c ::user-usecase
                :session ::session

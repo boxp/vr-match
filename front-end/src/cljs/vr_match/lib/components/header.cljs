@@ -82,6 +82,10 @@
   (re-frame/dispatch [::events/push "/favorite"])
   (handle-close-drawer))
 
+(defn- handle-click-favorited-from-users []
+  (re-frame/dispatch [::events/push "/favorited-from-users"])
+  (handle-close-drawer))
+
 (defn- handle-click-matching []
   (re-frame/dispatch [::events/push "/matching"])
   (handle-close-drawer))
@@ -107,5 +111,6 @@
                        :handleClickMyProfile handle-click-my-profile
                        :handleClickSearch handle-click-search
                        :handleClickFavorite handle-click-favorite
+                       :handleClickFavoritedFromUsers handle-click-favorited-from-users
                        :handleClickMatching handle-click-matching
                        :handleClickSetting handle-click-setting}]))

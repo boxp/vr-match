@@ -38,3 +38,41 @@
                   :success-handler ::on-success-fetch-partner
                   :error-handler ::on-error-fetch-partner}]})))
 
+(re-frame/reg-event-fx
+ ::on-success-favorite
+ (fn [{:keys [db]} [_ {:keys [data]}]]
+   {:db (-> db
+            (assoc-in [:fetch-status :profile] :loaded)
+            (assoc-in [:profile :show-matching-dialog] (-> data :favorite :isMatched))
+            (assoc-in [:profile :partner :isMatched] (-> data :favorite :isMatched)))}))
+
+(re-frame/reg-event-fx
+ ::on-error-favorite
+ (fn [{:keys [db]}
+      [_ {:keys [errors]}]]
+   {:db (assoc-in db [:fetch-status :profile] :loaded)
+    :dispatch-n (case (-> errors first :extensions :type)
+                  "invalid-session" [[::events/push "/"]
+                                     [::events/clear-session]]
+                  [[::events/api-error errors]])}))
+
+(re-frame/reg-event-fx
+ ::favorite
+ (fn [{:keys [db] :as cofx} [_ {:keys [id] :as user}]]
+   (when (not= (-> db :fetch-status :profile) :loading)
+     {:db (-> db
+              (assoc-in [:fetch-status :profile] :loading))
+      :dispatch [::events/graphql-query
+                 {:query
+                  {:venia/operation {:operation/type :mutation
+                                     :operation/name "favorite"}
+                   :venia/queries [[:favorite {:partnerId id}
+                                    [:isMatched]]]}
+                  :success-handler ::on-success-favorite
+                  :error-handler ::on-error-favorite}]})))
+
+(re-frame/reg-event-fx
+ ::close-matching-dialog
+ (fn [{:keys [db]}]
+   {:db (-> db
+            (assoc-in [:profile :show-matching-dialog] false))}))
