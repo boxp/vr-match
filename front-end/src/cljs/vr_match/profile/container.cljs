@@ -22,7 +22,7 @@
         handleClickFavorite (fn [] (re-frame/dispatch [::profile-events/favorite @partner]))
         handleCloseMatchingDialog (fn [] (re-frame/dispatch [::profile-events/close-matching-dialog]))]
     (fn [params]
-      [component/profile {:me me
+      [component/profile {:me @me
                           :partner @partner
                           :isLoading @isLoading
                           :isShowMatchingDialog @isShowMatchingDialog
