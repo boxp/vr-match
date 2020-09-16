@@ -244,6 +244,34 @@
                   :hasNextPage has-next?}})
     (catch Exception e (handle-error e))))
 
+(defn favorited-from-users
+  [{:keys [user-usecase session]} arguments _]
+  (try
+    (let [paging-params {:after (some-> arguments
+                                        :after
+                                        converter/decode-cursor
+                                        converter/string->date-time)
+                         :first (:first arguments)}
+          {:keys [users has-next?]} (uuser/get-my-favorited-users
+                                     user-usecase
+                                     session
+                                     true
+                                     true
+                                     true
+                                     paging-params)
+          edges (map (fn [user]
+                       {:node user
+                        :cursor (-> user
+                                    :created_at
+                                    converter/date-time->string
+                                    converter/encode-cursor)}) users)]
+      {:edges edges
+       :pageInfo {:startCursor (some->> edges first :cursor)
+                  :endCursor (some->> edges last :cursor)
+                  :hasPreviousPage false
+                  :hasNextPage has-next?}})
+    (catch Exception e (handle-error e))))
+
 (defn partner
   [{:keys [user-usecase session] :as context}
    {:keys [id] :as arguments}
@@ -254,8 +282,7 @@
          session
          id
          (executor/selects-field? context :User/images)
-         (executor/selects-field? context :User/platforms)
-         (executor/selects-field? context :User/isMatched))
+         (executor/selects-field? context :User/platforms))
         converter/user->User
         (update :platforms #(map converter/platform->Platform %)))
     (catch Exception e (handle-error e))))

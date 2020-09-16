@@ -25,7 +25,8 @@
       (dissoc :session_cookie)
       (dissoc :created_at)
       (dissoc :updated_at)
-      (set/rename-keys {:matched? :isMatched})))
+      (set/rename-keys {:matched? :isMatched})
+      (set/rename-keys {:favorited? :isFavorited})))
 
 (def date-time-formatter (f/formatters :basic-date-time))
 

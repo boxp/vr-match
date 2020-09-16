@@ -20,7 +20,9 @@
             :platforms {:type (list :Platform)
                         :optional true}
             :isMatched {:type Boolean
-                        :optional true}}}
+                        :optional true}
+            :isFavorited {:type Boolean
+                          :optional true}}}
   :UserWithSession
   {:fields {:user {:type User}
             :session {:type String}}}
@@ -39,6 +41,9 @@
   {:fields {:edges {:type (list UserEdge)}
             :pageInfo {:type :PageInfo}}}
   :MatchedUsers
+  {:fields {:edges {:type (list UserEdge)}
+            :pageInfo {:type :PageInfo}}}
+  :FavoritedFromUsers
   {:fields {:edges {:type (list UserEdge)}
             :pageInfo {:type :PageInfo}}}
   :UserMatch
@@ -76,6 +81,12 @@
                         :after {:type String
                                 :optional true}}
                  :resolve :resolve-matched-users}
+  :favoritedFromUsers {:type :FavoritedFromUsers
+                 :args {:first {:type Int
+                                :optional true}
+                        :after {:type String
+                                :optional true}}
+                 :resolve :resolve-favorited-from-users}
   :me {:type :User
        :resolve :resolve-me}
   :partner {:type :User

@@ -13,6 +13,7 @@
 (s/def ::platforms (s/coll-of ::eplatform/platform))
 (s/def ::images (s/coll-of ::eimage/image))
 (s/def ::matched? boolean?)
+(s/def ::favorited? boolean?)
 (s/def ::created_at ::t-spec/date-time)
 (s/def ::updated_at ::t-spec/date-time)
 

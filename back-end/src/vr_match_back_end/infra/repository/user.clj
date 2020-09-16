@@ -444,6 +444,55 @@
                            with-images? (assoc :images (get-images-by-user-id c (:id %)))
                            with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))}))
 
+(s/def :get-favorited-from-users-by-without-matched-by-me-paging-params/after (s/nilable ::t-spec/date-time))
+(s/def :get-favorited-from-users-by-without-matched-by-me-paging-params/first (s/nilable number?))
+(s/def ::get-favorited-from-users-by-without-matched-by-me-paging-params
+  (s/keys :opt-un [:get-favorited-from-users-by-without-matched-by-me-paging-params/after
+                   :get-favorited-from-users-by-without-matched-by-me-paging-params/first]))
+
+(s/def :get-favorited-from-users-by-without-matched-by-me-result/users (s/coll-of ::euser/user))
+(s/def :get-favorited-from-users-by-without-matched-by-me-result/has-next? boolean?)
+(s/def ::get-favorited-from-users-by-without-matched-by-me-result
+  (s/keys :req-un [:get-favorited-from-users-by-without-matched-by-me-result/users]
+          :opt-un [:get-favorited-from-users-by-without-matched-by-me-result/has-next?]))
+
+(s/fdef get-favorited-from-users-by-without-matched-by-user
+  :args (s/cat :c ::user-repository
+               :user-id ::euser/id
+               :with-images? boolean?
+               :with-platforms? boolean?
+               :with-has-next? boolean?
+               :paging-params ::get-favorited-from-users-by-without-matched-by-me-paging-params)
+  :ret ::get-favorited-from-users-by-without-matched-by-me-result)
+(defn get-favorited-from-users-by-without-matched-by-user
+  [{:keys [mysql-datasource] :as c}
+   user-id
+   with-images?
+   with-platforms?
+   with-has-next?
+   paging-params]
+  (if with-has-next?
+    (let [limit (inc (or (:first paging-params) 1000))
+          users (favorited-from-user-without-matched-user-by-user_id
+                      (:db mysql-datasource)
+                      {:user_id user-id
+                       :after (or (:after paging-params) (t/now))
+                       :limit limit})
+          has-next? (>= (count users) limit)]
+      {:users (->> (if has-next? (drop-last users) users)
+                   (pmap #(cond-> %
+                            with-images? (assoc :images (get-images-by-user-id c (:id %)))
+                            with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))
+       :has-next? has-next?})
+    {:users (->> (favorited-from-user-without-matched-user-by-user_id
+                  (:db mysql-datasource)
+                  {:user_id user-id
+                   :after (or (:after paging-params) (t/now))
+                   :limit (or (:first paging-params) 1000)})
+                  (pmap #(cond-> %
+                           with-images? (assoc :images (get-images-by-user-id c (:id %)))
+                           with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))}))
+
 (s/fdef get-user
   :args (s/cat :c ::user-repository
                :partner-id ::euser/id
@@ -465,13 +514,15 @@
     with-images?
     with-platforms?
     me-id]
-   (cond-> (user-with-is_matched (:db mysql-datasource)
-                                 {:partner_id partner-id
-                                  :me_id me-id})
+   (cond-> (user_with_status (:db mysql-datasource)
+                             {:partner_id partner-id
+                              :me_id me-id})
      with-images? (assoc :images (get-images-by-user-id c partner-id))
      with-platforms? (assoc :platforms (get-platforms-by-user-id c partner-id))
-     :always (-> (set/rename-keys {:is_matched :matched?})
-                 (update :matched? #(= % 1))))))
+     :always (-> (set/rename-keys {:is_matched :matched?
+                                   :is_favorited_from_me :favorited?})
+                 (update :matched? #(= % 1))
+                 (update :favorited? #(= % 1))))))
 
 (s/fdef delete-all-skip-from-user
   :args (s/cat :c ::user-repository
