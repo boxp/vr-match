@@ -514,13 +514,15 @@
     with-images?
     with-platforms?
     me-id]
-   (cond-> (user-with-is_matched (:db mysql-datasource)
-                                 {:partner_id partner-id
-                                  :me_id me-id})
+   (cond-> (user_with_status (:db mysql-datasource)
+                             {:partner_id partner-id
+                              :me_id me-id})
      with-images? (assoc :images (get-images-by-user-id c partner-id))
      with-platforms? (assoc :platforms (get-platforms-by-user-id c partner-id))
-     :always (-> (set/rename-keys {:is_matched :matched?})
-                 (update :matched? #(= % 1))))))
+     :always (-> (set/rename-keys {:is_matched :matched?
+                                   :is_favorited_from_me :favorited?})
+                 (update :matched? #(= % 1))
+                 (update :favorited? #(= % 1))))))
 
 (s/fdef delete-all-skip-from-user
   :args (s/cat :c ::user-repository

@@ -282,8 +282,7 @@
          session
          id
          (executor/selects-field? context :User/images)
-         (executor/selects-field? context :User/platforms)
-         (executor/selects-field? context :User/isMatched))
+         (executor/selects-field? context :User/platforms))
         converter/user->User
         (update :platforms #(map converter/platform->Platform %)))
     (catch Exception e (handle-error e))))

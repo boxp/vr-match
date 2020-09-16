@@ -33,6 +33,7 @@
                                      :name
                                      :introduction
                                      :isMatched
+                                     :isFavorited
                                      [:images [:id :url]]
                                      [:platforms [:id :name :url :platformUserId]]]]]}
                   :success-handler ::on-success-fetch-partner
@@ -41,10 +42,13 @@
 (re-frame/reg-event-fx
  ::on-success-favorite
  (fn [{:keys [db]} [_ {:keys [data]}]]
-   {:db (-> db
-            (assoc-in [:fetch-status :profile] :loaded)
-            (assoc-in [:profile :show-matching-dialog] (-> data :favorite :isMatched))
-            (assoc-in [:profile :partner :isMatched] (-> data :favorite :isMatched)))}))
+   (let [partner-id (-> data :profile :partner :id)]
+     {:db (-> db
+              (assoc-in [:fetch-status :profile] :loaded)
+              (assoc-in [:profile :show-matching-dialog] (-> data :favorite :isMatched))
+              (assoc-in [:profile :partner :isMatched] (-> data :favorite :isMatched))
+              (assoc-in [:profile :partner :isFavorited] true)
+              (update-in [:approach :list] #(remove (fn [user] (= (:id user) partner-id)) %)))})))
 
 (re-frame/reg-event-fx
  ::on-error-favorite

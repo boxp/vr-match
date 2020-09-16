@@ -21,7 +21,8 @@
                  handleInitialize
                  handleClickFavorite
                  handleCloseMatchingDialog] :as props}]
-      (let [matched? (:isMatched partner)]
+      (let [matched? (:isMatched partner)
+            favorited? (:isFavorited partner)]
         [navigation-bar-layout {:title "プロフィール"}
          [:<>
           (when isLoading
@@ -39,9 +40,10 @@
              [mui/button {:variant "contained"
                           :color "primary"
                           :style {:width "100%"}
+                          :disabled favorited?
                           :on-click handleClickFavorite}
               [mui/icon {:style {:margin-right "8px"}} "favorite"]
-              "お気に入り"]])
+              (if favorited? "お気に入り済み" "お気に入り")]])
           [matching-dialog {:isOpen isShowMatchingDialog
                             :me me
                             :partner partner

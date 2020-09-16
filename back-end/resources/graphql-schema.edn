@@ -20,7 +20,9 @@
             :platforms {:type (list :Platform)
                         :optional true}
             :isMatched {:type Boolean
-                        :optional true}}}
+                        :optional true}
+            :isFavorited {:type Boolean
+                          :optional true}}}
   :UserWithSession
   {:fields {:user {:type User}
             :session {:type String}}}

@@ -59,13 +59,14 @@ and user_skip.to_id is null
 and user_favorite.to_id is null
 and user.id not in (:v*:exclude_ids)
 
--- :name user-with-is_matched :? :1
--- :doc parnter_idからme_idに対してのマッチング情報を含むUser一件取得
+-- :name user_with_status :? :1
+-- :doc parnter_idからme_idに対してのマッチング情報・お気に入り情報を含むUser一件取得
 select
 user.id as id,
 user.name as name,
 user.introduction as introduction,
-count(user.id) >= 2 as is_matched
+count(user.id) >= 2 as is_matched,
+count(user_favorite.from_id = user.id) as is_favorited_from_me
 from `user`
 inner join user_favorite
 on (user.id = user_favorite.to_id and :me_id = user_favorite.from_id)
