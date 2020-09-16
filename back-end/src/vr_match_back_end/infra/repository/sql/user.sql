@@ -66,7 +66,7 @@ user.id as id,
 user.name as name,
 user.introduction as introduction,
 count(user.id) >= 2 as is_matched,
-count(user_favorite.from_id = :me_id) >= 1 as is_favorited_from_me
+(max(user_favorite.from_id) = :me_id or count(user.id) >= 2) as is_favorited_from_me
 from `user`
 inner join user_favorite
 on (user.id = user_favorite.to_id and :me_id = user_favorite.from_id)
