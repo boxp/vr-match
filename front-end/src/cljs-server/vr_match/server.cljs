@@ -19,7 +19,6 @@
     [vr-match.auth.containers.twitter-login]
     [vr-match.wizard.container]
     [vr-match.favorite.container]
-    [vr-match.favorited-from-users.container]
     [vr-match.matching.container]
     [vr-match.myprofile.container]
     [vr-match.mypage.container]

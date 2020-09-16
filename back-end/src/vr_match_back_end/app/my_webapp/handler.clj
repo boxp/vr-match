@@ -54,7 +54,6 @@
                          :resolve-platform-options resolvers/platform-options
                          :resolve-favorited-users resolvers/favorited-users
                          :resolve-matched-users resolvers/matched-users
-                         :resolve-favorited-from-users resolvers/favorited-from-users
                          :resolve-partner resolvers/partner
                          :resolve-reset-all-skip resolvers/reset-all-skip})
       schema/compile))

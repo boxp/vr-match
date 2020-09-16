@@ -12,7 +12,3 @@
  (fn [db]
    (-> db :profile :partner)))
 
-(re-frame/reg-sub
- ::show-matching-dialog?
- (fn [db]
-   (-> db :profile :show-matching-dialog)))

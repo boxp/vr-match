@@ -33,8 +33,6 @@
             :module-name :wizard}
    :favorite {:container #(resolve 'vr-match.favorite.container/favorite)
               :module-name :favorite}
-   :favorited-from-users {:container #(resolve 'vr-match.favorited-from-users.container/favorited-from-users)
-                          :module-name :favorited-from-users}
    :matching {:container #(resolve 'vr-match.matching.container/matching)
               :module-name :matching}
    :myprofile {:container #(resolve 'vr-match.myprofile.container/myprofile)
@@ -83,9 +81,6 @@
 
 (defroute favorite-path "/favorite" []
   (lazy-push :favorite {}))
-
-(defroute favorited-from-users-path "/favorited-from-users" []
-  (lazy-push :favorited-from-users {}))
 
 (defroute matching-path "/matching" []
   (lazy-push :matching {}))

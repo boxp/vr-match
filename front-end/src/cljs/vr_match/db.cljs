@@ -11,12 +11,9 @@
           :linked-provider-ids #{}}
    :mypage {:platform-options nil}
    :myprofile {}
-   :profile {:partner nil
-             :show-matching-dialog false}
+   :profile {:partner nil}
    :favorite {:favorited-from-me-list {:edges []
-                                       :pageInfo nil}
-              :favorited-from-users-list {:edges []
-                                          :pageInfo nil}}
+                                       :pageInfo nil}}
    :matching {:list {:edges []
                      :pageInfo nil}}
    :wizard {:uploaded-image nil
@@ -40,7 +37,6 @@
                   :firebase :none
                   :wizard :none
                   :favorite :none
-                  :favorited-from-users :none
                   :matching :none
                   :profile :none}
    :history nil})
