@@ -45,7 +45,7 @@ and user_skip.to_id is null
 and user_favorite.to_id is null
 and user.id not in (:v*:exclude_ids)
 group by user.id, user.name, user.introduction, user_platform.user_id, user_image.user_id
-order by count(user_platform.platform_id) desc, count(user_image.image_id) desc, user.created_at desc
+order by count(user_image.image_id) desc, count(user_platform.platform_id) desc, user.created_at desc
 limit :offset, :limit
 
 -- :name count-recommended-user-by-user_id :? :1
