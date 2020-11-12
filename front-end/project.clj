@@ -74,7 +74,7 @@
                  [e85th/venia "0.2.5-1"]
                  [cljs-ajax "0.8.1"]]
 
-  :plugins [[lein-cljsbuild "1.1.7"]]
+  :plugins [[lein-cljsbuild "1.1.8"]]
 
   :min-lein-version "2.5.3"
 
