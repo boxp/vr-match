@@ -10,7 +10,7 @@
                  [com.novemberain/pantomime "2.11.0"]
                  [digest "1.4.9"]
                  [environ "1.1.0"]
-                 [clj-time "0.15.1"]
+                 [clj-time "0.15.2"]
                  [com.stuartsierra/component "0.4.0"]
                  [ring "1.7.1"]
                  [ring/ring-json "0.4.0"]
