@@ -1,4 +1,4 @@
-FROM node:8.16-alpine as npm
+FROM node:8.17-alpine as npm
 RUN mkdir -p /usr/src/app
 COPY . /usr/src/app
 WORKDIR /usr/src/app
@@ -12,7 +12,7 @@ RUN lein cljsbuild once prod
 RUN lein cljsbuild once server-prod
 RUN lein cljsbuild once worker-prod
 
-FROM node:8.16-alpine
+FROM node:8.17-alpine
 RUN mkdir -p /usr/src/app
 COPY --from=clojure /usr/src/app /usr/src/app
 WORKDIR /usr/src/app
