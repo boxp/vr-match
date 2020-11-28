@@ -42,12 +42,15 @@
         editing-user-name? (r/atom false)
         editing-introduction? (r/atom false)
         editing-platform? (r/atom false)
+        editing-image-id (r/atom nil)
         handle-click-user-name #(reset! editing-user-name? true)
         handle-close-user-name #(reset! editing-user-name? false)
         handle-click-introduction #(reset! editing-introduction? true)
         handle-close-introduction #(reset! editing-introduction? false)
         handle-click-platform #(reset! editing-platform? true)
-        handle-close-platform #(reset! editing-platform? false)]
+        handle-close-platform #(reset! editing-platform? false)
+        handle-close-images-editor #(reset! editing-image-id nil)
+        handle-click-image (fn [image-id] (reset! editing-image-id image-id))]
     (r/create-class
      {:display-name "mypage"
       :component-did-mount
@@ -87,6 +90,41 @@
                       :style {:color "white"
                               :font-size "32px"}}
             "edit"]]
+          [:div {:style {:padding "24px"}}
+           [:div {:style {:display "flex"
+                          :flex-wrap "wrap"}}
+            (map (fn [image]
+                   ^{:key (:id image)}
+                   [mui/button-base {:on-click #(handle-click-image (:id image))
+                                      :style {:margin-right "16px"
+                                              :margin-top "16px"
+                                              :position "relative"}}
+                    [:img {:width "96px"
+                           :height "96px"
+                           :src (:url image)}]
+                    [mui/icon-button {:on-click #(handle-click-image (:id image))
+                                      :style
+                                      {:position "absolute"
+                                       :width "32px"
+                                       :height "32px"
+                                       :right "8px"
+                                       :bottom "8px"
+                                       :background-color mui/primary-color}}
+                     [mui/icon {:font-size "inherit"
+                                :style {:color "white"
+                                        :font-size "16px"}}
+                      "edit"]]])
+                 (take 5 (cycle (-> me :images))))
+            [mui/button-base {:style {:margin-top "16px"}}
+             [:div {:style {:display "flex"
+                            :justify-content "center"
+                            :align-items "center"
+                            :width "96px"
+                            :height "96px"
+                            :border-radius "8px"
+                            :border "1px solid gray"
+                            :padding "auto"}}
+              [mui/icon {:color "primary"} "add_circle"]]]]]
           [mui/list {:subheader (r/as-element [mui/list-subheader "ユーザー名"])}
            [mui/list-item {:key "user-name"
                            :on-click handle-click-user-name}
@@ -139,6 +177,24 @@
                                  :platforms (-> me :platforms)
                                  :platformOptions platformOptions
                                  :handleSubmit (fn [platforms]
-                                                      (handleSubmitPlatforms platforms)
-                                                      (handle-close-platform))
-                                 :handleCancel handle-close-platform}]]])})))
+                                                 (handleSubmitPlatforms platforms)
+                                                 (handle-close-platform))
+                                 :handleCancel handle-close-platform}]
+          [mui/dialog {:open (not (nil? @editing-image-id))
+                       :on-close handle-close-images-editor}
+           [mui/dialog-title "編集メニュー"]
+           [mui/dialog-content
+            [:img {:width "240px"
+                   :height "240px"
+                   :src (->> me
+                             :images
+                             (filter #(= (:id %) @editing-image-id))
+                             first
+                             :url)}]
+            [mui/button {:style {:margin-top "32px"}
+                         :variant "contained"}
+             "メイン画像として設定する"]
+            [mui/button {:style {:margin-top "8px"}
+                         :variant "contained"
+                         :color "secondary"}
+             "画像を削除"]]]]])})))
