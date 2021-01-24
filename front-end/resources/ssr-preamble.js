@@ -20,6 +20,10 @@ global.window.localStorage = null;
 // TypeError: Cannot read property 'renderToString' of undefined
 // goog.global = global;
 
+// Reagent1.0に更新後出たエラー対策
+// TypeError: Cannot read property 'unstable_cancelCallback' of undefined
+global.ReactDOM.unstable_cancelCallback = function(){};
+
 // for https://github.com/firebase/firebase-js-sdk/issues/965
 self = {
     fetch: function(){},
