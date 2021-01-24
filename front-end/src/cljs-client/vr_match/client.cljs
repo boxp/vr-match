@@ -72,8 +72,7 @@
 
 (defn ^:export remount-for-figwheel []
   (re-frame/clear-subscription-cache!)
-  (reagent/render-component [index]
-                            (.getElementById js/document "app")))
+  (reagent/render [index] (.getElementById js/document "app")))
 
 (defn- preload-state []
   (some->
