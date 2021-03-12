@@ -1,7 +1,7 @@
 (ns vr-match.auth.components.email-login-complete
   (:require
    [reagent.core :as r]
-   ["material-ui"]
+   ["@material-ui/core" :as material-ui]
    [vr-match.lib.components.linear-progress :refer [linear-progress]]))
 
 (defn- handle-change-email
@@ -24,30 +24,30 @@
         [:<>
          (when isLoading [linear-progress])
          [:div {:style {:padding 16}}
-          [:> js/MaterialUI.Grid {:container true
-                                  :spacing 32
-                                  :direction "column"
-                                  :justify "space-between"
-                                  :align-items "flex-start"
-                                  :style {:height "100%"
-                                          :width "100vw"
-                                          :padding 32}}
-           [:> js/MaterialUI.Typography {:variant "display1"
-                                         :component "h1"
-                                         :gutterBottom true
-                                         :style {:text-align "left"}}
+          [:> material-ui/Grid {:container true
+                                :spacing 32
+                                :direction "column"
+                                :justify "space-between"
+                                :align-items "flex-start"
+                                :style {:height "100%"
+                                        :width "100vw"
+                                        :padding 32}}
+           [:> material-ui/Typography {:variant "display1"
+                                       :component "h1"
+                                       :gutterBottom true
+                                       :style {:text-align "left"}}
             "メールアドレスをもう一度入力してください"]
-           [:> js/MaterialUI.FormControl {:fullWidth true}
-            [:> js/MaterialUI.TextField {:type "email"
-                                         :auto-complete "email"
-                                         :on-change #(handle-change-email draft-email %)
-                                         :placeholder "sample@example.com"
-                                         :disabled isLoading}]]
-           [:> js/MaterialUI.Button {:disabled (or (= @draft-email "")
-                                                   isLoading)
-                                     :variant "contained"
-                                     :color "primary"
-                                     :on-click #(handleSubmitEmail @draft-email)
-                                     :full-width true}
+           [:> material-ui/FormControl {:fullWidth true}
+            [:> material-ui/TextField {:type "email"
+                                       :auto-complete "email"
+                                       :on-change #(handle-change-email draft-email %)
+                                       :placeholder "sample@example.com"
+                                       :disabled isLoading}]]
+           [:> material-ui/Button {:disabled (or (= @draft-email "")
+                                                 isLoading)
+                                   :variant "contained"
+                                   :color "primary"
+                                   :on-click #(handleSubmitEmail @draft-email)
+                                   :full-width true}
             "確認"]]]])
       :component-did-mount component-did-mount})))

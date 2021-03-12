@@ -1,6 +1,6 @@
 (ns vr-match.setting.components.unlink-confirmation-alert
   (:require [reagent.core :as r]
-            ["material-ui"]))
+            ["@material-ui/core" :as material-ui]))
 
 (defn unlink-confirmation-alert
   [{:keys [isOpen
@@ -9,13 +9,13 @@
            handleSubmit] :as props}]
   (let [title (get {"twitter.com" "Twitterとの連携を解除しますか？"
                     "password" "登録されたEmailアドレスを削除し、認証を無効化しますか？"} thirdPartyId)]
-    [:> js/MaterialUI.Dialog {:open isOpen
-                              :onClose handleClose
-                              :aria-labelledby title}
-     [:> js/MaterialUI.DialogTitle title]
-     [:> js/MaterialUI.DialogActions
-      [:> js/MaterialUI.Button {:onClick handleClose}
+    [:> material-ui/Dialog {:open isOpen
+                            :onClose handleClose
+                            :aria-labelledby title}
+     [:> material-ui/DialogTitle title]
+     [:> material-ui/DialogActions
+      [:> material-ui/Button {:onClick handleClose}
        "キャンセル"]
-      [:> js/MaterialUI.Button {:onClick handleSubmit
-                                :color "primary"}
+      [:> material-ui/Button {:onClick handleSubmit
+                              :color "primary"}
        "OK"]]]))

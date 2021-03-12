@@ -1,5 +1,8 @@
 (ns vr-match.server
   (:require
+    ["express" :as express]
+    ["compression" :as compression]
+    ["react-jss" :refer (JssProvider SheetsRegistry)]
     [cljs.reader :as reader]
     [cljs.loader :as loader]
     [re-frame.core :as re-frame]
@@ -31,8 +34,6 @@
     [vr-match.events :as events]
     [vr-match.route]))
 
-(def express (js/require "express"))
-(def compression (js/require "compression"))
 (def ^:export app (express))
 
 (def api-endpoint (or js/process.env.API_ENDPOINT "http://localhost:8080"))
@@ -48,9 +49,7 @@
 
 (def google-analytics-tracking-id js/process.env.GOOGLE_ANALYTICS_TRACKING_ID)
 
-(def JssProvider (-> (js/require "react-jss/lib/JssProvider") .-default adapt-react-class))
-(def jss (js/require "react-jss/lib/jss"))
-(def sheets-registry (.-SheetsRegistry jss))
+(def jss-provider (adapt-react-class JssProvider))
 
 (goog-define static-file-path "/")
 (goog-define dev? false)
@@ -62,8 +61,8 @@
 
 (defn app-component
   [registry generate-class-name theme sheets-manager]
-  [JssProvider {:registry registry
-                :generateClassName generate-class-name}
+  [jss-provider {:registry registry
+                 :generateClassName generate-class-name}
    [mui/MuiThemeProvider {:theme theme
                           :sheetsManager sheets-manager}
     [component/app]]])
@@ -145,8 +144,7 @@
    [:div
     {:dangerouslySetInnerHTML
      {:__html  (str "<script>window.firebaseConfig = '" (-> firebase-config pr-str) "'</script>")}}]
-   [:script {:src "/static/js/compiled/cljs_base.js"}]
-   [:script {:src "/static/js/compiled/app.js"}]
+   [:script {:src "/static/js/compiled/main.js"}]
    [:link {:rel "stylesheet"
            :href "https://fonts.googleapis.com/icon?family=Material+Icons"}]
    (when google-analytics-tracking-id
@@ -186,7 +184,7 @@
 (defn handle-render
   [req res]
   (let [request-path (.-baseUrl req)
-        sheets-registry (new sheets-registry)
+        sheets-registry (SheetsRegistry.)
         sheets-manager (new js/Map)
         generate-class-name (mui/create-generate-class-name)
         theme (mui/theme)]
@@ -199,19 +197,8 @@
                                                             theme
                                                             sheets-manager))})))
 
-(defn serve
-  [port]
-  (.listen app port))
-
-(defn -main
-  [& args]
-  (let [port (-> args first js/parseInt)]
-    (dev-setup)
-    (serve port)))
-
 (doto app
   (.use (compression))
-
   (.use "/sw.js" (.static express (str static-file-path "sw.js")))
   (.use "/manifest.json" (.static express (str static-file-path "manifest.json")))
   (.use "/favicon.ico" (.static express (str static-file-path "favicon.ico")))
@@ -219,4 +206,12 @@
   (.use "/static" (.static express static-file-path))
   (.use "/*" handle-render))
 
-(set! *main-cli-fn* -main)
+(defn serve
+  [port]
+  (.listen app port))
+
+(defn main
+  [& args]
+  (let [port (-> args first js/parseInt)]
+    (dev-setup)
+    (serve port)))

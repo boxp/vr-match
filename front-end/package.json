@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/hoge/vr-match#readme",
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "compression": "1.7.4",
     "create-react-class": "15.6.3",
     "express": "4.17.1",
@@ -48,6 +49,7 @@
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-jss": "8.6.1",
+    "shadow-cljs": "^2.11.18",
     "whatwg-fetch": "3.0.0",
     "workbox-cli": "4.3.1",
     "xmlhttprequest": "1.8.0"

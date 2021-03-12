@@ -2,7 +2,7 @@
   (:require [cljs.spec.alpha :as s]
             [reagent.core :as r]
             [vr-match.lib.models.platform :as platform-model]
-            ["material-ui"]))
+            ["@material-ui/core" :as material-ui]))
 
 (s/def ::name string?)
 (s/def ::id number?)
@@ -46,20 +46,20 @@
                handleChangePlatform
                handleClickDelete
                handleChangePlatformUserId]}]
-    [:> js/MaterialUI.ExpansionPanel
-     [:> js/MaterialUI.ExpansionPanelSummary
+    [:> material-ui/ExpansionPanel
+     [:> material-ui/ExpansionPanelSummary
       {:expand-icon (r/as-element
-                     [:> js/MaterialUI.Icon "expand_more"])}
-      [:> js/MaterialUI.Typography
+                     [:> material-ui/Icon "expand_more"])}
+      [:> material-ui/Typography
        (-> platform :name)]]
-     [:> js/MaterialUI.ExpansionPanelDetails
+     [:> material-ui/ExpansionPanelDetails
       [:form {:style {:width "100%"}}
-       [:> js/MaterialUI.FormControl
+       [:> material-ui/FormControl
         {:full-width true}
-        [:> js/MaterialUI.InputLabel
+        [:> material-ui/InputLabel
          {:html-for (str "platform-selector-" platformIdx)}
          "活動場所"]
-        [:> js/MaterialUI.Select
+        [:> material-ui/Select
          {:value (-> platform :id)
           :onChange handleChangePlatform
           :full-width true
@@ -68,11 +68,11 @@
          (map (fn [{:keys [id
                            name] :as option}]
                 ^{:key id}
-                [:> js/MaterialUI.MenuItem
+                [:> material-ui/MenuItem
                  {:value id}
                  name])
               platformOptions)]
-        [:> js/MaterialUI.TextField
+        [:> material-ui/TextField
          {:label "ID"
           :margin "dense"
           :type "text"
@@ -82,8 +82,8 @@
           :placeholder (platform->placeholder
                         platform
                         platformOptions)}]]]]
-     [:> js/MaterialUI.ExpansionPanelActions
-      [:> js/MaterialUI.IconButton
+     [:> material-ui/ExpansionPanelActions
+      [:> material-ui/IconButton
        {:on-click handleClickDelete}
-       [:> js/MaterialUI.Icon
+       [:> material-ui/Icon
         "delete"]]]]))

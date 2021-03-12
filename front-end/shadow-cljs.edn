@@ -1,0 +1,76 @@
+{:source-paths ["src/clj" "src/cljs" "src/cljs-client" "src/cljs-server" "src/cljs-worker"]
+
+ :dependencies [[org.clojure/test.check "0.9.0"]
+                [reagent "0.10.0"]
+                [re-frame "0.10.8"]
+                [clj-commons/secretary "1.2.4"]
+                [kibu/pushy "0.3.8"]
+                [e85th/venia "0.2.5-1"]
+                [cljs-ajax "0.8.1"]]
+
+ :builds
+ {:client
+  {:output-dir "resources/public/js/compiled"
+   :asset-path "/static/js/compiled"
+   :release {:output-dir "resources/public/prod/js/compiled"
+             :asset-path "/static/js/compiled"}
+   :target :browser
+   :module-loader true
+   :modules
+   {:example {:entries [vr-match.example.container]
+              :depends-on #{:main}}
+    :welcome {:entries [vr-match.welcome.container]
+              :depends-on #{:main}}
+    :approach {:entries [vr-match.approach.container]
+               :depends-on #{:main}}
+    :profile {:entries [vr-match.profile.container]
+              :depends-on #{:main}}
+    :register {:entries [vr-match.auth.containers.register]
+               :depends-on #{:main}}
+    :email-register {:entries [vr-match.auth.containers.email-register]
+                     :depends-on #{:main}}
+    :email-register-complete {:entries [vr-match.auth.containers.email-register-complete]
+                              :depends-on #{:main}}
+    :twitter-login {:entries [vr-match.auth.containers.twitter-login]
+                    :depends-on #{:main}}
+    :email-login {:entries [vr-match.auth.containers.email-login]
+                  :depends-on #{:main}}
+    :email-login-complete {:entries [vr-match.auth.containers.email-login-complete]
+                           :depends-on #{:main}}
+    :wizard {:entries [vr-match.wizard.container]
+             :depends-on #{:main}}
+    :favorite {:entries [vr-match.favorite.container]
+               :depends-on #{:main}}
+    :favorited-from-users {:entries [vr-match.favorited-from-users.container]
+                           :depends-on #{:main}}
+    :matching {:entries [vr-match.matching.container]
+               :depends-on #{:main}}
+    :myprofile {:entries [vr-match.myprofile.container]
+                :depends-on #{:main}}
+    :mypage {:entries [vr-match.mypage.container]
+             :depends-on #{:main}}
+    :setting-top {:entries [vr-match.setting.containers.top]
+                  :depends-on #{:main}}
+    :setting-third-party-authorization {:entries [vr-match.setting.containers.third-party-authorization]
+                                        :depends-on #{:main}}
+    ;; 分割されたモジュールをロードするために最低限必要なモジュール
+    ;; モジュールの分割を行うと必ずこのモジュールが分割されるので出力先ファイル名だけ変更している
+    :main {:entries [vr-match.client]}}}
+  :worker
+  {:output-dir "resources/public/worker/js/compiled"
+   :asset-path "/static/worker/js/compiled"
+   :release {:output-dir "resources/public/prod/worker/js/compiled"}
+   :target :browser
+   :modules
+   {:worker {:entries [vr-match.worker]
+             :web-worker true}}}
+  :server
+  {:output-to      "target/server/js/compiled/server.js"
+   :closure-defines {vr-match.server/dev? true
+                     vr-match.server/static-file-path "resources/public/"}
+   :release {:output-to      "target/server/prod/js/compiled/server.js"
+             :closure-defines {vr-match.server/dev? false
+                               vr-match.server/static-file-path "resources/public/prod/"}
+             :source-map true}
+   :target :node-script
+   :main vr-match.server/main}}}

@@ -4,7 +4,7 @@
    [reagent.core :as r]
    [vr-match.lib.models.platform :as platform-model]
    [vr-match.mypage.components.platform-expansion-panel :as platform-expansion-panel]
-   ["material-ui"]))
+   ["@material-ui/core" :as material-ui]))
 
 (s/def ::platforms (s/coll-of ::platform-model/platForm))
 
@@ -74,11 +74,11 @@
   (let [value (.. event -target -value)]
     (swap! draft-platforms
            (fn [platforms]
-           (map-indexed (fn [idx platform]
-                          (if (= idx draft-platform-idx)
-                            (assoc platform :platformUserId value)
-                            platform))
-                        platforms)))))
+             (map-indexed (fn [idx platform]
+                            (if (= idx draft-platform-idx)
+                              (assoc platform :platformUserId value)
+                              platform))
+                          platforms)))))
 
 (s/def ::isOpen boolean?)
 (s/def ::handleClickSubmit fn?)
@@ -108,12 +108,12 @@
                    platformOptions
                    handleSubmit
                    handleCancel]}]
-        [:> js/MaterialUI.Dialog {:open isOpen
-                                  :onClose handleCancel
-                                  :aria-labelledby "活動場所を編集"
-                                  :full-screen true}
-         [:> js/MaterialUI.DialogTitle "活動場所を編集"]
-         [:> js/MaterialUI.DialogContent
+        [:> material-ui/Dialog {:open isOpen
+                                :onClose handleCancel
+                                :aria-labelledby "活動場所を編集"
+                                :full-screen true}
+         [:> material-ui/DialogTitle "活動場所を編集"]
+         [:> material-ui/DialogContent
           [:<>
            [:ul
             (->> @draft-platforms
@@ -144,7 +144,7 @@
                                                      %)}]]))
                  doall)]
            [:div {:style {:margin-top "16px"}}
-            [:> js/MaterialUI.Button
+            [:> material-ui/Button
              {:color "primary"
               :variant "contained"
               :size "large"
@@ -156,13 +156,13 @@
                              @draft-platforms
                              platformOptions)
                             not)}
-             [:> js/MaterialUI.Icon
+             [:> material-ui/Icon
               "add"]]]]]
-         [:> js/MaterialUI.DialogActions
-          [:> js/MaterialUI.Button {:on-click (fn []
-                                                (handleCancel)
-                                                (reset! draft-platforms platforms))}
+         [:> material-ui/DialogActions
+          [:> material-ui/Button {:on-click (fn []
+                                              (handleCancel)
+                                              (reset! draft-platforms platforms))}
            "キャンセル"]
-          [:> js/MaterialUI.Button {:on-click #(handleSubmit @draft-platforms)
-                                    :color "primary"}
+          [:> material-ui/Button {:on-click #(handleSubmit @draft-platforms)
+                                  :color "primary"}
            "決定"]]])})))

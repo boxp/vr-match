@@ -4,7 +4,7 @@
    [vr-match.lib.component :refer [navigation-bar-layout]]
    [vr-match.lib.components.linear-progress :refer [linear-progress]]
    [vr-match.lib.components.progress-button :refer [progress-button]]
-   ["material-ui"]
+   ["@material-ui/core" :as material-ui]
    [vr-match.lib.components.user-list-item :refer [user-list-item]]))
 
 (defn- component-did-mount
@@ -27,7 +27,7 @@
        [:div {:style {:padding "8px"}}
         (when isLoading
           [linear-progress])
-        [:> js/MaterialUI.List
+        [:> material-ui/List
          (map (fn [{:keys [id name platforms images introduction]}]
                 ^{:key id}
                 [:div {:style {:margin-bottom "16px"}}
@@ -44,5 +44,5 @@
                             :variant "contained"
                             :full-width true
                             :on-click handleFetchNext}
-             "もっと見る"])]])
+           "もっと見る"])]])
     {:component-did-mount component-did-mount}))

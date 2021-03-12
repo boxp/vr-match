@@ -2,7 +2,7 @@
   (:require
     [cljs.spec.alpha :as s]
     [reagent.core :as r]
-    ["material-ui"]
+    ["@material-ui/core" :as material-ui]
     [vr-match.approach.components.reset-all-skip-alert :refer [reset-all-skip-alert]]))
 
 (defn swipe-cards-empty
@@ -18,7 +18,7 @@
        [reset-all-skip-alert {:isOpen @is-open-alert
                               :handleClose handle-close-alert
                               :handleSubmit handle-submit-alert}]
-       [:> js/MaterialUI.Grid {:container true
+       [:> material-ui/Grid {:container true
                                :spacing 32
                                :direction "column"
                                :justify "space-between"
@@ -26,23 +26,23 @@
                                :style {:height "100%"
                                        :width "100vw"
                                        :padding 32}}
-        [:> js/MaterialUI.Typography {:variant "display1"
+        [:> material-ui/Typography {:variant "display1"
                                       :component "h1"
                                       :gutterBottom true
                                       :style {:text-align "left"}}
          "すべてのアバターをスワイプしました"]
-        [:> js/MaterialUI.Grid {:container true
+        [:> material-ui/Grid {:container true
                                 :spacing 32
                                 :direction "column"
                                 :justify "space-between"
                                 :align-items "center"
                                 :style {:padding 32}}
-         [:> js/MaterialUI.Icon
+         [:> material-ui/Icon
           {:font-size "inherit"
            :color "primary"
            :style {:font-size "10em"}}
           "done"]]
-        [:> js/MaterialUI.Button {:variant "contained"
+        [:> material-ui/Button {:variant "contained"
                                   :color "primary"
                                   :style {:margin-left "auto"
                                           :margin-right "auto"}
