@@ -1,6 +1,7 @@
 (ns vr-match-back-end.app.my-webapp.system
   (:require [com.stuartsierra.component :as component]
             [environ.core :refer [env]]
+            [integrant.core :as ig]
             [vr-match-back-end.infra.datasource.cloud-storage :refer [map->CloudStorageDatasource]]
             [vr-match-back-end.infra.datasource.firebase-admin :refer [map->FirebaseAdminDatasourceComponent]]
             [vr-match-back-end.infra.datasource.mysql :refer [map->MysqlDatasourceComponent]]

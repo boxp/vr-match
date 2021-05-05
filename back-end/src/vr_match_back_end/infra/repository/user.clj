@@ -15,7 +15,9 @@
    [vr-match-back-end.domain.entity.user :as euser]
    [vr-match-back-end.domain.entity.image :as eimage]
    [vr-match-back-end.domain.entity.platform :as eplatform]
-   [vr-match-back-end.infra.datasource.firebase-admin :as firebase-admin]))
+   [vr-match-back-end.infra.datasource.firebase-admin :as firebase-admin]
+   [vr-match-back-end.infra.datasource.mysql :as mysql]
+   [integrant.core :as ig]))
 
 (def-db-fns "vr_match_back_end/infra/repository/sql/user.sql")
 (def-db-fns "vr_match_back_end/infra/repository/sql/user_image.sql")
@@ -28,8 +30,8 @@
 (s/def ::id-token string?)
 
 (s/def ::user-repository
-  (s/keys :req-un [::firebase-admin-datasource
-                   ::mysql-datasource]))
+  (s/keys :req-un [:firebase-admin/firebase-admin-datasource
+                   :mysql/mysql-datasource]))
 
 (s/fdef get-firebase_id
   :args (s/cat :firebase-admin-datasource ::firebase-admin-datasource
@@ -542,3 +544,10 @@
     this)
   (stop [this]
     this))
+
+(defmethod ig/init-key ::user-repository [_ r] r)
+
+(defmethod ig/halt-key! ::user-repository [_ _] nil)
+
+(defmethod ig/pre-init-spec ::user-repository [_]
+  (s/keys :req-un [:mysql/mysql-datasource :firebase-admin/firebase-admin-datasource]))

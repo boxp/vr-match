@@ -17,6 +17,7 @@
                  [compojure "1.6.1"]
                  [cheshire "5.8.1"]
                  [cljstache "2.0.6"]
+                 [integrant "0.8.0"]
                  [org.clojure/tools.namespace "0.3.0"]
                  [com.walmartlabs/lacinia "0.33.0"]
                  [e85th/venia "0.2.5-1"]
@@ -26,5 +27,6 @@
                  [com.google.auth/google-auth-library-oauth2-http "0.16.2"]
                  [com.google.cloud/google-cloud-storage "1.40.0"]]
   :profiles
-  {:dev {:source-paths ["src" "dev"]}
+  {:dev {:source-paths ["src" "dev"]
+         :dependencies [[integrant/repl "0.3.2"]]}
    :uberjar {:main vr-match-back-end.app.my-webapp.system}})

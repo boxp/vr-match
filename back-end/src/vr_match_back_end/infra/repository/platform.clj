@@ -7,7 +7,8 @@
    [com.stuartsierra.component :as component]
    [hugsql.core :refer [def-db-fns]]
    [vr-match-back-end.domain.entity.platform :as eplatform]
-   [vr-match-back-end.infra.datasource.mysql :as mysql]))
+   [vr-match-back-end.infra.datasource.mysql :as mysql]
+   [integrant.core :as ig]))
 
 (s/def ::platform-repository
   (s/keys :req-un [::mysql/mysql-datasource]))
@@ -44,3 +45,10 @@
   component/Lifecycle
   (start [this] this)
   (stop [this] this))
+
+(defmethod ig/init-key ::platform-repository [_ r] r)
+
+(defmethod ig/halt-key! ::platform-repository [_ _] nil)
+
+(defmethod ig/pre-init-spec ::platform-repository [_]
+  (s/keys :req-un [:mysql/mysql-datasource]))

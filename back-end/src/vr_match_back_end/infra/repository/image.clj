@@ -15,7 +15,9 @@
    [digest]
    [pantomime.mime :refer [mime-type-of]]
    [vr-match-back-end.infra.datasource.cloud-storage :as cloud-storage]
-   [vr-match-back-end.domain.entity.image :as eimage]))
+   [vr-match-back-end.infra.datasource.mysql :as mysql]
+   [vr-match-back-end.domain.entity.image :as eimage]
+   [integrant.core :as ig]))
 
 (s/def ::image-repository (s/keys :req-un [::cloud-storage/cloud-storage-datasource]))
 
@@ -68,3 +70,10 @@
   component/Lifecycle
   (start [this] this)
   (stop [this] this))
+
+(defmethod ig/init-key ::image-repository [_ r] r)
+
+(defmethod ig/halt-key! ::image-repository [_ _] nil)
+
+(defmethod ig/pre-init-spec ::image-repository [_]
+  (s/keys :req-un [:mysql/mysql-datasource :cloud-storage/cloud-storage-datasource]))
