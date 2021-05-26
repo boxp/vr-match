@@ -1,6 +1,7 @@
 (ns user
   (:require
    [clojure.spec.test.alpha :as stest]
+   [environ.core :refer [env]]
    [com.stuartsierra.component :as component]
    [clojure.tools.namespace.repl :refer (refresh)]
    [com.walmartlabs.lacinia :as lacinia]
@@ -18,7 +19,7 @@
               {:bucket-name ""}
               :vr-match-back-end.infra.datasource.firebase-admin/firebase-admin-datasource
               {:database-url "https://vr-match.firebaseio.com"
-               :credential ""}
+               :credential (env :vr-match-firebase-service-account-key)}
               :vr-match-back-end.infra.repository.image/image-repository
               {:mysql-datasource (ig/ref :vr-match-back-end.infra.datasource.mysql/mysql-datasource)
                :cloud-storage-datasource (ig/ref :vr-match-back-end.infra.datasource.cloud-storage/cloud-storage-datasource)}

@@ -38,7 +38,7 @@
 
 (s/def ::dbname string?)
 
-(defmethod ig/init-key ::mysql [_ {:keys [dbname user password]}]
+(defmethod ig/init-key ::mysql-datasource [_ {:keys [dbname user password]}]
   (init-db {:dbname dbname
             :user user
             :password password}))
@@ -46,11 +46,11 @@
 (defmethod ig/halt-key! ::mysql-datasource [_ _]
   nil)
 
-(defmethod ig/prep-key ::mysql [_ config]
+(defmethod ig/prep-key ::mysql-datasource [_ config]
   (merge {:dbname "vr_match"
           :user "root"
           :password ""}
          config))
 
-(defmethod ig/pre-init-spec ::mysql [_]
+(defmethod ig/pre-init-spec ::mysql-datasource [_]
   (s/keys :req-un [::dbname ::user ::password]))
