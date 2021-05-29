@@ -1,5 +1,6 @@
 (ns vr-match-back-end.domain.usecase.user
   (:require
+   [integrant.core :as ig]
    [clojure.spec.alpha :as s]
    [com.stuartsierra.component :as component]
    [vr-match-back-end.domain.entity.user :as euser]
@@ -192,7 +193,9 @@
      with-platforms?
      me-id)))
 
-(defrecord UserUsecase [user-repository]
-  component/Lifecycle
-  (start [this] this)
-  (stop [this] this))
+(defmethod ig/init-key ::user-usecase [_ u] u)
+
+(defmethod ig/halt-key! ::user-usecase [_ _] nil)
+
+(defmethod ig/pre-init-spec ::user-usecase [_]
+  (s/keys :req-un [:ruser/user-repository]))

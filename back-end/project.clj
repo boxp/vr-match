@@ -29,4 +29,5 @@
   :profiles
   {:dev {:source-paths ["src" "dev"]
          :dependencies [[integrant/repl "0.3.2"]]}
-   :uberjar {:main vr-match-back-end.app.my-webapp.system}})
+   :uberjar {:main vr-match-back-end.app.my-webapp.system
+             :aot :all}})

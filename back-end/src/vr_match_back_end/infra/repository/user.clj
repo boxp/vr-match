@@ -537,14 +537,6 @@
                                    {:user_id user-id})
   nil)
 
-(defrecord UserRepositoryComponent [mysql-datasource
-                                    firebase-admin-datasource]
-  component/Lifecycle
-  (start [this]
-    this)
-  (stop [this]
-    this))
-
 (defmethod ig/init-key ::user-repository [_ r] r)
 
 (defmethod ig/halt-key! ::user-repository [_ _] nil)

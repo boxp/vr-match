@@ -25,23 +25,11 @@
       (assoc :user user)
       (assoc :password password)))
 
-(defrecord MysqlDatasourceComponent [dbname user password db]
-  component/Lifecycle
-  (start [this]
-    (-> this
-        (assoc :db (init-db {:dbname dbname
-                             :user user
-                             :password password}))))
-  (stop [this]
-    (-> this
-        (dissoc :db))))
-
-(s/def ::dbname string?)
-
-(defmethod ig/init-key ::mysql-datasource [_ {:keys [dbname user password]}]
-  (init-db {:dbname dbname
-            :user user
-            :password password}))
+(defmethod ig/init-key ::mysql-datasource [_ {:keys [dbname user password] :as d}]
+  (-> d
+      (assoc :db (init-db {:dbname dbname
+                           :user user
+                           :password password}))))
 
 (defmethod ig/halt-key! ::mysql-datasource [_ _]
   nil)

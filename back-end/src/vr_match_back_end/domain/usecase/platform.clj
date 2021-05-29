@@ -1,10 +1,9 @@
 (ns vr-match-back-end.domain.usecase.platform
   (:require
+   [integrant.core :as ig]
    [clojure.spec.alpha :as s]
    [com.stuartsierra.component :as component]
-   [vr-match-back-end.domain.entity.user :as euser]
    [vr-match-back-end.domain.entity.platform :as eplatform]
-   [vr-match-back-end.infra.repository.user :as ruser]
    [vr-match-back-end.infra.repository.platform :as rplatform]))
 
 (s/def ::platform-usecase
@@ -17,7 +16,10 @@
   [{:keys [platform-repository]}]
   (rplatform/get-platform-masters platform-repository))
 
-(defrecord PlatformUsecase [platform-repository]
-  component/Lifecycle
-  (start [this] this)
-  (stop [this] this))
+(defmethod ig/init-key ::platform-usecase [_ u] u)
+
+(defmethod ig/halt-key! ::platform-usecase [_ _] nil)
+
+(defmethod ig/pre-init-spec ::platform-usecase [_]
+  (s/keys :req-un [:rplatform/platform-repository]))
+

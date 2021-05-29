@@ -25,25 +25,13 @@
          build)
      (str (gensym)))))
 
-(defrecord FirebaseAdminDatasourceComponent [database-url credential app auth]
-  component/Lifecycle
-  (start [this]
-    (let [application (init-app {:database-url database-url
-                                 :credential-str credential})]
-      (-> this
-          (assoc :app application)
-          (assoc :auth (FirebaseAuth/getInstance application)))))
-  (stop [this]
-    (-> this
-        (dissoc :app))))
-
 (s/def ::database-url string?)
 (s/def ::credential string?)
 
-(defmethod ig/init-key ::firebase-admin-datasource [_ {:keys [database-url credential]}]
+(defmethod ig/init-key ::firebase-admin-datasource [_ {:keys [database-url credential] :as d}]
   (let [application (init-app {:database-url database-url
                                :credential-str credential})]
-    (-> {}
+    (-> d
         (assoc :app application)
         (assoc :auth (FirebaseAuth/getInstance application)))))
 

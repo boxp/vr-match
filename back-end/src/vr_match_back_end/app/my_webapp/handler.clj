@@ -1,5 +1,7 @@
 (ns vr-match-back-end.app.my-webapp.handler
   (:require
+   [integrant.core :as ig]
+   [clojure.spec.alpha :as s]
    [clojure.edn :as edn]
    [clojure.stacktrace :refer [print-stack-trace]]
    [com.stuartsierra.component :as component]
@@ -59,15 +61,11 @@
                          :resolve-reset-all-skip resolvers/reset-all-skip})
       schema/compile))
 
-(defrecord MyWebappHandlerComponent [graphql-schema my-webapp-resolvers]
-  component/Lifecycle
-  (start [this]
-    (-> this
-        (assoc :graphql-schema (load-schema))))
-  (stop [this]
-    (-> this
-        (dissoc :graphql-schema))))
+(defmethod ig/init-key ::my-webapp-handler [_ h]
+  (-> h
+      (assoc :graphql-schema (load-schema))))
 
-(defn my-webapp-handler-component
-  []
-  (map->MyWebappHandlerComponent {}))
+(defmethod ig/halt-key! ::my-webapp-handler [_ _] nil)
+
+(defmethod ig/pre-init-spec ::my-webapp-handler [_]
+  (s/keys :req-un [:resolvers/my-webapp-resolvers]))

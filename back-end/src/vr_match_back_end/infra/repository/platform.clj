@@ -41,11 +41,6 @@
   (->> (platform (:db mysql-datasource))
        (map record->platform-master)))
 
-(defrecord PlatformRepository [mysql-datasource]
-  component/Lifecycle
-  (start [this] this)
-  (stop [this] this))
-
 (defmethod ig/init-key ::platform-repository [_ r] r)
 
 (defmethod ig/halt-key! ::platform-repository [_ _] nil)

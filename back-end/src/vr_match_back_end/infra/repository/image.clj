@@ -66,11 +66,6 @@
     {:id image-id
      :url image-url}))
 
-(defrecord ImageRepository [cloud-storage-datasource mysql-datasource]
-  component/Lifecycle
-  (start [this] this)
-  (stop [this] this))
-
 (defmethod ig/init-key ::image-repository [_ r] r)
 
 (defmethod ig/halt-key! ::image-repository [_ _] nil)

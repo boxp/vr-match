@@ -20,15 +20,6 @@
   (.. (StorageOptions/getDefaultInstance)
       getService))
 
-(defrecord CloudStorageDatasource [bucket-name service]
-  component/Lifecycle
-  (start [this]
-    (-> this
-        (assoc :service (get-default-service))))
-  (stop [this]
-    (-> this
-        (dissoc :service))))
-
 (defmethod ig/init-key ::cloud-storage-datasource [_ {:keys [bucket-name]}]
   {:service (get-default-service)
    :bucket-name bucket-name})

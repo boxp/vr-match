@@ -1,9 +1,12 @@
 (ns vr-match-back-end.app.my-webapp.endpoint
-  (:require [com.stuartsierra.component :as component]
-            [compojure.core :refer [defroutes context GET POST OPTIONS routes]]
-            [compojure.route :as route]
-            [ring.adapter.jetty :as server]
-            [vr-match-back-end.app.my-webapp.handler :as handler]))
+  (:require
+   [integrant.core :as ig]
+   [clojure.spec.alpha :as s]
+   [com.stuartsierra.component :as component]
+   [compojure.core :refer [defroutes context GET POST OPTIONS routes]]
+   [compojure.route :as route]
+   [ring.adapter.jetty :as server]
+   [vr-match-back-end.app.my-webapp.handler :as handler]))
 
 (defn wrap-header-csp
   [handler origin]
@@ -39,17 +42,20 @@
       (wrap-header-csp client-origin)
       (wrap-header-cors client-origin)))
 
-(defrecord MyWebappEndpointComponent [port server client-origin my-webapp-handler]
-  component/Lifecycle
-  (start [this]
-    (-> this
-        (assoc :server (server/run-jetty (app this) {:port port :join? false}))))
-  (stop [this]
-    (.stop (:server this))
-    (-> this
-        (dissoc :server))))
+(s/def ::port number?)
+(s/def ::client-origin string?)
 
-(defn my-webapp-endpoint-component
-  [port client-origin]
-  (map->MyWebappEndpointComponent {:port port
-                                   :client-origin client-origin}))
+(defmethod ig/init-key ::endpoint [_ {:keys [port] :as h}]
+  (-> h
+      (assoc :server (server/run-jetty (app h) {:port port :join? false}))))
+
+(defmethod ig/halt-key! ::endpoint [_ h]
+  (do
+    (-> h :server .stop)
+    nil))
+
+(defmethod ig/pre-init-spec ::endpoint [_]
+  (s/keys
+   :req-un [::port
+            ::client-origin
+            :handler/my-webapp-handler]))

@@ -8,26 +8,11 @@
    [venia.core :as venia]
    [integrant.core :as ig]
    [integrant.repl :refer [clear go halt prep init reset reset-all]]
-   [vr-match-back-end.app.my-webapp.system :refer [vr-match-back-end-system load-config]]))
+   ;; [vr-match-back-end.app.my-webapp.system :refer [vr-match-back-end-system load-config]]
+   [vr-match-back-end.app.my-webapp.config :refer [config]]))
 
 (integrant.repl/set-prep!
- (constantly {:vr-match-back-end.infra.datasource.mysql/mysql-datasource
-              {:dbname "vr_match"
-               :user "root"
-               :password ""}
-              :vr-match-back-end.infra.datasource.cloud-storage/cloud-storage-datasource
-              {:bucket-name ""}
-              :vr-match-back-end.infra.datasource.firebase-admin/firebase-admin-datasource
-              {:database-url "https://vr-match.firebaseio.com"
-               :credential (env :vr-match-firebase-service-account-key)}
-              :vr-match-back-end.infra.repository.image/image-repository
-              {:mysql-datasource (ig/ref :vr-match-back-end.infra.datasource.mysql/mysql-datasource)
-               :cloud-storage-datasource (ig/ref :vr-match-back-end.infra.datasource.cloud-storage/cloud-storage-datasource)}
-              :vr-match-back-end.infra.repository.platform/platform-repository
-              {:mysql-datasource (ig/ref :vr-match-back-end.infra.datasource.mysql/mysql-datasource)}
-              :vr-match-back-end.infra.repository.user/user-repository
-              {:mysql-datasource (ig/ref :vr-match-back-end.infra.datasource.mysql/mysql-datasource)
-               :firebase-admin-datasource (ig/ref :vr-match-back-end.infra.datasource.firebase-admin/firebase-admin-datasource)}}))
+ (constantly config))
 
 ;; (def system nil)
 
