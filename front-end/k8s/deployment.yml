@@ -4,6 +4,9 @@ metadata:
   name: vr-match-${_ENVIRONMENT}
 spec:
   replicas: 3
+  selector:
+    matchLabels:
+      app: vr-match-${_ENVIRONMENT}
   template:
     metadata:
       labels:
