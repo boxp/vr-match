@@ -1,5 +1,6 @@
 (ns vr-match-back-end.domain.usecase.auth
   (:require
+   [integrant.core :as ig]
    [clojure.spec.alpha :as s]
    [com.stuartsierra.component :as component]
    [vr-match-back-end.domain.entity.user :as euser]
@@ -20,9 +21,9 @@
    id-token]
   (ruser/renew-user-session user-repository {:id-token id-token}))
 
-(defrecord AuthUsecaseComponent [user-repository]
-  component/Lifecycle
-  (start [this]
-    this)
-  (stop [this]
-    this))
+(defmethod ig/init-key ::auth-usecase [_ u] u)
+
+(defmethod ig/halt-key! ::auth-usecase [_ _] nil)
+
+(defmethod ig/pre-init-spec ::auth-usecase [_]
+  (s/keys :req-un [:ruser/user-repository]))

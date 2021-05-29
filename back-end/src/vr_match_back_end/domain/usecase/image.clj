@@ -1,5 +1,6 @@
 (ns vr-match-back-end.domain.usecase.image
   (:require
+   [integrant.core :as ig]
    [clojure.spec.alpha :as s]
    [com.stuartsierra.component :as component]
    [vr-match-back-end.infra.repository.image :as rimage]
@@ -25,8 +26,10 @@
      image-repository
      base64-string)))
 
-(defrecord ImageUsecase [user-repository image-repository]
-  component/Lifecycle
-  (start [this] this)
-  (stop [this] this))
+(defmethod ig/init-key ::image-usecase [_ u] u)
+
+(defmethod ig/halt-key! ::image-usecase [_ _] nil)
+
+(defmethod ig/pre-init-spec ::image-usecase [_]
+  (s/keys :req-un [:ruser/user-repository :rimage/image-repository]))
 

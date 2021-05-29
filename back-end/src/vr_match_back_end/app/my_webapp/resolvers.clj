@@ -1,5 +1,6 @@
 (ns vr-match-back-end.app.my-webapp.resolvers
   (:require
+   [integrant.core :as ig]
    [clojure.spec.alpha :as s]
    [clojure.data.codec.base64 :as b64]
    [clojure.stacktrace :refer [print-stack-trace]]
@@ -304,9 +305,13 @@
          (map #(set/rename-keys % {:example-platform-user-id :exampleUserId})))
     (catch Exception e (handle-error e))))
 
-(defrecord MyWebappResolversComponent [auth-usecase image-usecase user-usecase approach-usecase]
-  component/Lifecycle
-  (start [this]
-    (-> this))
-  (stop [this]
-    (-> this)))
+(defmethod ig/init-key ::my-webapp-resolvers [_ r] r)
+
+(defmethod ig/halt-key! ::my-webapp-resolvers [_ _] nil)
+
+(defmethod ig/pre-init-spec ::my-webapp-resolvers [_]
+  (s/keys :req-un [:uauth/auth-usecase
+                   :uplatform/platform-usecase
+                   :uimage/image-usecase
+                   :uuser/user-usecase
+                   :uapproach/approach-usecase]))

@@ -1,5 +1,6 @@
 (ns vr-match-back-end.domain.usecase.approach
   (:require
+   [integrant.core :as ig]
    [clojure.spec.alpha :as s]
    [com.stuartsierra.component :as component]
    [vr-match-back-end.domain.entity.user :as euser]
@@ -55,8 +56,9 @@
                session)]
     (ruser/delete-all-skip-from-user user-repository me-id)))
 
-(defrecord ApproachUsecase [user-repository]
-  component/Lifecycle
-  (start [this] this)
-  (stop [this] this))
+(defmethod ig/init-key ::approach-usecase [_ u] u)
 
+(defmethod ig/halt-key! ::approach-usecase [_ _] nil)
+
+(defmethod ig/pre-init-spec ::approach-usecase [_]
+  (s/keys :req-un [:ruser/user-repository]))
