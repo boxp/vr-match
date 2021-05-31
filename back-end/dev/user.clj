@@ -12,7 +12,7 @@
    [vr-match-back-end.app.my-webapp.config :refer [config]]))
 
 (integrant.repl/set-prep!
- (constantly config))
+ (fn [] (doto config ig/load-namespaces)))
 
 ;; (def system nil)
 
