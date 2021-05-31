@@ -40,8 +40,10 @@
 
 (defn- onSwipeCardTouchStart
   [event]
-  (let [position-x (-> event .-targetTouches (aget 0) .-pageX)
-        position-y (-> event .-targetTouches (aget 0) .-pageY)]
+  (let [position-x (or (some-> event .-targetTouches (aget 0) .-pageX)
+                       (some-> event .-pageX))
+        position-y (or (some-> event .-targetTouches (aget 0) .-pageY)
+                       (some-> event .-pageY))]
     (-> approach-state
         (swap! #(-> %
                     (assoc :isDragging true)
@@ -55,14 +57,17 @@
 
 (defn- onSwipeCardTouchMoved
   [event]
-  (let [position-x (-> event .-targetTouches (aget 0) .-pageX)
-        position-y (-> event .-targetTouches (aget 0) .-pageY)]
-    (-> approach-state
-        (swap!
-         #(-> %
-              (assoc-in [:swipeCurrentPosition :x] position-x)
-              (assoc-in [:swipeCurrentPosition :y] position-y))))
-    (.. event preventDefault)))
+  (when (-> @approach-state :isDragging)
+    (let [position-x (or (some-> event .-targetTouches (aget 0) .-pageX)
+                         (some-> event .-pageX))
+          position-y (or (some-> event .-targetTouches (aget 0) .-pageY)
+                         (some-> event .-pageY))]
+      (-> approach-state
+          (swap!
+           #(-> %
+                (assoc-in [:swipeCurrentPosition :x] position-x)
+                (assoc-in [:swipeCurrentPosition :y] position-y))))
+      (.. event preventDefault))))
 
 (defn- onSwipeCardTouchEnd
   [event]
@@ -223,7 +228,15 @@
   (some-> card-ref
           (.addEventListener "touchend" onSwipeCardTouchEnd))
   (some-> card-ref
-          (.addEventListener "animationend" #(-> this r/props handleOnExit))))
+          (.addEventListener "animationend" #(-> this r/props handleOnExit)))
+  (some-> card-ref
+          (.addEventListener "mousedown" onSwipeCardTouchStart))
+  (some-> card-ref
+          (.addEventListener "mousemove"
+                             onSwipeCardTouchMoved
+                             #js {"passive" false}))
+  (some-> card-ref
+          (.addEventListener "mouseup" onSwipeCardTouchEnd)))
 
 (defn- component-did-mount
   [this]
@@ -266,7 +279,13 @@
   (some-> @card-ref
           (.removeEventListener "touchmove" onSwipeCardTouchMoved))
   (some-> @card-ref
-          (.removeEventListener "touchend" onSwipeCardTouchEnd)))
+          (.removeEventListener "touchend" onSwipeCardTouchEnd))
+  (some-> @card-ref
+          (.removeEventListener "mousedown" onSwipeCardTouchStart))
+  (some-> @card-ref
+          (.removeEventListener "mousemove" onSwipeCardTouchMoved))
+  (some-> @card-ref
+          (.removeEventListener "mouseup" onSwipeCardTouchEnd)))
 
 (def approach
   (r/create-class
@@ -296,7 +315,12 @@
                           :justify-content "space-around"}}
             [:div {:style {:display "flex"
                            :justify-content "center"
-                           :flex-direction "column"}}
+                           :flex-direction "column"
+                           :position "relative"
+                           :width "86vw"
+                           :max-width "640px"
+                           :height "64vh"
+                           :max-height "960px"}}
              [:style (cond (:isReturning @approach-state)
                            (state->return-swipe-card-animation @approach-state)
                            (:isFavorite @approach-state)
@@ -304,9 +328,12 @@
                            (:isSkip @approach-state)
                            (state->skip-swipe-card-animation @approach-state)
                            :else nil)]
-             [:div {:style {:margin-bottom "-64vh"
-                            :z-index "1000"
-                            :position "relative"
+             [:div {:style {:z-index "1000"
+                            :position "absolute"
+                            :top 0
+                            :left 0
+                            :bottom 0
+                            :right 0
                             :will-change "transform"}}
               [swipe-card-item {:item (-> @approach-state :secondItem)
                                 :handleClickCard #()}]]
@@ -318,7 +345,11 @@
                                                         (:isFavorite @approach-state)
                                                         (:isSkip @approach-state))
                                                     "running")
-                            :position "relative"
+                            :position "absolute"
+                            :top 0
+                            :left 0
+                            :bottom 0
+                            :right 0
                             :z-index "1200"}
                     :class (cond (:isReturning @approach-state)
                                  "return-animation"
@@ -347,7 +378,8 @@
                              :pointer-events "none"}}
                [skip-overlay]]]]
             [:div {:style {:will-change "transform"
-                           :width "100%"}}
+                           :width "100%"
+                           :max-width "360px"}}
              [action-buttons {:onClickSkip #(onClickSkip props)
                               :onClickFavorite #(onClickFavorite props)}]]
             [matching-dialog {:isOpen isShowMatchingDialog

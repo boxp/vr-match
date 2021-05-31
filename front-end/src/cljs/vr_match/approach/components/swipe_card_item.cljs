@@ -15,12 +15,12 @@
                 platforms
                 images]}
         (js->clj item :keywordize-keys true)]
-    [mui/card {:style {"width" "86vw"
-                       "height" "64vh"
+    [mui/card {:style {"width" "100%"
+                       "height" "100%"
                        "position" "relative"}}
      [mui/card-media {:style {"objectFit" "cover"
-                              "width" "86vw"
-                              "height" 284
+                              "width" "100%"
+                              "height" "60%"
                               "flexGrow" 2}
                       :component "div"
                       :alt title
@@ -54,7 +54,6 @@
                         :variant "subheading"
                         :component "h2"}
        name]
-      [mui/typo-graphy {:noWrap true
-                        :style {:width "72vw"}}
+      [mui/typo-graphy {:noWrap true}
        introduction]]]))
 
