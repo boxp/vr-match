@@ -40,7 +40,6 @@
 
 (defn- onSwipeCardTouchStart
   [event]
-  (println "onSwipeCardTouchStart")
   (let [position-x (or (some-> event .-targetTouches (aget 0) .-pageX)
                        (some-> event .-pageX))
         position-y (or (some-> event .-targetTouches (aget 0) .-pageY)
@@ -59,12 +58,10 @@
 (defn- onSwipeCardTouchMoved
   [event]
   (when (-> @approach-state :isDragging)
-    (println "dragging")
     (let [position-x (or (some-> event .-targetTouches (aget 0) .-pageX)
                          (some-> event .-pageX))
           position-y (or (some-> event .-targetTouches (aget 0) .-pageY)
                          (some-> event .-pageY))]
-      (println "position-x: " position-x " position-y: " position-y)
       (-> approach-state
           (swap!
            #(-> %
@@ -74,7 +71,6 @@
 
 (defn- onSwipeCardTouchEnd
   [event]
-  (println "onSwipeCardTouchEnd")
   (let [add-x (- (-> @approach-state :swipeCurrentPosition :x)
                  (-> @approach-state :swipeStartPosition :x))]
     (cond (< add-x (- swipe-return-limit))
