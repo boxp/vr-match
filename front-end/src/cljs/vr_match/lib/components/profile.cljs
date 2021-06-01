@@ -16,10 +16,11 @@
              :direction "column"
              :style {:width "100vw"}}
    [:img {:style {:object-fit "cover"
-                  :width "100vw"
-                  :height "100vw"}
+                  :width "100%"
+                  :max-height "480px"
+                  :height "60%"}
           :src (-> images first :url)}]
-   [:div {:style {:padding 16}}
+   [:div {:style {:padding "16px 16px 52px"}}
     [mui/grid {:container true
                :spacing 16}
      [mui/grid {:item true
