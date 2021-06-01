@@ -36,10 +36,14 @@
                            :right 0
                            :left 0
                            :bottom "16px"
-                           :padding "0 16px"}}
+                           :padding "0 16px"
+                           :display "flex"
+                           :justify-content "center"}}
              [mui/button {:variant "contained"
                           :color "primary"
-                          :style {:width "100%"}
+                          :style {:width "100%"
+                                  :max-width "640px"
+                                  :margin "0 auto"}
                           :disabled favorited?
                           :on-click handleClickFavorite}
               [mui/icon {:style {:margin-right "8px"}} "favorite"]
