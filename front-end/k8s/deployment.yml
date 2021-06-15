@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: vr-match-${_ENVIRONMENT}
 spec:
-  replicas: 3
+  replicas: ${_REPLICAS}
   selector:
     matchLabels:
       app: vr-match-${_ENVIRONMENT}

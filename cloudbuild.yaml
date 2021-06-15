@@ -28,6 +28,7 @@ steps:
   - "REVISION_ID=$REVISION_ID"
   - "PROJECT_ID=$PROJECT_ID"
   - "_ENVIRONMENT=$_ENVIRONMENT"
+  - "_REPLICAS=$_REPLICAS"
   id: 'apply-env'
   waitFor: ['push-front-end', 'push-back-end']
   args:
