@@ -25,7 +25,7 @@
                  [mysql/mysql-connector-java "8.0.22"]
                  [com.google.firebase/firebase-admin "6.9.0" :exclusions [io.grpc/grpc-core]]
                  [com.google.auth/google-auth-library-oauth2-http "0.16.2"]
-                 [com.google.cloud/google-cloud-storage "1.40.0"]]
+                 [com.google.cloud/google-cloud-storage "1.118.1"]]
   :profiles
   {:dev {:source-paths ["src" "dev"]
          :dependencies [[integrant/repl "0.3.2"]]}
