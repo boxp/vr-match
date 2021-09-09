@@ -3,6 +3,8 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :plugins [[lein-bom "0.2.0-SNAPSHOT"]]
+  :bom {:import [[com.google.cloud/libraries-bom "23.0.0"]]}
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.async "0.4.500"]
                  [org.clojure/data.codec "0.1.1"]
@@ -23,9 +25,9 @@
                  [e85th/venia "0.2.5-1"]
                  [com.layerware/hugsql "0.4.9"]
                  [mysql/mysql-connector-java "8.0.22"]
-                 [com.google.firebase/firebase-admin "6.9.0" :exclusions [io.grpc/grpc-core]]
-                 [com.google.auth/google-auth-library-oauth2-http "0.16.2"]
-                 [com.google.cloud/google-cloud-storage "1.40.0"]]
+                 [com.google.firebase/firebase-admin "6.16.0" :exclusions [[com.google.api-client/google-api-client]]]
+                 [com.google.cloud/google-cloud-storage]
+                 [com.google.auth/google-auth-library-oauth2-http]]
   :profiles
   {:dev {:source-paths ["src" "dev"]
          :dependencies [[integrant/repl "0.3.2"]]}
