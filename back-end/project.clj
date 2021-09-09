@@ -23,7 +23,7 @@
                  [e85th/venia "0.2.5-1"]
                  [com.layerware/hugsql "0.4.9"]
                  [mysql/mysql-connector-java "8.0.22"]
-                 [com.google.firebase/firebase-admin "6.9.0" :exclusions [io.grpc/grpc-core]]
+                 [com.google.firebase/firebase-admin "6.16.0" :exclusions [io.grpc/grpc-core]]
                  [com.google.auth/google-auth-library-oauth2-http "0.27.0"]
                  [com.google.cloud/google-cloud-storage "1.40.0"]]
   :profiles
