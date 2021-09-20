@@ -3,7 +3,7 @@
    [integrant.core :as ig]
    [clojure.spec.alpha :as s]
    [clojure.edn :as edn]
-   [clojure.stacktrace :refer [print-stack-trace]]
+   [clojure.tools.logging :as log]
    [com.stuartsierra.component :as component]
    [cheshire.core :refer [generate-string parse-string]]
    [com.walmartlabs.lacinia.util :refer [attach-resolvers]]
@@ -36,7 +36,7 @@
        :body (-> result
                  generate-string)})
     (catch Exception e
-      (print-stack-trace e)
+      (log/error e)
       {:status 400
        :headers {}
        :body "Something has wrong."})))

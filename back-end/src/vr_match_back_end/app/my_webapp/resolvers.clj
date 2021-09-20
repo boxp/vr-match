@@ -3,8 +3,8 @@
    [integrant.core :as ig]
    [clojure.spec.alpha :as s]
    [clojure.data.codec.base64 :as b64]
-   [clojure.stacktrace :refer [print-stack-trace]]
    [clojure.set :as set]
+   [clojure.tools.logging :as log]
    [com.stuartsierra.component :as component]
    [com.walmartlabs.lacinia.resolve :refer [resolve-as]]
    [com.walmartlabs.lacinia.executor :as executor]
@@ -28,7 +28,7 @@
                :type (-> error ex-data :type)}))
 
 (defmethod handle-error :default [error]
-  (print-stack-trace error)
+  (log/error error)
   (resolve-as nil {:message "Something has wrong."}))
 
 (s/fdef int->cursor
