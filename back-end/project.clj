@@ -9,6 +9,7 @@
                  [org.clojure/core.async "0.4.500"]
                  [org.clojure/data.codec "0.1.1"]
                  [org.clojure/test.check "0.9.0"]
+                 [org.clojure/tools.logging "1.1.0"]
                  [com.novemberain/pantomime "2.11.0"]
                  [digest "1.4.9"]
                  [environ "1.1.0"]
