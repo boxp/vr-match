@@ -10,6 +10,7 @@
                  [org.clojure/data.codec "0.1.1"]
                  [org.clojure/test.check "0.9.0"]
                  [org.clojure/tools.logging "1.1.0"]
+                 [org.slf4j/slf4j-log4j12 "1.7.9"]
                  [com.novemberain/pantomime "2.11.0"]
                  [digest "1.4.9"]
                  [environ "1.1.0"]
@@ -29,6 +30,7 @@
                  [com.google.firebase/firebase-admin "6.16.0" :exclusions [[com.google.api-client/google-api-client]]]
                  [com.google.cloud/google-cloud-storage]
                  [com.google.auth/google-auth-library-oauth2-http]]
+  :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/slf4j-factory"]
   :profiles
   {:dev {:source-paths ["src" "dev"]
          :dependencies [[integrant/repl "0.3.2"]]}
