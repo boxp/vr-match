@@ -21,7 +21,9 @@
 (defn graphql
   [{:keys [graphql-schema my-webapp-resolvers]} req]
   (try
-    (let [session (or (some-> req :headers (get "session")) "")
+    (let [session (or (some-> req :headers (get "session"))
+                      (some-> req :query-params (get "session"))
+                      "")
           query (-> req :body slurp (parse-string true) :query)
           result (execute graphql-schema
                           query

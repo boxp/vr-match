@@ -6,6 +6,7 @@
    [compojure.core :refer [defroutes context GET POST OPTIONS routes]]
    [compojure.route :as route]
    [ring.adapter.jetty :as server]
+   [ring.middleware.params :refer [wrap-params]]
    [vr-match-back-end.app.my-webapp.handler :as handler]))
 
 (defn wrap-header-csp
