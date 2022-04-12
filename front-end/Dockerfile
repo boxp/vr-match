@@ -4,7 +4,7 @@ COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN npm install
 
-FROM clojure:lein-2.8.1-alpine as clojure
+FROM clojure:lein-2.9.8-slim-buster as clojure
 RUN mkdir -p /usr/src/app
 COPY --from=npm /usr/src/app /usr/src/app
 WORKDIR /usr/src/app
