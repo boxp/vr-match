@@ -4,7 +4,7 @@
    [environ.core :refer [env]]))
 
 (defmethod ig/init-key ::client-origin [_ _] (or (env :vr-match-client-origin) "http://localhost:8888"))
-(defmethod ig/init-key ::port [_ _] (-> (or (env :vr-match-back-end-my-webapp-port) "8080") Integer/parseInt))
+(defmethod ig/init-key ::port [_ _] (-> (or (env :vr-match-back-end-my-webapp-port) (env :port) "8080") Integer/parseInt))
 (defmethod ig/init-key ::firebase-database-url [_ _] (or (env :vr-match-back-end-firebase-database-url) "https://vr-match.firebaseio.com"))
 (defmethod ig/init-key ::firebase-service-account-key [_ _] (or (env :vr-match-firebase-service-account-key) ""))
 (defmethod ig/init-key ::mysql-dbname [_ _] (or (env :vr-match-mysql-dbname) "vr_match"))
