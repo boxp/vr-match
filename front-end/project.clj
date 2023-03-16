@@ -91,7 +91,7 @@
                    [figwheel-sidecar "0.5.19"]
                    [day8.re-frame/re-frame-10x "0.4.2"]]
     :plugins      [[lein-figwheel "0.5.20"]
-                   [lein-cljfmt "0.6.4"]]}
+                   [lein-cljfmt "0.9.2"]]}
    :prod {}}
 
   :cljsbuild
