@@ -12,7 +12,7 @@
                  [org.clojure/tools.logging "1.1.0"]
                  [org.slf4j/slf4j-log4j12 "1.7.9"]
                  [com.novemberain/pantomime "2.11.0"]
-                 [digest "1.4.9"]
+                 [digest "1.4.10"]
                  [environ "1.1.0"]
                  [clj-time "0.15.2"]
                  [com.stuartsierra/component "0.4.0"]
