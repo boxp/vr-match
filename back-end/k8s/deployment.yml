@@ -49,7 +49,7 @@ spec:
                 name: vr-match-${_ENVIRONMENT}-secrets
                 key: CLOUD_STORAGE_BUCKET_NAME
       - name: cloudsql-proxy
-        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.6.1
+        image: gcr.io/cloudsql-docker/gce-proxy:1.11
         command: ["/cloud_sql_proxy",
                   "-instances=boxp-tk:asia-northeast1:vr-match-${_ENVIRONMENT}=tcp:3306",
                   "-credential_file=/secrets/cloudsql/credentials.json"]
