@@ -1,6 +1,7 @@
 name: Build and Push Frontend Docker image to Stage ECR
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - stage
