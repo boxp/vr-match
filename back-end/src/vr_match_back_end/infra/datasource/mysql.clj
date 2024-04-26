@@ -7,21 +7,23 @@
 
 (s/def ::user string?)
 (s/def ::password string?)
+(s/def ::hostname string?)
+(s/def ::port string?)
 (s/def :db/classname string?)
 (s/def :db/subprotocol string?)
 (s/def :db/subname string?)
 (s/def ::db
-  (s/keys :req-un [::user ::password :db/classname :db/subprotocol :db/subprotocol]))
+  (s/keys :req-un [::user ::password ::hostname ::port :db/classname :db/subprotocol :db/subprotocol]))
 (s/def ::mysql-datasource
   (s/keys :req-un [::db]
           :opt-un [::dbname ::user ::password]))
 
 (defn init-db
-  [{:keys [dbname user password] :as params}]
+  [{:keys [dbname user password hostname port] :as params}]
   (-> {}
       (assoc :classname "com.mysql.jdbc.Driver")
       (assoc :subprotocol "mysql")
-      (assoc :subname (str "//127.0.0.1:3306/" dbname "?connectionCollation=utf8mb4_bin"))
+      (assoc :subname (str "//" hostname ":" port "/" dbname "?connectionCollation=utf8mb4_bin"))
       (assoc :user user)
       (assoc :password password)))
 

@@ -10,4 +10,6 @@
 (defmethod ig/init-key ::mysql-dbname [_ _] (or (env :vr-match-mysql-dbname) "vr_match"))
 (defmethod ig/init-key ::mysql-user [_ _] (or (env :vr-match-mysql-user) "root"))
 (defmethod ig/init-key ::mysql-password [_ _] (or (env :vr-match-mysql-password) ""))
+(defmethod ig/init-key ::mysql-hostname [_ _] (or (env :vr-match-mysql-hostname) "127.0.0.1"))
+(defmethod ig/init-key ::mysql-port [_ _] (or (env :vr-match-mysql-port) "3306"))
 (defmethod ig/init-key ::cloud-storage-bucket-name [_ _] (or (env :vr-match-cloud-storage-bucket-name) ""))
