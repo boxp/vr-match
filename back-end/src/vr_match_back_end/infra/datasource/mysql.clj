@@ -7,29 +7,33 @@
 
 (s/def ::user string?)
 (s/def ::password string?)
+(s/def ::hostname string?)
+(s/def ::port string?)
 (s/def :db/classname string?)
 (s/def :db/subprotocol string?)
 (s/def :db/subname string?)
 (s/def ::db
-  (s/keys :req-un [::user ::password :db/classname :db/subprotocol :db/subprotocol]))
+  (s/keys :req-un [::user ::password ::hostname ::port :db/classname :db/subprotocol :db/subprotocol]))
 (s/def ::mysql-datasource
   (s/keys :req-un [::db]
           :opt-un [::dbname ::user ::password]))
 
 (defn init-db
-  [{:keys [dbname user password] :as params}]
+  [{:keys [dbname user password hostname port] :as params}]
   (-> {}
       (assoc :classname "com.mysql.jdbc.Driver")
       (assoc :subprotocol "mysql")
-      (assoc :subname (str "//127.0.0.1:3306/" dbname "?connectionCollation=utf8mb4_bin"))
+      (assoc :subname (str "//" hostname ":" port "/" dbname "?connectionCollation=utf8mb4_bin"))
       (assoc :user user)
       (assoc :password password)))
 
-(defmethod ig/init-key ::mysql-datasource [_ {:keys [dbname user password] :as d}]
+(defmethod ig/init-key ::mysql-datasource [_ {:keys [dbname user password hostname port] :as d}]
   (-> d
       (assoc :db (init-db {:dbname dbname
                            :user user
-                           :password password}))))
+                           :password password
+                           :hostname hostname
+                           :port port}))))
 
 (defmethod ig/halt-key! ::mysql-datasource [_ _]
   nil)
@@ -41,4 +45,4 @@
          config))
 
 (defmethod ig/pre-init-spec ::mysql-datasource [_]
-  (s/keys :req-un [::dbname ::user ::password]))
+  (s/keys :req-un [::dbname ::user ::password ::hostname ::port]))
