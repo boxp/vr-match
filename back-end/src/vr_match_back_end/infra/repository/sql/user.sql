@@ -36,6 +36,7 @@ with CommonPlatforms as (
 )
 select user.id, user.name, user.introduction
 from user
+JOIN user_platform ON user.id = user_platform.user_id
 left join CommonPlatforms on user_platform.platform_id = CommonPlatforms.platform_id
 left join user_image on user.id = user_image.user_id
 left join user_skip on user.id = user_skip.to_id and user_skip.from_id = :user_id
