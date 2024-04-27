@@ -29,14 +29,14 @@ where id = :id
 
 -- :name recommended-user-by-user_id :? :*
 -- :doc user_idのuserに対してまだお気に入りもスキップもしていないユーザーをおすすめ順に取得
+with CommonPlatforms as (
+  select platform_id
+  from user_platform
+  where user_id = :user_id
+)
 select user.id, user.name, user.introduction
 from user
-left join user_platform on user.id = user_platform.user_id and user_platform.platform_id in (
-  select user_platform.platform_id
-  from `user`
-  inner join user_platform on user.id = user_platform.user_id
-  where user.id = :user_id
-)
+left join CommonPlatforms on user_platform.platform_id = CommonPlatforms.platform_id
 left join user_image on user.id = user_image.user_id
 left join user_skip on user.id = user_skip.to_id and user_skip.from_id = :user_id
 left join user_favorite on user.id = user_favorite.to_id and user_favorite.from_id = :user_id
