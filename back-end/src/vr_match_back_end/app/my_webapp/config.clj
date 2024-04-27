@@ -9,11 +9,15 @@
    :vr-match-back-end.app.my-webapp.env/mysql-dbname {}
    :vr-match-back-end.app.my-webapp.env/mysql-user {}
    :vr-match-back-end.app.my-webapp.env/mysql-password {}
+   :vr-match-back-end.app.my-webapp.env/mysql-hostname {}
+   :vr-match-back-end.app.my-webapp.env/mysql-port {}
    :vr-match-back-end.app.my-webapp.env/cloud-storage-bucket-name {}
    :vr-match-back-end.infra.datasource.mysql/mysql-datasource
    {:dbname (ig/ref :vr-match-back-end.app.my-webapp.env/mysql-dbname)
     :user (ig/ref :vr-match-back-end.app.my-webapp.env/mysql-user)
-    :password (ig/ref :vr-match-back-end.app.my-webapp.env/mysql-password)}
+    :password (ig/ref :vr-match-back-end.app.my-webapp.env/mysql-password)
+    :hostname (ig/ref :vr-match-back-end.app.my-webapp.env/mysql-hostname)
+    :port (ig/ref :vr-match-back-end.app.my-webapp.env/mysql-port) }
    :vr-match-back-end.infra.datasource.cloud-storage/cloud-storage-datasource
    {:bucket-name (ig/ref :vr-match-back-end.app.my-webapp.env/cloud-storage-bucket-name)}
    :vr-match-back-end.infra.datasource.firebase-admin/firebase-admin-datasource

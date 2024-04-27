@@ -27,11 +27,13 @@
       (assoc :user user)
       (assoc :password password)))
 
-(defmethod ig/init-key ::mysql-datasource [_ {:keys [dbname user password] :as d}]
+(defmethod ig/init-key ::mysql-datasource [_ {:keys [dbname user password hostname port] :as d}]
   (-> d
       (assoc :db (init-db {:dbname dbname
                            :user user
-                           :password password}))))
+                           :password password
+                           :hostname hostname
+                           :port port}))))
 
 (defmethod ig/halt-key! ::mysql-datasource [_ _]
   nil)
@@ -43,4 +45,4 @@
          config))
 
 (defmethod ig/pre-init-spec ::mysql-datasource [_]
-  (s/keys :req-un [::dbname ::user ::password]))
+  (s/keys :req-un [::dbname ::user ::password ::hostname ::port]))
