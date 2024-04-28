@@ -62,14 +62,24 @@ and user.id not in (:v*:exclude_ids)
 
 -- :name user_with_status :? :1
 -- :doc parnter_idからme_idに対してのマッチング情報・お気に入り情報を含むUser一件取得
-select
-user.id as id,
-user.name as name,
-user.introduction as introduction,
-count(user.id) >= 2 as is_matched,
-(max(user_favorite.from_id) = :me_id or count(user.id) >= 2) as is_favorited_from_me
-from `user`
-inner join user_favorite
-on (user.id = user_favorite.to_id and :me_id = user_favorite.from_id)
-or (user.id = user_favorite.from_id and :me_id = user_favorite.to_id)
-where user.id = :partner_id
+WITH FavoriteStats AS (
+    SELECT
+        CASE 
+            WHEN to_id = :me_id THEN from_id
+            WHEN from_id = :me_id THEN to_id
+        END AS user_id,
+        COUNT(*) AS total_count,
+        MAX(from_id = :me_id) AS is_favorited_from_me
+    FROM user_favorite
+    WHERE :me_id IN (from_id, to_id)
+    GROUP BY user_id
+)
+SELECT
+    u.id AS id,
+    u.name AS name,
+    u.introduction AS introduction,
+    fs.total_count >= 2 AS is_matched,
+    fs.is_favorited_from_me AND fs.total_count >= 2 AS is_favorited_from_me_corrected
+FROM user u
+LEFT JOIN FavoriteStats fs ON u.id = fs.user_id
+WHERE u.id = :partner_id;

@@ -271,12 +271,10 @@
    id
    with-images?
    with-platforms?]
-  (doto
-   (cond-> (user-by-id (:db mysql-datasource) {:id id})
-     with-images? (assoc :images (get-images-by-user-id c id))
-     with-platforms? (assoc :platforms (get-platforms-by-user-id c id))
-     :always identity)
-    println))
+  (cond-> (user-by-id (:db mysql-datasource) {:id id})
+    with-images? (assoc :images (get-images-by-user-id c id))
+    with-platforms? (assoc :platforms (get-platforms-by-user-id c id))
+    :always identity))
 
 (s/def :paging-parameters/offset number?)
 (s/def :paging-parameters/limit number?)
@@ -518,15 +516,17 @@
     with-images?
     with-platforms?
     me-id]
-   (cond-> (user_with_status (:db mysql-datasource)
-                             {:partner_id partner-id
-                              :me_id me-id})
-     with-images? (assoc :images (get-images-by-user-id c partner-id))
-     with-platforms? (assoc :platforms (get-platforms-by-user-id c partner-id))
-     :always (-> (set/rename-keys {:is_matched :matched?
-                                   :is_favorited_from_me :favorited?})
-                 (update :matched? #(= % 1))
-                 (update :favorited? #(= % 1))))))
+   (doto
+    (cond-> (user_with_status (:db mysql-datasource)
+                              {:partner_id partner-id
+                               :me_id me-id})
+      with-images? (assoc :images (get-images-by-user-id c partner-id))
+      with-platforms? (assoc :platforms (get-platforms-by-user-id c partner-id))
+      :always (-> (set/rename-keys {:is_matched :matched?
+                                    :is_favorited_from_me :favorited?})
+                  (update :matched? #(= % 1))
+                  (update :favorited? #(= % 1))))
+     println)))
 
 (s/fdef delete-all-skip-from-user
   :args (s/cat :c ::user-repository
