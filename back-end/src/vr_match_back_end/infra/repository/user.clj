@@ -271,10 +271,12 @@
    id
    with-images?
    with-platforms?]
-  (cond-> (user-by-id (:db mysql-datasource) {:id id})
-    with-images? (assoc :images (get-images-by-user-id c id))
-    with-platforms? (assoc :platforms (get-platforms-by-user-id c id))
-    :always identity))
+  (doto
+   (cond-> (user-by-id (:db mysql-datasource) {:id id})
+     with-images? (assoc :images (get-images-by-user-id c id))
+     with-platforms? (assoc :platforms (get-platforms-by-user-id c id))
+     :always identity)
+    println))
 
 (s/def :paging-parameters/offset number?)
 (s/def :paging-parameters/limit number?)
@@ -427,10 +429,10 @@
   (if with-has-next?
     (let [limit (inc (or (:first paging-params) 1000))
           users (matched-user-by-user_id
-                      (:db mysql-datasource)
-                      {:user_id user-id
-                       :after (or (:after paging-params) (t/now))
-                       :limit limit})
+                 (:db mysql-datasource)
+                 {:user_id user-id
+                  :after (or (:after paging-params) (t/now))
+                  :limit limit})
           has-next? (>= (count users) limit)]
       {:users (->> (if has-next? (drop-last users) users)
                    (pmap #(cond-> %
@@ -442,9 +444,9 @@
                   {:user_id user-id
                    :after (or (:after paging-params) (t/now))
                    :limit (or (:first paging-params) 1000)})
-                  (pmap #(cond-> %
-                           with-images? (assoc :images (get-images-by-user-id c (:id %)))
-                           with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))}))
+                 (pmap #(cond-> %
+                          with-images? (assoc :images (get-images-by-user-id c (:id %)))
+                          with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))}))
 
 (s/def :get-favorited-from-users-by-without-matched-by-me-paging-params/after (s/nilable ::t-spec/date-time))
 (s/def :get-favorited-from-users-by-without-matched-by-me-paging-params/first (s/nilable number?))
@@ -476,10 +478,10 @@
   (if with-has-next?
     (let [limit (inc (or (:first paging-params) 1000))
           users (favorited-from-user-without-matched-user-by-user_id
-                      (:db mysql-datasource)
-                      {:user_id user-id
-                       :after (or (:after paging-params) (t/now))
-                       :limit limit})
+                 (:db mysql-datasource)
+                 {:user_id user-id
+                  :after (or (:after paging-params) (t/now))
+                  :limit limit})
           has-next? (>= (count users) limit)]
       {:users (->> (if has-next? (drop-last users) users)
                    (pmap #(cond-> %
@@ -491,9 +493,9 @@
                   {:user_id user-id
                    :after (or (:after paging-params) (t/now))
                    :limit (or (:first paging-params) 1000)})
-                  (pmap #(cond-> %
-                           with-images? (assoc :images (get-images-by-user-id c (:id %)))
-                           with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))}))
+                 (pmap #(cond-> %
+                          with-images? (assoc :images (get-images-by-user-id c (:id %)))
+                          with-platforms? (assoc :platforms (get-platforms-by-user-id c (:id %))))))}))
 
 (s/fdef get-user
   :args (s/cat :c ::user-repository
