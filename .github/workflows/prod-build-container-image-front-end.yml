@@ -1,0 +1,41 @@
+name: Build and Push Frontend Docker image to Prod ECR
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+        - .github/workflows/prod-build-container-image-front-end.yml
+        - front-end/**
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ssh-key: ${{ secrets.PRIVATE_REPO_SSH_KEY }}
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: ap-northeast-1
+        role-to-assume: 'arn:aws:iam::839695154978:role/hitohub-prod-gha-role'
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      working-directory: ./front-end
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: hitohub-frontend-prod
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
