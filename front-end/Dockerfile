@@ -4,6 +4,7 @@ COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN npm install
 
+# フロントエンドビルド用ステージ
 FROM clojure:lein-2.9.8-slim-buster as clojure
 RUN mkdir -p /usr/src/app
 COPY --from=npm /usr/src/app /usr/src/app
@@ -12,6 +13,7 @@ RUN lein cljsbuild once prod
 RUN lein cljsbuild once server-prod
 RUN lein cljsbuild once worker-prod
 
+# 最終ステージ
 FROM node:8.17-alpine
 RUN mkdir -p /usr/src/app
 COPY --from=clojure /usr/src/app /usr/src/app
