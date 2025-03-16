@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+タスクを始める前に必ず以下のファイルを読んでください
+
+- [project-structure.md](mdc:doc/project-structure.md)
+- [project-spec.md](mdc:doc/project-spec.md)
+- [project-coding-rule.md](mdc:doc/project-coding-rule.md)
