@@ -1,17 +1,27 @@
 name: Frontend Docker Build Check
 
 on:
+  pull_request:
   push:
     branches: ['**']
-    paths:
-      - 'front-end/**'
-      - '.github/workflows/frontend-docker-build-check.yml'
   workflow_dispatch:
 
 jobs:
   build-frontend:
     name: Build Frontend Docker Image
     runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' && (
+        contains(github.event.pull_request.changed_files, 'front-end/') ||
+        contains(github.event.pull_request.changed_files, '.github/workflows/frontend-docker-build-check.yml')
+      )) ||
+      (github.event_name == 'push' && (
+        contains(github.event.head_commit.modified, 'front-end/') ||
+        contains(github.event.head_commit.added, 'front-end/') ||
+        contains(github.event.head_commit.modified, '.github/workflows/frontend-docker-build-check.yml') ||
+        contains(github.event.head_commit.added, '.github/workflows/frontend-docker-build-check.yml')
+      ))
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
