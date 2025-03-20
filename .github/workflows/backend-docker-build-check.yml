@@ -1,10 +1,6 @@
 name: Backend Docker Build Check
 
 on:
-  pull_request:
-    paths:
-      - 'back-end/**'
-      - '.github/workflows/backend-docker-build-check.yml'
   push:
     branches: ['**']
     paths:

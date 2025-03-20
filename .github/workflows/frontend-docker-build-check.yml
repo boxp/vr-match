@@ -1,10 +1,6 @@
 name: Frontend Docker Build Check
 
 on:
-  pull_request:
-    paths:
-      - 'front-end/**'
-      - '.github/workflows/frontend-docker-build-check.yml'
   push:
     branches: ['**']
     paths:
