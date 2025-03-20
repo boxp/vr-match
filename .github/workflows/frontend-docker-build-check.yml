@@ -1,0 +1,42 @@
+name: Frontend Docker Build Check
+
+on:
+  pull_request:
+    paths:
+      - 'front-end/**'
+      - '.github/workflows/frontend-docker-build-check.yml'
+  push:
+    branches: ['**']
+    paths:
+      - 'front-end/**'
+      - '.github/workflows/frontend-docker-build-check.yml'
+  workflow_dispatch:
+
+jobs:
+  build-frontend:
+    name: Build Frontend Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Frontend Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./front-end
+          push: false
+          load: true
+          tags: vr-match-frontend:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+        
+      - name: Verify build success
+        run: |
+          if [ "$(docker images -q vr-match-frontend:test 2> /dev/null)" == "" ]; then
+            echo "Frontend Docker build failed"
+            exit 1
+          fi
+          echo "Frontend Docker build succeeded" 
