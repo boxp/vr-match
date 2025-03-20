@@ -1,17 +1,27 @@
 name: Backend Docker Build Check
 
 on:
+  pull_request:
   push:
     branches: ['**']
-    paths:
-      - 'back-end/**'
-      - '.github/workflows/backend-docker-build-check.yml'
   workflow_dispatch:
 
 jobs:
   build-backend:
     name: Build Backend Docker Image
     runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' && (
+        contains(github.event.pull_request.changed_files, 'back-end/') ||
+        contains(github.event.pull_request.changed_files, '.github/workflows/backend-docker-build-check.yml')
+      )) ||
+      (github.event_name == 'push' && (
+        contains(github.event.head_commit.modified, 'back-end/') ||
+        contains(github.event.head_commit.added, 'back-end/') ||
+        contains(github.event.head_commit.modified, '.github/workflows/backend-docker-build-check.yml') ||
+        contains(github.event.head_commit.added, '.github/workflows/backend-docker-build-check.yml')
+      ))
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
