@@ -11,6 +11,10 @@
         "digest"
       ],
       "automerge": true
+    },
+    {
+      "matchPackageNames": ["org.clojure/clojurescript"],
+      "enabled": false
     }
   ]
 }
