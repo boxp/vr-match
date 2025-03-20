@@ -26,7 +26,7 @@
                  [com.walmartlabs/lacinia "0.33.0"]
                  [e85th/venia "0.2.5-1"]
                  [com.layerware/hugsql "0.4.9"]
-                 [mysql/mysql-connector-java "8.0.22"]
+                 [mysql/mysql-connector-java "8.0.33"]
                  [com.google.firebase/firebase-admin "8.1.0" :exclusions [[com.google.api-client/google-api-client]]]
                  [com.google.cloud/google-cloud-storage]
                  [com.google.auth/google-auth-library-oauth2-http]]
