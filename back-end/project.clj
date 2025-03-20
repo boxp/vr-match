@@ -27,7 +27,7 @@
                  [e85th/venia "0.2.5-1"]
                  [com.layerware/hugsql "0.5.3"]
                  [mysql/mysql-connector-java "8.0.33"]
-                 [com.google.firebase/firebase-admin "8.1.0" :exclusions [[com.google.api-client/google-api-client]]]
+                 [com.google.firebase/firebase-admin "8.2.0" :exclusions [[com.google.api-client/google-api-client]]]
                  [com.google.cloud/google-cloud-storage]
                  [com.google.auth/google-auth-library-oauth2-http]]
   :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/slf4j-factory"]
