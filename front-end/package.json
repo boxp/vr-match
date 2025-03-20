@@ -42,7 +42,7 @@
     "compression": "1.7.4",
     "create-react-class": "15.7.0",
     "express": "4.17.1",
-    "firebase": "5.11.1",
+    "firebase": "5.7.3",
     "nodemon": "1.19.4",
     "npm-run-all2": "5.0.2",
     "react": "16.14.0",
