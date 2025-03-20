@@ -2,23 +2,45 @@ name: Docker Build Check
 
 on:
   pull_request:
-  push:
-    branches: ['**']
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 jobs:
+  file-changes:
+    name: Detect File Changes
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+      backend: ${{ steps.filter.outputs.backend }}
+      workflow: ${{ steps.filter.outputs.workflow }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for file changes
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          base: ${{ github.event.pull_request.base.sha || github.event.before }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          filters: |
+            frontend:
+              - 'front-end/**'
+            backend:
+              - 'back-end/**'
+            workflow:
+              - '.github/workflows/docker-build-check.yml'
+
   build-frontend:
     name: Build Frontend Docker Image
+    needs: file-changes
     runs-on: ubuntu-latest
     if: |
       github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'pull_request' ||
-      (github.event_name == 'push' && (
-        contains(github.event.head_commit.modified, 'front-end/') ||
-        contains(github.event.head_commit.added, 'front-end/') ||
-        contains(github.event.head_commit.modified, '.github/workflows/docker-build-check.yml') ||
-        contains(github.event.head_commit.added, '.github/workflows/docker-build-check.yml')
-      ))
+      needs.file-changes.outputs.frontend == 'true' ||
+      needs.file-changes.outputs.workflow == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -45,16 +67,12 @@ jobs:
           echo "Frontend Docker build succeeded"
   build-backend:
     name: Build Backend Docker Image
+    needs: file-changes
     runs-on: ubuntu-latest
     if: |
       github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'pull_request' ||
-      (github.event_name == 'push' && (
-        contains(github.event.head_commit.modified, 'back-end/') ||
-        contains(github.event.head_commit.added, 'back-end/') ||
-        contains(github.event.head_commit.modified, '.github/workflows/docker-build-check.yml') ||
-        contains(github.event.head_commit.added, '.github/workflows/docker-build-check.yml')
-      ))
+      needs.file-changes.outputs.backend == 'true' ||
+      needs.file-changes.outputs.workflow == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
