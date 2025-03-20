@@ -12,7 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'pull_request' ||
+      (github.event_name == 'pull_request' && (
+        contains(github.event.pull_request.title, 'front-end') ||
+        contains(join(github.event.pull_request.labels.*.name, ' '), 'front-end') ||
+        contains(toJson(github.event.pull_request.files.*.filename), 'front-end/') ||
+        contains(toJson(github.event.pull_request.files.*.filename), '.github/workflows/docker-build-check.yml')
+      )) ||
       (github.event_name == 'push' && (
         contains(github.event.head_commit.modified, 'front-end/') ||
         contains(github.event.head_commit.added, 'front-end/') ||
@@ -48,7 +53,12 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'pull_request' ||
+      (github.event_name == 'pull_request' && (
+        contains(github.event.pull_request.title, 'back-end') ||
+        contains(join(github.event.pull_request.labels.*.name, ' '), 'back-end') ||
+        contains(toJson(github.event.pull_request.files.*.filename), 'back-end/') ||
+        contains(toJson(github.event.pull_request.files.*.filename), '.github/workflows/docker-build-check.yml')
+      )) ||
       (github.event_name == 'push' && (
         contains(github.event.head_commit.modified, 'back-end/') ||
         contains(github.event.head_commit.added, 'back-end/') ||
