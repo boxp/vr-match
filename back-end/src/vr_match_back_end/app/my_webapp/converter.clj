@@ -30,9 +30,26 @@
 
 (def date-time-formatter (f/formatters :basic-date-time))
 
+(defn- convert-local-date-time-to-joda
+  "Convert java.time.LocalDateTime to org.joda.time.DateTime"
+  [local-date-time]
+  (org.joda.time.DateTime.
+    (.getYear local-date-time)
+    (.getMonthValue local-date-time)
+    (.getDayOfMonth local-date-time)
+    (.getHour local-date-time)
+    (.getMinute local-date-time)
+    (.getSecond local-date-time)
+    (.get local-date-time java.time.temporal.ChronoField/MILLI_OF_SECOND)))
+
 (defn date-time->string
+  "Convert date-time object to string"
   [date-time]
-  (f/unparse date-time-formatter date-time))
+  (if (instance? java.time.LocalDateTime date-time)
+    (let [joda-date-time (convert-local-date-time-to-joda date-time)]
+      (f/unparse date-time-formatter joda-date-time))
+    ;; else - assume it's already a joda DateTime or compatible
+    (f/unparse date-time-formatter date-time)))
 
 (defn string->date-time
   [string]
