@@ -44,5 +44,6 @@
   (merge config {:database-url "https://vr-match.firebaseio.com"
                  :credential ""}))
 
-(defmethod ig/pre-init-spec ::firebase-admin-datasource [_]
-  (s/keys :req-un [::database-url ::credential]))
+(defmethod ig/assert-key ::firebase-admin-datasource [_ {:keys [database-url credential]}]
+  (assert database-url "database-url is required")
+  (assert credential "credential is required"))

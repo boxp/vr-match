@@ -30,6 +30,7 @@
 
 (defmethod ig/halt-key! ::image-usecase [_ _] nil)
 
-(defmethod ig/pre-init-spec ::image-usecase [_]
-  (s/keys :req-un [:ruser/user-repository :rimage/image-repository]))
+(defmethod ig/assert-key ::image-usecase [_ {:keys [user-repository image-repository]}]
+  (assert user-repository "user-repository is required")
+  (assert image-repository "image-repository is required"))
 

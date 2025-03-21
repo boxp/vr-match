@@ -32,5 +32,5 @@
 (defmethod ig/prep-key ::cloud-storage-datasource [_ config]
   (merge config {:bucket-name ""}))
 
-(defmethod ig/pre-init-spec ::cloud-storage-datasource [_]
-  (s/keys :req-un [::bucket-name]))
+(defmethod ig/assert-key ::cloud-storage-datasource [_ {:keys [bucket-name]}]
+  (assert bucket-name "bucket-name is required"))

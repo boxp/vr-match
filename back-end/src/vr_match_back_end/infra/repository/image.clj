@@ -70,5 +70,6 @@
 
 (defmethod ig/halt-key! ::image-repository [_ _] nil)
 
-(defmethod ig/pre-init-spec ::image-repository [_]
-  (s/keys :req-un [:mysql/mysql-datasource :cloud-storage/cloud-storage-datasource]))
+(defmethod ig/assert-key ::image-repository [_ {:keys [mysql-datasource cloud-storage-datasource]}]
+  (assert mysql-datasource "mysql-datasource is required")
+  (assert cloud-storage-datasource "cloud-storage-datasource is required"))

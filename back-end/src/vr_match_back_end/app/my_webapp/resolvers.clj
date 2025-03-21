@@ -309,9 +309,9 @@
 
 (defmethod ig/halt-key! ::my-webapp-resolvers [_ _] nil)
 
-(defmethod ig/pre-init-spec ::my-webapp-resolvers [_]
-  (s/keys :req-un [:uauth/auth-usecase
-                   :uplatform/platform-usecase
-                   :uimage/image-usecase
-                   :uuser/user-usecase
-                   :uapproach/approach-usecase]))
+(defmethod ig/assert-key ::my-webapp-resolvers [_ {:keys [auth-usecase platform-usecase image-usecase user-usecase approach-usecase]}]
+  (assert auth-usecase "auth-usecase is required")
+  (assert platform-usecase "platform-usecase is required")
+  (assert image-usecase "image-usecase is required")
+  (assert user-usecase "user-usecase is required")
+  (assert approach-usecase "approach-usecase is required"))

@@ -44,5 +44,9 @@
           :password ""}
          config))
 
-(defmethod ig/pre-init-spec ::mysql-datasource [_]
-  (s/keys :req-un [::dbname ::user ::password ::hostname ::port]))
+(defmethod ig/assert-key ::mysql-datasource [_ {:keys [dbname user password hostname port]}]
+  (assert dbname "dbname is required")
+  (assert user "user is required")
+  (assert password "password is required")
+  (assert hostname "hostname is required")
+  (assert port "port is required"))

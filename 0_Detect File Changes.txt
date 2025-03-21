@@ -1,0 +1,233 @@
+﻿2025-03-21T09:49:15.4823807Z Current runner version: '2.322.0'
+2025-03-21T09:49:15.4858321Z ##[group]Operating System
+2025-03-21T09:49:15.4859421Z Ubuntu
+2025-03-21T09:49:15.4860264Z 24.04.2
+2025-03-21T09:49:15.4861124Z LTS
+2025-03-21T09:49:15.4862077Z ##[endgroup]
+2025-03-21T09:49:15.4863111Z ##[group]Runner Image
+2025-03-21T09:49:15.4864299Z Image: ubuntu-24.04
+2025-03-21T09:49:15.4865186Z Version: 20250316.1.0
+2025-03-21T09:49:15.4866903Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250316.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-03-21T09:49:15.4869549Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250316.1
+2025-03-21T09:49:15.4871169Z ##[endgroup]
+2025-03-21T09:49:15.4872190Z ##[group]Runner Image Provisioner
+2025-03-21T09:49:15.4873486Z 2.0.422.1
+2025-03-21T09:49:15.4874306Z ##[endgroup]
+2025-03-21T09:49:15.4878625Z ##[group]GITHUB_TOKEN Permissions
+2025-03-21T09:49:15.4881267Z Actions: write
+2025-03-21T09:49:15.4882416Z Attestations: write
+2025-03-21T09:49:15.4883584Z Checks: write
+2025-03-21T09:49:15.4884538Z Contents: write
+2025-03-21T09:49:15.4885402Z Deployments: write
+2025-03-21T09:49:15.4886182Z Discussions: write
+2025-03-21T09:49:15.4887133Z Issues: write
+2025-03-21T09:49:15.4887857Z Metadata: read
+2025-03-21T09:49:15.4888644Z Models: read
+2025-03-21T09:49:15.4889576Z Packages: write
+2025-03-21T09:49:15.4890407Z Pages: write
+2025-03-21T09:49:15.4891350Z PullRequests: write
+2025-03-21T09:49:15.4892284Z RepositoryProjects: write
+2025-03-21T09:49:15.4893555Z SecurityEvents: write
+2025-03-21T09:49:15.4894413Z Statuses: write
+2025-03-21T09:49:15.4895358Z ##[endgroup]
+2025-03-21T09:49:15.4898125Z Secret source: Actions
+2025-03-21T09:49:15.4899535Z Prepare workflow directory
+2025-03-21T09:49:15.5375510Z Prepare all required actions
+2025-03-21T09:49:15.5430603Z Getting action download info
+2025-03-21T09:49:15.7568577Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-03-21T09:49:15.7569552Z Version: 4.2.2
+2025-03-21T09:49:15.7570519Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-03-21T09:49:15.7571719Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-03-21T09:49:15.7572389Z ##[endgroup]
+2025-03-21T09:49:15.8464079Z Download action repository 'dorny/paths-filter@v2' (SHA:4512585405083f25c027a35db413c2b3b9006d50)
+2025-03-21T09:49:16.0686956Z Complete job name: Detect File Changes
+2025-03-21T09:49:16.1332508Z ##[group]Run actions/checkout@v4
+2025-03-21T09:49:16.1333595Z with:
+2025-03-21T09:49:16.1333963Z   fetch-depth: 0
+2025-03-21T09:49:16.1334362Z   repository: boxp/vr-match
+2025-03-21T09:49:16.1334951Z   token: ***
+2025-03-21T09:49:16.1335315Z   ssh-strict: true
+2025-03-21T09:49:16.1335692Z   ssh-user: git
+2025-03-21T09:49:16.1336068Z   persist-credentials: true
+2025-03-21T09:49:16.1336490Z   clean: true
+2025-03-21T09:49:16.1336866Z   sparse-checkout-cone-mode: true
+2025-03-21T09:49:16.1337323Z   fetch-tags: false
+2025-03-21T09:49:16.1337695Z   show-progress: true
+2025-03-21T09:49:16.1338090Z   lfs: false
+2025-03-21T09:49:16.1338462Z   submodules: false
+2025-03-21T09:49:16.1338847Z   set-safe-directory: true
+2025-03-21T09:49:16.1339465Z ##[endgroup]
+2025-03-21T09:49:16.3098751Z Syncing repository: boxp/vr-match
+2025-03-21T09:49:16.3100849Z ##[group]Getting Git version info
+2025-03-21T09:49:16.3102016Z Working directory is '/home/runner/work/vr-match/vr-match'
+2025-03-21T09:49:16.3103584Z [command]/usr/bin/git version
+2025-03-21T09:49:16.3169528Z git version 2.48.1
+2025-03-21T09:49:16.3198130Z ##[endgroup]
+2025-03-21T09:49:16.3211314Z Temporarily overriding HOME='/home/runner/work/_temp/0297ef3c-bf81-4b9f-aae1-a402e5cfbf5b' before making global git config changes
+2025-03-21T09:49:16.3212946Z Adding repository directory to the temporary git global config as a safe directory
+2025-03-21T09:49:16.3216917Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/vr-match/vr-match
+2025-03-21T09:49:16.3254685Z Deleting the contents of '/home/runner/work/vr-match/vr-match'
+2025-03-21T09:49:16.3259013Z ##[group]Initializing the repository
+2025-03-21T09:49:16.3263855Z [command]/usr/bin/git init /home/runner/work/vr-match/vr-match
+2025-03-21T09:49:16.3333374Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-03-21T09:49:16.3335177Z hint: is subject to change. To configure the initial branch name to use in all
+2025-03-21T09:49:16.3336191Z hint: of your new repositories, which will suppress this warning, call:
+2025-03-21T09:49:16.3337133Z hint:
+2025-03-21T09:49:16.3338066Z hint: 	git config --global init.defaultBranch <name>
+2025-03-21T09:49:16.3339198Z hint:
+2025-03-21T09:49:16.3340261Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-03-21T09:49:16.3341939Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-03-21T09:49:16.3342971Z hint:
+2025-03-21T09:49:16.3343450Z hint: 	git branch -m <name>
+2025-03-21T09:49:16.3344201Z Initialized empty Git repository in /home/runner/work/vr-match/vr-match/.git/
+2025-03-21T09:49:16.3352220Z [command]/usr/bin/git remote add origin https://github.com/boxp/vr-match
+2025-03-21T09:49:16.3387509Z ##[endgroup]
+2025-03-21T09:49:16.3388312Z ##[group]Disabling automatic garbage collection
+2025-03-21T09:49:16.3391293Z [command]/usr/bin/git config --local gc.auto 0
+2025-03-21T09:49:16.3419419Z ##[endgroup]
+2025-03-21T09:49:16.3420131Z ##[group]Setting up auth
+2025-03-21T09:49:16.3426372Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-03-21T09:49:16.3455158Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-03-21T09:49:16.3765807Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-03-21T09:49:16.3794048Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-03-21T09:49:16.4027866Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-03-21T09:49:16.4064293Z ##[endgroup]
+2025-03-21T09:49:16.4065774Z ##[group]Fetching the repository
+2025-03-21T09:49:16.4075314Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +91f79da8433fa2bd63c0da716e8315b8e3bfaca5:refs/remotes/pull/196/merge
+2025-03-21T09:49:16.7567481Z From https://github.com/boxp/vr-match
+2025-03-21T09:49:16.7569737Z  * [new branch]      feature/add_automerge_stage              -> origin/feature/add_automerge_stage
+2025-03-21T09:49:16.7572266Z  * [new branch]      feature/add_gha_for_prod_hitohub         -> origin/feature/add_gha_for_prod_hitohub
+2025-03-21T09:49:16.7575053Z  * [new branch]      feature/add_logging_implementation       -> origin/feature/add_logging_implementation
+2025-03-21T09:49:16.7577355Z  * [new branch]      feature/add_multi_images                 -> origin/feature/add_multi_images
+2025-03-21T09:49:16.7579601Z  * [new branch]      feature/add_support_pc                   -> origin/feature/add_support_pc
+2025-03-21T09:49:16.7581664Z  * [new branch]      feature/fix_approach_order               -> origin/feature/fix_approach_order
+2025-03-21T09:49:16.7584043Z  * [new branch]      master                                   -> origin/master
+2025-03-21T09:49:16.7586145Z  * [new branch]      migrate-to-shadow-cljs                   -> origin/migrate-to-shadow-cljs
+2025-03-21T09:49:16.7588497Z  * [new branch]      renovate/firebase-5.x                    -> origin/renovate/firebase-5.x
+2025-03-21T09:49:16.7591024Z  * [new branch]      renovate/integrant-integrant-0.x         -> origin/renovate/integrant-integrant-0.x
+2025-03-21T09:49:16.7594398Z  * [new branch]      renovate/org.clojure-clojurescript-1.x   -> origin/renovate/org.clojure-clojurescript-1.x
+2025-03-21T09:49:16.7597482Z  * [new branch]      renovate/org.clojure-tools.logging-1.x   -> origin/renovate/org.clojure-tools.logging-1.x
+2025-03-21T09:49:16.7600270Z  * [new branch]      renovate/re-frame-re-frame-0.x           -> origin/renovate/re-frame-re-frame-0.x
+2025-03-21T09:49:16.7604102Z  * [new branch]      renovate/reagent-reagent-0.x             -> origin/renovate/reagent-reagent-0.x
+2025-03-21T09:49:16.7606914Z  * [new branch]      stage                                    -> origin/stage
+2025-03-21T09:49:16.7609215Z  * [new tag]         release/v0.0.1                           -> release/v0.0.1
+2025-03-21T09:49:16.7611478Z  * [new tag]         release/v0.0.2                           -> release/v0.0.2
+2025-03-21T09:49:16.7613868Z  * [new tag]         release/v0.0.3                           -> release/v0.0.3
+2025-03-21T09:49:16.7616180Z  * [new tag]         release/v0.0.4                           -> release/v0.0.4
+2025-03-21T09:49:16.7618385Z  * [new tag]         release/v0.0.5                           -> release/v0.0.5
+2025-03-21T09:49:16.7620683Z  * [new tag]         release/v0.0.6                           -> release/v0.0.6
+2025-03-21T09:49:16.7623234Z  * [new tag]         release/v0.0.7                           -> release/v0.0.7
+2025-03-21T09:49:16.7625717Z  * [new tag]         release/v0.0.8                           -> release/v0.0.8
+2025-03-21T09:49:16.7628261Z  * [new tag]         release/v1.0.1                           -> release/v1.0.1
+2025-03-21T09:49:16.7630683Z  * [new tag]         release/v1.0.10                          -> release/v1.0.10
+2025-03-21T09:49:16.7633497Z  * [new tag]         release/v1.0.11                          -> release/v1.0.11
+2025-03-21T09:49:16.7636448Z  * [new tag]         release/v1.0.12                          -> release/v1.0.12
+2025-03-21T09:49:16.7639224Z  * [new tag]         release/v1.0.13                          -> release/v1.0.13
+2025-03-21T09:49:16.7641916Z  * [new tag]         release/v1.0.14                          -> release/v1.0.14
+2025-03-21T09:49:16.7644759Z  * [new tag]         release/v1.0.15                          -> release/v1.0.15
+2025-03-21T09:49:16.7647550Z  * [new tag]         release/v1.0.16                          -> release/v1.0.16
+2025-03-21T09:49:16.7650250Z  * [new tag]         release/v1.0.17                          -> release/v1.0.17
+2025-03-21T09:49:16.7653299Z  * [new tag]         release/v1.0.18                          -> release/v1.0.18
+2025-03-21T09:49:16.7655368Z  * [new tag]         release/v1.0.19                          -> release/v1.0.19
+2025-03-21T09:49:16.7657673Z  * [new tag]         release/v1.0.2                           -> release/v1.0.2
+2025-03-21T09:49:16.7659549Z  * [new tag]         release/v1.0.20                          -> release/v1.0.20
+2025-03-21T09:49:16.7661435Z  * [new tag]         release/v1.0.21                          -> release/v1.0.21
+2025-03-21T09:49:16.7663534Z  * [new tag]         release/v1.0.22                          -> release/v1.0.22
+2025-03-21T09:49:16.7665431Z  * [new tag]         release/v1.0.23                          -> release/v1.0.23
+2025-03-21T09:49:16.7667334Z  * [new tag]         release/v1.0.24                          -> release/v1.0.24
+2025-03-21T09:49:16.7669576Z  * [new tag]         release/v1.0.25                          -> release/v1.0.25
+2025-03-21T09:49:16.7671694Z  * [new tag]         release/v1.0.26                          -> release/v1.0.26
+2025-03-21T09:49:16.7673999Z  * [new tag]         release/v1.0.27                          -> release/v1.0.27
+2025-03-21T09:49:16.7676128Z  * [new tag]         release/v1.0.28                          -> release/v1.0.28
+2025-03-21T09:49:16.7678172Z  * [new tag]         release/v1.0.29                          -> release/v1.0.29
+2025-03-21T09:49:16.7680275Z  * [new tag]         release/v1.0.3                           -> release/v1.0.3
+2025-03-21T09:49:16.7682318Z  * [new tag]         release/v1.0.30                          -> release/v1.0.30
+2025-03-21T09:49:16.7684704Z  * [new tag]         release/v1.0.31                          -> release/v1.0.31
+2025-03-21T09:49:16.7687069Z  * [new tag]         release/v1.0.32                          -> release/v1.0.32
+2025-03-21T09:49:16.7689784Z  * [new tag]         release/v1.0.4                           -> release/v1.0.4
+2025-03-21T09:49:16.7692277Z  * [new tag]         release/v1.0.5                           -> release/v1.0.5
+2025-03-21T09:49:16.7694550Z  * [new tag]         release/v1.0.6                           -> release/v1.0.6
+2025-03-21T09:49:16.7696786Z  * [new tag]         release/v1.0.7                           -> release/v1.0.7
+2025-03-21T09:49:16.7699010Z  * [new tag]         release/v1.0.8                           -> release/v1.0.8
+2025-03-21T09:49:16.7701130Z  * [new tag]         release/v1.0.9                           -> release/v1.0.9
+2025-03-21T09:49:16.7703398Z  * [new ref]         91f79da8433fa2bd63c0da716e8315b8e3bfaca5 -> pull/196/merge
+2025-03-21T09:49:16.7707769Z ##[endgroup]
+2025-03-21T09:49:16.7709349Z ##[group]Determining the checkout info
+2025-03-21T09:49:16.7711134Z ##[endgroup]
+2025-03-21T09:49:16.7712236Z [command]/usr/bin/git sparse-checkout disable
+2025-03-21T09:49:16.7748615Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-03-21T09:49:16.7778846Z ##[group]Checking out the ref
+2025-03-21T09:49:16.7782078Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/196/merge
+2025-03-21T09:49:16.7922987Z Note: switching to 'refs/remotes/pull/196/merge'.
+2025-03-21T09:49:16.7924134Z 
+2025-03-21T09:49:16.7924956Z You are in 'detached HEAD' state. You can look around, make experimental
+2025-03-21T09:49:16.7926968Z changes and commit them, and you can discard any commits you make in this
+2025-03-21T09:49:16.7928958Z state without impacting any branches by switching back to a branch.
+2025-03-21T09:49:16.7930500Z 
+2025-03-21T09:49:16.7931286Z If you want to create a new branch to retain commits you create, you may
+2025-03-21T09:49:16.7933310Z do so (now or later) by using -c with the switch command. Example:
+2025-03-21T09:49:16.7934522Z 
+2025-03-21T09:49:16.7934954Z   git switch -c <new-branch-name>
+2025-03-21T09:49:16.7935659Z 
+2025-03-21T09:49:16.7936023Z Or undo this operation with:
+2025-03-21T09:49:16.7936648Z 
+2025-03-21T09:49:16.7936965Z   git switch -
+2025-03-21T09:49:16.7937407Z 
+2025-03-21T09:49:16.7938259Z Turn off this advice by setting config variable advice.detachedHead to false
+2025-03-21T09:49:16.7939729Z 
+2025-03-21T09:49:16.7941360Z HEAD is now at 91f79da Merge cc059294fa087ecdb931be8c4d5594a3b3311913 into 67faa41ffcb0b5cd1996f36989ece32c2aadb056
+2025-03-21T09:49:16.7945565Z ##[endgroup]
+2025-03-21T09:49:16.7969872Z [command]/usr/bin/git log -1 --format=%H
+2025-03-21T09:49:16.7993224Z 91f79da8433fa2bd63c0da716e8315b8e3bfaca5
+2025-03-21T09:49:16.8248096Z ##[group]Run dorny/paths-filter@v2
+2025-03-21T09:49:16.8249101Z with:
+2025-03-21T09:49:16.8249871Z   base: 67faa41ffcb0b5cd1996f36989ece32c2aadb056
+2025-03-21T09:49:16.8251059Z   ref: cc059294fa087ecdb931be8c4d5594a3b3311913
+2025-03-21T09:49:16.8253369Z   filters: frontend:
+  - 'front-end/**'
+backend:
+  - 'back-end/**'
+workflow:
+  - '.github/workflows/docker-build-check.yml'
+
+2025-03-21T09:49:16.8255604Z   token: ***
+2025-03-21T09:49:16.8256304Z   list-files: none
+2025-03-21T09:49:16.8257068Z   initial-fetch-depth: 100
+2025-03-21T09:49:16.8257889Z ##[endgroup]
+2025-03-21T09:49:16.9228593Z ##[warning]'ref' input parameter is ignored when 'base' is set to HEAD
+2025-03-21T09:49:16.9250596Z ##[warning]'base' input parameter is ignored when action is triggered by pull request event
+2025-03-21T09:49:16.9257057Z ##[group]Fetching list of changed files for PR#196 from Github API
+2025-03-21T09:49:16.9259469Z Invoking listFiles(pull_number: 196, per_page: 100)
+2025-03-21T09:49:17.1842331Z Received 1 items
+2025-03-21T09:49:17.1844014Z [modified] back-end/project.clj
+2025-03-21T09:49:17.1846111Z ##[endgroup]
+2025-03-21T09:49:17.1846860Z Detected 1 changed files
+2025-03-21T09:49:17.1850185Z Results:
+2025-03-21T09:49:17.1852004Z ##[group]Filter frontend = false
+2025-03-21T09:49:17.1853175Z Matching files: none
+2025-03-21T09:49:17.1862993Z ##[endgroup]
+2025-03-21T09:49:17.1864742Z ##[group]Filter backend = true
+2025-03-21T09:49:17.1866137Z Matching files:
+2025-03-21T09:49:17.1867355Z back-end/project.clj [modified]
+2025-03-21T09:49:17.1869542Z ##[endgroup]
+2025-03-21T09:49:17.1871134Z ##[group]Filter workflow = false
+2025-03-21T09:49:17.1872081Z Matching files: none
+2025-03-21T09:49:17.1873609Z ##[endgroup]
+2025-03-21T09:49:17.1874398Z Changes output set to ["backend"]
+2025-03-21T09:49:17.2177179Z Post job cleanup.
+2025-03-21T09:49:17.3136795Z [command]/usr/bin/git version
+2025-03-21T09:49:17.3182068Z git version 2.48.1
+2025-03-21T09:49:17.3227766Z Temporarily overriding HOME='/home/runner/work/_temp/61d419f5-8287-42fd-90f7-542ad2fa54f5' before making global git config changes
+2025-03-21T09:49:17.3232539Z Adding repository directory to the temporary git global config as a safe directory
+2025-03-21T09:49:17.3236510Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/vr-match/vr-match
+2025-03-21T09:49:17.3269607Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-03-21T09:49:17.3305649Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-03-21T09:49:17.3541305Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-03-21T09:49:17.3562357Z http.https://github.com/.extraheader
+2025-03-21T09:49:17.3575206Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-03-21T09:49:17.3607115Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-03-21T09:49:17.4072695Z Evaluate and set job outputs
+2025-03-21T09:49:17.4080902Z Set output 'frontend'
+2025-03-21T09:49:17.4084058Z Set output 'backend'
+2025-03-21T09:49:17.4085579Z Set output 'workflow'
+2025-03-21T09:49:17.4087164Z Cleaning up orphan processes

@@ -55,8 +55,7 @@
     (-> h :server .stop)
     nil))
 
-(defmethod ig/pre-init-spec ::endpoint [_]
-  (s/keys
-   :req-un [::port
-            ::client-origin
-            :handler/my-webapp-handler]))
+(defmethod ig/assert-key ::endpoint [_ {:keys [port client-origin my-webapp-handler]}]
+  (assert port "port is required")
+  (assert client-origin "client-origin is required")
+  (assert my-webapp-handler "my-webapp-handler is required"))

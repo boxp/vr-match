@@ -25,5 +25,5 @@
 
 (defmethod ig/halt-key! ::auth-usecase [_ _] nil)
 
-(defmethod ig/pre-init-spec ::auth-usecase [_]
-  (s/keys :req-un [:ruser/user-repository]))
+(defmethod ig/assert-key ::auth-usecase [_ {:keys [user-repository]}]
+  (assert user-repository "user-repository is required"))

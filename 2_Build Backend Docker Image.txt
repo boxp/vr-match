@@ -1,0 +1,1362 @@
+﻿2025-03-21T09:49:23.3961926Z Current runner version: '2.322.0'
+2025-03-21T09:49:23.4000910Z ##[group]Operating System
+2025-03-21T09:49:23.4002031Z Ubuntu
+2025-03-21T09:49:23.4002970Z 24.04.2
+2025-03-21T09:49:23.4003930Z LTS
+2025-03-21T09:49:23.4004800Z ##[endgroup]
+2025-03-21T09:49:23.4005637Z ##[group]Runner Image
+2025-03-21T09:49:23.4006625Z Image: ubuntu-24.04
+2025-03-21T09:49:23.4007464Z Version: 20250316.1.0
+2025-03-21T09:49:23.4009347Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250316.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-03-21T09:49:23.4011942Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250316.1
+2025-03-21T09:49:23.4013693Z ##[endgroup]
+2025-03-21T09:49:23.4014852Z ##[group]Runner Image Provisioner
+2025-03-21T09:49:23.4015849Z 2.0.422.1
+2025-03-21T09:49:23.4016631Z ##[endgroup]
+2025-03-21T09:49:23.4021017Z ##[group]GITHUB_TOKEN Permissions
+2025-03-21T09:49:23.4024361Z Actions: write
+2025-03-21T09:49:23.4025454Z Attestations: write
+2025-03-21T09:49:23.4026549Z Checks: write
+2025-03-21T09:49:23.4027317Z Contents: write
+2025-03-21T09:49:23.4028136Z Deployments: write
+2025-03-21T09:49:23.4028999Z Discussions: write
+2025-03-21T09:49:23.4029945Z Issues: write
+2025-03-21T09:49:23.4030789Z Metadata: read
+2025-03-21T09:49:23.4031790Z Models: read
+2025-03-21T09:49:23.4032565Z Packages: write
+2025-03-21T09:49:23.4033650Z Pages: write
+2025-03-21T09:49:23.4034583Z PullRequests: write
+2025-03-21T09:49:23.4035418Z RepositoryProjects: write
+2025-03-21T09:49:23.4036340Z SecurityEvents: write
+2025-03-21T09:49:23.4037133Z Statuses: write
+2025-03-21T09:49:23.4037932Z ##[endgroup]
+2025-03-21T09:49:23.4040826Z Secret source: Actions
+2025-03-21T09:49:23.4042231Z Prepare workflow directory
+2025-03-21T09:49:23.4517532Z Prepare all required actions
+2025-03-21T09:49:23.4573809Z Getting action download info
+2025-03-21T09:49:23.7611875Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-03-21T09:49:23.7613061Z Version: 4.2.2
+2025-03-21T09:49:23.7614330Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-03-21T09:49:23.7615560Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-03-21T09:49:23.7616396Z ##[endgroup]
+2025-03-21T09:49:23.8592443Z ##[group]Download immutable action package 'docker/setup-buildx-action@v2'
+2025-03-21T09:49:23.8593266Z Version: 2.10.0
+2025-03-21T09:49:23.8594586Z Digest: sha256:0246269ef10a0a489293f9b45667dd6d87c500232734ddff4402cd9b375fa186
+2025-03-21T09:49:23.8595803Z Source commit SHA: 885d1462b80bc1c1c7f0b00334ad271f09369c55
+2025-03-21T09:49:23.8596504Z ##[endgroup]
+2025-03-21T09:49:24.0516025Z ##[group]Download immutable action package 'docker/build-push-action@v4'
+2025-03-21T09:49:24.0516921Z Version: 4.2.1
+2025-03-21T09:49:24.0517640Z Digest: sha256:295ced658312cfbe602d510dde94b23d332ec7b392ba1ce218956952bcec0d6e
+2025-03-21T09:49:24.0518607Z Source commit SHA: 0a97817b6ade9f46837855d676c4cca3a2471fc9
+2025-03-21T09:49:24.0519257Z ##[endgroup]
+2025-03-21T09:49:24.3336480Z Complete job name: Build Backend Docker Image
+2025-03-21T09:49:24.4019261Z ##[group]Run actions/checkout@v4
+2025-03-21T09:49:24.4020163Z with:
+2025-03-21T09:49:24.4020627Z   repository: boxp/vr-match
+2025-03-21T09:49:24.4021304Z   token: ***
+2025-03-21T09:49:24.4021732Z   ssh-strict: true
+2025-03-21T09:49:24.4022180Z   ssh-user: git
+2025-03-21T09:49:24.4022638Z   persist-credentials: true
+2025-03-21T09:49:24.4023143Z   clean: true
+2025-03-21T09:49:24.4023764Z   sparse-checkout-cone-mode: true
+2025-03-21T09:49:24.4024312Z   fetch-depth: 1
+2025-03-21T09:49:24.4024756Z   fetch-tags: false
+2025-03-21T09:49:24.4025212Z   show-progress: true
+2025-03-21T09:49:24.4025675Z   lfs: false
+2025-03-21T09:49:24.4026122Z   submodules: false
+2025-03-21T09:49:24.4026595Z   set-safe-directory: true
+2025-03-21T09:49:24.4027331Z ##[endgroup]
+2025-03-21T09:49:24.5933181Z Syncing repository: boxp/vr-match
+2025-03-21T09:49:24.5935636Z ##[group]Getting Git version info
+2025-03-21T09:49:24.5936531Z Working directory is '/home/runner/work/vr-match/vr-match'
+2025-03-21T09:49:24.5938188Z [command]/usr/bin/git version
+2025-03-21T09:49:24.5990339Z git version 2.48.1
+2025-03-21T09:49:24.6017512Z ##[endgroup]
+2025-03-21T09:49:24.6030344Z Temporarily overriding HOME='/home/runner/work/_temp/887b21ff-4867-480c-a24f-fe910d736af7' before making global git config changes
+2025-03-21T09:49:24.6031791Z Adding repository directory to the temporary git global config as a safe directory
+2025-03-21T09:49:24.6035861Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/vr-match/vr-match
+2025-03-21T09:49:24.6068884Z Deleting the contents of '/home/runner/work/vr-match/vr-match'
+2025-03-21T09:49:24.6072427Z ##[group]Initializing the repository
+2025-03-21T09:49:24.6076606Z [command]/usr/bin/git init /home/runner/work/vr-match/vr-match
+2025-03-21T09:49:24.6150426Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-03-21T09:49:24.6151957Z hint: is subject to change. To configure the initial branch name to use in all
+2025-03-21T09:49:24.6153370Z hint: of your new repositories, which will suppress this warning, call:
+2025-03-21T09:49:24.6154811Z hint:
+2025-03-21T09:49:24.6155688Z hint: 	git config --global init.defaultBranch <name>
+2025-03-21T09:49:24.6156680Z hint:
+2025-03-21T09:49:24.6157642Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-03-21T09:49:24.6158695Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-03-21T09:49:24.6159439Z hint:
+2025-03-21T09:49:24.6159866Z hint: 	git branch -m <name>
+2025-03-21T09:49:24.6160627Z Initialized empty Git repository in /home/runner/work/vr-match/vr-match/.git/
+2025-03-21T09:49:24.6168207Z [command]/usr/bin/git remote add origin https://github.com/boxp/vr-match
+2025-03-21T09:49:24.6200376Z ##[endgroup]
+2025-03-21T09:49:24.6201573Z ##[group]Disabling automatic garbage collection
+2025-03-21T09:49:24.6204130Z [command]/usr/bin/git config --local gc.auto 0
+2025-03-21T09:49:24.6232113Z ##[endgroup]
+2025-03-21T09:49:24.6232871Z ##[group]Setting up auth
+2025-03-21T09:49:24.6238866Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-03-21T09:49:24.6270548Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-03-21T09:49:24.6571559Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-03-21T09:49:24.6610443Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-03-21T09:49:24.6846068Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-03-21T09:49:24.6880464Z ##[endgroup]
+2025-03-21T09:49:24.6882080Z ##[group]Fetching the repository
+2025-03-21T09:49:24.6890853Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +91f79da8433fa2bd63c0da716e8315b8e3bfaca5:refs/remotes/pull/196/merge
+2025-03-21T09:49:25.0718756Z From https://github.com/boxp/vr-match
+2025-03-21T09:49:25.0720559Z  * [new ref]         91f79da8433fa2bd63c0da716e8315b8e3bfaca5 -> pull/196/merge
+2025-03-21T09:49:25.0745176Z ##[endgroup]
+2025-03-21T09:49:25.0746113Z ##[group]Determining the checkout info
+2025-03-21T09:49:25.0747740Z ##[endgroup]
+2025-03-21T09:49:25.0752757Z [command]/usr/bin/git sparse-checkout disable
+2025-03-21T09:49:25.0793034Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-03-21T09:49:25.0821748Z ##[group]Checking out the ref
+2025-03-21T09:49:25.0826556Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/196/merge
+2025-03-21T09:49:25.0963178Z Note: switching to 'refs/remotes/pull/196/merge'.
+2025-03-21T09:49:25.0964479Z 
+2025-03-21T09:49:25.0965299Z You are in 'detached HEAD' state. You can look around, make experimental
+2025-03-21T09:49:25.0967373Z changes and commit them, and you can discard any commits you make in this
+2025-03-21T09:49:25.0969916Z state without impacting any branches by switching back to a branch.
+2025-03-21T09:49:25.0971452Z 
+2025-03-21T09:49:25.0972414Z If you want to create a new branch to retain commits you create, you may
+2025-03-21T09:49:25.0974872Z do so (now or later) by using -c with the switch command. Example:
+2025-03-21T09:49:25.0976205Z 
+2025-03-21T09:49:25.0976725Z   git switch -c <new-branch-name>
+2025-03-21T09:49:25.0977689Z 
+2025-03-21T09:49:25.0978145Z Or undo this operation with:
+2025-03-21T09:49:25.0978939Z 
+2025-03-21T09:49:25.0979373Z   git switch -
+2025-03-21T09:49:25.0979956Z 
+2025-03-21T09:49:25.0980961Z Turn off this advice by setting config variable advice.detachedHead to false
+2025-03-21T09:49:25.0982602Z 
+2025-03-21T09:49:25.0984221Z HEAD is now at 91f79da Merge cc059294fa087ecdb931be8c4d5594a3b3311913 into 67faa41ffcb0b5cd1996f36989ece32c2aadb056
+2025-03-21T09:49:25.0987731Z ##[endgroup]
+2025-03-21T09:49:25.1009446Z [command]/usr/bin/git log -1 --format=%H
+2025-03-21T09:49:25.1031641Z 91f79da8433fa2bd63c0da716e8315b8e3bfaca5
+2025-03-21T09:49:25.1311593Z ##[group]Run docker/setup-buildx-action@v2
+2025-03-21T09:49:25.1312750Z with:
+2025-03-21T09:49:25.1313890Z   driver: docker-container
+2025-03-21T09:49:25.1315960Z   buildkitd-flags: --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host
+2025-03-21T09:49:25.1318175Z   install: false
+2025-03-21T09:49:25.1319011Z   use: true
+2025-03-21T09:49:25.1319818Z   cleanup: true
+2025-03-21T09:49:25.1320633Z ##[endgroup]
+2025-03-21T09:49:25.2780668Z ##[group]Docker info
+2025-03-21T09:49:25.2792429Z [command]/usr/bin/docker version
+2025-03-21T09:49:25.3388295Z Client: Docker Engine - Community
+2025-03-21T09:49:25.3391153Z  Version:           26.1.3
+2025-03-21T09:49:25.3396257Z  API version:       1.45
+2025-03-21T09:49:25.3397730Z  Go version:        go1.21.10
+2025-03-21T09:49:25.3399081Z  Git commit:        b72abbb
+2025-03-21T09:49:25.3400355Z  Built:             Thu May 16 08:33:35 2024
+2025-03-21T09:49:25.3401510Z  OS/Arch:           linux/amd64
+2025-03-21T09:49:25.3402653Z  Context:           default
+2025-03-21T09:49:25.3403243Z 
+2025-03-21T09:49:25.3404047Z Server: Docker Engine - Community
+2025-03-21T09:49:25.3405117Z  Engine:
+2025-03-21T09:49:25.3405915Z   Version:          26.1.3
+2025-03-21T09:49:25.3406944Z   API version:      1.45 (minimum version 1.24)
+2025-03-21T09:49:25.3408148Z   Go version:       go1.21.10
+2025-03-21T09:49:25.3409057Z   Git commit:       8e96db1
+2025-03-21T09:49:25.3410140Z   Built:            Thu May 16 08:33:35 2024
+2025-03-21T09:49:25.3411320Z   OS/Arch:          linux/amd64
+2025-03-21T09:49:25.3412297Z   Experimental:     false
+2025-03-21T09:49:25.3413256Z  containerd:
+2025-03-21T09:49:25.3414279Z   Version:          1.7.25
+2025-03-21T09:49:25.3415408Z   GitCommit:        bcc810d6b9066471b0b6fa75f557a15a1cbf31bb
+2025-03-21T09:49:25.3416724Z  runc:
+2025-03-21T09:49:25.3417442Z   Version:          1.2.4
+2025-03-21T09:49:25.3418340Z   GitCommit:        v1.2.4-0-g6c52b3f
+2025-03-21T09:49:25.3419488Z  docker-init:
+2025-03-21T09:49:25.3420237Z   Version:          0.19.0
+2025-03-21T09:49:25.3421152Z   GitCommit:        de40ad0
+2025-03-21T09:49:25.3449633Z [command]/usr/bin/docker info
+2025-03-21T09:49:25.5354977Z Client: Docker Engine - Community
+2025-03-21T09:49:25.5356762Z  Version:    26.1.3
+2025-03-21T09:49:25.5358102Z  Context:    default
+2025-03-21T09:49:25.5359420Z  Debug Mode: false
+2025-03-21T09:49:25.5360226Z  Plugins:
+2025-03-21T09:49:25.5361036Z   buildx: Docker Buildx (Docker Inc.)
+2025-03-21T09:49:25.5362125Z     Version:  v0.21.2
+2025-03-21T09:49:25.5363193Z     Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+2025-03-21T09:49:25.5364878Z   compose: Docker Compose (Docker Inc.)
+2025-03-21T09:49:25.5366195Z     Version:  v2.27.1
+2025-03-21T09:49:25.5368059Z     Path:     /usr/libexec/docker/cli-plugins/docker-compose
+2025-03-21T09:49:25.5369548Z 
+2025-03-21T09:49:25.5370348Z Server:
+2025-03-21T09:49:25.5371413Z  Containers: 0
+2025-03-21T09:49:25.5372723Z   Running: 0
+2025-03-21T09:49:25.5374136Z   Paused: 0
+2025-03-21T09:49:25.5374993Z   Stopped: 0
+2025-03-21T09:49:25.5376228Z  Images: 0
+2025-03-21T09:49:25.5377446Z  Server Version: 26.1.3
+2025-03-21T09:49:25.5378778Z  Storage Driver: overlay2
+2025-03-21T09:49:25.5380428Z   Backing Filesystem: extfs
+2025-03-21T09:49:25.5381949Z   Supports d_type: true
+2025-03-21T09:49:25.5383617Z   Using metacopy: false
+2025-03-21T09:49:25.5385196Z   Native Overlay Diff: false
+2025-03-21T09:49:25.5386822Z   userxattr: false
+2025-03-21T09:49:25.5388131Z  Logging Driver: json-file
+2025-03-21T09:49:25.5389813Z  Cgroup Driver: systemd
+2025-03-21T09:49:25.5391309Z  Cgroup Version: 2
+2025-03-21T09:49:25.5392730Z  Plugins:
+2025-03-21T09:49:25.5394247Z   Volume: local
+2025-03-21T09:49:25.5395754Z   Network: bridge host ipvlan macvlan null overlay
+2025-03-21T09:49:25.5398421Z   Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+2025-03-21T09:49:25.5400844Z  Swarm: inactive
+2025-03-21T09:49:25.5402463Z  Runtimes: io.containerd.runc.v2 runc
+2025-03-21T09:49:25.5404973Z  Default Runtime: runc
+2025-03-21T09:49:25.5406449Z  Init Binary: docker-init
+2025-03-21T09:49:25.5408584Z  containerd version: bcc810d6b9066471b0b6fa75f557a15a1cbf31bb
+2025-03-21T09:49:25.5410830Z  runc version: v1.2.4-0-g6c52b3f
+2025-03-21T09:49:25.5412685Z  init version: de40ad0
+2025-03-21T09:49:25.5414283Z  Security Options:
+2025-03-21T09:49:25.5415521Z   apparmor
+2025-03-21T09:49:25.5416591Z   seccomp
+2025-03-21T09:49:25.5417836Z    Profile: builtin
+2025-03-21T09:49:25.5419092Z   cgroupns
+2025-03-21T09:49:25.5420236Z  Kernel Version: 6.8.0-1021-azure
+2025-03-21T09:49:25.5421856Z  Operating System: Ubuntu 24.04.2 LTS
+2025-03-21T09:49:25.5423380Z  OSType: linux
+2025-03-21T09:49:25.5424612Z  Architecture: x86_64
+2025-03-21T09:49:25.5425518Z  CPUs: 4
+2025-03-21T09:49:25.5426376Z  Total Memory: 15.62GiB
+2025-03-21T09:49:25.5427217Z  Name: fv-az1671-42
+2025-03-21T09:49:25.5428133Z  ID: 6a8bf038-5108-4101-bd5f-2bc4f2707329
+2025-03-21T09:49:25.5429229Z  Docker Root Dir: /var/lib/docker
+2025-03-21T09:49:25.5430215Z  Debug Mode: false
+2025-03-21T09:49:25.5430985Z  Username: githubactions
+2025-03-21T09:49:25.5431971Z  Experimental: false
+2025-03-21T09:49:25.5433283Z  Insecure Registries:
+2025-03-21T09:49:25.5434893Z   127.0.0.0/8
+2025-03-21T09:49:25.5502327Z  Live Restore Enabled: false
+2025-03-21T09:49:25.5503354Z 
+2025-03-21T09:49:25.5505152Z ##[endgroup]
+2025-03-21T09:49:25.5951645Z ##[group]Buildx version
+2025-03-21T09:49:25.5982700Z [command]/usr/bin/docker buildx version
+2025-03-21T09:49:25.6408380Z github.com/docker/buildx v0.21.2 1360a9e8d25a2c3d03c2776d53ae62e6ff0a843d
+2025-03-21T09:49:25.6437521Z ##[endgroup]
+2025-03-21T09:49:25.6444913Z ##[group]Creating a new builder instance
+2025-03-21T09:49:25.6971593Z [command]/usr/bin/docker buildx create --name builder-67acc04d-ec5f-414f-b9bc-61aa7dd27152 --driver docker-container --buildkitd-flags --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host --use
+2025-03-21T09:49:25.7436252Z builder-67acc04d-ec5f-414f-b9bc-61aa7dd27152
+2025-03-21T09:49:25.7466713Z ##[endgroup]
+2025-03-21T09:49:25.7468197Z ##[group]Booting builder
+2025-03-21T09:49:25.7497530Z [command]/usr/bin/docker buildx inspect --bootstrap --builder builder-67acc04d-ec5f-414f-b9bc-61aa7dd27152
+2025-03-21T09:49:25.7919812Z #1 [internal] booting buildkit
+2025-03-21T09:49:25.9424255Z #1 pulling image moby/buildkit:buildx-stable-1
+2025-03-21T09:49:27.8171259Z #1 pulling image moby/buildkit:buildx-stable-1 2.0s done
+2025-03-21T09:49:27.9678044Z #1 creating container buildx_buildkit_builder-67acc04d-ec5f-414f-b9bc-61aa7dd271520
+2025-03-21T09:49:28.2136897Z #1 creating container buildx_buildkit_builder-67acc04d-ec5f-414f-b9bc-61aa7dd271520 0.4s done
+2025-03-21T09:49:28.2163676Z #1 DONE 2.4s
+2025-03-21T09:49:28.2465436Z Name:          builder-67acc04d-ec5f-414f-b9bc-61aa7dd27152
+2025-03-21T09:49:28.2466226Z Driver:        docker-container
+2025-03-21T09:49:28.2467176Z Last Activity: 2025-03-21 09:49:25 +0000 UTC
+2025-03-21T09:49:28.2467458Z 
+2025-03-21T09:49:28.2467571Z Nodes:
+2025-03-21T09:49:28.2467957Z Name:                  builder-67acc04d-ec5f-414f-b9bc-61aa7dd271520
+2025-03-21T09:49:28.2468451Z Endpoint:              unix:///var/run/docker.sock
+2025-03-21T09:49:28.2468858Z Status:                running
+2025-03-21T09:49:28.2469566Z BuildKit daemon flags: --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host
+2025-03-21T09:49:28.2470339Z BuildKit version:      v0.20.1
+2025-03-21T09:49:28.2470902Z Platforms:             linux/amd64, linux/amd64/v2, linux/amd64/v3, linux/386
+2025-03-21T09:49:28.2471474Z Labels:
+2025-03-21T09:49:28.2471862Z  org.mobyproject.buildkit.worker.executor:         oci
+2025-03-21T09:49:28.2472497Z  org.mobyproject.buildkit.worker.hostname:         336091b78a5f
+2025-03-21T09:49:28.2473149Z  org.mobyproject.buildkit.worker.network:          host
+2025-03-21T09:49:28.2474120Z  org.mobyproject.buildkit.worker.oci.process-mode: sandbox
+2025-03-21T09:49:28.2474793Z  org.mobyproject.buildkit.worker.selinux.enabled:  false
+2025-03-21T09:49:28.2475738Z  org.mobyproject.buildkit.worker.snapshotter:      overlayfs
+2025-03-21T09:49:28.2476316Z GC Policy rule#0:
+2025-03-21T09:49:28.2476646Z  All:            false
+2025-03-21T09:49:28.2477220Z  Filters:        type==source.local,type==exec.cachemount,type==source.git.checkout
+2025-03-21T09:49:28.2477842Z  Keep Duration:  48h0m0s
+2025-03-21T09:49:28.2478185Z  Max Used Space: 488.3MiB
+2025-03-21T09:49:28.2478561Z GC Policy rule#1:
+2025-03-21T09:49:28.2478878Z  All:            false
+2025-03-21T09:49:28.2479298Z  Keep Duration:  1440h0m0s
+2025-03-21T09:49:28.2479683Z  Reserved Space: 7.451GiB
+2025-03-21T09:49:28.2480070Z  Max Used Space: 54.02GiB
+2025-03-21T09:49:28.2480440Z  Min Free Space: 13.97GiB
+2025-03-21T09:49:28.2480770Z GC Policy rule#2:
+2025-03-21T09:49:28.2481086Z  All:            false
+2025-03-21T09:49:28.2481406Z  Reserved Space: 7.451GiB
+2025-03-21T09:49:28.2481775Z  Max Used Space: 54.02GiB
+2025-03-21T09:49:28.2482187Z  Min Free Space: 13.97GiB
+2025-03-21T09:49:28.2482563Z GC Policy rule#3:
+2025-03-21T09:49:28.2482900Z  All:            true
+2025-03-21T09:49:28.2483242Z  Reserved Space: 7.451GiB
+2025-03-21T09:49:28.2484918Z  Max Used Space: 54.02GiB
+2025-03-21T09:49:28.2485322Z  Min Free Space: 13.97GiB
+2025-03-21T09:49:28.2513132Z ##[endgroup]
+2025-03-21T09:49:28.3322173Z ##[group]Inspect builder
+2025-03-21T09:49:28.3353992Z {
+2025-03-21T09:49:28.3354267Z   "nodes": [
+2025-03-21T09:49:28.3354522Z     {
+2025-03-21T09:49:28.3354899Z       "name": "builder-67acc04d-ec5f-414f-b9bc-61aa7dd271520",
+2025-03-21T09:49:28.3355361Z       "endpoint": "unix:///var/run/docker.sock",
+2025-03-21T09:49:28.3355764Z       "status": "running",
+2025-03-21T09:49:28.3356209Z       "platforms": "linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/386",
+2025-03-21T09:49:28.3356733Z       "labels": {
+2025-03-21T09:49:28.3357094Z         "org.mobyproject.buildkit.worker.executor": "oci",
+2025-03-21T09:49:28.3357698Z         "org.mobyproject.buildkit.worker.hostname": "336091b78a5f",
+2025-03-21T09:49:28.3358277Z         "org.mobyproject.buildkit.worker.network": "host",
+2025-03-21T09:49:28.3358850Z         "org.mobyproject.buildkit.worker.oci.process-mode": "sandbox",
+2025-03-21T09:49:28.3359623Z         "org.mobyproject.buildkit.worker.selinux.enabled": "false",
+2025-03-21T09:49:28.3360241Z         "org.mobyproject.buildkit.worker.snapshotter": "overlayfs"
+2025-03-21T09:49:28.3360703Z       },
+2025-03-21T09:49:28.3360869Z       "gcPolicy": [
+2025-03-21T09:49:28.3361045Z         {
+2025-03-21T09:49:28.3361201Z           "all": false,
+2025-03-21T09:49:28.3361393Z           "filter": [
+2025-03-21T09:49:28.3361584Z             "type==source.local",
+2025-03-21T09:49:28.3361808Z             "type==exec.cachemount",
+2025-03-21T09:49:28.3362046Z             "type==source.git.checkout"
+2025-03-21T09:49:28.3362258Z           ],
+2025-03-21T09:49:28.3362448Z           "keepDuration": "48h0m0s"
+2025-03-21T09:49:28.3363060Z         },
+2025-03-21T09:49:28.3363329Z         {
+2025-03-21T09:49:28.3363839Z           "all": false,
+2025-03-21T09:49:28.3364055Z           "keepDuration": "1440h0m0s"
+2025-03-21T09:49:28.3364278Z         },
+2025-03-21T09:49:28.3364420Z         {
+2025-03-21T09:49:28.3364572Z           "all": false
+2025-03-21T09:49:28.3364834Z         },
+2025-03-21T09:49:28.3365087Z         {
+2025-03-21T09:49:28.3365242Z           "all": true
+2025-03-21T09:49:28.3365420Z         }
+2025-03-21T09:49:28.3365559Z       ]
+2025-03-21T09:49:28.3365736Z     }
+2025-03-21T09:49:28.3365876Z   ],
+2025-03-21T09:49:28.3366327Z   "name": "builder-67acc04d-ec5f-414f-b9bc-61aa7dd27152",
+2025-03-21T09:49:28.3366830Z   "driver": "docker-container",
+2025-03-21T09:49:28.3367222Z   "lastActivity": "2025-03-21T09:49:25.000Z"
+2025-03-21T09:49:28.3367609Z }
+2025-03-21T09:49:28.3368152Z ##[endgroup]
+2025-03-21T09:49:28.3368587Z ##[group]BuildKit version
+2025-03-21T09:49:28.6198988Z builder-67acc04d-ec5f-414f-b9bc-61aa7dd271520: moby/buildkit:buildx-stable-1 => buildkitd github.com/moby/buildkit v0.20.1 de56a3c5056341667b5bad71f414ece70b50724f
+2025-03-21T09:49:28.6200333Z ##[endgroup]
+2025-03-21T09:49:28.6360069Z ##[group]Run docker/build-push-action@v4
+2025-03-21T09:49:28.6360336Z with:
+2025-03-21T09:49:28.6360502Z   context: ./back-end
+2025-03-21T09:49:28.6360682Z   push: false
+2025-03-21T09:49:28.6360844Z   load: true
+2025-03-21T09:49:28.6361009Z   tags: vr-match-backend:test
+2025-03-21T09:49:28.6361219Z   cache-from: type=gha
+2025-03-21T09:49:28.6361409Z   cache-to: type=gha,mode=max
+2025-03-21T09:49:28.6361611Z   no-cache: false
+2025-03-21T09:49:28.6361772Z   pull: false
+2025-03-21T09:49:28.6362070Z   github-token: ***
+2025-03-21T09:49:28.6362245Z ##[endgroup]
+2025-03-21T09:49:28.7792705Z ##[group]GitHub Actions runtime token ACs
+2025-03-21T09:49:28.7812175Z refs/pull/196/merge: read/write
+2025-03-21T09:49:28.7812970Z refs/heads/master: read
+2025-03-21T09:49:28.7815008Z ##[endgroup]
+2025-03-21T09:49:28.7815597Z ##[group]Docker info
+2025-03-21T09:49:28.7868119Z [command]/usr/bin/docker version
+2025-03-21T09:49:28.8051319Z Client: Docker Engine - Community
+2025-03-21T09:49:28.8054968Z  Version:           26.1.3
+2025-03-21T09:49:28.8055329Z  API version:       1.45
+2025-03-21T09:49:28.8055658Z  Go version:        go1.21.10
+2025-03-21T09:49:28.8055940Z  Git commit:        b72abbb
+2025-03-21T09:49:28.8056184Z  Built:             Thu May 16 08:33:35 2024
+2025-03-21T09:49:28.8056426Z  OS/Arch:           linux/amd64
+2025-03-21T09:49:28.8056638Z  Context:           default
+2025-03-21T09:49:28.8056769Z 
+2025-03-21T09:49:28.8056865Z Server: Docker Engine - Community
+2025-03-21T09:49:28.8057085Z  Engine:
+2025-03-21T09:49:28.8057248Z   Version:          26.1.3
+2025-03-21T09:49:28.8057467Z   API version:      1.45 (minimum version 1.24)
+2025-03-21T09:49:28.8057741Z   Go version:       go1.21.10
+2025-03-21T09:49:28.8057941Z   Git commit:       8e96db1
+2025-03-21T09:49:28.8058157Z   Built:            Thu May 16 08:33:35 2024
+2025-03-21T09:49:28.8058403Z   OS/Arch:          linux/amd64
+2025-03-21T09:49:28.8058612Z   Experimental:     false
+2025-03-21T09:49:28.8058804Z  containerd:
+2025-03-21T09:49:28.8058965Z   Version:          1.7.25
+2025-03-21T09:49:28.8059215Z   GitCommit:        bcc810d6b9066471b0b6fa75f557a15a1cbf31bb
+2025-03-21T09:49:28.8059487Z  runc:
+2025-03-21T09:49:28.8059644Z   Version:          1.2.4
+2025-03-21T09:49:28.8059839Z   GitCommit:        v1.2.4-0-g6c52b3f
+2025-03-21T09:49:28.8060066Z  docker-init:
+2025-03-21T09:49:28.8060228Z   Version:          0.19.0
+2025-03-21T09:49:28.8060429Z   GitCommit:        de40ad0
+2025-03-21T09:49:28.8100191Z [command]/usr/bin/docker info
+2025-03-21T09:49:28.8479461Z Client: Docker Engine - Community
+2025-03-21T09:49:28.8480244Z  Version:    26.1.3
+2025-03-21T09:49:28.8480707Z  Context:    default
+2025-03-21T09:49:28.8481934Z  Debug Mode: false
+2025-03-21T09:49:28.8482240Z  Plugins:
+2025-03-21T09:49:28.8482529Z   buildx: Docker Buildx (Docker Inc.)
+2025-03-21T09:49:28.8482913Z     Version:  v0.21.2
+2025-03-21T09:49:28.8484013Z     Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+2025-03-21T09:49:28.8484517Z   compose: Docker Compose (Docker Inc.)
+2025-03-21T09:49:28.8484908Z     Version:  v2.27.1
+2025-03-21T09:49:28.8485273Z     Path:     /usr/libexec/docker/cli-plugins/docker-compose
+2025-03-21T09:49:28.8485595Z 
+2025-03-21T09:49:28.8485695Z Server:
+2025-03-21T09:49:28.8485928Z  Containers: 1
+2025-03-21T09:49:28.8486200Z   Running: 1
+2025-03-21T09:49:28.8486453Z   Paused: 0
+2025-03-21T09:49:28.8486706Z   Stopped: 0
+2025-03-21T09:49:28.8486953Z  Images: 1
+2025-03-21T09:49:28.8487211Z  Server Version: 26.1.3
+2025-03-21T09:49:28.8487511Z  Storage Driver: overlay2
+2025-03-21T09:49:28.8487833Z   Backing Filesystem: extfs
+2025-03-21T09:49:28.8488157Z   Supports d_type: true
+2025-03-21T09:49:28.8488480Z   Using metacopy: false
+2025-03-21T09:49:28.8488787Z   Native Overlay Diff: false
+2025-03-21T09:49:28.8489108Z   userxattr: false
+2025-03-21T09:49:28.8489402Z  Logging Driver: json-file
+2025-03-21T09:49:28.8489738Z  Cgroup Driver: systemd
+2025-03-21T09:49:28.8490047Z  Cgroup Version: 2
+2025-03-21T09:49:28.8490316Z  Plugins:
+2025-03-21T09:49:28.8490899Z   Volume: local
+2025-03-21T09:49:28.8491255Z   Network: bridge host ipvlan macvlan null overlay
+2025-03-21T09:49:28.8491866Z   Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+2025-03-21T09:49:28.8492409Z  Swarm: inactive
+2025-03-21T09:49:28.8492731Z  Runtimes: io.containerd.runc.v2 runc
+2025-03-21T09:49:28.8493117Z  Default Runtime: runc
+2025-03-21T09:49:28.8493413Z  Init Binary: docker-init
+2025-03-21T09:49:28.8494373Z  containerd version: bcc810d6b9066471b0b6fa75f557a15a1cbf31bb
+2025-03-21T09:49:28.8494798Z  runc version: v1.2.4-0-g6c52b3f
+2025-03-21T09:49:28.8495134Z  init version: de40ad0
+2025-03-21T09:49:28.8495336Z  Security Options:
+2025-03-21T09:49:28.8495515Z   apparmor
+2025-03-21T09:49:28.8495665Z   seccomp
+2025-03-21T09:49:28.8495882Z    Profile: builtin
+2025-03-21T09:49:28.8496083Z   cgroupns
+2025-03-21T09:49:28.8496261Z  Kernel Version: 6.8.0-1021-azure
+2025-03-21T09:49:28.8496495Z  Operating System: Ubuntu 24.04.2 LTS
+2025-03-21T09:49:28.8496715Z  OSType: linux
+2025-03-21T09:49:28.8496905Z  Architecture: x86_64
+2025-03-21T09:49:28.8497084Z  CPUs: 4
+2025-03-21T09:49:28.8497246Z  Total Memory: 15.62GiB
+2025-03-21T09:49:28.8497424Z  Name: fv-az1671-42
+2025-03-21T09:49:28.8497614Z  ID: 6a8bf038-5108-4101-bd5f-2bc4f2707329
+2025-03-21T09:49:28.8497856Z  Docker Root Dir: /var/lib/docker
+2025-03-21T09:49:28.8498068Z  Debug Mode: false
+2025-03-21T09:49:28.8498239Z  Username: githubactions
+2025-03-21T09:49:28.8498454Z  Experimental: false
+2025-03-21T09:49:28.8498632Z  Insecure Registries:
+2025-03-21T09:49:28.8498803Z   127.0.0.0/8
+2025-03-21T09:49:28.8498963Z  Live Restore Enabled: false
+2025-03-21T09:49:28.8499098Z 
+2025-03-21T09:49:28.8500304Z ##[endgroup]
+2025-03-21T09:49:28.8501299Z ##[group]Proxy configuration
+2025-03-21T09:49:28.8505156Z No proxy configuration found
+2025-03-21T09:49:28.8505763Z ##[endgroup]
+2025-03-21T09:49:28.9031931Z ##[group]Buildx version
+2025-03-21T09:49:28.9058577Z [command]/usr/bin/docker buildx version
+2025-03-21T09:49:28.9483736Z github.com/docker/buildx v0.21.2 1360a9e8d25a2c3d03c2776d53ae62e6ff0a843d
+2025-03-21T09:49:28.9517652Z ##[endgroup]
+2025-03-21T09:49:29.3903096Z [command]/usr/bin/docker buildx build --cache-from type=gha --cache-to type=gha,mode=max --iidfile /tmp/docker-actions-toolkit-5LLKFO/iidfile --tag vr-match-backend:test --load --metadata-file /tmp/docker-actions-toolkit-5LLKFO/metadata-file ./back-end
+2025-03-21T09:49:29.7211655Z #0 building with "builder-67acc04d-ec5f-414f-b9bc-61aa7dd27152" instance using docker-container driver
+2025-03-21T09:49:29.7212363Z 
+2025-03-21T09:49:29.7212549Z #1 [internal] load build definition from Dockerfile
+2025-03-21T09:49:29.7212858Z #1 transferring dockerfile: 527B done
+2025-03-21T09:49:29.7213187Z #1 DONE 0.0s
+2025-03-21T09:49:29.7213332Z 
+2025-03-21T09:49:29.7213710Z #2 [auth] library/clojure:pull token for registry-1.docker.io
+2025-03-21T09:49:29.7214504Z #2 DONE 0.0s
+2025-03-21T09:49:29.7214681Z 
+2025-03-21T09:49:29.7214918Z #3 [internal] load metadata for docker.io/library/clojure:latest
+2025-03-21T09:49:29.9052622Z #3 DONE 0.4s
+2025-03-21T09:49:30.0689067Z 
+2025-03-21T09:49:30.0689359Z #4 [internal] load .dockerignore
+2025-03-21T09:49:30.0689839Z #4 transferring context: 2B done
+2025-03-21T09:49:30.0690243Z #4 DONE 0.0s
+2025-03-21T09:49:30.0690354Z 
+2025-03-21T09:49:30.0690438Z #5 [internal] load build context
+2025-03-21T09:49:30.0690661Z #5 DONE 0.0s
+2025-03-21T09:49:30.0690757Z 
+2025-03-21T09:49:30.0691110Z #6 [1/7] FROM docker.io/library/clojure:latest@sha256:850687a8150b48ad2b57e29db3cb08bd17a30ccc019c8171c62e0985b9e6051d
+2025-03-21T09:49:30.0691939Z #6 resolve docker.io/library/clojure:latest@sha256:850687a8150b48ad2b57e29db3cb08bd17a30ccc019c8171c62e0985b9e6051d done
+2025-03-21T09:49:30.0692483Z #6 DONE 0.0s
+2025-03-21T09:49:30.0692587Z 
+2025-03-21T09:49:30.0692725Z #7 importing cache manifest from gha:18183001671702809400
+2025-03-21T09:49:30.1291306Z #7 DONE 0.2s
+2025-03-21T09:49:30.2826074Z 
+2025-03-21T09:49:30.2827341Z #5 [internal] load build context
+2025-03-21T09:49:30.2828470Z #5 transferring context: 125.47kB 0.0s done
+2025-03-21T09:49:30.2829140Z #5 DONE 0.0s
+2025-03-21T09:49:30.2829319Z 
+2025-03-21T09:49:30.2829992Z #6 [1/7] FROM docker.io/library/clojure:latest@sha256:850687a8150b48ad2b57e29db3cb08bd17a30ccc019c8171c62e0985b9e6051d
+2025-03-21T09:49:30.2831138Z #6 sha256:d726fdb86465c678e0125847dc8f911bedf38c3540c3b1c351121c704e2d3b9d 397B / 397B 0.0s done
+2025-03-21T09:49:30.2832161Z #6 sha256:2a990224440a853c3b8a6c2d2323288cd225fd6d7fb113696564ab01afa34dc7 613B / 613B 0.1s done
+2025-03-21T09:49:30.4525422Z #6 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 32B / 32B 0.1s done
+2025-03-21T09:49:30.4544666Z #6 sha256:b84fa2b22c2f16399239161377d42cee6d60f14d8f70de9fa48d42b689570b50 1.05MB / 28.56MB 0.2s
+2025-03-21T09:49:30.4545968Z #6 sha256:8940792420d139c8eb74fd235441214f66320b66798f81f335e9face1675a804 3.15MB / 62.06MB 0.2s
+2025-03-21T09:49:30.4547634Z #6 sha256:e8f4065251a9692fb545238e20ef4bf80c34781d2616f74322d0c985ec150729 4.51MB / 4.51MB 0.1s done
+2025-03-21T09:49:30.4548626Z #6 sha256:c46c32c1dff732c5f75cdf0fa8c5427f5c8f16ebdac05538dd6234aabab5a554 17.22MB / 157.59MB 0.2s
+2025-03-21T09:49:30.5999010Z #6 sha256:b84fa2b22c2f16399239161377d42cee6d60f14d8f70de9fa48d42b689570b50 28.56MB / 28.56MB 0.4s done
+2025-03-21T09:49:30.6002795Z #6 sha256:8940792420d139c8eb74fd235441214f66320b66798f81f335e9face1675a804 27.26MB / 62.06MB 0.3s
+2025-03-21T09:49:30.6004035Z #6 sha256:c46c32c1dff732c5f75cdf0fa8c5427f5c8f16ebdac05538dd6234aabab5a554 49.28MB / 157.59MB 0.3s
+2025-03-21T09:49:30.6006859Z #6 sha256:7cd785773db44407e20a679ce5439222e505475eed5b99f1910eb2cda51729ab 24.83MB / 48.47MB 0.2s
+2025-03-21T09:49:30.7505981Z #6 sha256:8940792420d139c8eb74fd235441214f66320b66798f81f335e9face1675a804 57.34MB / 62.06MB 0.5s
+2025-03-21T09:49:30.7507144Z #6 sha256:c46c32c1dff732c5f75cdf0fa8c5427f5c8f16ebdac05538dd6234aabab5a554 76.55MB / 157.59MB 0.5s
+2025-03-21T09:49:30.7509455Z #6 sha256:7cd785773db44407e20a679ce5439222e505475eed5b99f1910eb2cda51729ab 48.47MB / 48.47MB 0.3s done
+2025-03-21T09:49:30.7510509Z #6 extracting sha256:7cd785773db44407e20a679ce5439222e505475eed5b99f1910eb2cda51729ab
+2025-03-21T09:49:30.8989532Z #6 sha256:8940792420d139c8eb74fd235441214f66320b66798f81f335e9face1675a804 62.06MB / 62.06MB 0.6s done
+2025-03-21T09:49:30.8991149Z #6 sha256:c46c32c1dff732c5f75cdf0fa8c5427f5c8f16ebdac05538dd6234aabab5a554 101.71MB / 157.59MB 0.6s
+2025-03-21T09:49:31.0486010Z #6 sha256:c46c32c1dff732c5f75cdf0fa8c5427f5c8f16ebdac05538dd6234aabab5a554 135.27MB / 157.59MB 0.8s
+2025-03-21T09:49:31.1985595Z #6 sha256:c46c32c1dff732c5f75cdf0fa8c5427f5c8f16ebdac05538dd6234aabab5a554 157.59MB / 157.59MB 0.9s
+2025-03-21T09:49:31.4379798Z #6 sha256:c46c32c1dff732c5f75cdf0fa8c5427f5c8f16ebdac05538dd6234aabab5a554 157.59MB / 157.59MB 1.0s done
+2025-03-21T09:49:31.8481270Z #6 extracting sha256:7cd785773db44407e20a679ce5439222e505475eed5b99f1910eb2cda51729ab 1.2s done
+2025-03-21T09:49:31.8482374Z #6 DONE 1.7s
+2025-03-21T09:49:31.9986931Z 
+2025-03-21T09:49:31.9987985Z #6 [1/7] FROM docker.io/library/clojure:latest@sha256:850687a8150b48ad2b57e29db3cb08bd17a30ccc019c8171c62e0985b9e6051d
+2025-03-21T09:49:31.9989134Z #6 extracting sha256:c46c32c1dff732c5f75cdf0fa8c5427f5c8f16ebdac05538dd6234aabab5a554
+2025-03-21T09:49:33.0246830Z #6 extracting sha256:c46c32c1dff732c5f75cdf0fa8c5427f5c8f16ebdac05538dd6234aabab5a554 1.2s done
+2025-03-21T09:49:33.0247586Z #6 DONE 2.9s
+2025-03-21T09:49:33.1788429Z 
+2025-03-21T09:49:33.1790282Z #6 [1/7] FROM docker.io/library/clojure:latest@sha256:850687a8150b48ad2b57e29db3cb08bd17a30ccc019c8171c62e0985b9e6051d
+2025-03-21T09:49:33.1791388Z #6 extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 done
+2025-03-21T09:49:33.1792301Z #6 extracting sha256:8940792420d139c8eb74fd235441214f66320b66798f81f335e9face1675a804
+2025-03-21T09:49:34.1069373Z #6 extracting sha256:8940792420d139c8eb74fd235441214f66320b66798f81f335e9face1675a804 1.1s done
+2025-03-21T09:49:34.1070160Z #6 DONE 4.0s
+2025-03-21T09:49:34.2937170Z 
+2025-03-21T09:49:34.2938313Z #6 [1/7] FROM docker.io/library/clojure:latest@sha256:850687a8150b48ad2b57e29db3cb08bd17a30ccc019c8171c62e0985b9e6051d
+2025-03-21T09:49:34.2939267Z #6 extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 done
+2025-03-21T09:49:34.2939928Z #6 extracting sha256:e8f4065251a9692fb545238e20ef4bf80c34781d2616f74322d0c985ec150729 0.0s done
+2025-03-21T09:49:34.2940572Z #6 extracting sha256:b84fa2b22c2f16399239161377d42cee6d60f14d8f70de9fa48d42b689570b50
+2025-03-21T09:49:34.5159553Z #6 extracting sha256:b84fa2b22c2f16399239161377d42cee6d60f14d8f70de9fa48d42b689570b50 0.4s done
+2025-03-21T09:49:34.5160071Z #6 DONE 4.4s
+2025-03-21T09:49:34.6775789Z 
+2025-03-21T09:49:34.6776691Z #6 [1/7] FROM docker.io/library/clojure:latest@sha256:850687a8150b48ad2b57e29db3cb08bd17a30ccc019c8171c62e0985b9e6051d
+2025-03-21T09:49:34.6777835Z #6 extracting sha256:2a990224440a853c3b8a6c2d2323288cd225fd6d7fb113696564ab01afa34dc7 done
+2025-03-21T09:49:34.6778750Z #6 extracting sha256:d726fdb86465c678e0125847dc8f911bedf38c3540c3b1c351121c704e2d3b9d done
+2025-03-21T09:49:34.6779329Z #6 DONE 4.4s
+2025-03-21T09:49:34.6779516Z 
+2025-03-21T09:49:34.6779687Z #8 [2/7] RUN mkdir -p /usr/src/app
+2025-03-21T09:49:35.9575679Z #8 DONE 1.4s
+2025-03-21T09:49:36.1277865Z 
+2025-03-21T09:49:36.1278104Z #9 [3/7] WORKDIR /usr/src/app
+2025-03-21T09:49:36.1278403Z #9 DONE 0.0s
+2025-03-21T09:49:36.1278510Z 
+2025-03-21T09:49:36.1278605Z #10 [4/7] COPY project.clj /usr/src/app/
+2025-03-21T09:49:36.1278852Z #10 DONE 0.0s
+2025-03-21T09:49:36.1278952Z 
+2025-03-21T09:49:36.1279030Z #11 [5/7] RUN lein deps
+2025-03-21T09:49:37.0640238Z #11 1.086 Retrieving lein-bom/lein-bom/0.2.0-SNAPSHOT/lein-bom-0.2.0-20200121.153209-18.pom from clojars
+2025-03-21T09:49:37.2451575Z #11 1.117 Retrieving lein-bom/lein-bom/0.2.0-SNAPSHOT/lein-bom-0.2.0-20200121.153209-18.jar from clojars
+2025-03-21T09:49:38.6822008Z #11 2.705 Retrieving org/clojure/core.async/0.7.559/core.async-0.7.559.pom from central
+2025-03-21T09:49:38.7866143Z #11 2.714 Retrieving org/clojure/pom.contrib/0.2.2/pom.contrib-0.2.2.pom from central
+2025-03-21T09:49:38.7867007Z #11 2.723 Retrieving org/clojure/tools.analyzer.jvm/0.7.3/tools.analyzer.jvm-0.7.3.pom from central
+2025-03-21T09:49:38.7867605Z #11 2.734 Retrieving org/clojure/tools.analyzer/0.7.0/tools.analyzer-0.7.0.pom from central
+2025-03-21T09:49:38.7868108Z #11 2.744 Retrieving org/clojure/clojure/1.5.1/clojure-1.5.1.pom from central
+2025-03-21T09:49:38.7868569Z #11 2.753 Retrieving org/sonatype/oss/oss-parent/5/oss-parent-5.pom from central
+2025-03-21T09:49:38.7869064Z #11 2.762 Retrieving org/clojure/core.memoize/0.8.2/core.memoize-0.8.2.pom from central
+2025-03-21T09:49:38.7869550Z #11 2.773 Retrieving org/clojure/core.cache/0.8.2/core.cache-0.8.2.pom from central
+2025-03-21T09:49:38.7870142Z #11 2.783 Retrieving org/clojure/data.priority-map/0.0.7/data.priority-map-0.0.7.pom from central
+2025-03-21T09:49:38.7870999Z #11 2.791 Retrieving org/clojure/pom.contrib/0.1.2/pom.contrib-0.1.2.pom from central
+2025-03-21T09:49:38.7871492Z #11 2.800 Retrieving org/sonatype/oss/oss-parent/7/oss-parent-7.pom from central
+2025-03-21T09:49:38.7871957Z #11 2.809 Retrieving org/clojure/clojure/1.4.0/clojure-1.4.0.pom from central
+2025-03-21T09:49:38.8925503Z #11 2.820 Retrieving org/clojure/clojure/1.6.0/clojure-1.6.0.pom from central
+2025-03-21T09:49:38.8926596Z #11 2.830 Retrieving org/ow2/asm/asm/5.2/asm-5.2.pom from central
+2025-03-21T09:49:38.8927573Z #11 2.838 Retrieving org/ow2/asm/asm-parent/5.2/asm-parent-5.2.pom from central
+2025-03-21T09:49:38.8928262Z #11 2.847 Retrieving org/ow2/ow2/1.3/ow2-1.3.pom from central
+2025-03-21T09:49:38.8928698Z #11 2.856 Retrieving org/clojure/tools.reader/1.3.2/tools.reader-1.3.2.pom from central
+2025-03-21T09:49:38.8929185Z #11 2.865 Retrieving org/clojure/clojure/1.7.0/clojure-1.7.0.pom from central
+2025-03-21T09:49:38.8929654Z #11 2.876 Retrieving org/clojure/data.codec/0.2.0/data.codec-0.2.0.pom from central
+2025-03-21T09:49:38.8930132Z #11 2.886 Retrieving org/clojure/clojure/1.9.0/clojure-1.9.0.pom from central
+2025-03-21T09:49:38.8930815Z #11 2.896 Retrieving org/clojure/spec.alpha/0.1.143/spec.alpha-0.1.143.pom from central
+2025-03-21T09:49:38.8931361Z #11 2.906 Retrieving org/clojure/core.specs.alpha/0.1.24/core.specs.alpha-0.1.24.pom from central
+2025-03-21T09:49:38.9967840Z #11 2.916 Retrieving org/clojure/test.check/0.10.0/test.check-0.10.0.pom from central
+2025-03-21T09:49:38.9971737Z #11 2.926 Retrieving org/clojure/tools.logging/1.1.0/tools.logging-1.1.0.pom from central
+2025-03-21T09:49:38.9972393Z #11 2.936 Retrieving org/slf4j/slf4j-log4j12/1.7.36/slf4j-log4j12-1.7.36.pom from central
+2025-03-21T09:49:38.9972930Z #11 2.946 Retrieving org/slf4j/slf4j-parent/1.7.36/slf4j-parent-1.7.36.pom from central
+2025-03-21T09:49:38.9973716Z #11 2.955 Retrieving org/slf4j/slf4j-reload4j/1.7.36/slf4j-reload4j-1.7.36.pom from central
+2025-03-21T09:49:38.9974243Z #11 2.965 Retrieving org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.pom from central
+2025-03-21T09:49:38.9974738Z #11 2.974 Retrieving ch/qos/reload4j/reload4j/1.2.19/reload4j-1.2.19.pom from central
+2025-03-21T09:49:38.9975246Z #11 3.010 Retrieving com/novemberain/pantomime/2.11.0/pantomime-2.11.0.pom from clojars
+2025-03-21T09:49:38.9975719Z #11 3.020 Retrieving org/clojure/clojure/1.10.0/clojure-1.10.0.pom from central
+2025-03-21T09:49:39.1026385Z #11 3.030 Retrieving org/clojure/spec.alpha/0.2.176/spec.alpha-0.2.176.pom from central
+2025-03-21T09:49:39.1027389Z #11 3.039 Retrieving org/clojure/core.specs.alpha/0.2.44/core.specs.alpha-0.2.44.pom from central
+2025-03-21T09:49:39.1028339Z #11 3.050 Retrieving org/apache/tika/tika-parsers/1.19.1/tika-parsers-1.19.1.pom from central
+2025-03-21T09:49:39.1029266Z #11 3.061 Retrieving org/apache/tika/tika-parent/1.19.1/tika-parent-1.19.1.pom from central
+2025-03-21T09:49:39.1030103Z #11 3.068 Retrieving org/apache/apache/17/apache-17.pom from central
+2025-03-21T09:49:39.1030723Z #11 3.077 Retrieving org/apache/tika/tika-core/1.19.1/tika-core-1.19.1.pom from central
+2025-03-21T09:49:39.1031313Z #11 3.088 Retrieving org/glassfish/jaxb/jaxb-core/2.3.0.1/jaxb-core-2.3.0.1.pom from central
+2025-03-21T09:49:39.1031882Z #11 3.098 Retrieving com/sun/xml/bind/mvn/jaxb-parent/2.3.0.1/jaxb-parent-2.3.0.1.pom from central
+2025-03-21T09:49:39.1032441Z #11 3.109 Retrieving com/sun/xml/bind/jaxb-bom-ext/2.3.0.1/jaxb-bom-ext-2.3.0.1.pom from central
+2025-03-21T09:49:39.1032963Z #11 3.118 Retrieving org/glassfish/jaxb/jaxb-bom/2.3.0.1/jaxb-bom-2.3.0.1.pom from central
+2025-03-21T09:49:39.1033662Z #11 3.125 Retrieving net/java/jvnet-parent/5/jvnet-parent-5.pom from central
+2025-03-21T09:49:39.2094311Z #11 3.134 Retrieving javax/xml/bind/jaxb-api/2.3.0/jaxb-api-2.3.0.pom from central
+2025-03-21T09:49:39.2095430Z #11 3.143 Retrieving javax/xml/bind/jaxb-api-parent/2.3.0/jaxb-api-parent-2.3.0.pom from central
+2025-03-21T09:49:39.2095977Z #11 3.152 Retrieving org/glassfish/jaxb/txw2/2.3.0.1/txw2-2.3.0.1.pom from central
+2025-03-21T09:49:39.2096846Z #11 3.163 Retrieving com/sun/xml/bind/mvn/jaxb-txw-parent/2.3.0.1/jaxb-txw-parent-2.3.0.1.pom from central
+2025-03-21T09:49:39.2097514Z #11 3.174 Retrieving com/sun/istack/istack-commons-runtime/3.0.5/istack-commons-runtime-3.0.5.pom from central
+2025-03-21T09:49:39.2098118Z #11 3.184 Retrieving com/sun/istack/istack-commons/3.0.5/istack-commons-3.0.5.pom from central
+2025-03-21T09:49:39.2098672Z #11 3.194 Retrieving org/glassfish/jaxb/jaxb-runtime/2.3.0.1/jaxb-runtime-2.3.0.1.pom from central
+2025-03-21T09:49:39.2099285Z #11 3.205 Retrieving com/sun/xml/bind/mvn/jaxb-runtime-parent/2.3.0.1/jaxb-runtime-parent-2.3.0.1.pom from central
+2025-03-21T09:49:39.2099868Z #11 3.224 Retrieving org/jvnet/staxex/stax-ex/1.7.8/stax-ex-1.7.8.pom from central
+2025-03-21T09:49:39.2100317Z #11 3.232 Retrieving net/java/jvnet-parent/3/jvnet-parent-3.pom from central
+2025-03-21T09:49:39.3114663Z #11 3.243 Retrieving com/sun/xml/fastinfoset/FastInfoset/1.2.13/FastInfoset-1.2.13.pom from central
+2025-03-21T09:49:39.3115990Z #11 3.250 Retrieving com/sun/xml/fastinfoset/fastinfoset-project/1.2.13/fastinfoset-project-1.2.13.pom from central
+2025-03-21T09:49:39.3117554Z #11 3.259 Retrieving javax/activation/activation/1.1.1/activation-1.1.1.pom from central
+2025-03-21T09:49:39.3118173Z #11 3.267 Retrieving org/gagravarr/vorbis-java-tika/0.8/vorbis-java-tika-0.8.pom from central
+2025-03-21T09:49:39.3118860Z #11 3.274 Retrieving org/gagravarr/vorbis-java-parent/0.8/vorbis-java-parent-0.8.pom from central
+2025-03-21T09:49:39.3119464Z #11 3.286 Retrieving com/healthmarketscience/jackcess/jackcess/2.1.12/jackcess-2.1.12.pom from central
+2025-03-21T09:49:39.3120082Z #11 3.295 Retrieving com/healthmarketscience/openhms-parent/1.1.8/openhms-parent-1.1.8.pom from central
+2025-03-21T09:49:39.3120630Z #11 3.304 Retrieving commons-lang/commons-lang/2.6/commons-lang-2.6.pom from central
+2025-03-21T09:49:39.3121152Z #11 3.314 Retrieving org/apache/commons/commons-parent/17/commons-parent-17.pom from central
+2025-03-21T09:49:39.3121619Z #11 3.325 Retrieving org/apache/apache/7/apache-7.pom from central
+2025-03-21T09:49:39.3122161Z #11 3.334 Retrieving com/healthmarketscience/jackcess/jackcess-encrypt/2.1.4/jackcess-encrypt-2.1.4.pom from central
+2025-03-21T09:49:39.4171202Z #11 3.344 Retrieving org/tallison/jmatio/1.5/jmatio-1.5.pom from central
+2025-03-21T09:49:39.4171715Z #11 3.353 Retrieving org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.pom from central
+2025-03-21T09:49:39.4172218Z #11 3.360 Retrieving org/slf4j/slf4j-parent/1.7.25/slf4j-parent-1.7.25.pom from central
+2025-03-21T09:49:39.4172797Z #11 3.369 Retrieving org/apache/james/apache-mime4j-core/0.8.2/apache-mime4j-core-0.8.2.pom from central
+2025-03-21T09:49:39.4173611Z #11 3.377 Retrieving org/apache/james/apache-mime4j-project/0.8.2/apache-mime4j-project-0.8.2.pom from central
+2025-03-21T09:49:39.4174149Z #11 3.386 Retrieving org/apache/apache/18/apache-18.pom from central
+2025-03-21T09:49:39.4174630Z #11 3.395 Retrieving org/apache/james/apache-mime4j-dom/0.8.2/apache-mime4j-dom-0.8.2.pom from central
+2025-03-21T09:49:39.4175254Z #11 3.404 Retrieving org/apache/commons/commons-compress/1.18/commons-compress-1.18.pom from central
+2025-03-21T09:49:39.4175822Z #11 3.412 Retrieving org/apache/commons/commons-parent/47/commons-parent-47.pom from central
+2025-03-21T09:49:39.4176279Z #11 3.423 Retrieving org/apache/apache/19/apache-19.pom from central
+2025-03-21T09:49:39.4176636Z #11 3.432 Retrieving org/tukaani/xz/1.8/xz-1.8.pom from central
+2025-03-21T09:49:39.4176998Z #11 3.440 Retrieving com/epam/parso/2.0.9/parso-2.0.9.pom from central
+2025-03-21T09:49:39.5274767Z #11 3.448 Retrieving org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.pom from central
+2025-03-21T09:49:39.5275696Z #11 3.459 Retrieving org/slf4j/slf4j-parent/1.7.5/slf4j-parent-1.7.5.pom from central
+2025-03-21T09:49:39.5276438Z #11 3.473 Retrieving org/brotli/dec/0.1.2/dec-0.1.2.pom from central
+2025-03-21T09:49:39.5277147Z #11 3.483 Retrieving org/brotli/parent/0.1.2/parent-0.1.2.pom from central
+2025-03-21T09:49:39.5277963Z #11 3.491 Retrieving commons-codec/commons-codec/1.11/commons-codec-1.11.pom from central
+2025-03-21T09:49:39.5278540Z #11 3.499 Retrieving org/apache/commons/commons-parent/42/commons-parent-42.pom from central
+2025-03-21T09:49:39.5279098Z #11 3.516 Retrieving org/apache/pdfbox/pdfbox/2.0.12/pdfbox-2.0.12.pom from central
+2025-03-21T09:49:39.5279627Z #11 3.528 Retrieving org/apache/pdfbox/pdfbox-parent/2.0.12/pdfbox-parent-2.0.12.pom from central
+2025-03-21T09:49:39.5280164Z #11 3.539 Retrieving org/apache/pdfbox/fontbox/2.0.12/fontbox-2.0.12.pom from central
+2025-03-21T09:49:39.5280689Z #11 3.550 Retrieving org/apache/pdfbox/pdfbox-tools/2.0.12/pdfbox-tools-2.0.12.pom from central
+2025-03-21T09:49:39.6326498Z #11 3.561 Retrieving org/apache/pdfbox/jempbox/1.8.16/jempbox-1.8.16.pom from central
+2025-03-21T09:49:39.6329279Z #11 3.569 Retrieving org/apache/pdfbox/pdfbox-parent/1.8.16/pdfbox-parent-1.8.16.pom from central
+2025-03-21T09:49:39.6330209Z #11 3.577 Retrieving org/apache/apache/16/apache-16.pom from central
+2025-03-21T09:49:39.6330824Z #11 3.585 Retrieving org/bouncycastle/bcmail-jdk15on/1.60/bcmail-jdk15on-1.60.pom from central
+2025-03-21T09:49:39.6331610Z #11 3.593 Retrieving org/bouncycastle/bcprov-jdk15on/1.60/bcprov-jdk15on-1.60.pom from central
+2025-03-21T09:49:39.6332162Z #11 3.601 Retrieving org/bouncycastle/bcpkix-jdk15on/1.60/bcpkix-jdk15on-1.60.pom from central
+2025-03-21T09:49:39.6332642Z #11 3.610 Retrieving org/apache/poi/poi/4.0.0/poi-4.0.0.pom from central
+2025-03-21T09:49:39.6333265Z #11 3.619 Retrieving org/apache/commons/commons-collections4/4.2/commons-collections4-4.2.pom from central
+2025-03-21T09:49:39.6334096Z #11 3.631 Retrieving org/apache/poi/poi-scratchpad/4.0.0/poi-scratchpad-4.0.0.pom from central
+2025-03-21T09:49:39.6334638Z #11 3.640 Retrieving commons-codec/commons-codec/1.10/commons-codec-1.10.pom from central
+2025-03-21T09:49:39.6335194Z #11 3.647 Retrieving org/apache/commons/commons-parent/35/commons-parent-35.pom from central
+2025-03-21T09:49:39.6335669Z #11 3.655 Retrieving org/apache/apache/15/apache-15.pom from central
+2025-03-21T09:49:39.7364025Z #11 3.665 Retrieving org/apache/poi/poi-ooxml/4.0.0/poi-ooxml-4.0.0.pom from central
+2025-03-21T09:49:39.7365044Z #11 3.675 Retrieving org/apache/poi/poi-ooxml-schemas/4.0.0/poi-ooxml-schemas-4.0.0.pom from central
+2025-03-21T09:49:39.7366057Z #11 3.684 Retrieving org/apache/xmlbeans/xmlbeans/3.0.1/xmlbeans-3.0.1.pom from central
+2025-03-21T09:49:39.7366660Z #11 3.696 Retrieving com/github/virtuald/curvesapi/1.04/curvesapi-1.04.pom from central
+2025-03-21T09:49:39.7367319Z #11 3.704 Retrieving org/ccil/cowan/tagsoup/tagsoup/1.2.1/tagsoup-1.2.1.pom from central
+2025-03-21T09:49:39.7367867Z #11 3.712 Retrieving org/ow2/asm/asm/6.2/asm-6.2.pom from central
+2025-03-21T09:49:39.7368235Z #11 3.719 Retrieving org/ow2/ow2/1.5/ow2-1.5.pom from central
+2025-03-21T09:49:39.7368812Z #11 3.728 Retrieving com/googlecode/mp4parser/isoparser/1.1.22/isoparser-1.1.22.pom from central
+2025-03-21T09:49:39.7369533Z #11 3.738 Retrieving com/drewnoakes/metadata-extractor/2.11.0/metadata-extractor-2.11.0.pom from central
+2025-03-21T09:49:39.7370184Z #11 3.750 Retrieving com/adobe/xmp/xmpcore/5.1.3/xmpcore-5.1.3.pom from central
+2025-03-21T09:49:39.7370705Z #11 3.759 Retrieving de/l3s/boilerpipe/boilerpipe/1.1.0/boilerpipe-1.1.0.pom from central
+2025-03-21T09:49:39.8437863Z #11 3.768 Retrieving com/rometools/rome/1.5.1/rome-1.5.1.pom from central
+2025-03-21T09:49:39.8438730Z #11 3.779 Retrieving com/rometools/rome-parent/1.5.1/rome-parent-1.5.1.pom from central
+2025-03-21T09:49:39.8439447Z #11 3.789 Retrieving org/sonatype/oss/oss-parent/9/oss-parent-9.pom from central
+2025-03-21T09:49:39.8440094Z #11 3.797 Retrieving com/rometools/rome-utils/1.5.1/rome-utils-1.5.1.pom from central
+2025-03-21T09:49:39.8440730Z #11 3.807 Retrieving org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.pom from central
+2025-03-21T09:49:39.8441199Z #11 3.814 Retrieving org/slf4j/slf4j-parent/1.7.7/slf4j-parent-1.7.7.pom from central
+2025-03-21T09:49:39.8441845Z #11 3.821 Retrieving org/gagravarr/vorbis-java-core/0.8/vorbis-java-core-0.8.pom from central
+2025-03-21T09:49:39.8442915Z #11 3.829 Retrieving com/googlecode/juniversalchardet/juniversalchardet/1.0.3/juniversalchardet-1.0.3.pom from central
+2025-03-21T09:49:39.8443788Z #11 3.839 Retrieving org/codelibs/jhighlight/1.0.3/jhighlight-1.0.3.pom from central
+2025-03-21T09:49:39.8444384Z #11 3.847 Retrieving com/pff/java-libpst/0.8.1/java-libpst-0.8.1.pom from central
+2025-03-21T09:49:39.8444958Z #11 3.857 Retrieving com/github/junrar/junrar/2.0.0/junrar-2.0.0.pom from central
+2025-03-21T09:49:39.8445542Z #11 3.867 Retrieving org/apache/cxf/cxf-rt-rs-client/3.2.6/cxf-rt-rs-client-3.2.6.pom from central
+2025-03-21T09:49:39.9450667Z #11 3.875 Retrieving org/apache/cxf/cxf-parent/3.2.6/cxf-parent-3.2.6.pom from central
+2025-03-21T09:49:39.9451203Z #11 3.889 Retrieving org/apache/cxf/cxf/3.2.6/cxf-3.2.6.pom from central
+2025-03-21T09:49:39.9451751Z #11 3.902 Retrieving org/apache/cxf/cxf-rt-transports-http/3.2.6/cxf-rt-transports-http-3.2.6.pom from central
+2025-03-21T09:49:39.9452373Z #11 3.919 Retrieving org/apache/cxf/cxf-core/3.2.6/cxf-core-3.2.6.pom from central
+2025-03-21T09:49:39.9453145Z #11 3.933 Retrieving com/fasterxml/woodstox/woodstox-core/5.1.0/woodstox-core-5.1.0.pom from central
+2025-03-21T09:49:39.9453997Z #11 3.942 Retrieving com/fasterxml/oss-parent/33/oss-parent-33.pom from central
+2025-03-21T09:49:39.9454491Z #11 3.951 Retrieving org/codehaus/woodstox/stax2-api/4.1/stax2-api-4.1.pom from central
+2025-03-21T09:49:39.9454971Z #11 3.959 Retrieving com/fasterxml/oss-parent/32/oss-parent-32.pom from central
+2025-03-21T09:49:39.9455498Z #11 3.968 Retrieving org/apache/ws/xmlschema/xmlschema-core/2.2.3/xmlschema-core-2.2.3.pom from central
+2025-03-21T09:49:40.0492689Z #11 3.976 Retrieving org/apache/ws/xmlschema/xmlschema/2.2.3/xmlschema-2.2.3.pom from central
+2025-03-21T09:49:40.0495632Z #11 3.986 Retrieving org/apache/cxf/cxf-rt-frontend-jaxrs/3.2.6/cxf-rt-frontend-jaxrs-3.2.6.pom from central
+2025-03-21T09:49:40.0496398Z #11 3.999 Retrieving javax/ws/rs/javax.ws.rs-api/2.1/javax.ws.rs-api-2.1.pom from central
+2025-03-21T09:49:40.0497039Z #11 4.010 Retrieving javax/annotation/javax.annotation-api/1.3/javax.annotation-api-1.3.pom from central
+2025-03-21T09:49:40.0497706Z #11 4.019 Retrieving org/apache/commons/commons-exec/1.3/commons-exec-1.3.pom from central
+2025-03-21T09:49:40.0498352Z #11 4.032 Retrieving org/apache/opennlp/opennlp-tools/1.9.0/opennlp-tools-1.9.0.pom from central
+2025-03-21T09:49:40.0498975Z #11 4.043 Retrieving org/apache/opennlp/opennlp/1.9.0/opennlp-1.9.0.pom from central
+2025-03-21T09:49:40.0499534Z #11 4.052 Retrieving commons-io/commons-io/2.6/commons-io-2.6.pom from central
+2025-03-21T09:49:40.0500093Z #11 4.063 Retrieving com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.pom from central
+2025-03-21T09:49:40.0500756Z #11 4.072 Retrieving com/github/openjson/openjson/1.0.10/openjson-1.0.10.pom from central
+2025-03-21T09:49:40.1538401Z #11 4.080 Retrieving com/google/code/gson/gson/2.8.5/gson-2.8.5.pom from central
+2025-03-21T09:49:40.1539363Z #11 4.087 Retrieving com/google/code/gson/gson-parent/2.8.5/gson-parent-2.8.5.pom from central
+2025-03-21T09:49:40.1540163Z #11 4.097 Retrieving org/slf4j/jul-to-slf4j/1.7.25/jul-to-slf4j-1.7.25.pom from central
+2025-03-21T09:49:40.1540685Z #11 4.104 Retrieving org/slf4j/jcl-over-slf4j/1.7.25/jcl-over-slf4j-1.7.25.pom from central
+2025-03-21T09:49:40.1541166Z #11 4.111 Retrieving edu/ucar/netcdf4/4.5.5/netcdf4-4.5.5.pom from central
+2025-03-21T09:49:40.1541638Z #11 4.120 Retrieving edu/ucar/thredds-parent/4.5.5/thredds-parent-4.5.5.pom from central
+2025-03-21T09:49:40.1542105Z #11 4.131 Retrieving edu/ucar/cdm/4.5.5/cdm-4.5.5.pom from central
+2025-03-21T09:49:40.1542490Z #11 4.141 Retrieving edu/ucar/udunits/4.5.5/udunits-4.5.5.pom from central
+2025-03-21T09:49:40.1542907Z #11 4.150 Retrieving joda-time/joda-time/2.2/joda-time-2.2.pom from central
+2025-03-21T09:49:40.1543363Z #11 4.158 Retrieving net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.pom from central
+2025-03-21T09:49:40.1544361Z #11 4.168 Retrieving edu/ucar/httpservices/4.5.5/httpservices-4.5.5.pom from central
+2025-03-21T09:49:40.1544899Z #11 4.177 Retrieving org/apache/httpcomponents/httpclient/4.2.6/httpclient-4.2.6.pom from central
+2025-03-21T09:49:40.2587510Z #11 4.185 Retrieving org/apache/httpcomponents/httpcomponents-client/4.2.6/httpcomponents-client-4.2.6.pom from central
+2025-03-21T09:49:40.2588670Z #11 4.193 Retrieving org/apache/httpcomponents/project/7/project-7.pom from central
+2025-03-21T09:49:40.2589438Z #11 4.201 Retrieving org/apache/apache/13/apache-13.pom from central
+2025-03-21T09:49:40.2590237Z #11 4.209 Retrieving org/apache/httpcomponents/httpcore/4.2.5/httpcore-4.2.5.pom from central
+2025-03-21T09:49:40.2591006Z #11 4.217 Retrieving org/apache/httpcomponents/httpcomponents-core/4.2.5/httpcomponents-core-4.2.5.pom from central
+2025-03-21T09:49:40.2591669Z #11 4.226 Retrieving commons-codec/commons-codec/1.6/commons-codec-1.6.pom from central
+2025-03-21T09:49:40.2592241Z #11 4.234 Retrieving org/apache/commons/commons-parent/22/commons-parent-22.pom from central
+2025-03-21T09:49:40.2592932Z #11 4.242 Retrieving org/apache/apache/9/apache-9.pom from central
+2025-03-21T09:49:40.2593652Z #11 4.251 Retrieving org/apache/httpcomponents/httpmime/4.2.6/httpmime-4.2.6.pom from central
+2025-03-21T09:49:40.2594238Z #11 4.269 Retrieving org/slf4j/jcl-over-slf4j/1.7.7/jcl-over-slf4j-1.7.7.pom from central
+2025-03-21T09:49:40.2594734Z #11 4.282 Retrieving org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0.pom from central
+2025-03-21T09:49:40.3649127Z #11 4.293 Retrieving org/quartz-scheduler/quartz-parent/2.2.0/quartz-parent-2.2.0.pom from central
+2025-03-21T09:49:40.3649882Z #11 4.302 Retrieving c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.pom from central
+2025-03-21T09:49:40.3650587Z #11 4.311 Retrieving org/slf4j/slf4j-api/1.6.6/slf4j-api-1.6.6.pom from central
+2025-03-21T09:49:40.3651571Z #11 4.318 Retrieving org/slf4j/slf4j-parent/1.6.6/slf4j-parent-1.6.6.pom from central
+2025-03-21T09:49:40.3653259Z #11 4.327 Retrieving com/google/protobuf/protobuf-java/3.17.3/protobuf-java-3.17.3.pom from central
+2025-03-21T09:49:40.3654780Z #11 4.336 Retrieving com/google/protobuf/protobuf-parent/3.17.3/protobuf-parent-3.17.3.pom from central
+2025-03-21T09:49:40.3655888Z #11 4.346 Retrieving net/sf/ehcache/ehcache-core/2.6.2/ehcache-core-2.6.2.pom from central
+2025-03-21T09:49:40.3656867Z #11 4.356 Retrieving net/sf/ehcache/ehcache-parent/2.3/ehcache-parent-2.3.pom from central
+2025-03-21T09:49:40.3657754Z #11 4.364 Retrieving org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.pom from central
+2025-03-21T09:49:40.3658592Z #11 4.373 Retrieving org/slf4j/slf4j-parent/1.6.1/slf4j-parent-1.6.1.pom from central
+2025-03-21T09:49:40.3659492Z #11 4.380 Retrieving com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.pom from central
+2025-03-21T09:49:40.3660458Z #11 4.388 Retrieving com/google/guava/guava-parent/30.1.1-jre/guava-parent-30.1.1-jre.pom from central
+2025-03-21T09:49:40.4720014Z #11 4.395 Retrieving com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.pom from central
+2025-03-21T09:49:40.4721164Z #11 4.404 Retrieving com/google/guava/guava-parent/26.0-android/guava-parent-26.0-android.pom from central
+2025-03-21T09:49:40.4722804Z #11 4.412 Retrieving com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.pom from central
+2025-03-21T09:49:40.4724669Z #11 4.419 Retrieving com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom from central
+2025-03-21T09:49:40.4725647Z #11 4.427 Retrieving org/checkerframework/checker-qual/3.8.0/checker-qual-3.8.0.pom from central
+2025-03-21T09:49:40.4726328Z #11 4.434 Retrieving com/google/errorprone/error_prone_annotations/2.5.1/error_prone_annotations-2.5.1.pom from central
+2025-03-21T09:49:40.4726996Z #11 4.440 Retrieving com/google/errorprone/error_prone_parent/2.5.1/error_prone_parent-2.5.1.pom from central
+2025-03-21T09:49:40.4727628Z #11 4.448 Retrieving com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.pom from central
+2025-03-21T09:49:40.4728407Z #11 4.455 Retrieving org/itadaki/bzip2/0.9.1/bzip2-0.9.1.pom from central
+2025-03-21T09:49:40.4728844Z #11 4.464 Retrieving com/beust/jcommander/1.35/jcommander-1.35.pom from central
+2025-03-21T09:49:40.4729300Z #11 4.471 Retrieving org/sonatype/oss/oss-parent/3/oss-parent-3.pom from central
+2025-03-21T09:49:40.4729719Z #11 4.479 Retrieving edu/ucar/grib/4.5.5/grib-4.5.5.pom from central
+2025-03-21T09:49:40.4730204Z #11 4.495 Retrieving commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.pom from central
+2025-03-21T09:49:40.5785209Z #11 4.503 Retrieving org/apache/commons/commons-parent/5/commons-parent-5.pom from central
+2025-03-21T09:49:40.5786037Z #11 4.512 Retrieving org/apache/apache/4/apache-4.pom from central
+2025-03-21T09:49:40.5786580Z #11 4.525 Retrieving net/java/dev/jna/jna/4.3.0/jna-4.3.0.pom from central
+2025-03-21T09:49:40.5787002Z #11 4.533 Retrieving org/jsoup/jsoup/1.11.3/jsoup-1.11.3.pom from central
+2025-03-21T09:49:40.5787659Z #11 4.543 Retrieving org/apache/httpcomponents/httpclient/4.5.6/httpclient-4.5.6.pom from central
+2025-03-21T09:49:40.5788733Z #11 4.550 Retrieving org/apache/httpcomponents/httpcomponents-client/4.5.6/httpcomponents-client-4.5.6.pom from central
+2025-03-21T09:49:40.5789691Z #11 4.558 Retrieving org/apache/httpcomponents/httpcomponents-parent/10/httpcomponents-parent-10.pom from central
+2025-03-21T09:49:40.5790422Z #11 4.567 Retrieving org/apache/httpcomponents/httpcore/4.4.10/httpcore-4.4.10.pom from central
+2025-03-21T09:49:40.5791189Z #11 4.574 Retrieving org/apache/httpcomponents/httpcomponents-core/4.4.10/httpcomponents-core-4.4.10.pom from central
+2025-03-21T09:49:40.5791943Z #11 4.584 Retrieving org/apache/httpcomponents/httpmime/4.5.6/httpmime-4.5.6.pom from central
+2025-03-21T09:49:40.5792594Z #11 4.594 Retrieving commons-logging/commons-logging/1.2/commons-logging-1.2.pom from central
+2025-03-21T09:49:40.5793250Z #11 4.601 Retrieving org/apache/commons/commons-parent/34/commons-parent-34.pom from central
+2025-03-21T09:49:40.6812780Z #11 4.617 Retrieving org/apache/commons/commons-csv/1.5/commons-csv-1.5.pom from central
+2025-03-21T09:49:40.6813922Z #11 4.628 Retrieving org/apache/sis/core/sis-utility/0.8/sis-utility-0.8.pom from central
+2025-03-21T09:49:40.6814693Z #11 4.637 Retrieving org/apache/sis/core/0.8/core-0.8.pom from central
+2025-03-21T09:49:40.6815376Z #11 4.645 Retrieving org/apache/sis/parent/0.8/parent-0.8.pom from central
+2025-03-21T09:49:40.6816194Z #11 4.655 Retrieving org/opengis/geoapi-parent/3.0.1/geoapi-parent-3.0.1.pom from central
+2025-03-21T09:49:40.6816970Z #11 4.664 Retrieving javax/measure/unit-api/1.0/unit-api-1.0.pom from central
+2025-03-21T09:49:40.6817406Z #11 4.674 Retrieving org/opengis/geoapi/3.0.1/geoapi-3.0.1.pom from central
+2025-03-21T09:49:40.6817897Z #11 4.684 Retrieving org/apache/sis/storage/sis-netcdf/0.8/sis-netcdf-0.8.pom from central
+2025-03-21T09:49:40.6818396Z #11 4.694 Retrieving org/apache/sis/storage/0.8/storage-0.8.pom from central
+2025-03-21T09:49:40.6818896Z #11 4.704 Retrieving org/apache/sis/storage/sis-storage/0.8/sis-storage-0.8.pom from central
+2025-03-21T09:49:40.7829911Z #11 4.716 Retrieving org/apache/sis/core/sis-feature/0.8/sis-feature-0.8.pom from central
+2025-03-21T09:49:40.7830863Z #11 4.728 Retrieving org/apache/sis/core/sis-metadata/0.8/sis-metadata-0.8.pom from central
+2025-03-21T09:49:40.7831801Z #11 4.742 Retrieving org/apache/sis/core/sis-referencing/0.8/sis-referencing-0.8.pom from central
+2025-03-21T09:49:40.7832866Z #11 4.755 Retrieving edu/usc/ir/sentiment-analysis-parser/0.1/sentiment-analysis-parser-0.1.pom from central
+2025-03-21T09:49:40.7833846Z #11 4.764 Retrieving org/apache/uima/uimafit-core/2.2.0/uimafit-core-2.2.0.pom from central
+2025-03-21T09:49:40.7834507Z #11 4.773 Retrieving org/apache/uima/uimafit-parent/2.2.0/uimafit-parent-2.2.0.pom from central
+2025-03-21T09:49:40.7835102Z #11 4.782 Retrieving org/apache/uima/parent-pom/10/parent-pom-10.pom from central
+2025-03-21T09:49:40.7835660Z #11 4.794 Retrieving org/apache/apache/14/apache-14.pom from central
+2025-03-21T09:49:40.7836539Z #11 4.806 Retrieving org/apache/uima/uimaj-core/2.9.0/uimaj-core-2.9.0.pom from central
+2025-03-21T09:49:40.8874261Z #11 4.814 Retrieving org/apache/uima/uimaj-parent/2.9.0/uimaj-parent-2.9.0.pom from central
+2025-03-21T09:49:40.8875049Z #11 4.825 Retrieving org/jdom/jdom2/2.0.6/jdom2-2.0.6.pom from central
+2025-03-21T09:49:40.8875583Z #11 4.833 Retrieving com/fasterxml/jackson/core/jackson-core/2.9.6/jackson-core-2.9.6.pom from central
+2025-03-21T09:49:40.8876199Z #11 4.845 Retrieving com/fasterxml/jackson/jackson-base/2.9.6/jackson-base-2.9.6.pom from central
+2025-03-21T09:49:40.8876759Z #11 4.853 Retrieving com/fasterxml/jackson/jackson-bom/2.9.6/jackson-bom-2.9.6.pom from central
+2025-03-21T09:49:40.8877353Z #11 4.861 Retrieving com/fasterxml/jackson/jackson-parent/2.9.1.1/jackson-parent-2.9.1.1.pom from central
+2025-03-21T09:49:40.8878081Z #11 4.871 Retrieving com/fasterxml/jackson/core/jackson-databind/2.9.6/jackson-databind-2.9.6.pom from central
+2025-03-21T09:49:40.8879073Z #11 4.884 Retrieving com/fasterxml/jackson/core/jackson-annotations/2.9.6/jackson-annotations-2.9.6.pom from central
+2025-03-21T09:49:40.8879770Z #11 4.891 Retrieving com/fasterxml/jackson/jackson-parent/2.9.1/jackson-parent-2.9.1.pom from central
+2025-03-21T09:49:40.8880304Z #11 4.899 Retrieving com/fasterxml/oss-parent/30/oss-parent-30.pom from central
+2025-03-21T09:49:40.8880806Z #11 4.910 Retrieving org/apache/pdfbox/jbig2-imageio/3.0.2/jbig2-imageio-3.0.2.pom from central
+2025-03-21T09:49:40.9986471Z #11 4.920 Retrieving com/github/jai-imageio/jai-imageio-core/1.4.0/jai-imageio-core-1.4.0.pom from central
+2025-03-21T09:49:40.9987459Z #11 4.937 Retrieving digest/digest/1.4.10/digest-1.4.10.pom from clojars
+2025-03-21T09:49:40.9988245Z #11 4.950 Retrieving org/clojure/clojure/1.10.1/clojure-1.10.1.pom from central
+2025-03-21T09:49:40.9988846Z #11 4.965 Retrieving environ/environ/1.2.0/environ-1.2.0.pom from clojars
+2025-03-21T09:49:40.9989349Z #11 4.973 Retrieving org/clojure/clojure/1.8.0/clojure-1.8.0.pom from central
+2025-03-21T09:49:40.9989845Z #11 4.986 Retrieving clj-time/clj-time/0.15.2/clj-time-0.15.2.pom from clojars
+2025-03-21T09:49:41.0008502Z #11 4.994 Retrieving joda-time/joda-time/2.10/joda-time-2.10.pom from central
+2025-03-21T09:49:41.0009020Z #11 5.010 Retrieving com/stuartsierra/component/0.4.0/component-0.4.0.pom from clojars
+2025-03-21T09:49:41.0009541Z #11 5.022 Retrieving com/stuartsierra/dependency/0.2.0/dependency-0.2.0.pom from clojars
+2025-03-21T09:49:41.1008170Z #11 5.035 Retrieving ring/ring/1.7.1/ring-1.7.1.pom from clojars
+2025-03-21T09:49:41.1010534Z #11 5.047 Retrieving ring/ring-core/1.7.1/ring-core-1.7.1.pom from clojars
+2025-03-21T09:49:41.1011305Z #11 5.059 Retrieving ring/ring-codec/1.1.1/ring-codec-1.1.1.pom from clojars
+2025-03-21T09:49:41.1012410Z #11 5.073 Retrieving commons-fileupload/commons-fileupload/1.3.3/commons-fileupload-1.3.3.pom from central
+2025-03-21T09:49:41.1013694Z #11 5.080 Retrieving org/apache/commons/commons-parent/41/commons-parent-41.pom from central
+2025-03-21T09:49:41.1014661Z #11 5.091 Retrieving commons-io/commons-io/2.2/commons-io-2.2.pom from central
+2025-03-21T09:49:41.1015617Z #11 5.098 Retrieving org/apache/commons/commons-parent/24/commons-parent-24.pom from central
+2025-03-21T09:49:41.1016537Z #11 5.115 Retrieving clj-time/clj-time/0.14.3/clj-time-0.14.3.pom from clojars
+2025-03-21T09:49:41.1017364Z #11 5.124 Retrieving joda-time/joda-time/2.9.9/joda-time-2.9.9.pom from central
+2025-03-21T09:49:41.2085154Z #11 5.137 Retrieving crypto-random/crypto-random/1.2.0/crypto-random-1.2.0.pom from clojars
+2025-03-21T09:49:41.2086359Z #11 5.145 Retrieving org/clojure/clojure/1.2.1/clojure-1.2.1.pom from central
+2025-03-21T09:49:41.2087094Z #11 5.161 Retrieving crypto-equality/crypto-equality/1.0.0/crypto-equality-1.0.0.pom from clojars
+2025-03-21T09:49:41.2087740Z #11 5.172 Retrieving ring/ring-devel/1.7.1/ring-devel-1.7.1.pom from clojars
+2025-03-21T09:49:41.2088271Z #11 5.184 Retrieving hiccup/hiccup/1.0.5/hiccup-1.0.5.pom from clojars
+2025-03-21T09:49:41.2089218Z #11 5.195 Retrieving clj-stacktrace/clj-stacktrace/0.2.8/clj-stacktrace-0.2.8.pom from clojars
+2025-03-21T09:49:41.2089860Z #11 5.211 Retrieving ns-tracker/ns-tracker/0.3.1/ns-tracker-0.3.1.pom from clojars
+2025-03-21T09:49:41.2090486Z #11 5.219 Retrieving org/clojure/tools.namespace/0.2.11/tools.namespace-0.2.11.pom from central
+2025-03-21T09:49:41.2091161Z #11 5.231 Retrieving org/clojure/java.classpath/0.2.3/java.classpath-0.2.3.pom from central
+2025-03-21T09:49:41.3101165Z #11 5.244 Retrieving ring/ring-jetty-adapter/1.7.1/ring-jetty-adapter-1.7.1.pom from clojars
+2025-03-21T09:49:41.3102075Z #11 5.257 Retrieving ring/ring-servlet/1.7.1/ring-servlet-1.7.1.pom from clojars
+2025-03-21T09:49:41.3103044Z #11 5.264 Retrieving org/eclipse/jetty/jetty-server/9.4.12.v20180830/jetty-server-9.4.12.v20180830.pom from central
+2025-03-21T09:49:41.3104350Z #11 5.271 Retrieving org/eclipse/jetty/jetty-project/9.4.12.v20180830/jetty-project-9.4.12.v20180830.pom from central
+2025-03-21T09:49:41.3105040Z #11 5.281 Retrieving javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.pom from central
+2025-03-21T09:49:41.3105920Z #11 5.289 Retrieving org/eclipse/jetty/jetty-http/9.4.12.v20180830/jetty-http-9.4.12.v20180830.pom from central
+2025-03-21T09:49:41.3106564Z #11 5.298 Retrieving org/eclipse/jetty/jetty-util/9.4.12.v20180830/jetty-util-9.4.12.v20180830.pom from central
+2025-03-21T09:49:41.3107227Z #11 5.307 Retrieving org/eclipse/jetty/jetty-io/9.4.12.v20180830/jetty-io-9.4.12.v20180830.pom from central
+2025-03-21T09:49:41.3107723Z #11 5.320 Retrieving ring/ring-json/0.4.0/ring-json-0.4.0.pom from clojars
+2025-03-21T09:49:41.3108140Z #11 5.333 Retrieving cheshire/cheshire/5.5.0/cheshire-5.5.0.pom from clojars
+2025-03-21T09:49:41.4170627Z #11 5.342 Retrieving com/fasterxml/jackson/core/jackson-core/2.5.3/jackson-core-2.5.3.pom from central
+2025-03-21T09:49:41.4171719Z #11 5.350 Retrieving com/fasterxml/jackson/jackson-parent/2.5.1/jackson-parent-2.5.1.pom from central
+2025-03-21T09:49:41.4172716Z #11 5.358 Retrieving com/fasterxml/oss-parent/19/oss-parent-19.pom from central
+2025-03-21T09:49:41.4174081Z #11 5.368 Retrieving com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.5.3/jackson-dataformat-smile-2.5.3.pom from central
+2025-03-21T09:49:41.4175551Z #11 5.377 Retrieving com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.5.3/jackson-dataformat-cbor-2.5.3.pom from central
+2025-03-21T09:49:41.4176579Z #11 5.392 Retrieving tigris/tigris/0.1.1/tigris-0.1.1.pom from clojars
+2025-03-21T09:49:41.4177018Z #11 5.403 Retrieving ring/ring-core/1.4.0/ring-core-1.4.0.pom from clojars
+2025-03-21T09:49:41.4177510Z #11 5.412 Retrieving org/clojure/tools.reader/0.9.1/tools.reader-0.9.1.pom from central
+2025-03-21T09:49:41.4177984Z #11 5.424 Retrieving ring/ring-codec/1.0.0/ring-codec-1.0.0.pom from clojars
+2025-03-21T09:49:41.4178417Z #11 5.432 Retrieving org/clojure/clojure/1.3.0/clojure-1.3.0.pom from central
+2025-03-21T09:49:41.4178855Z #11 5.440 Retrieving commons-io/commons-io/2.4/commons-io-2.4.pom from central
+2025-03-21T09:49:41.5205532Z #11 5.447 Retrieving org/apache/commons/commons-parent/25/commons-parent-25.pom from central
+2025-03-21T09:49:41.5206484Z #11 5.457 Retrieving commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.pom from central
+2025-03-21T09:49:41.5207123Z #11 5.464 Retrieving org/apache/commons/commons-parent/32/commons-parent-32.pom from central
+2025-03-21T09:49:41.5207621Z #11 5.478 Retrieving clj-time/clj-time/0.9.0/clj-time-0.9.0.pom from clojars
+2025-03-21T09:49:41.5208049Z #11 5.485 Retrieving joda-time/joda-time/2.6/joda-time-2.6.pom from central
+2025-03-21T09:49:41.5208473Z #11 5.500 Retrieving compojure/compojure/1.7.1/compojure-1.7.1.pom from clojars
+2025-03-21T09:49:41.5208942Z #11 5.509 Retrieving org/clojure/tools.macro/0.1.5/tools.macro-0.1.5.pom from central
+2025-03-21T09:49:41.5209373Z #11 5.521 Retrieving clout/clout/2.2.1/clout-2.2.1.pom from clojars
+2025-03-21T09:49:41.5209787Z #11 5.533 Retrieving instaparse/instaparse/1.4.8/instaparse-1.4.8.pom from clojars
+2025-03-21T09:49:41.5210537Z #11 5.543 Retrieving medley/medley/1.4.0/medley-1.4.0.pom from clojars
+2025-03-21T09:49:41.6258183Z #11 5.554 Retrieving ring/ring-core/1.11.0/ring-core-1.11.0.pom from clojars
+2025-03-21T09:49:41.6259898Z #11 5.567 Retrieving org/ring-clojure/ring-websocket-protocols/1.11.0/ring-websocket-protocols-1.11.0.pom from clojars
+2025-03-21T09:49:41.6260923Z #11 5.580 Retrieving ring/ring-codec/1.2.0/ring-codec-1.2.0.pom from clojars
+2025-03-21T09:49:41.6261707Z #11 5.587 Retrieving commons-io/commons-io/2.15.0/commons-io-2.15.0.pom from central
+2025-03-21T09:49:41.6262581Z #11 5.594 Retrieving org/apache/commons/commons-parent/64/commons-parent-64.pom from central
+2025-03-21T09:49:41.6263373Z #11 5.604 Retrieving org/apache/apache/30/apache-30.pom from central
+2025-03-21T09:49:41.6264286Z #11 5.613 Retrieving org/junit/junit-bom/5.10.0/junit-bom-5.10.0.pom from central
+2025-03-21T09:49:41.6264940Z #11 5.622 Retrieving org/apache/commons/commons-fileupload2-core/2.0.0-M1/commons-fileupload2-core-2.0.0-M1.pom from central
+2025-03-21T09:49:41.6266092Z #11 5.631 Retrieving org/apache/commons/commons-fileupload2/2.0.0-M1/commons-fileupload2-2.0.0-M1.pom from central
+2025-03-21T09:49:41.6267065Z #11 5.639 Retrieving org/apache/commons/commons-parent/58/commons-parent-58.pom from central
+2025-03-21T09:49:41.6267808Z #11 5.649 Retrieving org/apache/apache/29/apache-29.pom from central
+2025-03-21T09:49:41.7327796Z #11 5.657 Retrieving org/junit/junit-bom/5.9.3/junit-bom-5.9.3.pom from central
+2025-03-21T09:49:41.7328869Z #11 5.665 Retrieving commons-io/commons-io/2.13.0/commons-io-2.13.0.pom from central
+2025-03-21T09:49:41.7329650Z #11 5.680 Retrieving crypto-random/crypto-random/1.2.1/crypto-random-1.2.1.pom from clojars
+2025-03-21T09:49:41.7330344Z #11 5.686 Retrieving commons-codec/commons-codec/1.15/commons-codec-1.15.pom from central
+2025-03-21T09:49:41.7331015Z #11 5.694 Retrieving org/apache/commons/commons-parent/52/commons-parent-52.pom from central
+2025-03-21T09:49:41.7331991Z #11 5.705 Retrieving org/apache/apache/23/apache-23.pom from central
+2025-03-21T09:49:41.7332494Z #11 5.717 Retrieving crypto-equality/crypto-equality/1.0.1/crypto-equality-1.0.1.pom from clojars
+2025-03-21T09:49:41.7332999Z #11 5.729 Retrieving cheshire/cheshire/5.13.0/cheshire-5.13.0.pom from clojars
+2025-03-21T09:49:41.7333745Z #11 5.739 Retrieving com/fasterxml/jackson/core/jackson-core/2.17.0/jackson-core-2.17.0.pom from central
+2025-03-21T09:49:41.7334401Z #11 5.746 Retrieving com/fasterxml/jackson/jackson-base/2.17.0/jackson-base-2.17.0.pom from central
+2025-03-21T09:49:41.7334980Z #11 5.756 Retrieving com/fasterxml/jackson/jackson-bom/2.17.0/jackson-bom-2.17.0.pom from central
+2025-03-21T09:49:41.8498570Z #11 5.767 Retrieving com/fasterxml/jackson/jackson-parent/2.17/jackson-parent-2.17.pom from central
+2025-03-21T09:49:41.8499161Z #11 5.775 Retrieving com/fasterxml/oss-parent/58/oss-parent-58.pom from central
+2025-03-21T09:49:41.8499646Z #11 5.784 Retrieving org/junit/junit-bom/5.10.2/junit-bom-5.10.2.pom from central
+2025-03-21T09:49:41.8500366Z #11 5.794 Retrieving com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.17.0/jackson-dataformat-smile-2.17.0.pom from central
+2025-03-21T09:49:41.8501236Z #11 5.802 Retrieving com/fasterxml/jackson/dataformat/jackson-dataformats-binary/2.17.0/jackson-dataformats-binary-2.17.0.pom from central
+2025-03-21T09:49:41.8502096Z #11 5.816 Retrieving com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.17.0/jackson-dataformat-cbor-2.17.0.pom from central
+2025-03-21T09:49:41.8502722Z #11 5.830 Retrieving tigris/tigris/0.1.2/tigris-0.1.2.pom from clojars
+2025-03-21T09:49:41.8503163Z #11 5.841 Retrieving cljstache/cljstache/2.0.6/cljstache-2.0.6.pom from clojars
+2025-03-21T09:49:41.8503918Z #11 5.873 Retrieving integrant/integrant/0.13.1/integrant-0.13.1.pom from clojars
+2025-03-21T09:49:41.9543332Z #11 5.881 Retrieving org/clojure/clojure/1.11.4/clojure-1.11.4.pom from central
+2025-03-21T09:49:41.9544550Z #11 5.889 Retrieving org/clojure/spec.alpha/0.3.218/spec.alpha-0.3.218.pom from central
+2025-03-21T09:49:41.9545109Z #11 5.896 Retrieving org/clojure/pom.contrib/1.1.0/pom.contrib-1.1.0.pom from central
+2025-03-21T09:49:41.9545775Z #11 5.903 Retrieving org/clojure/core.specs.alpha/0.2.62/core.specs.alpha-0.2.62.pom from central
+2025-03-21T09:49:41.9546344Z #11 5.915 Retrieving weavejester/dependency/0.2.1/dependency-0.2.1.pom from clojars
+2025-03-21T09:49:41.9546901Z #11 5.923 Retrieving org/clojure/tools.namespace/0.3.1/tools.namespace-0.3.1.pom from central
+2025-03-21T09:49:41.9547467Z #11 5.935 Retrieving org/clojure/java.classpath/0.3.0/java.classpath-0.3.0.pom from central
+2025-03-21T09:49:41.9548015Z #11 5.949 Retrieving com/walmartlabs/lacinia/0.38.0/lacinia-0.38.0.pom from clojars
+2025-03-21T09:49:41.9548512Z #11 5.961 Retrieving clj-antlr/clj-antlr/0.2.9/clj-antlr-0.2.9.pom from clojars
+2025-03-21T09:49:41.9549023Z #11 5.970 Retrieving org/antlr/antlr4-runtime/4.8-1/antlr4-runtime-4.8-1.pom from central
+2025-03-21T09:49:41.9549576Z #11 5.977 Retrieving org/antlr/antlr4-master/4.8-1/antlr4-master-4.8-1.pom from central
+2025-03-21T09:49:42.0559965Z #11 5.987 Retrieving org/antlr/antlr4/4.8-1/antlr4-4.8-1.pom from central
+2025-03-21T09:49:42.0560867Z #11 5.996 Retrieving org/antlr/antlr-runtime/3.5.2/antlr-runtime-3.5.2.pom from central
+2025-03-21T09:49:42.0561720Z #11 6.006 Retrieving org/antlr/antlr-master/3.5.2/antlr-master-3.5.2.pom from central
+2025-03-21T09:49:42.0562427Z #11 6.014 Retrieving org/antlr/ST4/4.3/ST4-4.3.pom from central
+2025-03-21T09:49:42.0563308Z #11 6.023 Retrieving org/abego/treelayout/org.abego.treelayout.core/1.0.3/org.abego.treelayout.core-1.0.3.pom from central
+2025-03-21T09:49:42.0564165Z #11 6.030 Retrieving org/glassfish/javax.json/1.0.4/javax.json-1.0.4.pom from central
+2025-03-21T09:49:42.0564626Z #11 6.040 Retrieving org/glassfish/json/1.0.4/json-1.0.4.pom from central
+2025-03-21T09:49:42.0565023Z #11 6.048 Retrieving com/ibm/icu/icu4j/61.1/icu4j-61.1.pom from central
+2025-03-21T09:49:42.0565454Z #11 6.079 Retrieving org/flatland/ordered/1.5.9/ordered-1.5.9.pom from clojars
+2025-03-21T09:49:42.1828181Z #11 6.087 Retrieving org/clojure/data.json/1.0.0/data.json-1.0.0.pom from central
+2025-03-21T09:49:42.1829233Z #11 6.100 Retrieving e85th/venia/0.2.5-1/venia-0.2.5-1.pom from clojars
+2025-03-21T09:49:42.1830100Z #11 6.113 Retrieving com/layerware/hugsql/0.5.3/hugsql-0.5.3.pom from clojars
+2025-03-21T09:49:42.1831056Z #11 6.125 Retrieving com/layerware/hugsql-core/0.5.3/hugsql-core-0.5.3.pom from clojars
+2025-03-21T09:49:42.1831859Z #11 6.133 Retrieving org/clojure/tools.reader/1.3.6/tools.reader-1.3.6.pom from central
+2025-03-21T09:49:42.1832472Z #11 6.146 Retrieving com/layerware/hugsql-adapter/0.5.3/hugsql-adapter-0.5.3.pom from clojars
+2025-03-21T09:49:42.1833328Z #11 6.206 Retrieving com/layerware/hugsql-adapter-clojure-java-jdbc/0.5.3/hugsql-adapter-clojure-java-jdbc-0.5.3.pom from clojars
+2025-03-21T09:49:42.2951327Z #11 6.216 Retrieving org/clojure/java.jdbc/0.7.12/java.jdbc-0.7.12.pom from central
+2025-03-21T09:49:42.2952380Z #11 6.226 Retrieving mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.pom from central
+2025-03-21T09:49:42.2953403Z #11 6.234 Retrieving com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.pom from central
+2025-03-21T09:49:42.2954575Z #11 6.245 Retrieving com/google/firebase/firebase-admin/8.2.0/firebase-admin-8.2.0.pom from central
+2025-03-21T09:49:42.2955394Z #11 6.255 Retrieving com/google/cloud/libraries-bom/20.9.0/libraries-bom-20.9.0.pom from central
+2025-03-21T09:49:42.2956003Z #11 6.268 Retrieving com/google/guava/guava-bom/30.1.1-android/guava-bom-30.1.1-android.pom from central
+2025-03-21T09:49:42.2956609Z #11 6.281 Retrieving com/google/cloud/google-cloud-bom/0.158.0/google-cloud-bom-0.158.0.pom from central
+2025-03-21T09:49:42.2957339Z #11 6.294 Retrieving com/google/cloud/google-cloud-accessapproval-bom/1.1.3/google-cloud-accessapproval-bom-1.1.3.pom from central
+2025-03-21T09:49:42.2958123Z #11 6.304 Retrieving com/google/cloud/google-cloud-shared-config/0.12.0/google-cloud-shared-config-0.12.0.pom from central
+2025-03-21T09:49:42.2959134Z #11 6.318 Retrieving com/google/cloud/google-cloud-aiplatform-bom/1.0.2/google-cloud-aiplatform-bom-1.0.2.pom from central
+2025-03-21T09:49:42.4082104Z #11 6.331 Retrieving com/google/cloud/google-cloud-api-gateway-bom/1.1.2/google-cloud-api-gateway-bom-1.1.2.pom from central
+2025-03-21T09:49:42.4084092Z #11 6.343 Retrieving com/google/cloud/google-cloud-asset-bom/2.6.0/google-cloud-asset-bom-2.6.0.pom from central
+2025-03-21T09:49:42.4085067Z #11 6.354 Retrieving com/google/cloud/google-cloud-automl-bom/1.5.5/google-cloud-automl-bom-1.5.5.pom from central
+2025-03-21T09:49:42.4086010Z #11 6.365 Retrieving com/google/cloud/google-cloud-bigquerydatatransfer-bom/1.3.11/google-cloud-bigquerydatatransfer-bom-1.3.11.pom from central
+2025-03-21T09:49:42.4087066Z #11 6.379 Retrieving com/google/cloud/google-cloud-bigquerystorage-bom/1.23.0/google-cloud-bigquerystorage-bom-1.23.0.pom from central
+2025-03-21T09:49:42.4088354Z #11 6.392 Retrieving com/google/cloud/google-cloud-bigqueryconnection-bom/1.2.0/google-cloud-bigqueryconnection-bom-1.2.0.pom from central
+2025-03-21T09:49:42.4089416Z #11 6.403 Retrieving com/google/cloud/google-cloud-bigqueryreservation-bom/1.2.2/google-cloud-bigqueryreservation-bom-1.2.2.pom from central
+2025-03-21T09:49:42.4090473Z #11 6.415 Retrieving com/google/cloud/google-cloud-bigtable-bom/1.27.3/google-cloud-bigtable-bom-1.27.3.pom from central
+2025-03-21T09:49:42.4091296Z #11 6.431 Retrieving com/google/cloud/google-cloud-billing-bom/1.2.2/google-cloud-billing-bom-1.2.2.pom from central
+2025-03-21T09:49:42.5129482Z #11 6.444 Retrieving com/google/cloud/google-cloud-billingbudgets-bom/1.2.2/google-cloud-billingbudgets-bom-1.2.2.pom from central
+2025-03-21T09:49:42.5131854Z #11 6.456 Retrieving com/google/cloud/google-cloud-build-bom/2.6.2/google-cloud-build-bom-2.6.2.pom from central
+2025-03-21T09:49:42.5133067Z #11 6.469 Retrieving com/google/cloud/google-cloud-channel-bom/2.3.0/google-cloud-channel-bom-2.3.0.pom from central
+2025-03-21T09:49:42.5134488Z #11 6.487 Retrieving com/google/cloud/google-cloud-compute-bom/1.3.0-alpha/google-cloud-compute-bom-1.3.0-alpha.pom from central
+2025-03-21T09:49:42.5135485Z #11 6.499 Retrieving com/google/cloud/google-cloud-container-bom/1.5.0/google-cloud-container-bom-1.5.0.pom from central
+2025-03-21T09:49:42.5136450Z #11 6.512 Retrieving com/google/cloud/google-cloud-containeranalysis-bom/1.3.5/google-cloud-containeranalysis-bom-1.3.5.pom from central
+2025-03-21T09:49:42.5137279Z #11 6.523 Retrieving com/google/cloud/google-cloud-datacatalog-bom/1.4.2/google-cloud-datacatalog-bom-1.4.2.pom from central
+2025-03-21T09:49:42.5138081Z #11 6.536 Retrieving com/google/cloud/google-cloud-datalabeling-bom/0.120.2/google-cloud-datalabeling-bom-0.120.2.pom from central
+2025-03-21T09:49:42.6154333Z #11 6.549 Retrieving com/google/cloud/google-cloud-dataproc-bom/1.5.3/google-cloud-dataproc-bom-1.5.3.pom from central
+2025-03-21T09:49:42.6156145Z #11 6.562 Retrieving com/google/cloud/google-cloud-dataproc-metastore-bom/1.0.2/google-cloud-dataproc-metastore-bom-1.0.2.pom from central
+2025-03-21T09:49:42.6157184Z #11 6.577 Retrieving com/google/cloud/google-cloud-datastore-bom/1.107.1/google-cloud-datastore-bom-1.107.1.pom from central
+2025-03-21T09:49:42.6157937Z #11 6.596 Retrieving com/google/cloud/google-cloud-dlp-bom/2.4.5/google-cloud-dlp-bom-2.4.5.pom from central
+2025-03-21T09:49:42.6158659Z #11 6.610 Retrieving com/google/cloud/google-cloud-dialogflow-bom/3.3.0/google-cloud-dialogflow-bom-3.3.0.pom from central
+2025-03-21T09:49:42.6159365Z #11 6.623 Retrieving com/google/cloud/google-cloud-dms-bom/1.0.0/google-cloud-dms-bom-1.0.0.pom from central
+2025-03-21T09:49:42.6160071Z #11 6.638 Retrieving com/google/cloud/google-cloud-document-ai-bom/1.2.1/google-cloud-document-ai-bom-1.2.1.pom from central
+2025-03-21T09:49:42.7235115Z #11 6.651 Retrieving com/google/cloud/google-cloud-errorreporting-bom/0.121.4-beta/google-cloud-errorreporting-bom-0.121.4-beta.pom from central
+2025-03-21T09:49:42.7237187Z #11 6.665 Retrieving com/google/cloud/google-cloud-essential-contacts-bom/1.0.0/google-cloud-essential-contacts-bom-1.0.0.pom from central
+2025-03-21T09:49:42.7238206Z #11 6.680 Retrieving com/google/cloud/google-cloud-firestore-bom/2.6.1/google-cloud-firestore-bom-2.6.1.pom from central
+2025-03-21T09:49:42.7238975Z #11 6.691 Retrieving com/google/cloud/google-cloud-functions-bom/1.2.2/google-cloud-functions-bom-1.2.2.pom from central
+2025-03-21T09:49:42.7239737Z #11 6.708 Retrieving com/google/cloud/google-cloud-game-servers-bom/1.2.2/google-cloud-game-servers-bom-1.2.2.pom from central
+2025-03-21T09:49:42.7240531Z #11 6.721 Retrieving com/google/cloud/google-cloud-gsuite-addons-bom/1.0.0/google-cloud-gsuite-addons-bom-1.0.0.pom from central
+2025-03-21T09:49:42.7241334Z #11 6.733 Retrieving com/google/cloud/google-cloud-iamcredentials-bom/1.3.2/google-cloud-iamcredentials-bom-1.3.2.pom from central
+2025-03-21T09:49:42.7242055Z #11 6.746 Retrieving com/google/cloud/google-cloud-iot-bom/1.3.2/google-cloud-iot-bom-1.3.2.pom from central
+2025-03-21T09:49:42.8313142Z #11 6.758 Retrieving com/google/cloud/google-cloud-kms-bom/1.43.0/google-cloud-kms-bom-1.43.0.pom from central
+2025-03-21T09:49:42.8314707Z #11 6.770 Retrieving com/google/cloud/google-cloud-language-bom/1.103.2/google-cloud-language-bom-1.103.2.pom from central
+2025-03-21T09:49:42.8315630Z #11 6.783 Retrieving com/google/cloud/google-cloud-logging-bom/2.3.2/google-cloud-logging-bom-2.3.2.pom from central
+2025-03-21T09:49:42.8316438Z #11 6.796 Retrieving com/google/cloud/google-cloud-mediatranslation-bom/0.5.2/google-cloud-mediatranslation-bom-0.5.2.pom from central
+2025-03-21T09:49:42.8317221Z #11 6.813 Retrieving com/google/cloud/google-cloud-memcache-bom/1.1.2/google-cloud-memcache-bom-1.1.2.pom from central
+2025-03-21T09:49:42.8317962Z #11 6.827 Retrieving com/google/cloud/google-cloud-monitoring-bom/2.3.4/google-cloud-monitoring-bom-2.3.4.pom from central
+2025-03-21T09:49:42.8318797Z #11 6.841 Retrieving com/google/cloud/google-cloud-monitoring-dashboard-bom/1.3.2/google-cloud-monitoring-dashboard-bom-1.3.2.pom from central
+2025-03-21T09:49:42.8319644Z #11 6.854 Retrieving com/google/cloud/google-cloud-orgpolicy-bom/1.2.2/google-cloud-orgpolicy-bom-1.2.2.pom from central
+2025-03-21T09:49:42.9338107Z #11 6.866 Retrieving com/google/cloud/google-cloud-os-config-bom/1.3.2/google-cloud-os-config-bom-1.3.2.pom from central
+2025-03-21T09:49:42.9339938Z #11 6.880 Retrieving com/google/cloud/google-cloud-os-login-bom/1.3.1/google-cloud-os-login-bom-1.3.1.pom from central
+2025-03-21T09:49:42.9341567Z #11 6.891 Retrieving com/google/cloud/google-cloud-phishingprotection-bom/0.30.2/google-cloud-phishingprotection-bom-0.30.2.pom from central
+2025-03-21T09:49:42.9342641Z #11 6.906 Retrieving com/google/cloud/google-cloud-profiler-bom/1.1.2/google-cloud-profiler-bom-1.1.2.pom from central
+2025-03-21T09:49:42.9343849Z #11 6.920 Retrieving com/google/cloud/google-cloud-pubsub-bom/1.113.5/google-cloud-pubsub-bom-1.113.5.pom from central
+2025-03-21T09:49:42.9344707Z #11 6.932 Retrieving com/google/cloud/google-cloud-recaptchaenterprise-bom/1.2.2/google-cloud-recaptchaenterprise-bom-1.2.2.pom from central
+2025-03-21T09:49:42.9345548Z #11 6.944 Retrieving com/google/cloud/google-cloud-recommender-bom/1.6.1/google-cloud-recommender-bom-1.6.1.pom from central
+2025-03-21T09:49:42.9346258Z #11 6.957 Retrieving com/google/cloud/google-cloud-redis-bom/1.2.2/google-cloud-redis-bom-1.2.2.pom from central
+2025-03-21T09:49:43.0358617Z #11 6.969 Retrieving com/google/cloud/google-cloud-resourcemanager-bom/0.119.8-alpha/google-cloud-resourcemanager-bom-0.119.8-alpha.pom from central
+2025-03-21T09:49:43.0359900Z #11 6.983 Retrieving com/google/cloud/google-cloud-retail-bom/1.1.2/google-cloud-retail-bom-1.1.2.pom from central
+2025-03-21T09:49:43.0360641Z #11 6.995 Retrieving com/google/cloud/google-cloud-scheduler-bom/1.24.6/google-cloud-scheduler-bom-1.24.6.pom from central
+2025-03-21T09:49:43.0361426Z #11 7.008 Retrieving com/google/cloud/google-cloud-secretmanager-bom/1.6.4/google-cloud-secretmanager-bom-1.6.4.pom from central
+2025-03-21T09:49:43.0362472Z #11 7.021 Retrieving com/google/cloud/google-cloud-securitycenter-bom/1.6.4/google-cloud-securitycenter-bom-1.6.4.pom from central
+2025-03-21T09:49:43.0363317Z #11 7.033 Retrieving com/google/cloud/google-cloud-security-private-ca-bom/1.1.0/google-cloud-security-private-ca-bom-1.1.0.pom from central
+2025-03-21T09:49:43.0364502Z #11 7.045 Retrieving com/google/cloud/google-cloud-servicedirectory-bom/1.3.0/google-cloud-servicedirectory-bom-1.3.0.pom from central
+2025-03-21T09:49:43.0365357Z #11 7.059 Retrieving com/google/cloud/google-cloud-service-management-bom/1.1.2/google-cloud-service-management-bom-1.1.2.pom from central
+2025-03-21T09:49:43.1406044Z #11 7.072 Retrieving com/google/cloud/google-cloud-service-usage-bom/1.0.1/google-cloud-service-usage-bom-1.0.1.pom from central
+2025-03-21T09:49:43.1407907Z #11 7.086 Retrieving com/google/cloud/google-cloud-shell-bom/1.0.0/google-cloud-shell-bom-1.0.0.pom from central
+2025-03-21T09:49:43.1408908Z #11 7.100 Retrieving com/google/cloud/google-cloud-spanner-bom/6.10.1/google-cloud-spanner-bom-6.10.1.pom from central
+2025-03-21T09:49:43.1409657Z #11 7.113 Retrieving com/google/cloud/google-cloud-speech-bom/1.29.3/google-cloud-speech-bom-1.29.3.pom from central
+2025-03-21T09:49:43.1410366Z #11 7.126 Retrieving com/google/cloud/google-cloud-talent-bom/1.2.2/google-cloud-talent-bom-1.2.2.pom from central
+2025-03-21T09:49:43.1411048Z #11 7.139 Retrieving com/google/cloud/google-cloud-tasks-bom/1.33.2/google-cloud-tasks-bom-1.33.2.pom from central
+2025-03-21T09:49:43.1411779Z #11 7.152 Retrieving com/google/cloud/google-cloud-texttospeech-bom/1.5.2/google-cloud-texttospeech-bom-1.5.2.pom from central
+2025-03-21T09:49:43.1412494Z #11 7.164 Retrieving com/google/cloud/google-cloud-tpu-bom/1.0.0/google-cloud-tpu-bom-1.0.0.pom from central
+2025-03-21T09:49:43.2477641Z #11 7.175 Retrieving com/google/cloud/google-cloud-trace-bom/1.4.2/google-cloud-trace-bom-1.4.2.pom from central
+2025-03-21T09:49:43.2478997Z #11 7.188 Retrieving com/google/cloud/google-cloud-translate-bom/1.98.5/google-cloud-translate-bom-1.98.5.pom from central
+2025-03-21T09:49:43.2480491Z #11 7.202 Retrieving com/google/cloud/google-cloud-video-intelligence-bom/1.7.4/google-cloud-video-intelligence-bom-1.7.4.pom from central
+2025-03-21T09:49:43.2481711Z #11 7.216 Retrieving com/google/cloud/google-cloud-vision-bom/1.103.6/google-cloud-vision-bom-1.103.6.pom from central
+2025-03-21T09:49:43.2482634Z #11 7.230 Retrieving com/google/cloud/google-cloud-vpcaccess-bom/1.0.0/google-cloud-vpcaccess-bom-1.0.0.pom from central
+2025-03-21T09:49:43.2483729Z #11 7.242 Retrieving com/google/cloud/google-cloud-websecurityscanner-bom/1.2.2/google-cloud-websecurityscanner-bom-1.2.2.pom from central
+2025-03-21T09:49:43.2484686Z #11 7.255 Retrieving com/google/cloud/google-cloud-webrisk-bom/1.2.2/google-cloud-webrisk-bom-1.2.2.pom from central
+2025-03-21T09:49:43.2485670Z #11 7.271 Retrieving com/google/cloud/google-cloud-workflow-executions-bom/1.0.1/google-cloud-workflow-executions-bom-1.0.1.pom from central
+2025-03-21T09:49:43.3500015Z #11 7.283 Retrieving com/google/cloud/google-cloud-workflows-bom/1.0.2/google-cloud-workflows-bom-1.0.2.pom from central
+2025-03-21T09:49:43.3501674Z #11 7.296 Retrieving com/google/auth/google-auth-library-bom/0.26.0/google-auth-library-bom-0.26.0.pom from central
+2025-03-21T09:49:43.3502811Z #11 7.306 Retrieving com/google/cloud/google-cloud-core-bom/1.95.4/google-cloud-core-bom-1.95.4.pom from central
+2025-03-21T09:49:43.3503733Z #11 7.315 Retrieving com/google/api-client/google-api-client-bom/1.34.1/google-api-client-bom-1.34.1.pom from central
+2025-03-21T09:49:43.3504479Z #11 7.324 Retrieving com/google/api-client/google-api-client-gson/1.34.1/google-api-client-gson-1.34.1.pom from central
+2025-03-21T09:49:43.3505242Z #11 7.331 Retrieving com/google/api-client/google-api-client-parent/1.34.1/google-api-client-parent-1.34.1.pom from central
+2025-03-21T09:49:43.3505985Z #11 7.341 Retrieving com/google/http-client/google-http-client-bom/1.41.8/google-http-client-bom-1.41.8.pom from central
+2025-03-21T09:49:43.3506980Z #11 7.348 Retrieving com/google/oauth-client/google-oauth-client-bom/1.33.2/google-oauth-client-bom-1.33.2.pom from central
+2025-03-21T09:49:43.3507693Z #11 7.355 Retrieving com/google/http-client/google-http-client/1.40.0/google-http-client-1.40.0.pom from central
+2025-03-21T09:49:43.3508447Z #11 7.363 Retrieving com/google/http-client/google-http-client-parent/1.40.0/google-http-client-parent-1.40.0.pom from central
+2025-03-21T09:49:43.3509146Z #11 7.373 Retrieving org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.pom from central
+2025-03-21T09:49:43.4544247Z #11 7.380 Retrieving org/apache/httpcomponents/httpcomponents-client/4.5.13/httpcomponents-client-4.5.13.pom from central
+2025-03-21T09:49:43.4545698Z #11 7.387 Retrieving org/apache/httpcomponents/httpcomponents-parent/11/httpcomponents-parent-11.pom from central
+2025-03-21T09:49:43.4546671Z #11 7.395 Retrieving org/apache/apache/21/apache-21.pom from central
+2025-03-21T09:49:43.4547750Z #11 7.402 Retrieving org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.pom from central
+2025-03-21T09:49:43.4548541Z #11 7.409 Retrieving org/apache/httpcomponents/httpcomponents-core/4.4.13/httpcomponents-core-4.4.13.pom from central
+2025-03-21T09:49:43.4549217Z #11 7.423 Retrieving org/apache/httpcomponents/httpcore/4.4.14/httpcore-4.4.14.pom from central
+2025-03-21T09:49:43.4549883Z #11 7.431 Retrieving org/apache/httpcomponents/httpcomponents-core/4.4.14/httpcomponents-core-4.4.14.pom from central
+2025-03-21T09:49:43.4550560Z #11 7.445 Retrieving io/opencensus/opencensus-api/0.28.0/opencensus-api-0.28.0.pom from central
+2025-03-21T09:49:43.4551085Z #11 7.454 Retrieving io/grpc/grpc-context/1.40.1/grpc-context-1.40.1.pom from central
+2025-03-21T09:49:43.4551718Z #11 7.462 Retrieving io/opencensus/opencensus-contrib-http-util/0.28.0/opencensus-contrib-http-util-0.28.0.pom from central
+2025-03-21T09:49:43.4552484Z #11 7.469 Retrieving com/google/http-client/google-http-client-gson/1.40.0/google-http-client-gson-1.40.0.pom from central
+2025-03-21T09:49:43.4553087Z #11 7.477 Retrieving com/google/code/gson/gson/2.8.8/gson-2.8.8.pom from central
+2025-03-21T09:49:43.5589203Z #11 7.484 Retrieving com/google/code/gson/gson-parent/2.8.8/gson-parent-2.8.8.pom from central
+2025-03-21T09:49:43.5590406Z #11 7.496 Retrieving com/google/api/api-common/2.0.2/api-common-2.0.2.pom from central
+2025-03-21T09:49:43.5591640Z #11 7.505 Retrieving javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.pom from central
+2025-03-21T09:49:43.5593120Z #11 7.513 Retrieving com/google/auto/value/auto-value-annotations/1.8.2/auto-value-annotations-1.8.2.pom from central
+2025-03-21T09:49:43.5594579Z #11 7.519 Retrieving com/google/auto/value/auto-value-parent/1.8.2/auto-value-parent-1.8.2.pom from central
+2025-03-21T09:49:43.5595678Z #11 7.528 Retrieving com/google/auth/google-auth-library-oauth2-http/1.1.0/google-auth-library-oauth2-http-1.1.0.pom from central
+2025-03-21T09:49:43.5596607Z #11 7.537 Retrieving com/google/auth/google-auth-library-parent/1.1.0/google-auth-library-parent-1.1.0.pom from central
+2025-03-21T09:49:43.5597452Z #11 7.546 Retrieving com/google/http-client/google-http-client-bom/1.39.2/google-http-client-bom-1.39.2.pom from central
+2025-03-21T09:49:43.5598365Z #11 7.554 Retrieving com/google/auth/google-auth-library-credentials/1.1.0/google-auth-library-credentials-1.1.0.pom from central
+2025-03-21T09:49:43.5599253Z #11 7.563 Retrieving com/google/cloud/google-cloud-storage/2.1.1/google-cloud-storage-2.1.1.pom from central
+2025-03-21T09:49:43.5600062Z #11 7.574 Retrieving com/google/errorprone/error_prone_annotations/2.9.0/error_prone_annotations-2.9.0.pom from central
+2025-03-21T09:49:43.5600833Z #11 7.582 Retrieving com/google/errorprone/error_prone_parent/2.9.0/error_prone_parent-2.9.0.pom from central
+2025-03-21T09:49:43.6649164Z #11 7.590 Retrieving com/google/http-client/google-http-client-jackson2/1.40.0/google-http-client-jackson2-1.40.0.pom from central
+2025-03-21T09:49:43.6651168Z #11 7.599 Retrieving com/fasterxml/jackson/core/jackson-core/2.12.5/jackson-core-2.12.5.pom from central
+2025-03-21T09:49:43.6652472Z #11 7.606 Retrieving com/fasterxml/jackson/jackson-base/2.12.5/jackson-base-2.12.5.pom from central
+2025-03-21T09:49:43.6653927Z #11 7.614 Retrieving com/fasterxml/jackson/jackson-bom/2.12.5/jackson-bom-2.12.5.pom from central
+2025-03-21T09:49:43.6655174Z #11 7.626 Retrieving com/fasterxml/jackson/jackson-parent/2.12/jackson-parent-2.12.pom from central
+2025-03-21T09:49:43.6656327Z #11 7.633 Retrieving com/fasterxml/oss-parent/41/oss-parent-41.pom from central
+2025-03-21T09:49:43.6657416Z #11 7.641 Retrieving com/google/oauth-client/google-oauth-client/1.32.1/google-oauth-client-1.32.1.pom from central
+2025-03-21T09:49:43.6658583Z #11 7.647 Retrieving com/google/oauth-client/google-oauth-client-parent/1.32.1/google-oauth-client-parent-1.32.1.pom from central
+2025-03-21T09:49:43.6659456Z #11 7.656 Retrieving com/google/http-client/google-http-client-apache-v2/1.40.0/google-http-client-apache-v2-1.40.0.pom from central
+2025-03-21T09:49:43.6660543Z #11 7.665 Retrieving com/google/apis/google-api-services-storage/v1-rev20210127-1.32.1/google-api-services-storage-v1-rev20210127-1.32.1.pom from central
+2025-03-21T09:49:43.6661348Z #11 7.675 Retrieving com/google/cloud/google-cloud-core/2.1.2/google-cloud-core-2.1.2.pom from central
+2025-03-21T09:49:43.6662033Z #11 7.688 Retrieving com/google/cloud/google-cloud-core-parent/2.1.2/google-cloud-core-parent-2.1.2.pom from central
+2025-03-21T09:49:43.7699407Z #11 7.698 Retrieving com/google/api/gax-bom/2.4.0/gax-bom-2.4.0.pom from central
+2025-03-21T09:49:43.7701066Z #11 7.708 Retrieving com/google/http-client/google-http-client-bom/1.40.0/google-http-client-bom-1.40.0.pom from central
+2025-03-21T09:49:43.7701976Z #11 7.715 Retrieving com/google/api-client/google-api-client-bom/1.32.1/google-api-client-bom-1.32.1.pom from central
+2025-03-21T09:49:43.7702582Z #11 7.724 Retrieving io/grpc/grpc-bom/1.40.1/grpc-bom-1.40.1.pom from central
+2025-03-21T09:49:43.7703090Z #11 7.732 Retrieving com/google/guava/guava-bom/30.1.1-jre/guava-bom-30.1.1-jre.pom from central
+2025-03-21T09:49:43.7703927Z #11 7.746 Retrieving com/google/api/grpc/proto-google-common-protos/2.5.0/proto-google-common-protos-2.5.0.pom from central
+2025-03-21T09:49:43.7704649Z #11 7.755 Retrieving com/google/cloud/google-cloud-core-http/2.1.2/google-cloud-core-http-2.1.2.pom from central
+2025-03-21T09:49:43.7705407Z #11 7.766 Retrieving com/google/http-client/google-http-client-appengine/1.40.0/google-http-client-appengine-1.40.0.pom from central
+2025-03-21T09:49:43.7706084Z #11 7.775 Retrieving com/google/api/gax-httpjson/0.89.0/gax-httpjson-0.89.0.pom from central
+2025-03-21T09:49:43.7706549Z #11 7.784 Retrieving com/google/api/gax/2.4.0/gax-2.4.0.pom from central
+2025-03-21T09:49:43.7707066Z #11 7.793 Retrieving com/google/api/grpc/proto-google-iam-v1/1.1.0/proto-google-iam-v1-1.1.0.pom from central
+2025-03-21T09:49:43.8745291Z #11 7.802 Retrieving com/google/protobuf/protobuf-java-util/3.17.3/protobuf-java-util-3.17.3.pom from central
+2025-03-21T09:49:43.8746627Z #11 7.811 Retrieving org/threeten/threetenbp/1.5.1/threetenbp-1.5.1.pom from central
+2025-03-21T09:49:43.8748040Z #11 7.839 Retrieving com/google/cloud/google-cloud-firestore/3.0.3/google-cloud-firestore-3.0.3.pom from central
+2025-03-21T09:49:43.8749264Z #11 7.854 Retrieving com/google/cloud/google-cloud-core-grpc/2.1.2/google-cloud-core-grpc-2.1.2.pom from central
+2025-03-21T09:49:43.8750090Z #11 7.873 Retrieving io/grpc/grpc-core/1.40.1/grpc-core-1.40.1.pom from central
+2025-03-21T09:49:43.8750747Z #11 7.882 Retrieving com/google/android/annotations/4.1.1.4/annotations-4.1.1.4.pom from central
+2025-03-21T09:49:43.8751548Z #11 7.890 Retrieving org/codehaus/mojo/animal-sniffer-annotations/1.20/animal-sniffer-annotations-1.20.pom from central
+2025-03-21T09:49:43.8752282Z #11 7.897 Retrieving org/codehaus/mojo/animal-sniffer-parent/1.20/animal-sniffer-parent-1.20.pom from central
+2025-03-21T09:49:43.9811258Z #11 7.905 Retrieving org/codehaus/mojo/mojo-parent/61/mojo-parent-61.pom from central
+2025-03-21T09:49:43.9812222Z #11 7.914 Retrieving io/perfmark/perfmark-api/0.23.0/perfmark-api-0.23.0.pom from central
+2025-03-21T09:49:43.9813205Z #11 7.932 Retrieving com/google/api/grpc/proto-google-cloud-firestore-v1/3.0.3/proto-google-cloud-firestore-v1-3.0.3.pom from central
+2025-03-21T09:49:43.9814342Z #11 7.945 Retrieving com/google/cloud/proto-google-cloud-firestore-bundle-v1/3.0.3/proto-google-cloud-firestore-bundle-v1-3.0.3.pom from central
+2025-03-21T09:49:43.9815205Z #11 7.956 Retrieving io/opencensus/opencensus-contrib-grpc-util/0.28.0/opencensus-contrib-grpc-util-0.28.0.pom from central
+2025-03-21T09:49:43.9815850Z #11 7.965 Retrieving io/grpc/grpc-protobuf/1.40.1/grpc-protobuf-1.40.1.pom from central
+2025-03-21T09:49:43.9816379Z #11 7.976 Retrieving io/grpc/grpc-protobuf-lite/1.40.1/grpc-protobuf-lite-1.40.1.pom from central
+2025-03-21T09:49:43.9816881Z #11 7.987 Retrieving io/grpc/grpc-api/1.40.1/grpc-api-1.40.1.pom from central
+2025-03-21T09:49:43.9817533Z #11 7.995 Retrieving com/google/api/gax-grpc/2.4.0/gax-grpc-2.4.0.pom from central
+2025-03-21T09:49:43.9818002Z #11 8.004 Retrieving io/grpc/grpc-auth/1.40.1/grpc-auth-1.40.1.pom from central
+2025-03-21T09:49:44.0817980Z #11 8.013 Retrieving io/grpc/grpc-netty-shaded/1.40.1/grpc-netty-shaded-1.40.1.pom from central
+2025-03-21T09:49:44.0818815Z #11 8.023 Retrieving io/grpc/grpc-alts/1.40.1/grpc-alts-1.40.1.pom from central
+2025-03-21T09:49:44.0819403Z #11 8.031 Retrieving io/grpc/grpc-grpclb/1.40.1/grpc-grpclb-1.40.1.pom from central
+2025-03-21T09:49:44.0820023Z #11 8.039 Retrieving org/conscrypt/conscrypt-openjdk-uber/2.5.1/conscrypt-openjdk-uber-2.5.1.pom from central
+2025-03-21T09:49:44.0820625Z #11 8.048 Retrieving io/grpc/grpc-stub/1.40.1/grpc-stub-1.40.1.pom from central
+2025-03-21T09:49:44.0821203Z #11 8.057 Retrieving io/netty/netty-codec-http/4.1.77.Final/netty-codec-http-4.1.77.Final.pom from central
+2025-03-21T09:49:44.0821849Z #11 8.064 Retrieving io/netty/netty-parent/4.1.77.Final/netty-parent-4.1.77.Final.pom from central
+2025-03-21T09:49:44.0822443Z #11 8.078 Retrieving io/netty/netty-common/4.1.77.Final/netty-common-4.1.77.Final.pom from central
+2025-03-21T09:49:44.0823010Z #11 8.087 Retrieving io/netty/netty-buffer/4.1.77.Final/netty-buffer-4.1.77.Final.pom from central
+2025-03-21T09:49:44.0823855Z #11 8.096 Retrieving io/netty/netty-transport/4.1.77.Final/netty-transport-4.1.77.Final.pom from central
+2025-03-21T09:49:44.0824478Z #11 8.105 Retrieving io/netty/netty-resolver/4.1.77.Final/netty-resolver-4.1.77.Final.pom from central
+2025-03-21T09:49:44.1916969Z #11 8.114 Retrieving io/netty/netty-codec/4.1.77.Final/netty-codec-4.1.77.Final.pom from central
+2025-03-21T09:49:44.1917854Z #11 8.124 Retrieving io/netty/netty-handler/4.1.77.Final/netty-handler-4.1.77.Final.pom from central
+2025-03-21T09:49:44.1918744Z #11 8.135 Retrieving com/google/api-client/google-api-client/1.32.1/google-api-client-1.32.1.pom from central
+2025-03-21T09:49:44.1919493Z #11 8.142 Retrieving com/google/api-client/google-api-client-parent/1.32.1/google-api-client-parent-1.32.1.pom from central
+2025-03-21T09:49:44.1920256Z #11 8.150 Retrieving com/google/oauth-client/google-oauth-client-bom/1.31.5/google-oauth-client-bom-1.31.5.pom from central
+2025-03-21T09:49:44.1920832Z #11 8.174 Retrieving integrant/repl/0.4.0/repl-0.4.0.pom from clojars
+2025-03-21T09:49:44.1921296Z #11 8.184 Retrieving org/clojure/tools.namespace/1.5.0/tools.namespace-1.5.0.pom from central
+2025-03-21T09:49:44.1921829Z #11 8.192 Retrieving org/clojure/java.classpath/1.1.0/java.classpath-1.1.0.pom from central
+2025-03-21T09:49:44.1922343Z #11 8.202 Retrieving org/clojure/tools.reader/1.4.0/tools.reader-1.4.0.pom from central
+2025-03-21T09:49:44.1922818Z #11 8.215 Retrieving integrant/integrant/0.13.0/integrant-0.13.0.pom from clojars
+2025-03-21T09:49:44.2934268Z #11 8.259 Retrieving org/clojure/core.async/0.7.559/core.async-0.7.559.jar from central
+2025-03-21T09:49:44.2935642Z #11 8.264 Retrieving org/clojure/tools.analyzer/0.7.0/tools.analyzer-0.7.0.jar from central
+2025-03-21T09:49:44.2937928Z #11 8.266 Retrieving org/clojure/core.memoize/0.8.2/core.memoize-0.8.2.jar from central
+2025-03-21T09:49:44.2938791Z #11 8.266 Retrieving org/clojure/core.cache/0.8.2/core.cache-0.8.2.jar from central
+2025-03-21T09:49:44.2939721Z #11 8.267 Retrieving org/clojure/tools.analyzer.jvm/0.7.3/tools.analyzer.jvm-0.7.3.jar from central
+2025-03-21T09:49:44.2940750Z #11 8.271 Retrieving org/clojure/data.priority-map/0.0.7/data.priority-map-0.0.7.jar from central
+2025-03-21T09:49:44.2941553Z #11 8.273 Retrieving org/ow2/asm/asm/5.2/asm-5.2.jar from central
+2025-03-21T09:49:44.2942311Z #11 8.275 Retrieving org/clojure/test.check/0.10.0/test.check-0.10.0.jar from central
+2025-03-21T09:49:44.2943148Z #11 8.276 Retrieving org/clojure/data.codec/0.2.0/data.codec-0.2.0.jar from central
+2025-03-21T09:49:44.2944141Z #11 8.278 Retrieving org/slf4j/slf4j-reload4j/1.7.36/slf4j-reload4j-1.7.36.jar from central
+2025-03-21T09:49:44.2945043Z #11 8.278 Retrieving org/clojure/tools.logging/1.1.0/tools.logging-1.1.0.jar from central
+2025-03-21T09:49:44.2946116Z #11 8.282 Retrieving org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar from central
+2025-03-21T09:49:44.2946979Z #11 8.283 Retrieving ch/qos/reload4j/reload4j/1.2.19/reload4j-1.2.19.jar from central
+2025-03-21T09:49:44.2947879Z #11 8.285 Retrieving org/apache/tika/tika-parsers/1.19.1/tika-parsers-1.19.1.jar from central
+2025-03-21T09:49:44.2948758Z #11 8.288 Retrieving org/apache/tika/tika-core/1.19.1/tika-core-1.19.1.jar from central
+2025-03-21T09:49:44.2949693Z #11 8.291 Retrieving org/glassfish/jaxb/jaxb-core/2.3.0.1/jaxb-core-2.3.0.1.jar from central
+2025-03-21T09:49:44.2950561Z #11 8.302 Retrieving javax/xml/bind/jaxb-api/2.3.0/jaxb-api-2.3.0.jar from central
+2025-03-21T09:49:44.2951573Z #11 8.307 Retrieving com/sun/istack/istack-commons-runtime/3.0.5/istack-commons-runtime-3.0.5.jar from central
+2025-03-21T09:49:44.2952567Z #11 8.308 Retrieving org/glassfish/jaxb/txw2/2.3.0.1/txw2-2.3.0.1.jar from central
+2025-03-21T09:49:44.2953714Z #11 8.316 Retrieving org/glassfish/jaxb/jaxb-runtime/2.3.0.1/jaxb-runtime-2.3.0.1.jar from central
+2025-03-21T09:49:44.4131409Z #11 8.316 Retrieving org/jvnet/staxex/stax-ex/1.7.8/stax-ex-1.7.8.jar from central
+2025-03-21T09:49:44.4132392Z #11 8.319 Retrieving com/sun/xml/fastinfoset/FastInfoset/1.2.13/FastInfoset-1.2.13.jar from central
+2025-03-21T09:49:44.4133392Z #11 8.324 Retrieving javax/activation/activation/1.1.1/activation-1.1.1.jar from central
+2025-03-21T09:49:44.4134503Z #11 8.326 Retrieving org/gagravarr/vorbis-java-tika/0.8/vorbis-java-tika-0.8.jar from central
+2025-03-21T09:49:44.4135514Z #11 8.335 Retrieving com/healthmarketscience/jackcess/jackcess/2.1.12/jackcess-2.1.12.jar from central
+2025-03-21T09:49:44.4136486Z #11 8.335 Retrieving commons-lang/commons-lang/2.6/commons-lang-2.6.jar from central
+2025-03-21T09:49:44.4137319Z #11 8.336 Retrieving org/tallison/jmatio/1.5/jmatio-1.5.jar from central
+2025-03-21T09:49:44.4139215Z #11 8.338 Retrieving com/healthmarketscience/jackcess/jackcess-encrypt/2.1.4/jackcess-encrypt-2.1.4.jar from central
+2025-03-21T09:49:44.4140369Z #11 8.349 Retrieving org/apache/james/apache-mime4j-core/0.8.2/apache-mime4j-core-0.8.2.jar from central
+2025-03-21T09:49:44.4141275Z #11 8.352 Retrieving org/tukaani/xz/1.8/xz-1.8.jar from central
+2025-03-21T09:49:44.4142186Z #11 8.353 Retrieving org/apache/james/apache-mime4j-dom/0.8.2/apache-mime4j-dom-0.8.2.jar from central
+2025-03-21T09:49:44.4143047Z #11 8.355 Retrieving com/epam/parso/2.0.9/parso-2.0.9.jar from central
+2025-03-21T09:49:44.4148186Z #11 8.361 Retrieving org/brotli/dec/0.1.2/dec-0.1.2.jar from central
+2025-03-21T09:49:44.4149022Z #11 8.363 Retrieving commons-codec/commons-codec/1.11/commons-codec-1.11.jar from central
+2025-03-21T09:49:44.4150247Z #11 8.365 Retrieving org/apache/pdfbox/pdfbox/2.0.12/pdfbox-2.0.12.jar from central
+2025-03-21T09:49:44.4151493Z #11 8.375 Retrieving org/apache/pdfbox/fontbox/2.0.12/fontbox-2.0.12.jar from central
+2025-03-21T09:49:44.4152598Z #11 8.375 Retrieving org/apache/pdfbox/jempbox/1.8.16/jempbox-1.8.16.jar from central
+2025-03-21T09:49:44.4173938Z #11 8.375 Retrieving org/apache/pdfbox/pdfbox-tools/2.0.12/pdfbox-tools-2.0.12.jar from central
+2025-03-21T09:49:44.4174979Z #11 8.385 Retrieving org/bouncycastle/bcmail-jdk15on/1.60/bcmail-jdk15on-1.60.jar from central
+2025-03-21T09:49:44.4175911Z #11 8.388 Retrieving org/bouncycastle/bcpkix-jdk15on/1.60/bcpkix-jdk15on-1.60.jar from central
+2025-03-21T09:49:44.4176992Z #11 8.400 Retrieving org/bouncycastle/bcprov-jdk15on/1.60/bcprov-jdk15on-1.60.jar from central
+2025-03-21T09:49:44.4177793Z #11 8.400 Retrieving org/apache/poi/poi/4.0.0/poi-4.0.0.jar from central
+2025-03-21T09:49:44.4178691Z #11 8.434 Retrieving org/apache/commons/commons-collections4/4.2/commons-collections4-4.2.jar from central
+2025-03-21T09:49:44.5209025Z #11 8.438 Retrieving org/apache/poi/poi-scratchpad/4.0.0/poi-scratchpad-4.0.0.jar from central
+2025-03-21T09:49:44.5210041Z #11 8.473 Retrieving org/apache/poi/poi-ooxml/4.0.0/poi-ooxml-4.0.0.jar from central
+2025-03-21T09:49:44.5211239Z #11 8.487 Retrieving org/apache/poi/poi-ooxml-schemas/4.0.0/poi-ooxml-schemas-4.0.0.jar from central
+2025-03-21T09:49:44.5212599Z #11 8.512 Retrieving com/github/virtuald/curvesapi/1.04/curvesapi-1.04.jar from central
+2025-03-21T09:49:44.5213722Z #11 8.514 Retrieving org/apache/xmlbeans/xmlbeans/3.0.1/xmlbeans-3.0.1.jar from central
+2025-03-21T09:49:44.5214887Z #11 8.527 Retrieving org/ccil/cowan/tagsoup/tagsoup/1.2.1/tagsoup-1.2.1.jar from central
+2025-03-21T09:49:44.5215827Z #11 8.543 Retrieving com/googlecode/mp4parser/isoparser/1.1.22/isoparser-1.1.22.jar from central
+2025-03-21T09:49:44.6267478Z #11 8.546 Retrieving com/drewnoakes/metadata-extractor/2.11.0/metadata-extractor-2.11.0.jar from central
+2025-03-21T09:49:44.6280378Z #11 8.550 Retrieving com/adobe/xmp/xmpcore/5.1.3/xmpcore-5.1.3.jar from central
+2025-03-21T09:49:44.6281241Z #11 8.566 Retrieving de/l3s/boilerpipe/boilerpipe/1.1.0/boilerpipe-1.1.0.jar from central
+2025-03-21T09:49:44.6282062Z #11 8.580 Retrieving com/rometools/rome/1.5.1/rome-1.5.1.jar from central
+2025-03-21T09:49:44.6282818Z #11 8.581 Retrieving com/rometools/rome-utils/1.5.1/rome-utils-1.5.1.jar from central
+2025-03-21T09:49:44.6284097Z #11 8.585 Retrieving org/gagravarr/vorbis-java-core/0.8/vorbis-java-core-0.8.jar from central
+2025-03-21T09:49:44.6285254Z #11 8.591 Retrieving com/googlecode/juniversalchardet/juniversalchardet/1.0.3/juniversalchardet-1.0.3.jar from central
+2025-03-21T09:49:44.6286327Z #11 8.597 Retrieving org/codelibs/jhighlight/1.0.3/jhighlight-1.0.3.jar from central
+2025-03-21T09:49:44.6287150Z #11 8.602 Retrieving com/pff/java-libpst/0.8.1/java-libpst-0.8.1.jar from central
+2025-03-21T09:49:44.6287929Z #11 8.603 Retrieving com/github/junrar/junrar/2.0.0/junrar-2.0.0.jar from central
+2025-03-21T09:49:44.6288809Z #11 8.611 Retrieving org/apache/cxf/cxf-rt-rs-client/3.2.6/cxf-rt-rs-client-3.2.6.jar from central
+2025-03-21T09:49:44.6289853Z #11 8.613 Retrieving org/apache/cxf/cxf-rt-transports-http/3.2.6/cxf-rt-transports-http-3.2.6.jar from central
+2025-03-21T09:49:44.6290833Z #11 8.615 Retrieving org/apache/cxf/cxf-core/3.2.6/cxf-core-3.2.6.jar from central
+2025-03-21T09:49:44.6292168Z #11 8.620 Retrieving com/fasterxml/woodstox/woodstox-core/5.1.0/woodstox-core-5.1.0.jar from central
+2025-03-21T09:49:44.6300888Z #11 8.626 Retrieving org/codehaus/woodstox/stax2-api/4.1/stax2-api-4.1.jar from central
+2025-03-21T09:49:44.6301936Z #11 8.642 Retrieving org/apache/cxf/cxf-rt-frontend-jaxrs/3.2.6/cxf-rt-frontend-jaxrs-3.2.6.jar from central
+2025-03-21T09:49:44.6303019Z #11 8.643 Retrieving org/apache/ws/xmlschema/xmlschema-core/2.2.3/xmlschema-core-2.2.3.jar from central
+2025-03-21T09:49:44.6304140Z #11 8.649 Retrieving javax/ws/rs/javax.ws.rs-api/2.1/javax.ws.rs-api-2.1.jar from central
+2025-03-21T09:49:44.7460272Z #11 8.664 Retrieving org/apache/commons/commons-exec/1.3/commons-exec-1.3.jar from central
+2025-03-21T09:49:44.7473839Z #11 8.669 Retrieving org/apache/opennlp/opennlp-tools/1.9.0/opennlp-tools-1.9.0.jar from central
+2025-03-21T09:49:44.7475141Z #11 8.673 Retrieving commons-io/commons-io/2.6/commons-io-2.6.jar from central
+2025-03-21T09:49:44.7476053Z #11 8.677 Retrieving com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar from central
+2025-03-21T09:49:44.7477010Z #11 8.679 Retrieving com/github/openjson/openjson/1.0.10/openjson-1.0.10.jar from central
+2025-03-21T09:49:44.7477895Z #11 8.686 Retrieving org/slf4j/jcl-over-slf4j/1.7.25/jcl-over-slf4j-1.7.25.jar from central
+2025-03-21T09:49:44.7478783Z #11 8.686 Retrieving org/slf4j/jul-to-slf4j/1.7.25/jul-to-slf4j-1.7.25.jar from central
+2025-03-21T09:49:44.7479553Z #11 8.689 Retrieving edu/ucar/netcdf4/4.5.5/netcdf4-4.5.5.jar from central
+2025-03-21T09:49:44.7480335Z #11 8.693 Retrieving net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar from central
+2025-03-21T09:49:44.7481123Z #11 8.698 Retrieving org/itadaki/bzip2/0.9.1/bzip2-0.9.1.jar from central
+2025-03-21T09:49:44.7481835Z #11 8.700 Retrieving net/java/dev/jna/jna/4.3.0/jna-4.3.0.jar from central
+2025-03-21T09:49:44.7482693Z #11 8.703 Retrieving edu/ucar/grib/4.5.5/grib-4.5.5.jar from central
+2025-03-21T09:49:44.7483355Z #11 8.710 Retrieving org/jsoup/jsoup/1.11.3/jsoup-1.11.3.jar from central
+2025-03-21T09:49:44.7484538Z #11 8.722 Retrieving edu/ucar/udunits/4.5.5/udunits-4.5.5.jar from central
+2025-03-21T09:49:44.7485243Z #11 8.725 Retrieving edu/ucar/cdm/4.5.5/cdm-4.5.5.jar from central
+2025-03-21T09:49:44.7485947Z #11 8.735 Retrieving org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0.jar from central
+2025-03-21T09:49:44.7486650Z #11 8.739 Retrieving c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar from central
+2025-03-21T09:49:44.7487387Z #11 8.746 Retrieving net/sf/ehcache/ehcache-core/2.6.2/ehcache-core-2.6.2.jar from central
+2025-03-21T09:49:44.7488265Z #11 8.769 Retrieving edu/ucar/httpservices/4.5.5/httpservices-4.5.5.jar from central
+2025-03-21T09:49:44.8470295Z #11 8.772 Retrieving com/beust/jcommander/1.35/jcommander-1.35.jar from central
+2025-03-21T09:49:44.8471712Z #11 8.782 Retrieving org/apache/httpcomponents/httpclient/4.5.6/httpclient-4.5.6.jar from central
+2025-03-21T09:49:44.8475026Z #11 8.783 Retrieving org/apache/httpcomponents/httpmime/4.5.6/httpmime-4.5.6.jar from central
+2025-03-21T09:49:44.8476001Z #11 8.794 Retrieving org/apache/commons/commons-csv/1.5/commons-csv-1.5.jar from central
+2025-03-21T09:49:44.8476909Z #11 8.806 Retrieving org/apache/sis/core/sis-utility/0.8/sis-utility-0.8.jar from central
+2025-03-21T09:49:44.8477706Z #11 8.809 Retrieving javax/measure/unit-api/1.0/unit-api-1.0.jar from central
+2025-03-21T09:49:44.8478512Z #11 8.818 Retrieving org/apache/sis/storage/sis-netcdf/0.8/sis-netcdf-0.8.jar from central
+2025-03-21T09:49:44.8479387Z #11 8.831 Retrieving org/apache/sis/storage/sis-storage/0.8/sis-storage-0.8.jar from central
+2025-03-21T09:49:44.8480247Z #11 8.831 Retrieving org/apache/sis/core/sis-feature/0.8/sis-feature-0.8.jar from central
+2025-03-21T09:49:44.8481058Z #11 8.847 Retrieving org/opengis/geoapi/3.0.1/geoapi-3.0.1.jar from central
+2025-03-21T09:49:44.8481911Z #11 8.848 Retrieving org/apache/sis/core/sis-referencing/0.8/sis-referencing-0.8.jar from central
+2025-03-21T09:49:44.8482821Z #11 8.849 Retrieving org/apache/sis/core/sis-metadata/0.8/sis-metadata-0.8.jar from central
+2025-03-21T09:49:44.8483998Z #11 8.870 Retrieving edu/usc/ir/sentiment-analysis-parser/0.1/sentiment-analysis-parser-0.1.jar from central
+2025-03-21T09:49:44.9548977Z #11 8.878 Retrieving org/apache/uima/uimafit-core/2.2.0/uimafit-core-2.2.0.jar from central
+2025-03-21T09:49:44.9551357Z #11 8.880 Retrieving org/jdom/jdom2/2.0.6/jdom2-2.0.6.jar from central
+2025-03-21T09:49:44.9554619Z #11 8.881 Retrieving org/apache/uima/uimaj-core/2.9.0/uimaj-core-2.9.0.jar from central
+2025-03-21T09:49:44.9555679Z #11 8.893 Retrieving com/fasterxml/jackson/core/jackson-databind/2.9.6/jackson-databind-2.9.6.jar from central
+2025-03-21T09:49:44.9556881Z #11 8.893 Retrieving com/fasterxml/jackson/core/jackson-annotations/2.9.6/jackson-annotations-2.9.6.jar from central
+2025-03-21T09:49:44.9558285Z #11 8.894 Retrieving org/apache/pdfbox/jbig2-imageio/3.0.2/jbig2-imageio-3.0.2.jar from central
+2025-03-21T09:49:44.9559283Z #11 8.904 Retrieving org/apache/commons/commons-compress/1.18/commons-compress-1.18.jar from central
+2025-03-21T09:49:44.9560972Z #11 8.905 Retrieving com/github/jai-imageio/jai-imageio-core/1.4.0/jai-imageio-core-1.4.0.jar from central
+2025-03-21T09:49:44.9562563Z #11 8.936 Retrieving joda-time/joda-time/2.10/joda-time-2.10.jar from central
+2025-03-21T09:49:44.9564045Z #11 8.941 Retrieving commons-fileupload/commons-fileupload/1.3.3/commons-fileupload-1.3.3.jar from central
+2025-03-21T09:49:44.9566180Z #11 8.950 Retrieving org/eclipse/jetty/jetty-server/9.4.12.v20180830/jetty-server-9.4.12.v20180830.jar from central
+2025-03-21T09:49:44.9567281Z #11 8.955 Retrieving javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar from central
+2025-03-21T09:49:44.9568338Z #11 8.955 Retrieving org/eclipse/jetty/jetty-http/9.4.12.v20180830/jetty-http-9.4.12.v20180830.jar from central
+2025-03-21T09:49:44.9569641Z #11 8.957 Retrieving org/eclipse/jetty/jetty-util/9.4.12.v20180830/jetty-util-9.4.12.v20180830.jar from central
+2025-03-21T09:49:44.9570730Z #11 8.963 Retrieving org/eclipse/jetty/jetty-io/9.4.12.v20180830/jetty-io-9.4.12.v20180830.jar from central
+2025-03-21T09:49:44.9571666Z #11 8.970 Retrieving org/clojure/tools.macro/0.1.5/tools.macro-0.1.5.jar from central
+2025-03-21T09:49:44.9572612Z #11 8.977 Retrieving com/fasterxml/jackson/core/jackson-core/2.17.0/jackson-core-2.17.0.jar from central
+2025-03-21T09:49:45.0621456Z #11 8.980 Retrieving com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.17.0/jackson-dataformat-smile-2.17.0.jar from central
+2025-03-21T09:49:45.0625721Z #11 8.981 Retrieving com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.17.0/jackson-dataformat-cbor-2.17.0.jar from central
+2025-03-21T09:49:45.0626939Z #11 8.990 Retrieving org/clojure/tools.namespace/0.3.1/tools.namespace-0.3.1.jar from central
+2025-03-21T09:49:45.0627881Z #11 8.991 Retrieving org/clojure/java.classpath/0.3.0/java.classpath-0.3.0.jar from central
+2025-03-21T09:49:45.0628755Z #11 8.992 Retrieving org/clojure/tools.reader/1.3.2/tools.reader-1.3.2.jar from central
+2025-03-21T09:49:45.0629589Z #11 9.001 Retrieving org/antlr/antlr-runtime/3.5.2/antlr-runtime-3.5.2.jar from central
+2025-03-21T09:49:45.0630513Z #11 9.001 Retrieving org/antlr/antlr4-runtime/4.8-1/antlr4-runtime-4.8-1.jar from central
+2025-03-21T09:49:45.0631341Z #11 9.002 Retrieving org/antlr/antlr4/4.8-1/antlr4-4.8-1.jar from central
+2025-03-21T09:49:45.0631976Z #11 9.003 Retrieving org/antlr/ST4/4.3/ST4-4.3.jar from central
+2025-03-21T09:49:45.0632889Z #11 9.012 Retrieving org/abego/treelayout/org.abego.treelayout.core/1.0.3/org.abego.treelayout.core-1.0.3.jar from central
+2025-03-21T09:49:45.0634086Z #11 9.015 Retrieving org/glassfish/javax.json/1.0.4/javax.json-1.0.4.jar from central
+2025-03-21T09:49:45.0634833Z #11 9.020 Retrieving org/clojure/data.json/1.0.0/data.json-1.0.0.jar from central
+2025-03-21T09:49:45.0635476Z #11 9.029 Retrieving com/ibm/icu/icu4j/61.1/icu4j-61.1.jar from central
+2025-03-21T09:49:45.0636128Z #11 9.036 Retrieving org/clojure/java.jdbc/0.7.12/java.jdbc-0.7.12.jar from central
+2025-03-21T09:49:45.0637060Z #11 9.040 Retrieving com/google/protobuf/protobuf-java/3.17.3/protobuf-java-3.17.3.jar from central
+2025-03-21T09:49:45.0638236Z #11 9.042 Retrieving com/google/firebase/firebase-admin/8.2.0/firebase-admin-8.2.0.jar from central
+2025-03-21T09:49:45.0639222Z #11 9.046 Retrieving com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar from central
+2025-03-21T09:49:45.0640326Z #11 9.047 Retrieving com/google/api-client/google-api-client-gson/1.34.1/google-api-client-gson-1.34.1.jar from central
+2025-03-21T09:49:45.0641590Z #11 9.057 Retrieving com/google/http-client/google-http-client/1.40.0/google-http-client-1.40.0.jar from central
+2025-03-21T09:49:45.0642647Z #11 9.085 Retrieving org/apache/httpcomponents/httpcore/4.4.14/httpcore-4.4.14.jar from central
+2025-03-21T09:49:45.1623186Z #11 9.088 Retrieving com/google/api/api-common/2.0.2/api-common-2.0.2.jar from central
+2025-03-21T09:49:45.1636065Z #11 9.105 Retrieving com/google/cloud/google-cloud-firestore/3.0.3/google-cloud-firestore-3.0.3.jar from central
+2025-03-21T09:49:45.1637387Z #11 9.109 Retrieving com/google/cloud/google-cloud-core-grpc/2.1.2/google-cloud-core-grpc-2.1.2.jar from central
+2025-03-21T09:49:45.1638401Z #11 9.110 Retrieving io/grpc/grpc-core/1.40.1/grpc-core-1.40.1.jar from central
+2025-03-21T09:49:45.1639274Z #11 9.118 Retrieving com/google/android/annotations/4.1.1.4/annotations-4.1.1.4.jar from central
+2025-03-21T09:49:45.1640201Z #11 9.126 Retrieving io/perfmark/perfmark-api/0.23.0/perfmark-api-0.23.0.jar from central
+2025-03-21T09:49:45.1641277Z #11 9.126 Retrieving org/codehaus/mojo/animal-sniffer-annotations/1.20/animal-sniffer-annotations-1.20.jar from central
+2025-03-21T09:49:45.1642387Z #11 9.132 Retrieving commons-logging/commons-logging/1.2/commons-logging-1.2.jar from central
+2025-03-21T09:49:45.1644062Z #11 9.136 Retrieving com/google/api/grpc/proto-google-cloud-firestore-v1/3.0.3/proto-google-cloud-firestore-v1-3.0.3.jar from central
+2025-03-21T09:49:45.1645501Z #11 9.138 Retrieving com/google/cloud/proto-google-cloud-firestore-bundle-v1/3.0.3/proto-google-cloud-firestore-bundle-v1-3.0.3.jar from central
+2025-03-21T09:49:45.1647003Z #11 9.142 Retrieving io/opencensus/opencensus-contrib-grpc-util/0.28.0/opencensus-contrib-grpc-util-0.28.0.jar from central
+2025-03-21T09:49:45.1648057Z #11 9.149 Retrieving io/grpc/grpc-api/1.40.1/grpc-api-1.40.1.jar from central
+2025-03-21T09:49:45.1648895Z #11 9.151 Retrieving io/grpc/grpc-protobuf-lite/1.40.1/grpc-protobuf-lite-1.40.1.jar from central
+2025-03-21T09:49:45.1649803Z #11 9.151 Retrieving io/grpc/grpc-protobuf/1.40.1/grpc-protobuf-1.40.1.jar from central
+2025-03-21T09:49:45.1650625Z #11 9.160 Retrieving com/google/api/gax-grpc/2.4.0/gax-grpc-2.4.0.jar from central
+2025-03-21T09:49:45.1651384Z #11 9.162 Retrieving io/grpc/grpc-auth/1.40.1/grpc-auth-1.40.1.jar from central
+2025-03-21T09:49:45.1652139Z #11 9.167 Retrieving io/grpc/grpc-alts/1.40.1/grpc-alts-1.40.1.jar from central
+2025-03-21T09:49:45.1652979Z #11 9.169 Retrieving io/grpc/grpc-netty-shaded/1.40.1/grpc-netty-shaded-1.40.1.jar from central
+2025-03-21T09:49:45.1664677Z #11 9.170 Retrieving io/grpc/grpc-grpclb/1.40.1/grpc-grpclb-1.40.1.jar from central
+2025-03-21T09:49:45.1665726Z #11 9.178 Retrieving org/conscrypt/conscrypt-openjdk-uber/2.5.1/conscrypt-openjdk-uber-2.5.1.jar from central
+2025-03-21T09:49:45.1666990Z #11 9.185 Retrieving io/grpc/grpc-stub/1.40.1/grpc-stub-1.40.1.jar from central
+2025-03-21T09:49:45.2690444Z #11 9.193 Retrieving com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar from central
+2025-03-21T09:49:45.2697394Z #11 9.200 Retrieving io/netty/netty-codec-http/4.1.77.Final/netty-codec-http-4.1.77.Final.jar from central
+2025-03-21T09:49:45.2698435Z #11 9.257 Retrieving io/netty/netty-common/4.1.77.Final/netty-common-4.1.77.Final.jar from central
+2025-03-21T09:49:45.2699414Z #11 9.292 Retrieving io/netty/netty-buffer/4.1.77.Final/netty-buffer-4.1.77.Final.jar from central
+2025-03-21T09:49:45.3747608Z #11 9.302 Retrieving io/netty/netty-codec/4.1.77.Final/netty-codec-4.1.77.Final.jar from central
+2025-03-21T09:49:45.3749171Z #11 9.314 Retrieving io/netty/netty-handler/4.1.77.Final/netty-handler-4.1.77.Final.jar from central
+2025-03-21T09:49:45.3750224Z #11 9.326 Retrieving io/netty/netty-resolver/4.1.77.Final/netty-resolver-4.1.77.Final.jar from central
+2025-03-21T09:49:45.3751228Z #11 9.336 Retrieving io/netty/netty-transport/4.1.77.Final/netty-transport-4.1.77.Final.jar from central
+2025-03-21T09:49:45.3752301Z #11 9.345 Retrieving com/google/cloud/google-cloud-storage/2.1.1/google-cloud-storage-2.1.1.jar from central
+2025-03-21T09:49:45.3753323Z #11 9.371 Retrieving com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar from central
+2025-03-21T09:49:45.3755071Z #11 9.371 Retrieving com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar from central
+2025-03-21T09:49:45.3756779Z #11 9.372 Retrieving com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar from central
+2025-03-21T09:49:45.3757788Z #11 9.378 Retrieving com/google/errorprone/error_prone_annotations/2.9.0/error_prone_annotations-2.9.0.jar from central
+2025-03-21T09:49:45.3758788Z #11 9.378 Retrieving org/checkerframework/checker-qual/3.8.0/checker-qual-3.8.0.jar from central
+2025-03-21T09:49:45.3759716Z #11 9.379 Retrieving com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar from central
+2025-03-21T09:49:45.3760950Z #11 9.387 Retrieving io/opencensus/opencensus-contrib-http-util/0.28.0/opencensus-contrib-http-util-0.28.0.jar from central
+2025-03-21T09:49:45.3762337Z #11 9.389 Retrieving com/google/http-client/google-http-client-jackson2/1.40.0/google-http-client-jackson2-1.40.0.jar from central
+2025-03-21T09:49:45.3763796Z #11 9.398 Retrieving com/google/oauth-client/google-oauth-client/1.32.1/google-oauth-client-1.32.1.jar from central
+2025-03-21T09:49:45.3765195Z #11 9.398 Retrieving com/google/api-client/google-api-client/1.32.1/google-api-client-1.32.1.jar from central
+2025-03-21T09:49:45.5074312Z #11 9.405 Retrieving com/google/http-client/google-http-client-gson/1.40.0/google-http-client-gson-1.40.0.jar from central
+2025-03-21T09:49:45.5075789Z #11 9.406 Retrieving com/google/http-client/google-http-client-apache-v2/1.40.0/google-http-client-apache-v2-1.40.0.jar from central
+2025-03-21T09:49:45.5077423Z #11 9.411 Retrieving com/google/apis/google-api-services-storage/v1-rev20210127-1.32.1/google-api-services-storage-v1-rev20210127-1.32.1.jar from central
+2025-03-21T09:49:45.5078968Z #11 9.412 Retrieving com/google/code/gson/gson/2.8.8/gson-2.8.8.jar from central
+2025-03-21T09:49:45.5080194Z #11 9.416 Retrieving com/google/cloud/google-cloud-core/2.1.2/google-cloud-core-2.1.2.jar from central
+2025-03-21T09:49:45.5081429Z #11 9.417 Retrieving com/google/auto/value/auto-value-annotations/1.8.2/auto-value-annotations-1.8.2.jar from central
+2025-03-21T09:49:45.5082873Z #11 9.423 Retrieving com/google/api/grpc/proto-google-common-protos/2.5.0/proto-google-common-protos-2.5.0.jar from central
+2025-03-21T09:49:45.5084528Z #11 9.426 Retrieving com/google/http-client/google-http-client-appengine/1.40.0/google-http-client-appengine-1.40.0.jar from central
+2025-03-21T09:49:45.5085914Z #11 9.427 Retrieving com/google/cloud/google-cloud-core-http/2.1.2/google-cloud-core-http-2.1.2.jar from central
+2025-03-21T09:49:45.5086698Z #11 9.428 Retrieving com/google/api/gax-httpjson/0.89.0/gax-httpjson-0.89.0.jar from central
+2025-03-21T09:49:45.5087544Z #11 9.429 Retrieving com/google/api/gax/2.4.0/gax-2.4.0.jar from central
+2025-03-21T09:49:45.5088899Z #11 9.433 Retrieving com/google/auth/google-auth-library-credentials/1.1.0/google-auth-library-credentials-1.1.0.jar from central
+2025-03-21T09:49:45.5090673Z #11 9.434 Retrieving javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar from central
+2025-03-21T09:49:45.5091808Z #11 9.439 Retrieving io/opencensus/opencensus-api/0.28.0/opencensus-api-0.28.0.jar from central
+2025-03-21T09:49:45.5092724Z #11 9.441 Retrieving io/grpc/grpc-context/1.40.1/grpc-context-1.40.1.jar from central
+2025-03-21T09:49:45.5093925Z #11 9.442 Retrieving com/google/api/grpc/proto-google-iam-v1/1.1.0/proto-google-iam-v1-1.1.0.jar from central
+2025-03-21T09:49:45.5095110Z #11 9.450 Retrieving com/google/protobuf/protobuf-java-util/3.17.3/protobuf-java-util-3.17.3.jar from central
+2025-03-21T09:49:45.5096133Z #11 9.452 Retrieving org/threeten/threetenbp/1.5.1/threetenbp-1.5.1.jar from central
+2025-03-21T09:49:45.5097300Z #11 9.455 Retrieving com/google/auth/google-auth-library-oauth2-http/1.1.0/google-auth-library-oauth2-http-1.1.0.jar from central
+2025-03-21T09:49:45.5098461Z #11 9.530 Retrieving com/novemberain/pantomime/2.11.0/pantomime-2.11.0.jar from clojars
+2025-03-21T09:49:45.7156499Z #11 9.533 Retrieving clj-time/clj-time/0.15.2/clj-time-0.15.2.jar from clojars
+2025-03-21T09:49:45.7157834Z #11 9.533 Retrieving digest/digest/1.4.10/digest-1.4.10.jar from clojars
+2025-03-21T09:49:45.7158405Z #11 9.534 Retrieving environ/environ/1.2.0/environ-1.2.0.jar from clojars
+2025-03-21T09:49:45.7158994Z #11 9.536 Retrieving com/stuartsierra/component/0.4.0/component-0.4.0.jar from clojars
+2025-03-21T09:49:45.7159642Z #11 9.538 Retrieving com/stuartsierra/dependency/0.2.0/dependency-0.2.0.jar from clojars
+2025-03-21T09:49:45.7160177Z #11 9.541 Retrieving ring/ring/1.7.1/ring-1.7.1.jar from clojars
+2025-03-21T09:49:45.7160639Z #11 9.541 Retrieving ring/ring-core/1.7.1/ring-core-1.7.1.jar from clojars
+2025-03-21T09:49:45.7161236Z #11 9.543 Retrieving crypto-random/crypto-random/1.2.0/crypto-random-1.2.0.jar from clojars
+2025-03-21T09:49:45.7161947Z #11 9.543 Retrieving crypto-equality/crypto-equality/1.0.0/crypto-equality-1.0.0.jar from clojars
+2025-03-21T09:49:45.7162599Z #11 9.547 Retrieving ring/ring-devel/1.7.1/ring-devel-1.7.1.jar from clojars
+2025-03-21T09:49:45.7163110Z #11 9.548 Retrieving hiccup/hiccup/1.0.5/hiccup-1.0.5.jar from clojars
+2025-03-21T09:49:45.7164057Z #11 9.550 Retrieving ns-tracker/ns-tracker/0.3.1/ns-tracker-0.3.1.jar from clojars
+2025-03-21T09:49:45.7164690Z #11 9.553 Retrieving ring/ring-jetty-adapter/1.7.1/ring-jetty-adapter-1.7.1.jar from clojars
+2025-03-21T09:49:45.7165356Z #11 9.553 Retrieving clj-stacktrace/clj-stacktrace/0.2.8/clj-stacktrace-0.2.8.jar from clojars
+2025-03-21T09:49:45.7165971Z #11 9.555 Retrieving ring/ring-servlet/1.7.1/ring-servlet-1.7.1.jar from clojars
+2025-03-21T09:49:45.7166490Z #11 9.557 Retrieving ring/ring-json/0.4.0/ring-json-0.4.0.jar from clojars
+2025-03-21T09:49:45.7166911Z #11 9.561 Retrieving compojure/compojure/1.7.1/compojure-1.7.1.jar from clojars
+2025-03-21T09:49:45.7167315Z #11 9.561 Retrieving clout/clout/2.2.1/clout-2.2.1.jar from clojars
+2025-03-21T09:49:45.7167720Z #11 9.562 Retrieving instaparse/instaparse/1.4.8/instaparse-1.4.8.jar from clojars
+2025-03-21T09:49:45.7168146Z #11 9.563 Retrieving medley/medley/1.4.0/medley-1.4.0.jar from clojars
+2025-03-21T09:49:45.7168549Z #11 9.563 Retrieving ring/ring-codec/1.2.0/ring-codec-1.2.0.jar from clojars
+2025-03-21T09:49:45.7168949Z #11 9.569 Retrieving tigris/tigris/0.1.2/tigris-0.1.2.jar from clojars
+2025-03-21T09:49:45.7169346Z #11 9.569 Retrieving cheshire/cheshire/5.13.0/cheshire-5.13.0.jar from clojars
+2025-03-21T09:49:45.7169782Z #11 9.570 Retrieving cljstache/cljstache/2.0.6/cljstache-2.0.6.jar from clojars
+2025-03-21T09:49:45.7170224Z #11 9.571 Retrieving integrant/integrant/0.13.1/integrant-0.13.1.jar from clojars
+2025-03-21T09:49:45.7170684Z #11 9.573 Retrieving weavejester/dependency/0.2.1/dependency-0.2.1.jar from clojars
+2025-03-21T09:49:45.7171138Z #11 9.577 Retrieving clj-antlr/clj-antlr/0.2.9/clj-antlr-0.2.9.jar from clojars
+2025-03-21T09:49:45.7171575Z #11 9.577 Retrieving com/walmartlabs/lacinia/0.38.0/lacinia-0.38.0.jar from clojars
+2025-03-21T09:49:45.7172016Z #11 9.578 Retrieving org/flatland/ordered/1.5.9/ordered-1.5.9.jar from clojars
+2025-03-21T09:49:45.7172429Z #11 9.579 Retrieving e85th/venia/0.2.5-1/venia-0.2.5-1.jar from clojars
+2025-03-21T09:49:45.7172828Z #11 9.580 Retrieving com/layerware/hugsql/0.5.3/hugsql-0.5.3.jar from clojars
+2025-03-21T09:49:45.7173289Z #11 9.585 Retrieving com/layerware/hugsql-core/0.5.3/hugsql-core-0.5.3.jar from clojars
+2025-03-21T09:49:45.7174056Z #11 9.586 Retrieving com/layerware/hugsql-adapter-clojure-java-jdbc/0.5.3/hugsql-adapter-clojure-java-jdbc-0.5.3.jar from clojars
+2025-03-21T09:49:45.7174726Z #11 9.586 Retrieving com/layerware/hugsql-adapter/0.5.3/hugsql-adapter-0.5.3.jar from clojars
+2025-03-21T09:49:45.7175207Z #11 9.588 Retrieving integrant/repl/0.4.0/repl-0.4.0.jar from clojars
+2025-03-21T09:49:45.9231765Z #11 DONE 9.9s
+2025-03-21T09:49:46.1338960Z 
+2025-03-21T09:49:46.1339567Z #12 [6/7] COPY . /usr/src/app
+2025-03-21T09:49:46.1340990Z #12 DONE 0.1s
+2025-03-21T09:49:46.1341193Z 
+2025-03-21T09:49:46.1341623Z #13 [7/7] RUN mv "$(lein uberjar | sed -n 's/^Created \(.*standalone\.jar\)/\1/p')" app-standalone.jar
+2025-03-21T09:49:49.7887449Z #13 3.805 Compiling vr-match-back-end.app.my-webapp.config
+2025-03-21T09:49:50.3635231Z #13 4.380 Compiling vr-match-back-end.app.my-webapp.converter
+2025-03-21T09:49:50.9958778Z #13 5.011 Compiling vr-match-back-end.app.my-webapp.endpoint
+2025-03-21T09:49:53.9577669Z #13 7.974 WARNING: parse-boolean already refers to: #'clojure.core/parse-boolean in namespace: com.walmartlabs.lacinia.schema, being replaced by: #'com.walmartlabs.lacinia.schema/parse-boolean
+2025-03-21T09:49:56.3221941Z #13 10.34 Syntax error compiling at (vr_match_back_end/infra/datasource/firebase_admin.clj:47:1).
+2025-03-21T09:49:56.5534828Z #13 10.57 Syntax error compiling at (vr_match_back_end/infra/datasource/firebase_admin.clj:47:1).
+2025-03-21T09:49:56.5536848Z #13 10.57 No such var: ig/pre-init-spec
+2025-03-21T09:49:56.5538683Z #13 10.57 
+2025-03-21T09:49:56.5540039Z #13 10.57 Full report at:
+2025-03-21T09:49:56.5540927Z #13 10.57 /tmp/clojure-14418884911754900421.edn
+2025-03-21T09:49:56.6493601Z #13 10.60 Compilation failed: Subprocess failed (exit code: 1)
+2025-03-21T09:49:56.6494579Z #13 10.61 mv: cannot stat '': No such file or directory
+2025-03-21T09:49:56.6495601Z #13 ERROR: process "/bin/sh -c mv \"$(lein uberjar | sed -n 's/^Created \\(.*standalone\\.jar\\)/\\1/p')\" app-standalone.jar" did not complete successfully: exit code: 1
+2025-03-21T09:49:56.6496539Z ------
+2025-03-21T09:49:56.6497096Z  > [7/7] RUN mv "$(lein uberjar | sed -n 's/^Created \(.*standalone\.jar\)/\1/p')" app-standalone.jar:
+2025-03-21T09:49:56.6497887Z 5.011 Compiling vr-match-back-end.app.my-webapp.endpoint
+2025-03-21T09:49:56.6499268Z 7.974 WARNING: parse-boolean already refers to: #'clojure.core/parse-boolean in namespace: com.walmartlabs.lacinia.schema, being replaced by: #'com.walmartlabs.lacinia.schema/parse-boolean
+2025-03-21T09:49:56.6500805Z 10.34 Syntax error compiling at (vr_match_back_end/infra/datasource/firebase_admin.clj:47:1).
+2025-03-21T09:49:56.6501752Z 10.57 Syntax error compiling at (vr_match_back_end/infra/datasource/firebase_admin.clj:47:1).
+2025-03-21T09:49:56.6502412Z 10.57 No such var: ig/pre-init-spec
+2025-03-21T09:49:56.6502776Z 10.57 
+2025-03-21T09:49:56.6503048Z 10.57 Full report at:
+2025-03-21T09:49:56.6503400Z 10.57 /tmp/clojure-14418884911754900421.edn
+2025-03-21T09:49:56.6504130Z 10.60 Compilation failed: Subprocess failed (exit code: 1)
+2025-03-21T09:49:56.6504694Z 10.61 mv: cannot stat '': No such file or directory
+2025-03-21T09:49:56.6505093Z ------
+2025-03-21T09:49:56.6580503Z Dockerfile:11
+2025-03-21T09:49:56.6580791Z --------------------
+2025-03-21T09:49:56.6581372Z    9 |     # ソースコードのコピーとビルド
+2025-03-21T09:49:56.6581829Z   10 |     COPY . /usr/src/app
+2025-03-21T09:49:56.6582380Z   11 | >>> RUN mv "$(lein uberjar | sed -n 's/^Created \(.*standalone\.jar\)/\1/p')" app-standalone.jar
+2025-03-21T09:49:56.6582957Z   12 |     
+2025-03-21T09:49:56.6583294Z   13 |     # ポート公開と実行コマンド
+2025-03-21T09:49:56.6583758Z --------------------
+2025-03-21T09:49:56.6584672Z ERROR: failed to solve: process "/bin/sh -c mv \"$(lein uberjar | sed -n 's/^Created \\(.*standalone\\.jar\\)/\\1/p')\" app-standalone.jar" did not complete successfully: exit code: 1
+2025-03-21T09:49:56.6842812Z ##[error]buildx failed with: ERROR: failed to solve: process "/bin/sh -c mv \"$(lein uberjar | sed -n 's/^Created \\(.*standalone\\.jar\\)/\\1/p')\" app-standalone.jar" did not complete successfully: exit code: 1
+2025-03-21T09:49:56.6939208Z Post job cleanup.
+2025-03-21T09:49:56.8246166Z ##[group]Removing temp folder /tmp/docker-actions-toolkit-5LLKFO
+2025-03-21T09:49:56.8255109Z ##[endgroup]
+2025-03-21T09:49:56.8404683Z Post job cleanup.
+2025-03-21T09:49:56.9702270Z ##[group]Removing builder
+2025-03-21T09:49:57.0776182Z [command]/usr/bin/docker buildx rm builder-67acc04d-ec5f-414f-b9bc-61aa7dd27152
+2025-03-21T09:49:57.9169661Z builder-67acc04d-ec5f-414f-b9bc-61aa7dd27152 removed
+2025-03-21T09:49:57.9203082Z ##[endgroup]
+2025-03-21T09:49:57.9204069Z ##[group]Cleaning up certificates
+2025-03-21T09:49:57.9215317Z ##[endgroup]
+2025-03-21T09:49:57.9325249Z Post job cleanup.
+2025-03-21T09:49:58.0254066Z [command]/usr/bin/git version
+2025-03-21T09:49:58.0299218Z git version 2.48.1
+2025-03-21T09:49:58.0344657Z Temporarily overriding HOME='/home/runner/work/_temp/2aed2441-36a8-4e49-89a1-4d419e39a004' before making global git config changes
+2025-03-21T09:49:58.0345886Z Adding repository directory to the temporary git global config as a safe directory
+2025-03-21T09:49:58.0350714Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/vr-match/vr-match
+2025-03-21T09:49:58.0385031Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-03-21T09:49:58.0417627Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-03-21T09:49:58.0651828Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-03-21T09:49:58.0672207Z http.https://github.com/.extraheader
+2025-03-21T09:49:58.0684838Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-03-21T09:49:58.0715993Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-03-21T09:49:58.1043345Z Cleaning up orphan processes

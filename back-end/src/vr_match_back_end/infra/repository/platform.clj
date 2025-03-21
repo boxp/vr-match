@@ -45,5 +45,5 @@
 
 (defmethod ig/halt-key! ::platform-repository [_ _] nil)
 
-(defmethod ig/pre-init-spec ::platform-repository [_]
-  (s/keys :req-un [:mysql/mysql-datasource]))
+(defmethod ig/assert-key ::platform-repository [_ {:keys [mysql-datasource]}]
+  (assert mysql-datasource "mysql-datasource is required"))

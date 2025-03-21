@@ -543,5 +543,6 @@
 
 (defmethod ig/halt-key! ::user-repository [_ _] nil)
 
-(defmethod ig/pre-init-spec ::user-repository [_]
-  (s/keys :req-un [:mysql/mysql-datasource :firebase-admin/firebase-admin-datasource]))
+(defmethod ig/assert-key ::user-repository [_ {:keys [mysql-datasource firebase-admin-datasource]}]
+  (assert mysql-datasource "mysql-datasource is required")
+  (assert firebase-admin-datasource "firebase-admin-datasource is required"))

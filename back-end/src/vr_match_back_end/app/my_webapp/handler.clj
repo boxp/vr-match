@@ -69,5 +69,5 @@
 
 (defmethod ig/halt-key! ::my-webapp-handler [_ _] nil)
 
-(defmethod ig/pre-init-spec ::my-webapp-handler [_]
-  (s/keys :req-un [:resolvers/my-webapp-resolvers]))
+(defmethod ig/assert-key ::my-webapp-handler [_ {:keys [my-webapp-resolvers]}]
+  (assert my-webapp-resolvers "my-webapp-resolvers is required"))

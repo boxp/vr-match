@@ -1,0 +1,5 @@
+﻿2025-03-21T09:49:17.4072663Z Evaluate and set job outputs
+2025-03-21T09:49:17.4080882Z Set output 'frontend'
+2025-03-21T09:49:17.4084035Z Set output 'backend'
+2025-03-21T09:49:17.4085571Z Set output 'workflow'
+2025-03-21T09:49:17.4087156Z Cleaning up orphan processes

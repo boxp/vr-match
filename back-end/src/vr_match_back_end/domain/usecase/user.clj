@@ -197,5 +197,5 @@
 
 (defmethod ig/halt-key! ::user-usecase [_ _] nil)
 
-(defmethod ig/pre-init-spec ::user-usecase [_]
-  (s/keys :req-un [:ruser/user-repository]))
+(defmethod ig/assert-key ::user-usecase [_ {:keys [user-repository]}]
+  (assert user-repository "user-repository is required"))

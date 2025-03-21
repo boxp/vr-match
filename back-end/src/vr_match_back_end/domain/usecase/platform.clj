@@ -20,6 +20,6 @@
 
 (defmethod ig/halt-key! ::platform-usecase [_ _] nil)
 
-(defmethod ig/pre-init-spec ::platform-usecase [_]
-  (s/keys :req-un [:rplatform/platform-repository]))
+(defmethod ig/assert-key ::platform-usecase [_ {:keys [platform-repository]}]
+  (assert platform-repository "platform-repository is required"))
 
