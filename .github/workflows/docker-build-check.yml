@@ -33,8 +33,8 @@ jobs:
             workflow:
               - '.github/workflows/docker-build-check.yml'
 
-  build-frontend:
-    name: Build Frontend Docker Image
+  build-and-test:
+    name: Build and Test
     needs: file-changes
     runs-on: ubuntu-latest
     if: |
@@ -66,45 +66,19 @@ jobs:
           fi
           echo "Frontend Docker build succeeded"
 
-      - name: Save Docker image
-        run: |
-          docker save vr-match-frontend:test > /tmp/frontend-image.tar
-
-      - name: Upload Docker image as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: frontend-docker-image
-          path: /tmp/frontend-image.tar
-          retention-days: 1
-
-  test-ssr-server:
-    name: Test SSR Server
-    needs: build-frontend
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Docker image
-        uses: actions/download-artifact@v3
-        with:
-          name: frontend-docker-image
-          path: /tmp
-
-      - name: Load Docker image
-        run: |
-          docker load < /tmp/frontend-image.tar
-
       - name: Test SSR server startup
         run: |
           # Start container and test if SSR server starts up properly
           docker run -d --name ssr-test -p 3000:3000 vr-match-frontend:test
-          
+
           # Wait for server to start
           echo "Waiting for SSR server to start..."
           sleep 10
-          
+
           # Check if server responds
           MAX_RETRIES=5
           RETRY_COUNT=0
-          
+
           while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
             if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 | grep -q "200\|301\|302"; then
               echo "SSR server is running successfully!"
@@ -113,12 +87,12 @@ jobs:
               docker rm ssr-test
               exit 0
             fi
-            
+
             echo "Retry $((RETRY_COUNT+1))/$MAX_RETRIES: SSR server not responding yet..."
             RETRY_COUNT=$((RETRY_COUNT+1))
             sleep 5
           done
-          
+
           echo "Failed to start SSR server"
           docker logs ssr-test
           docker stop ssr-test
