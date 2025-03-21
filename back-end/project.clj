@@ -25,7 +25,7 @@
                  [org.clojure/tools.namespace "0.3.1"]
                  [com.walmartlabs/lacinia "0.33.0"]
                  [e85th/venia "0.2.5-1"]
-                 [com.layerware/hugsql "0.4.9"]
+                 [com.layerware/hugsql "0.5.3"]
                  [mysql/mysql-connector-java "8.0.33"]
                  [com.google.firebase/firebase-admin "8.2.0" :exclusions [[com.google.api-client/google-api-client]]]
                  [com.google.cloud/google-cloud-storage]
