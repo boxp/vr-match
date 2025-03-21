@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :plugins [[lein-bom "0.2.0-SNAPSHOT"]]
   :bom {:import [[com.google.cloud/libraries-bom "23.0.0"]]}
-  :dependencies [[org.clojure/clojure "1.10.1"]
+  :dependencies [[org.clojure/clojure "1.12.0"]
                  [org.clojure/core.async "0.7.559"]
                  [org.clojure/data.codec "0.1.1"]
                  [org.clojure/test.check "0.10.0"]
