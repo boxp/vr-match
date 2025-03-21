@@ -1,3 +1,0 @@
-﻿2025-03-21T09:49:56.6939199Z Post job cleanup.
-2025-03-21T09:49:56.8246128Z ##[group]Removing temp folder /tmp/docker-actions-toolkit-5LLKFO
-2025-03-21T09:49:56.8255102Z ##[endgroup]

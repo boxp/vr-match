@@ -1,5 +1,0 @@
-2025-03-21T09:49:11.6388628Z Requested labels: ubuntu-latest
-2025-03-21T09:49:11.6388628Z Job defined at: boxp/vr-match/.github/workflows/docker-build-check.yml@refs/pull/196/merge
-2025-03-21T09:49:11.6388628Z Waiting for a runner to pick up this job...
-2025-03-21T09:49:11.9226828Z Job is waiting for a hosted runner to come online.
-2025-03-21T09:49:11.9226954Z Job is about to start running on the hosted runner: GitHub Actions
