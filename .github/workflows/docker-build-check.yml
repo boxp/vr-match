@@ -66,6 +66,32 @@ jobs:
           fi
           echo "Frontend Docker build succeeded"
 
+      - name: Save Docker image
+        run: |
+          docker save vr-match-frontend:test > /tmp/frontend-image.tar
+
+      - name: Upload Docker image as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-docker-image
+          path: /tmp/frontend-image.tar
+          retention-days: 1
+
+  test-ssr-server:
+    name: Test SSR Server
+    needs: build-frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Docker image
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend-docker-image
+          path: /tmp
+
+      - name: Load Docker image
+        run: |
+          docker load < /tmp/frontend-image.tar
+
       - name: Test SSR server startup
         run: |
           # Start container and test if SSR server starts up properly
