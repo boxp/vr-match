@@ -65,6 +65,40 @@ jobs:
             exit 1
           fi
           echo "Frontend Docker build succeeded"
+
+      - name: Test SSR server startup
+        run: |
+          # Start container and test if SSR server starts up properly
+          docker run -d --name ssr-test -p 3000:3000 vr-match-frontend:test
+          
+          # Wait for server to start
+          echo "Waiting for SSR server to start..."
+          sleep 10
+          
+          # Check if server responds
+          MAX_RETRIES=5
+          RETRY_COUNT=0
+          
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 | grep -q "200\|301\|302"; then
+              echo "SSR server is running successfully!"
+              docker logs ssr-test
+              docker stop ssr-test
+              docker rm ssr-test
+              exit 0
+            fi
+            
+            echo "Retry $((RETRY_COUNT+1))/$MAX_RETRIES: SSR server not responding yet..."
+            RETRY_COUNT=$((RETRY_COUNT+1))
+            sleep 5
+          done
+          
+          echo "Failed to start SSR server"
+          docker logs ssr-test
+          docker stop ssr-test
+          docker rm ssr-test
+          exit 1
+
   build-backend:
     name: Build Backend Docker Image
     needs: file-changes
