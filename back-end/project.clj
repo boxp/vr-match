@@ -21,7 +21,7 @@
                  [compojure "1.7.1"]
                  [cheshire "5.13.0"]
                  [cljstache "2.0.6"]
-                 [integrant "0.8.0"]
+                 [integrant "0.13.1"]
                  [org.clojure/tools.namespace "0.3.1"]
                  [com.walmartlabs/lacinia "0.38.0"]
                  [e85th/venia "0.2.5-1"]
