@@ -19,27 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Merge by labeled
-        id: merge
         uses: devmasx/merge-branch@v1.4.0
         with:
           label_name: 'stage'
           target_branch: 'stage'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      
-      # Trigger deployment workflows after successful merge
-      - name: Trigger backend deployment
-        if: steps.merge.outputs.status == 'success'
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          event-type: stage-deploy-backend
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
-      
-      - name: Trigger frontend deployment
-        if: steps.merge.outputs.status == 'success'
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          event-type: stage-deploy-frontend
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
