@@ -15,12 +15,17 @@ on:
     paths:
         - .github/workflows/stage-build-container-image-front-end.yml
         - front-end/**
+  repository_dispatch:
+    types: [stage-deploy-frontend]
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    # Only run this job when the PR is merged, not just closed
-    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
+    # Only run this job when:
+    # 1. It's a direct push to stage branch
+    # 2. It's a PR that was merged (not just closed)
+    # 3. It's a repository_dispatch event
+    if: github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     permissions:
       id-token: write
     steps:
