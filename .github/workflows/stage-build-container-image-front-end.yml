@@ -8,10 +8,19 @@ on:
     paths:
         - .github/workflows/stage-build-container-image-front-end.yml
         - front-end/**
+  pull_request:
+    types: [closed]
+    branches:
+      - stage
+    paths:
+        - .github/workflows/stage-build-container-image-front-end.yml
+        - front-end/**
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    # Only run this job when the PR is merged, not just closed
+    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
     permissions:
       id-token: write
     steps:
