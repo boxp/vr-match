@@ -8,6 +8,8 @@ on:
     paths:
         - .github/workflows/stage-build-container-image-back-end.yml
         - back-end/**
+  repository_dispatch:
+    types: [stage-deploy-backend]
 
 jobs:
   build-and-push:
