@@ -15,7 +15,7 @@
                  [digest "1.4.10"]
                  [environ "1.2.0"]
                  [clj-time "0.15.2"]
-                 [com.stuartsierra/component "0.4.0"]
+                 [com.stuartsierra/component "1.1.0"]
                  [ring "1.13.0"]
                  [ring/ring-json "0.5.1"]
                  [compojure "1.7.1"]
