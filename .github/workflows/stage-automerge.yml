@@ -30,7 +30,7 @@ jobs:
       # Trigger deployment workflows after successful merge
       - name: Trigger backend deployment
         if: steps.merge.outputs.status == 'success'
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: stage-deploy-backend
@@ -38,7 +38,7 @@ jobs:
       
       - name: Trigger frontend deployment
         if: steps.merge.outputs.status == 'success'
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: stage-deploy-frontend
