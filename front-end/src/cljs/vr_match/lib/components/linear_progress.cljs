@@ -1,7 +1,7 @@
 (ns vr-match.lib.components.linear-progress
   (:require
     [reagent.core :as r]
-    ["material-ui"]
+    ["@material-ui/core/LinearProgress" :as LinearProgress]
     [vr-match.lib.components.elevation :as elevation]))
 
 (defn linear-progress []
@@ -9,4 +9,4 @@
                  :position "fixed"
                  :top 0
                  :z-index elevation/linear-progress}}
-            [:> js/MaterialUI.LinearProgress]])
+   [:> LinearProgress]])
