@@ -284,6 +284,73 @@ Material-UIについては、npm-aliases機能を活用し、シムなしでの�
 
 フェーズ2のシム実装フェーズ終了後、フェーズ3のクライアント移行フェーズで段階的に修正していきます。重要度の高いコンポーネントから順に修正し、各コンポーネントの修正後にテストを行い、問題がないことを確認します。
 
+### 2.4 Firebaseの参照方法の修正リスト
+
+コードベース内でFirebaseを参照している箇所も同様に修正が必要です。特に、以下のようなインポート形式を修正する必要があります。
+
+#### 修正対象ファイル
+
+1. `front-end/src/cljs/vr_match/auth/effects.cljs`
+2. その他Firebaseを参照しているファイル
+
+#### 修正例
+
+**修正前:**
+```clojure
+(ns vr-match.auth.effects
+  (:require [firebase.app]
+            [firebase.auth]
+            [cljs.reader :refer [read-string]]
+            [ajax.core :refer [ajax-request json-request-format json-response-format]]
+            [re-frame.core :as re-frame]))
+```
+
+**修正後:**
+```clojure
+(ns vr-match.auth.effects
+  (:require ["firebase/app" :as firebase]
+            ["firebase/auth"]
+            [cljs.reader :refer [read-string]]
+            [ajax.core :refer [ajax-request json-request-format json-response-format]]
+            [re-frame.core :as re-frame]))
+```
+
+#### 修正方針
+
+Firebaseの参照方法は以下のパターンに統一します：
+
+1. **メインパッケージの参照**:
+   - `["firebase/app" :as firebase]`をrequireする
+   - インポートした`firebase`変数を通してFirebaseの基本機能にアクセスする
+
+2. **追加サービスの参照**:
+   - 必要な追加サービスを`["firebase/auth"]`などとして直接requireする
+   - 追加サービスはrequireするだけで自動的にfirebaseオブジェクトに機能が追加される
+
+3. **グローバル変数を避ける**:
+   - `js/firebase`などのグローバル変数への参照を避け、インポートした`firebase`変数を使用する
+
+この方法は、依存関係が明示的になるため、コードの可読性と保守性が向上します。また、shadow-cljsの最適化の恩恵も受けやすくなります。
+
+### 2.5 JSパッケージのインポート方法に関する一般的な修正方針
+
+JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方法について、以下の原則に従って修正を行います：
+
+1. **直接インポート**: 各コンポーネントやサービスを直接インポートする方法を採用します
+   - Material-UI: `["@material-ui/core/Button" :as Button]`
+   - Firebase: `["firebase/app" :as firebase]`, `["firebase/auth"]`
+   - React: `["react" :as react]`, `["react-dom" :as react-dom]`
+
+2. **名前空間の統一**: 同じパッケージを参照する場合、import方法を統一します
+
+3. **グローバル変数の使用制限**: `js/MaterialUI`や`js/firebase`などのグローバル変数への直接アクセスを避け、インポートした変数を使用します
+
+この修正アプローチにより、より明示的な依存関係管理が可能になり、コード品質とビルドプロセスが改善されます。
+
+#### 修正スケジュール
+
+フェーズ2のシム実装フェーズ終了後、フェーズ3のクライアント移行フェーズで段階的に修正していきます。重要度の高いコンポーネントから順に修正し、各コンポーネントの修正後にテストを行い、問題がないことを確認します。
+
 ## フェーズ3: クライアント移行フェーズ
 
 ### 3.1 クライアントコードの更新
