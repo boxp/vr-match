@@ -453,7 +453,7 @@ global.window.localStorage = null;
 
 ```dockerfile
 # ビルドステージ
-FROM node:14-alpine as build
+FROM node:8.17-alpine as build
 
 # 作業ディレクトリの作成
 WORKDIR /usr/src/app
@@ -471,7 +471,7 @@ COPY resources/ ./resources/
 RUN npm run build:prod
 
 # 実行ステージ
-FROM node:14-alpine
+FROM node:8.17-alpine
 
 # 作業ディレクトリの作成
 WORKDIR /usr/src/app
