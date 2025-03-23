@@ -53,6 +53,7 @@
                                :output-name "example.js"}
                      ;; 他のモジュールもproject.cljから移行
                      :worker {:entries [vr-match.worker]
+                              :depends-on #{:cljs-base}
                               :web-worker true  ;; Web Workerとして扱う
                               :init-fn vr-match.worker/init
                               :output-name "worker.js"}}
@@ -752,6 +753,7 @@ shadow-cljsのドキュメント「[User's Guide - Web Workers](https://shadow-c
           :client {...}
           ;; 他のモジュール
           :worker {:entries [vr-match.worker]
+                   :depends-on #{:cljs-base}
                    :web-worker true  ;; Web Workerとして扱う
                    :init-fn vr-match.worker/init}}
 ```
