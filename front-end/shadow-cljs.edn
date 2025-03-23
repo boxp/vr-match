@@ -5,6 +5,10 @@
                 [kibu/pushy "0.3.8"]
                 [e85th/venia "0.2.5-1"]
                 [cljs-ajax "0.8.4"]]
+ 
+ ;; npmパッケージのエイリアスを設定
+ :npm-aliases {"material-ui" "@material-ui/core"}
+
  :builds
  {:client {:target :browser
            :output-dir "resources/public/js/compiled"

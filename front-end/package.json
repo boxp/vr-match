@@ -31,6 +31,7 @@
     "react-dom": "16.14.0",
     "react-jss": "8.6.1",
     "@material-ui/core": "3.9.3",
+    "@material-ui/icons": "3.0.2",
     "whatwg-fetch": "3.6.20",
     "xmlhttprequest": "1.8.0"
   },

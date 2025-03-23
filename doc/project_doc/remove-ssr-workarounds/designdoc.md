@@ -34,6 +34,10 @@
                 [kibu/pushy "0.3.8"]
                 [e85th/venia "0.2.5-1"]
                 [cljs-ajax "0.8.4"]]
+
+ ;; 注: npmパッケージのエイリアスを設定
+ :npm-aliases {"material-ui" "@material-ui/core"}
+
  :builds
  {:client {:target :browser
            :output-dir "resources/public/js/compiled"
@@ -91,6 +95,7 @@
     "react-dom": "16.14.0",
     "react-jss": "8.6.1",
     "@material-ui/core": "3.9.3",
+    "@material-ui/icons": "3.0.2",
     "whatwg-fetch": "3.0.0",
     "xmlhttprequest": "1.8.0"
   },
@@ -116,7 +121,7 @@
 
 ### 2.1 CLJSJSパッケージ用シムの作成
 
-CLJSJSパッケージからnpmパッケージへの移行を簡単にするために、一時的な互換レイヤー（シム）を作成します。
+CLJSJSパッケージからnpmパッケージへの移行を簡単にするために、一時的な互換レイヤー（シム）を作成します。ただし、Material-UIについてはnpm-aliasesの設定で対応するため、シムは作成しません。
 
 #### Reactのシム
 
@@ -144,18 +149,6 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
 (js/goog.exportSymbol "ReactDOMServer" react-dom-server)
 ```
 
-#### Material-UIのシム
-
-ファイルパス: `front-end/src/cljs/cljsjs/material_ui.cljs`
-
-```clojure
-(ns cljsjs.material-ui
-  (:require ["@material-ui/core" :as mui]))
-
-;; グローバル変数の公開
-(js/goog.exportSymbol "MaterialUI" mui)
-```
-
 #### Firebaseのシム
 
 ファイルパス: `front-end/src/cljs/cljsjs/firebase.cljs`
@@ -174,6 +167,35 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
 (defn import-firestore []
   (js/require "firebase/firestore"))
 ```
+
+### 2.2 Material-UIの移行戦略
+
+Material-UIについては、npm-aliases機能を活用し、シムなしでの移行を試みます：
+
+1. **shadow-cljs.ednでのnpm-aliasesの設定**
+   ```clojure
+   :npm-aliases {"material-ui" "@material-ui/core"}
+   ```
+   
+2. **徐々に直接インポートスタイルに移行**
+
+   既存のインポート:
+   ```clojure
+   (ns vr-match.lib.components.linear-progress
+     (:require
+      [material-ui] ;; npm-aliasesにより@material-ui/coreにマッピング
+      [reagent.core :as reagent]))
+   ```
+
+   将来的に移行するスタイル:
+   ```clojure
+   (ns vr-match.lib.components.linear-progress
+     (:require
+      ["@material-ui/core/LinearProgress" :as LinearProgress]
+      [reagent.core :as reagent]))
+   ```
+
+このアプローチを採用することで、シム実装の複雑さを回避し、より直接的な方法でpackage管理の問題に対処します。ただし、問題が発生した場合はシム実装を検討します。
 
 ## フェーズ3: クライアント移行フェーズ
 
@@ -463,6 +485,7 @@ COPY package.json package-lock.json ./
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache make gcc g++ python openjdk11
+
 RUN npm ci
 
 # ソースコードと設定ファイルのコピー
