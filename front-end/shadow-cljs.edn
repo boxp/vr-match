@@ -72,16 +72,15 @@
                                    :output-name "setting_top.js"}
                      :setting-third-party-authorization {:entries [vr-match.setting.containers.third-party-authorization]
                                                          :depends-on #{:client}
-                                                         :output-name "setting_third_party_authorization.js"}}
+                                                         :output-name "setting_third_party_authorization.js"}
+                     :worker {:entries [vr-match.worker]
+                              :web-worker true
+                              :init-fn vr-match.worker/init
+                              :output-name "worker.js"}}
            :devtools {:after-load vr-match.client/remount-for-figwheel}}
   
   :server {:target :node-script
            :output-dir "target/server/prod/js/compiled"
            :output-to "target/server/prod/js/compiled/server.js"
            :main vr-match.server/main
-           :compiler-options {:optimizations :simple}}
-  
-  :worker {:target :browser
-           :output-dir "resources/public/prod/worker/js/compiled"
-           :output-to "resources/public/prod/worker/js/compiled/worker.js"
-           :compiler-options {:optimizations :advanced}}}}
+           :compiler-options {:optimizations :simple}}}}

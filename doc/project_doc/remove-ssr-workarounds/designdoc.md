@@ -52,7 +52,10 @@
                                :depends-on #{:client}
                                :output-name "example.js"}
                      ;; 他のモジュールもproject.cljから移行
-                     }
+                     :worker {:entries [vr-match.worker]
+                              :web-worker true  ;; Web Workerとして扱う
+                              :init-fn vr-match.worker/init
+                              :output-name "worker.js"}}
            :devtools {:after-load vr-match.client/remount-for-figwheel}}
   
   :server {:target :node-script
@@ -77,12 +80,12 @@
   "version": "1.0.0",
   "description": "VR Match Frontend",
   "scripts": {
-    "clean": "rm -rf resources/public/js/compiled resources/public/prod/worker/js/compiled target",
+    "clean": "rm -rf resources/public/js/compiled resources/public/prod/js/compiled target",
     "shadow-cljs": "shadow-cljs",
     "build": "npm run build:prod",
-    "build:dev": "shadow-cljs compile client server worker",
-    "build:prod": "shadow-cljs release client server worker && npm run workbox",
-    "watch": "shadow-cljs watch client server worker",
+    "build:dev": "shadow-cljs compile client server",
+    "build:prod": "shadow-cljs release client server && npm run workbox",
+    "watch": "shadow-cljs watch client server",
     "workbox": "workbox generateSW",
     "start": "node target/server/prod/js/compiled/server.js"
   },
@@ -729,3 +732,85 @@ CMD ["node", "target/server/prod/js/compiled/server.js", "3000"]
 6. フェーズ6 (検証): 1週間
 
 合計: 約8週間（問題解決の時間を含む）
+
+## 最終調整
+
+- パフォーマンスチューニング
+- 残りのワークアラウンドの除去
+
+## Web Workerの実装方法
+
+### Web Workerモジュールの設定
+
+shadow-cljsのドキュメント「[User's Guide - Web Workers](https://shadow-cljs.github.io/docs/UsersGuide.html#_web_workers)」に基づき、Web Workerを`:browser`ターゲット内のモジュールとして実装します。
+
+#### モジュール設定
+
+```clojure
+;; shadow-cljs.edn の :modules 設定
+:modules {:cljs-base {...}
+          :client {...}
+          ;; 他のモジュール
+          :worker {:entries [vr-match.worker]
+                   :web-worker true  ;; Web Workerとして扱う
+                   :init-fn vr-match.worker/init}}
+```
+
+この設定により、`:worker`モジュールがWeb Workerとして適切に構成されます。`:web-worker true`フラグにより、クライアントモジュールから分離され、適切なWeb Workerコンテキストで動作するためのコードが生成されます。
+
+#### Web Workerの呼び出し
+
+クライアントコードからは以下のようにWeb Workerを初期化して使用します：
+
+```clojure
+;; vr-match.effects などのクライアントコード
+(defn initialize-worker []
+  (let [worker (js/Worker. "/js/compiled/worker.js")]
+    (.addEventListener worker "message" 
+                       (fn [event] 
+                         ;; メッセージ処理
+                         ))
+    ;; Workerにメッセージを送信
+    (.postMessage worker #js{:cmd "start" :data "some-data"})))
+```
+
+#### Worker側の実装
+
+```clojure
+;; src/cljs/vr_match/worker.cljs
+(ns vr-match.worker)
+
+(defn handle-message [event]
+  (let [data (.-data event)
+        cmd (.-cmd data)]
+    (case cmd
+      "start" (.postMessage js/self #js{:result "開始しました"})
+      ;; その他のコマンド処理
+      )))
+
+(defn init []
+  ;; メッセージ受信リスナーを設定
+  (.addEventListener js/self "message" handle-message))
+```
+
+この方法の利点は、別途ビルド定義を作成する必要がなく、一つのビルド内でWeb Workerを管理できることです。また、コードの共有や依存関係の管理も容易になります。
+
+### ディレクトリ構造の整理
+
+Web Worker実装のためのディレクトリ構造も整理します：
+
+1. **従来の構造：**
+   - `src/cljs-worker/vr_match/worker.cljs` - 独立したワーカーコードを配置
+   - `:worker`ビルド定義で別々にビルド
+
+2. **新しい構造：**
+   - `src/cljs/vr_match/worker.cljs` - 通常のソースディレクトリ内にワーカーコードを統合
+   - `:client`ビルド内のモジュールとしてワーカーを管理
+
+3. **移行手順：**
+   - `src/cljs/vr_match/worker.cljs`を新規作成
+   - `src/cljs-worker/vr_match/worker.cljs`の内容をベースに`init`関数を追加
+   - `src/cljs-worker/vr_match/worker.cljs`を削除
+   - 必要に応じて`src/cljs-worker`ディレクトリ自体も削除
+
+これらの変更により、より統一されたディレクトリ構造が実現され、ワーカーコードの管理が容易になります。また、`shadow-cljs.edn`の`:source-paths`からも将来的には`"src/cljs-worker"`を削除できますが、他に依存するコードがないことを確認してから行うべきです。
