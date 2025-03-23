@@ -462,7 +462,7 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache make gcc g++ python
+    apk add --no-cache make gcc g++ python openjdk11
 RUN npm ci
 
 # ソースコードと設定ファイルのコピー
