@@ -61,7 +61,7 @@
            :main vr-match.server/main
            :compiler-options {:optimizations :simple}}
   
-  :worker {:target :webworker
+  :worker {:target :browser
            :output-dir "resources/public/prod/worker/js/compiled"
            :output-to "resources/public/prod/worker/js/compiled/worker.js"
            :compiler-options {:optimizations :advanced}}}}
