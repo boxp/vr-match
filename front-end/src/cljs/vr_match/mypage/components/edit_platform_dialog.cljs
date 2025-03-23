@@ -4,7 +4,12 @@
    [reagent.core :as r]
    [vr-match.lib.models.platform :as platform-model]
    [vr-match.mypage.components.platform-expansion-panel :as platform-expansion-panel]
-   ["material-ui"]))
+   ["@material-ui/core/Dialog" :as Dialog]
+   ["@material-ui/core/DialogTitle" :as DialogTitle]
+   ["@material-ui/core/DialogContent" :as DialogContent]
+   ["@material-ui/core/DialogActions" :as DialogActions]
+   ["@material-ui/core/Button" :as Button]
+   ["@material-ui/core/Icon" :as Icon]))
 
 (s/def ::platforms (s/coll-of ::platform-model/platForm))
 
@@ -108,12 +113,12 @@
                    platformOptions
                    handleSubmit
                    handleCancel]}]
-        [:> js/MaterialUI.Dialog {:open isOpen
+        [:> Dialog {:open isOpen
                                   :onClose handleCancel
                                   :aria-labelledby "活動場所を編集"
                                   :full-screen true}
-         [:> js/MaterialUI.DialogTitle "活動場所を編集"]
-         [:> js/MaterialUI.DialogContent
+         [:> DialogTitle "活動場所を編集"]
+         [:> DialogContent
           [:<>
            [:ul
             (->> @draft-platforms
@@ -144,7 +149,7 @@
                                                      %)}]]))
                  doall)]
            [:div {:style {:margin-top "16px"}}
-            [:> js/MaterialUI.Button
+            [:> Button
              {:color "primary"
               :variant "contained"
               :size "large"
@@ -156,13 +161,13 @@
                              @draft-platforms
                              platformOptions)
                             not)}
-             [:> js/MaterialUI.Icon
+             [:> Icon
               "add"]]]]]
-         [:> js/MaterialUI.DialogActions
-          [:> js/MaterialUI.Button {:on-click (fn []
+         [:> DialogActions
+          [:> Button {:on-click (fn []
                                                 (handleCancel)
                                                 (reset! draft-platforms platforms))}
            "キャンセル"]
-          [:> js/MaterialUI.Button {:on-click #(handleSubmit @draft-platforms)
+          [:> Button {:on-click #(handleSubmit @draft-platforms)
                                     :color "primary"}
            "決定"]]])})))

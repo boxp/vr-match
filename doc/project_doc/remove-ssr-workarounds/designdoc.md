@@ -197,6 +197,93 @@ Material-UIについては、npm-aliases機能を活用し、シムなしでの�
 
 このアプローチを採用することで、シム実装の複雑さを回避し、より直接的な方法でpackage管理の問題に対処します。ただし、問題が発生した場合はシム実装を検討します。
 
+### 2.3 Material-UIを直接参照しているコンポーネントの修正リスト
+
+プロジェクト内で`material-ui`を直接requireしているファイルおよび`js/MaterialUI`としてグローバル変数からアクセスしているコンポーネントが複数見つかりました。これらのコンポーネントは以下の手順で修正する必要があります。
+
+#### 修正対象ファイル
+
+**`material-ui`をrequireしているファイル**:
+1. `front-end/src/cljs/vr_match/lib/components/linear_progress.cljs` (修正済み)
+2. `front-end/src/cljs/vr_match/lib/components/progress_button.cljs`
+3. `front-end/src/cljs/vr_match/approach/components/empty.cljs`
+4. `front-end/src/cljs/vr_match/approach/components/reset_all_skip_alert.cljs`
+5. `front-end/src/cljs/vr_match/auth/components/email_login.cljs`
+6. `front-end/src/cljs/vr_match/auth/components/email_register.cljs`
+7. `front-end/src/cljs/vr_match/auth/components/email_login_complete.cljs`
+8. `front-end/src/cljs/vr_match/auth/components/email_register_complete.cljs`
+9. `front-end/src/cljs/vr_match/auth/components/twitter_login.cljs`
+10. `front-end/src/cljs/vr_match/setting/components/cannot_unlink_third_party_alert.cljs`
+11. `front-end/src/cljs/vr_match/setting/components/unlink_confirmation_alert.cljs`
+12. `front-end/src/cljs/vr_match/favorite/component.cljs`
+13. `front-end/src/cljs/vr_match/matching/component.cljs`
+14. `front-end/src/cljs/vr_match/favorited_from_users/component.cljs`
+15. `front-end/src/cljs/vr_match/mypage/components/platform_expansion_panel.cljs`
+16. `front-end/src/cljs/vr_match/mypage/components/edit_platform_dialog.cljs`
+
+#### 修正例
+
+例えば、`progress_button.cljs`の修正前・修正後は以下のようになります：
+
+**修正前:**
+```clojure
+(ns vr-match.lib.components.progress-button
+  (:require ["material-ui"]))
+
+(defn progress-button
+  [{:keys [loading?] :as props} children]
+  [:div {:style {:position "relative"}}
+   [:> js/MaterialUI.Button (-> props
+                                (dissoc :loading?)
+                                (assoc :disabled loading?))
+    children]
+   (when loading?
+     [:> js/MaterialUI.CircularProgress {:size 24
+                                         :style {:position "absolute"
+                                                 :top "50%"
+                                                 :left "50%"
+                                                 :margin-top "-12"
+                                                 :margin-left "-12"}}])])
+```
+
+**修正後:**
+```clojure
+(ns vr-match.lib.components.progress-button
+  (:require
+   ["@material-ui/core/Button" :as Button]
+   ["@material-ui/core/CircularProgress" :as CircularProgress]))
+
+(defn progress-button
+  [{:keys [loading?] :as props} children]
+  [:div {:style {:position "relative"}}
+   [:> Button (-> props
+                  (dissoc :loading?)
+                  (assoc :disabled loading?))
+    children]
+   (when loading?
+     [:> CircularProgress {:size 24
+                           :style {:position "absolute"
+                                   :top "50%"
+                                   :left "50%"
+                                   :margin-top "-12"
+                                   :margin-left "-12"}}])])
+```
+
+#### 修正方針
+
+各コンポーネントにおいて以下の修正を行います：
+
+1. `["material-ui"]` という一括インポートを個別コンポーネントのインポートに変更
+2. `js/MaterialUI.XXX` の参照を直接インポートしたコンポーネントへの参照に変更
+
+例えば：
+- `[:> js/MaterialUI.Button ...]` → `[:> Button ...]`
+- `[:> js/MaterialUI.Dialog ...]` → `[:> Dialog ...]`
+
+#### 修正スケジュール
+
+フェーズ2のシム実装フェーズ終了後、フェーズ3のクライアント移行フェーズで段階的に修正していきます。重要度の高いコンポーネントから順に修正し、各コンポーネントの修正後にテストを行い、問題がないことを確認します。
+
 ## フェーズ3: クライアント移行フェーズ
 
 ### 3.1 クライアントコードの更新
