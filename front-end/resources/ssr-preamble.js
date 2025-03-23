@@ -1,26 +1,11 @@
 
-// https://github.com/reagent-project/reagent/issues/296
-var React = require("react");
-var ReactDOM = {server: require("react-dom/server")};
-var ReactDOMServer = require("react-dom/server");
-var createReactClass = require("create-react-class");
-global.React = React;
-global.ReactDOM = ReactDOM;
-global.ReactDOMServer = ReactDOMServer;
-global.createReactClass = createReactClass;
+// 簡素化したプリアンブルファイル
+// shadow-cljsを使用することでほとんど不要になりますが、
+// 移行期間中は一部の機能をサポートする場合があります
 
-// material-ui の universal 対応のための workaround
-// もっといい手があれば知りたい
+// Material-UIのSSRサポートのためのグローバル設定
 global.window = global;
-global.window.navigator = {};
-global.window.navigator.userAgent = "";
-global.window.localStorage = null;
-
-// SSRサーバーを :optimization :simple でビルドする時、モジュール解決に失敗して以下のエラーが出るので無理やり補完する
-// TypeError: Cannot read property 'renderToString' of undefined
-// goog.global = global;
-
-// for https://github.com/firebase/firebase-js-sdk/issues/965
-self = {
-    fetch: function(){},
+global.window.navigator = {
+  userAgent: ""
 };
+global.window.localStorage = null;
