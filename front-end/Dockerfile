@@ -1,11 +1,14 @@
 # ビルドステージ
-FROM node:14-alpine as build
+FROM node:8.17-alpine as build
 
 # 作業ディレクトリの作成
 WORKDIR /usr/src/app
 
 # パッケージ依存関係のインストール
 COPY package.json package-lock.json ./
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache make gcc g++ python
 RUN npm ci
 
 # ソースコードと設定ファイルのコピー
@@ -17,7 +20,7 @@ COPY resources/ ./resources/
 RUN npm run build:prod
 
 # 実行ステージ
-FROM node:14-alpine
+FROM node:8.17-alpine
 
 # 作業ディレクトリの作成
 WORKDIR /usr/src/app

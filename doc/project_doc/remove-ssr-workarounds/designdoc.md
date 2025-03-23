@@ -460,6 +460,9 @@ WORKDIR /usr/src/app
 
 # パッケージ依存関係のインストール
 COPY package.json package-lock.json ./
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache make gcc g++ python
 RUN npm ci
 
 # ソースコードと設定ファイルのコピー
