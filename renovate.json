@@ -2,6 +2,7 @@
   "extends": [
     "config:recommended"
   ],
+  "enabled": false,
   "packageRules": [
     {
       "matchUpdateTypes": [
@@ -10,11 +11,15 @@
         "pin",
         "digest"
       ],
-      "automerge": true
+      "automerge": false
     },
     {
       "matchPackageNames": ["org.clojure/clojurescript"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["reagent"],
+      "allowedVersions": "0.8.1"
     }
   ]
 }
