@@ -15,6 +15,10 @@
     {
       "matchPackageNames": ["org.clojure/clojurescript"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["reagent"],
+      "allowedVersions": "0.8.1"
     }
   ]
 }
