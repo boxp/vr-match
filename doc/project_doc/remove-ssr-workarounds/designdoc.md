@@ -498,7 +498,7 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
    ["compression" :as compression]
    ["react" :as react]
    ["react-dom/server" :as react-dom-server]
-   ["@material-ui/core/styles" :refer [MuiThemeProvider ServerStyleSheets createMuiTheme]]
+   ["@material-ui/styles" :refer [MuiThemeProvider ServerStyleSheets createMuiTheme]]
    ["react-jss" :refer [JssProvider SheetsRegistry]]
    [vr-match.lib.component :as component]
    [vr-match.lib.components.material-ui :as mui]
