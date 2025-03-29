@@ -88,7 +88,7 @@
     "build:prod": "shadow-cljs release client server && npm run workbox",
     "watch": "shadow-cljs watch client server",
     "workbox": "workbox generateSW",
-    "start": "node target/server/prod/js/compiled/server.js"
+    "start": "node target/server/prod/js/compiled/server.js 8888"
   },
   "dependencies": {
     "compression": "1.8.0",
