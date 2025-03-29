@@ -10,7 +10,7 @@
     "build:prod": "shadow-cljs release client server && npm run workbox",
     "watch": "shadow-cljs watch client server",
     "workbox": "workbox generateSW",
-    "start": "node target/server/prod/js/compiled/server.js"
+    "start": "node target/server/prod/js/compiled/server.js 8888"
   },
   "repository": {
     "type": "git",
@@ -30,8 +30,8 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-jss": "8.6.1",
-    "@material-ui/core": "3.9.3",
-    "@material-ui/icons": "3.0.2",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "whatwg-fetch": "3.6.20",
     "xmlhttprequest": "1.8.0"
   },

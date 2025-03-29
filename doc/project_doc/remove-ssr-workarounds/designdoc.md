@@ -88,7 +88,7 @@
     "build:prod": "shadow-cljs release client server && npm run workbox",
     "watch": "shadow-cljs watch client server",
     "workbox": "workbox generateSW",
-    "start": "node target/server/prod/js/compiled/server.js"
+    "start": "node target/server/prod/js/compiled/server.js 8888"
   },
   "dependencies": {
     "compression": "1.8.0",
@@ -98,8 +98,8 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-jss": "8.6.1",
-    "@material-ui/core": "3.9.3",
-    "@material-ui/icons": "3.0.2",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "whatwg-fetch": "3.0.0",
     "xmlhttprequest": "1.8.0"
   },
@@ -172,34 +172,28 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
   (js/require "firebase/firestore"))
 ```
 
-### 2.2 Material-UIの移行戦略
+### 2.2 Material-UIの移行戦略: v4へのアップグレード
 
-Material-UIについては、npm-aliases機能を活用し、シムなしでの移行を試みます：
+SSR時の `ServerStyleSheets` に関する問題が v3 と shadow-cljs の組み合わせで解決困難であるため、Material-UI を v3 から v4 へアップグレードする方針を採用します。
 
-1. **shadow-cljs.ednでのnpm-aliasesの設定**
-   ```clojure
-   :npm-aliases {"material-ui" "@material-ui/core"}
-   ```
-   
-2. **徐々に直接インポートスタイルに移行**
+#### 方針
 
-   既存のインポート:
-   ```clojure
-   (ns vr-match.lib.components.linear-progress
-     (:require
-      [material-ui] ;; npm-aliasesにより@material-ui/coreにマッピング
-      [reagent.core :as reagent]))
-   ```
+1.  **バージョン更新**: `package.json` で `@material-ui/core` および関連パッケージ (`@material-ui/icons` など) のバージョンを v4 系に更新します。
+2.  **コード修正**: Material-UI 公式の [v3 から v4 への移行ガイド](https://v4.mui.com/guides/migration-v3/) に基づき、プロジェクト全体のコードを修正します。主な修正点には以下が含まれます:
+    *   **インポートパスの変更**: コンポーネントや関数のインポートパスが変更されている場合があります。
+    *   **API の変更**: コンポーネントのプロパティ名や動作が変更されている場合があります。
+    *   **スタイリング**: スタイルエンジンが `@material-ui/styles` に基づくものに変わるため、テーマや `withStyles` などの使い方を確認・修正する必要があります。
+    *   **TypeScript 型**: (このプロジェクトでは直接関係ないかもしれませんが) 型定義も変更されています。
+3.  **SSR 対応**: v4 の SSR 実装方法に合わせて、`server.cljs` 内の `ServerStyleSheets` (または v4 で相当するもの) の使い方を修正します。
+4.  **段階的実施**: フェーズ3 (クライアント移行) およびフェーズ4 (サーバー移行) で、影響範囲を考慮しながら段階的に修正作業を進めます。
+5.  **テスト**: 各コンポーネントの修正後および全体のアップグレード完了後に、表示崩れや機能不全がないか徹底的にテストします。
 
-   将来的に移行するスタイル:
-   ```clojure
-   (ns vr-match.lib.components.linear-progress
-     (:require
-      ["@material-ui/core/LinearProgress" :as LinearProgress]
-      [reagent.core :as reagent]))
-   ```
+#### 注意点
 
-このアプローチを採用することで、シム実装の複雑さを回避し、より直接的な方法でpackage管理の問題に対処します。ただし、問題が発生した場合はシム実装を検討します。
+*   **破壊的変更**: v4 へのアップグレードは破壊的変更を伴うため、広範囲なコード修正が必要になる可能性があります。
+*   **作業量**: プロジェクト規模に応じて、修正には相応の時間と工数が必要です。
+
+このアップグレードにより、SSR の問題解決に加え、Material-UI の新機能や改善されたパフォーマンスの恩恵を受けることが期待されます。
 
 ### 2.3 Material-UIを直接参照しているコンポーネントの修正リスト
 
@@ -332,9 +326,13 @@ Firebaseの参照方法は以下のパターンに統一します：
    - 追加サービスはrequireするだけで自動的にfirebaseオブジェクトに機能が追加される
 
 3. **グローバル変数を避ける**:
-   - `js/firebase`などのグローバル変数への参照を避け、インポートした`firebase`変数を使用する
+   - `js/firebase`などのグローバル変数への参照を避け、インポートした変数を使用する
 
 この方法は、依存関係が明示的になるため、コードの可読性と保守性が向上します。また、shadow-cljsの最適化の恩恵も受けやすくなります。
+
+#### 修正スケジュール
+
+フェーズ2のシム実装フェーズ終了後、フェーズ3のクライアント移行フェーズで段階的に修正していきます。重要度の高いコンポーネントから順に修正し、各コンポーネントの修正後にテストを行い、問題がないことを確認します。
 
 ### 2.5 JSパッケージのインポート方法に関する一般的な修正方針
 
@@ -487,9 +485,9 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
 
 ファイルパス: `front-end/src/cljs-server/vr_match/server.cljs`
 
-**現状の問題**: ステージング環境で `TypeError: shadow.js.shim.module$$material_ui$core$styles.ServerStyleSheets is not a constructor` エラーが発生しています。これは、SSR時に `@material-ui/core/styles` から `ServerStyleSheets` を正しくインポート・認識できていないことが原因と考えられます。shadow-cljs環境下で `:refer` を使ったインポートが適切に機能していない可能性があります。
+**現状の問題**: v3 環境で SSR 時の `ServerStyleSheets` のインポート/認識に問題が発生していました。
 
-**対応方針**: `:refer` をやめて、`@material-ui/core/styles` を `:as` でインポートし、`ServerStyleSheets` を直接参照するように変更します。
+**対応方針**: Material-UI v4 へのアップグレードに伴い、v4 の SSR 実装方法に従ってコードを修正します。v4 の [Server-Side Rendering ガイド](https://v4.mui.com/guides/server-rendering/) を参照し、`ServerStyleSheets` (または v4 での同等の仕組み) の使い方を適切に更新します。これにより、v3 で発生していた問題の解決が期待されます。
 
 ```clojure
 (ns vr-match.server
@@ -503,6 +501,7 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
    ["react" :as react]
    ["react-dom/server" :as react-dom-server]
    ["@material-ui/core/styles" :as styles]
+   ["@material-ui/styles" :refer [ServerStyleSheets]]
    ["react-jss" :refer [JssProvider SheetsRegistry]]
    [vr-match.lib.component :as component]
    [vr-match.lib.components.material-ui :as mui]
@@ -537,7 +536,7 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
     (println "dev mode")))
 
 (defn render-app-html [request-path]
-  (let [sheets (new (.-ServerStyleSheets styles))
+  (let [sheets (new ServerStyleSheets)
         theme (mui/theme)
         generate-class-name (mui/create-generate-class-name)
         html (.renderToString react-dom-server
