@@ -487,6 +487,10 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
 
 ファイルパス: `front-end/src/cljs-server/vr_match/server.cljs`
 
+**現状の問題**: ステージング環境で `TypeError: shadow.js.shim.module$$material_ui$core$styles.ServerStyleSheets is not a constructor` エラーが発生しています。これは、SSR時に `@material-ui/core/styles` から `ServerStyleSheets` を正しくインポート・認識できていないことが原因と考えられます。shadow-cljs環境下で `:refer` を使ったインポートが適切に機能していない可能性があります。
+
+**対応方針**: `:refer` をやめて、`@material-ui/core/styles` を `:as` でインポートし、`ServerStyleSheets` を直接参照するように変更します。
+
 ```clojure
 (ns vr-match.server
   (:require
@@ -498,7 +502,7 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
    ["compression" :as compression]
    ["react" :as react]
    ["react-dom/server" :as react-dom-server]
-   ["@material-ui/core/styles" :refer [MuiThemeProvider ServerStyleSheets createMuiTheme]]
+   ["@material-ui/core/styles" :as styles]
    ["react-jss" :refer [JssProvider SheetsRegistry]]
    [vr-match.lib.component :as component]
    [vr-match.lib.components.material-ui :as mui]
@@ -533,12 +537,12 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
     (println "dev mode")))
 
 (defn render-app-html [request-path]
-  (let [sheets (new ServerStyleSheets)
+  (let [sheets (new (.-ServerStyleSheets styles))
         theme (mui/theme)
         generate-class-name (mui/create-generate-class-name)
         html (.renderToString react-dom-server
                 (.collect sheets
-                  (react/createElement MuiThemeProvider
+                  (react/createElement (.-MuiThemeProvider styles)
                     #js{:theme theme}
                     (reagent/as-element [component/app]))))
         css (.toString sheets)]
