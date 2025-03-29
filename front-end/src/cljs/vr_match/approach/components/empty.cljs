@@ -2,7 +2,10 @@
   (:require
     [cljs.spec.alpha :as s]
     [reagent.core :as r]
-    ["material-ui"]
+    ["@material-ui/core/Grid" :as Grid]
+    ["@material-ui/core/Typography" :as Typography]
+    ["@material-ui/core/Icon" :as Icon]
+    ["@material-ui/core/Button" :as Button]
     [vr-match.approach.components.reset-all-skip-alert :refer [reset-all-skip-alert]]))
 
 (defn swipe-cards-empty
@@ -18,33 +21,33 @@
        [reset-all-skip-alert {:isOpen @is-open-alert
                               :handleClose handle-close-alert
                               :handleSubmit handle-submit-alert}]
-       [:> js/MaterialUI.Grid {:container true
-                               :spacing 32
-                               :direction "column"
-                               :justify "space-between"
-                               :align-items "flex-start"
-                               :style {:height "100%"
-                                       :width "100vw"
-                                       :padding 32}}
-        [:> js/MaterialUI.Typography {:variant "display1"
-                                      :component "h1"
-                                      :gutterBottom true
-                                      :style {:text-align "left"}}
+       [:> Grid {:container true
+                 :spacing 32
+                 :direction "column"
+                 :justify "space-between"
+                 :align-items "flex-start"
+                 :style {:height "100%"
+                         :width "100vw"
+                         :padding 32}}
+        [:> Typography {:variant "display1"
+                        :component "h1"
+                        :gutterBottom true
+                        :style {:text-align "left"}}
          "すべてのアバターをスワイプしました"]
-        [:> js/MaterialUI.Grid {:container true
-                                :spacing 32
-                                :direction "column"
-                                :justify "space-between"
-                                :align-items "center"
-                                :style {:padding 32}}
-         [:> js/MaterialUI.Icon
+        [:> Grid {:container true
+                  :spacing 32
+                  :direction "column"
+                  :justify "space-between"
+                  :align-items "center"
+                  :style {:padding 32}}
+         [:> Icon
           {:font-size "inherit"
            :color "primary"
            :style {:font-size "10em"}}
           "done"]]
-        [:> js/MaterialUI.Button {:variant "contained"
-                                  :color "primary"
-                                  :style {:margin-left "auto"
-                                          :margin-right "auto"}
-                                  :on-click handle-open-alert}
+        [:> Button {:variant "contained"
+                    :color "primary"
+                    :style {:margin-left "auto"
+                            :margin-right "auto"}
+                    :on-click handle-open-alert}
          "スキップしたお相手をもう一度みる"]]])))

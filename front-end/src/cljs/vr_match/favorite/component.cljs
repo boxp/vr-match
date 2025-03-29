@@ -4,7 +4,7 @@
    [vr-match.lib.component :refer [navigation-bar-layout]]
    [vr-match.lib.components.linear-progress :refer [linear-progress]]
    [vr-match.lib.components.progress-button :refer [progress-button]]
-   ["material-ui"]
+   ["@material-ui/core/List" :as List]
    [vr-match.lib.components.user-list-item :refer [user-list-item]]))
 
 (defn- component-did-mount
@@ -27,7 +27,7 @@
        [:div {:style {:padding "8px"}}
         (when isLoading
           [linear-progress])
-        [:> js/MaterialUI.List
+        [:> List
          (map (fn [{:keys [id name platforms images introduction]}]
                 ^{:key id}
                 [:div {:style {:margin-bottom "16px"}}

@@ -123,6 +123,61 @@ VR-Matchプロジェクトのフロントエンド部分、特にSSR（Server-Si
    npm install react react-dom create-react-class firebase
    ```
 
+#### Web Workerのビルド方法
+
+shadow-cljsのドキュメント「[User's Guide - Web Workers](https://shadow-cljs.github.io/docs/UsersGuide.html#_web_workers)」セクションに基づき、Web Workerの適切なビルド方法を説明します。shadow-cljsでは、Web Workerを実装する方法として、`:modules`定義内に`:web-worker true`を設定する方法が推奨されています。
+
+1. **モジュールとしてのWeb Worker実装（推奨）**
+   ```clojure
+   ;; shadow-cljs.edn の例
+   {:builds
+    {:client {:target :browser
+              :output-dir "resources/public/js/compiled"
+              :modules {:main {:entries [vr-match.client]
+                               :init-fn vr-match.client/init}
+                        :worker {:entries [vr-match.worker]
+                                 :web-worker true  ;; このモジュールをWeb Workerとして扱う
+                                 :init-fn vr-match.worker/init}}
+              :compiler-options {:optimizations :advanced}}}}
+   ```
+
+   この方法では、`:worker`モジュールが自動的にWeb Workerとして適切に構成されます。クライアントコードからは以下のように使用します：
+
+   ```clojure
+   ;; クライアント側のコード例
+   (defn init-worker []
+     (let [worker (js/Worker. "/js/compiled/worker.js")]
+       (.addEventListener worker "message" 
+                          (fn [event] 
+                            (js/console.log "Worker response:" (.-data event))))
+       (.postMessage worker #js{:cmd "start" :data "some-data"})))
+   ```
+
+2. **Worker側のコード例**
+   ```clojure
+   ;; src/cljs/vr_match/worker.cljs
+   (ns vr-match.worker)
+   
+   (defn handle-message [event]
+     (let [data (.-data event)
+           cmd (.-cmd data)]
+       (case cmd
+         "start" (.postMessage js/self #js{:result "started"})
+         ;; その他のコマンド処理
+         )))
+   
+   (defn init []
+     ;; メッセージ受信リスナーを設定
+     (.addEventListener js/self "message" handle-message))
+   ```
+
+この方法の利点：
+- より統合的なアプローチで、単一のビルド設定内でWeb Workerを管理できます
+- モジュール間の依存関係を適切に管理しやすくなります
+- コードの共有や再利用が容易になります
+
+特に、shadow-cljsドキュメントでは、「Web Workersの使用」セクションで`:web-worker`オプションを使用してモジュールをWeb Workerとして指定する方法が説明されています。これにより、別途ビルドを定義するよりも簡潔で管理しやすい構成が可能になります。
+
 ### 2. Material-UIのSSRサポート改善
 
 Material-UIのSSR実装を現代的な方法に更新します。

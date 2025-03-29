@@ -1,0 +1,87 @@
+{:source-paths ["src/clj" "src/cljs" "src/cljs-client" "src/cljs-server" "src/cljs-worker"]
+ :dependencies [[reagent "0.10.0"]
+                [re-frame "1.2.0"]
+                [clj-commons/secretary "1.2.4"]
+                [kibu/pushy "0.3.8"]
+                [e85th/venia "0.2.5-1"]
+                [cljs-ajax "0.8.4"]]
+ 
+ ;; npmパッケージのエイリアスを設定
+ :npm-aliases {"material-ui" "@material-ui/core"}
+
+ :builds
+ {:client {:target :browser
+           :output-dir "resources/public/js/compiled"
+           :asset-path "/static/js/compiled"
+           :module-loader true
+           :modules {:cljs-base {:entries []
+                                 :output-name "cljs_base.js"}
+                     :client {:entries [vr-match.client]
+                              :depends-on #{:cljs-base}
+                              :output-name "app.js"}
+                     :example {:entries [vr-match.example.container]
+                               :depends-on #{:client}
+                               :output-name "example.js"}
+                     :welcome {:entries [vr-match.welcome.container]
+                               :depends-on #{:client}
+                               :output-name "welcome.js"}
+                     :approach {:entries [vr-match.approach.container]
+                                :depends-on #{:client}
+                                :output-name "approach.js"}
+                     :profile {:entries [vr-match.profile.container]
+                               :depends-on #{:client}
+                               :output-name "profile.js"}
+                     :register {:entries [vr-match.auth.containers.register]
+                                :depends-on #{:client}
+                                :output-name "register.js"}
+                     :email-register {:entries [vr-match.auth.containers.email-register]
+                                      :depends-on #{:client}
+                                      :output-name "email_register.js"}
+                     :email-register-complete {:entries [vr-match.auth.containers.email-register-complete]
+                                               :depends-on #{:client}
+                                               :output-name "email_register_complete.js"}
+                     :twitter-login {:entries [vr-match.auth.containers.twitter-login]
+                                     :depends-on #{:client}
+                                     :output-name "twitter_login.js"}
+                     :email-login {:entries [vr-match.auth.containers.email-login]
+                                   :depends-on #{:client}
+                                   :output-name "email_login.js"}
+                     :email-login-complete {:entries [vr-match.auth.containers.email-login-complete]
+                                            :depends-on #{:client}
+                                            :output-name "email_login_complete.js"}
+                     :wizard {:entries [vr-match.wizard.container]
+                              :depends-on #{:client}
+                              :output-name "wizard.js"}
+                     :favorite {:entries [vr-match.favorite.container]
+                                :depends-on #{:client}
+                                :output-name "favorite.js"}
+                     :favorited-from-users {:entries [vr-match.favorited-from-users.container]
+                                            :depends-on #{:client}
+                                            :output-name "favorited-from-users.js"}
+                     :matching {:entries [vr-match.matching.container]
+                                :depends-on #{:client}
+                                :output-name "matching.js"}
+                     :myprofile {:entries [vr-match.myprofile.container]
+                                 :depends-on #{:client}
+                                 :output-name "myprofile.js"}
+                     :mypage {:entries [vr-match.mypage.container]
+                              :depends-on #{:client}
+                              :output-name "mypage.js"}
+                     :setting-top {:entries [vr-match.setting.containers.top]
+                                   :depends-on #{:client}
+                                   :output-name "setting_top.js"}
+                     :setting-third-party-authorization {:entries [vr-match.setting.containers.third-party-authorization]
+                                                         :depends-on #{:client}
+                                                         :output-name "setting_third_party_authorization.js"}
+                     :worker {:entries [vr-match.worker]
+                              :depends-on #{:cljs-base}
+                              :web-worker true
+                              :init-fn vr-match.worker/init
+                              :output-name "worker.js"}}
+           :devtools {:after-load vr-match.client/remount-for-figwheel}}
+  
+  :server {:target :node-script
+           :output-dir "target/server/prod/js/compiled"
+           :output-to "target/server/prod/js/compiled/server.js"
+           :main vr-match.server/main
+           :compiler-options {:optimizations :simple}}}}

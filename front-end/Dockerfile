@@ -1,23 +1,34 @@
-FROM node:8.17-alpine as npm
-RUN mkdir -p /usr/src/app
-COPY . /usr/src/app
-WORKDIR /usr/src/app
-RUN npm install
+# ビルドステージ
+FROM node:8.17-alpine as build
 
-# フロントエンドビルド用ステージ
-FROM clojure:lein-2.9.8-slim-buster as clojure
-RUN mkdir -p /usr/src/app
-COPY --from=npm /usr/src/app /usr/src/app
+# 作業ディレクトリの作成
 WORKDIR /usr/src/app
-RUN lein cljsbuild once prod
-RUN lein cljsbuild once server-prod
-RUN lein cljsbuild once worker-prod
 
-# 最終ステージ
+# パッケージ依存関係のインストール
+COPY package.json package-lock.json ./
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache make gcc g++ python openjdk11
+RUN npm ci
+
+# ソースコードと設定ファイルのコピー
+COPY shadow-cljs.edn workbox-config.js ./
+COPY src/ ./src/
+COPY resources/ ./resources/
+
+# プロダクションビルドの実行
+RUN npm run build:prod
+
+# 実行ステージ
 FROM node:8.17-alpine
-RUN mkdir -p /usr/src/app
-COPY --from=clojure /usr/src/app /usr/src/app
+
+# 作業ディレクトリの作成
 WORKDIR /usr/src/app
-RUN npm run workbox
-RUN sed -i -e 's/goog.global.React/global.React/g' -e 's/goog.global.ReactDOM/global.ReactDOM/g' -e 's/goog.global.createReactClass/global.createReactClass/g' target/server/prod/js/compiled/server.js
+
+# ビルドステージから必要なファイルをコピー
+COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/target ./target
+COPY --from=build /usr/src/app/resources/public/prod ./resources/public/prod
+
+# アプリケーションの実行
 CMD ["node", "target/server/prod/js/compiled/server.js", "3000"]

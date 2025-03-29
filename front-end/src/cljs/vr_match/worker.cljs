@@ -7,7 +7,7 @@
   [payload]
   (some-> payload
           pr-str
-          js/postMessage))
+          (.postMessage js/self)))
 
 (defn- event->payload
   [event]
@@ -27,7 +27,7 @@
   (response {:handler (-> payload :error-handler)
              :response (-> res second :response)}))
 
-(defn on-message
+(defn handle-message
   [e]
   (let [payload (event->payload e)
         handler #(handle-response payload %)]
@@ -37,4 +37,7 @@
             (assoc :handler handler)
             ajax-request)))
 
-(set! (.-onmessage js/self) on-message)
+;; shadow-cljsのWeb Worker初期化関数
+(defn init []
+  (js/console.log "Web Worker initialized")
+  (.addEventListener js/self "message" handle-message))

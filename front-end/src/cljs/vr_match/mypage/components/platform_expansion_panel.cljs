@@ -2,7 +2,18 @@
   (:require [cljs.spec.alpha :as s]
             [reagent.core :as r]
             [vr-match.lib.models.platform :as platform-model]
-            ["material-ui"]))
+            ["@material-ui/core/ExpansionPanel" :as ExpansionPanel]
+            ["@material-ui/core/ExpansionPanelSummary" :as ExpansionPanelSummary]
+            ["@material-ui/core/ExpansionPanelDetails" :as ExpansionPanelDetails]
+            ["@material-ui/core/ExpansionPanelActions" :as ExpansionPanelActions]
+            ["@material-ui/core/Typography" :as Typography]
+            ["@material-ui/core/Icon" :as Icon]
+            ["@material-ui/core/FormControl" :as FormControl]
+            ["@material-ui/core/InputLabel" :as InputLabel]
+            ["@material-ui/core/Select" :as Select]
+            ["@material-ui/core/MenuItem" :as MenuItem]
+            ["@material-ui/core/TextField" :as TextField]
+            ["@material-ui/core/IconButton" :as IconButton]))
 
 (s/def ::name string?)
 (s/def ::id number?)
@@ -46,20 +57,20 @@
                handleChangePlatform
                handleClickDelete
                handleChangePlatformUserId]}]
-    [:> js/MaterialUI.ExpansionPanel
-     [:> js/MaterialUI.ExpansionPanelSummary
+    [:> ExpansionPanel
+     [:> ExpansionPanelSummary
       {:expand-icon (r/as-element
-                     [:> js/MaterialUI.Icon "expand_more"])}
-      [:> js/MaterialUI.Typography
+                     [:> Icon "expand_more"])}
+      [:> Typography
        (-> platform :name)]]
-     [:> js/MaterialUI.ExpansionPanelDetails
+     [:> ExpansionPanelDetails
       [:form {:style {:width "100%"}}
-       [:> js/MaterialUI.FormControl
+       [:> FormControl
         {:full-width true}
-        [:> js/MaterialUI.InputLabel
+        [:> InputLabel
          {:html-for (str "platform-selector-" platformIdx)}
          "活動場所"]
-        [:> js/MaterialUI.Select
+        [:> Select
          {:value (-> platform :id)
           :onChange handleChangePlatform
           :full-width true
@@ -68,11 +79,11 @@
          (map (fn [{:keys [id
                            name] :as option}]
                 ^{:key id}
-                [:> js/MaterialUI.MenuItem
+                [:> MenuItem
                  {:value id}
                  name])
               platformOptions)]
-        [:> js/MaterialUI.TextField
+        [:> TextField
          {:label "ID"
           :margin "dense"
           :type "text"
@@ -82,8 +93,8 @@
           :placeholder (platform->placeholder
                         platform
                         platformOptions)}]]]]
-     [:> js/MaterialUI.ExpansionPanelActions
-      [:> js/MaterialUI.IconButton
+     [:> ExpansionPanelActions
+      [:> IconButton
        {:on-click handleClickDelete}
-       [:> js/MaterialUI.Icon
+       [:> Icon
         "delete"]]]]))
