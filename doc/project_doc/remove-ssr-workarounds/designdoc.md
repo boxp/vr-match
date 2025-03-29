@@ -332,9 +332,13 @@ Firebaseの参照方法は以下のパターンに統一します：
    - 追加サービスはrequireするだけで自動的にfirebaseオブジェクトに機能が追加される
 
 3. **グローバル変数を避ける**:
-   - `js/firebase`などのグローバル変数への参照を避け、インポートした`firebase`変数を使用する
+   - `js/firebase`などのグローバル変数への参照を避け、インポートした変数を使用する
 
 この方法は、依存関係が明示的になるため、コードの可読性と保守性が向上します。また、shadow-cljsの最適化の恩恵も受けやすくなります。
+
+#### 修正スケジュール
+
+フェーズ2のシム実装フェーズ終了後、フェーズ3のクライアント移行フェーズで段階的に修正していきます。重要度の高いコンポーネントから順に修正し、各コンポーネントの修正後にテストを行い、問題がないことを確認します。
 
 ### 2.5 JSパッケージのインポート方法に関する一般的な修正方針
 
@@ -489,7 +493,7 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
 
 **現状の問題**: ステージング環境で `TypeError: shadow.js.shim.module$$material_ui$core$styles.ServerStyleSheets is not a constructor` エラーが発生しています。これは、SSR時に `@material-ui/core/styles` から `ServerStyleSheets` を正しくインポート・認識できていないことが原因と考えられます。shadow-cljs環境下で `:refer` を使ったインポートが適切に機能していない可能性があります。
 
-**対応方針**: `:refer` をやめて、`@material-ui/core/styles` を `:as` でインポートし、`ServerStyleSheets` を直接参照するように変更します。
+**対応方針**: （最初の試行）`:refer` をやめて、`@material-ui/core/styles` を `:as` でインポートし、`ServerStyleSheets` を直接参照するように変更します。（この変更では解決しませんでした）
 
 ```clojure
 (ns vr-match.server
