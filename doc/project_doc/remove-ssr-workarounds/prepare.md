@@ -16,6 +16,12 @@ VR-Matchプロジェクトのフロントエンド部分、特にSSR（Server-Si
 3. **環境の互換性問題**
    - ClojureScriptのGoogle Closureコンパイラとnode.jsの環境の違いを解決するための複雑なワークアラウンドが存在しています
 
+4. **SSR時のスタイル生成エラー (ステージング環境)**
+   -   ステージング環境で `TypeError: shadow.js.shim.module$$material_ui$core$styles.ServerStyleSheets is not a constructor` というエラーが発生しています。
+   -   **原因**: SSRサーバー (`vr_match.server.render_app_html`) で Material-UI v3 のスタイルを処理する際に、`@material-ui/core/styles` から `ServerStyleSheets` を正しくインポート・認識できていないことが原因と考えられます。これは、shadow-cljs のビルド・shim 処理の問題、または `server.cljs` での `:refer` を使ったインポート方法の問題である可能性が高いです。
+   -   **影響**: SSR 時に Material-UI のスタイルが適用されず、サーバーから返される HTML のスタイルが崩れる、またはサーバーがエラーで応答できなくなります。
+   -   **参考**: [Stack Overflow の類似事例](https://stackoverflow.com/questions/59018739/trying-ssr-but-got-serverstylesheets-is-not-a-constructor) (ただし、こちらは v4 の事例)
+
 ## 詳細な技術的状況
 
 ### ビルドプロセスの問題

@@ -8,7 +8,7 @@
    ["compression" :as compression]
    ["react" :as react]
    ["react-dom/server" :as react-dom-server]
-   ["@material-ui/core/styles" :refer [MuiThemeProvider ServerStyleSheets createMuiTheme]]
+   ["@material-ui/core/styles" :as styles]
    ["react-jss" :refer [JssProvider SheetsRegistry]]
    [vr-match.lib.component :as component]
    [vr-match.lib.components.material-ui :as mui]
@@ -59,12 +59,12 @@
     (println "dev mode")))
 
 (defn render-app-html [request-path]
-  (let [sheets (new ServerStyleSheets)
+  (let [sheets (new (.-ServerStyleSheets styles))
         theme (mui/theme)
         generate-class-name (mui/create-generate-class-name)
         html (.renderToString react-dom-server
                 (.collect sheets
-                  (react/createElement MuiThemeProvider
+                  (react/createElement (.-MuiThemeProvider styles)
                     #js{:theme theme}
                     (reagent/as-element [component/app]))))
         css (.toString sheets)]
