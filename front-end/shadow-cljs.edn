@@ -81,7 +81,12 @@
            :devtools {:after-load vr-match.client/remount-for-figwheel}}
   
   :server {:target :node-script
-           :output-dir "target/server/prod/js/compiled"
-           :output-to "target/server/prod/js/compiled/server.js"
+           :output-dir "target/server/js/compiled"
+           :output-to "target/server/js/compiled/server.js"
            :main vr-match.server/main
-           :compiler-options {:optimizations :simple}}}}
+           :compiler-options {;; 常に simple 最適化を使用
+                             :optimizations :simple
+                             }}
+  
+  ;; :worker ビルド定義は以前削除済み
+  }}

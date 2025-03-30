@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "VR Match Frontend",
   "scripts": {
-    "clean": "rm -rf resources/public/js/compiled target",
+    "clean": "rm -rf resources/public/js/compiled resources/public/prod target",
     "shadow-cljs": "shadow-cljs",
     "build": "npm run build:prod",
     "build:dev": "shadow-cljs compile client server",
     "build:prod": "shadow-cljs release client server && npm run workbox",
     "watch": "shadow-cljs watch client server",
     "workbox": "workbox generateSW",
-    "start": "node target/server/prod/js/compiled/server.js 8888"
+    "start": "node target/server/js/compiled/server.js 8888"
   },
   "repository": {
     "type": "git",

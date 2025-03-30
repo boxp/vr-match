@@ -1,12 +1,12 @@
 module.exports = {
-  "globDirectory": "resources/public/prod",
+  "globDirectory": "resources/public",
   "globPatterns": [
     "js/compiled/*.js"
   ],
   "modifyUrlPrefix": {
       "js/compiled": "/static/js/compiled",
   },
-  "swDest": "resources/public/prod/sw.js",
+  "swDest": "resources/public/sw.js",
   "runtimeCaching": [
       {
           "urlPattern": /\//,
