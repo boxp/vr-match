@@ -3,7 +3,7 @@
   (:require
    [reagent.core :as r]
    ["@material-ui/core" :as mui]
-   ["@material-ui/core/styles" :refer [withStyles createMuiTheme createGenerateClassName MuiThemeProvider]]
+   ["@material-ui/core/styles" :refer [withStyles createTheme createGenerateClassName MuiThemeProvider]]
    ["@material-ui/core/colors" :as colors]))
 
 ;; material-ui/core
@@ -47,7 +47,7 @@
 
 ;; material-ui/styles
 (def with-styles withStyles)
-(def create-mui-theme createMuiTheme)
+(def create-theme createTheme)
 (def create-generate-class-name createGenerateClassName)
 (def MuiThemeProvider (r/adapt-react-class MuiThemeProvider))
 
@@ -61,7 +61,7 @@
 (def skip-color "#e0e0e0")
 
 (defn theme []
-  (create-mui-theme
+  (create-theme
    #js {:palette
         #js {:primary
              #js {:main primary-color}
