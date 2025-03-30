@@ -346,13 +346,15 @@ Firebaseの参照方法は以下のパターンに統一します：
 JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方法について、以下の原則に従って修正を行います：
 
 1. **直接インポート**: 各コンポーネントやサービスを直接インポートする方法を採用します
-   - Material-UI: `["@material-ui/core/Button" :as Button]`
-   - Firebase: `["firebase/app" :as firebase]`, `["firebase/auth"]`
-   - React: `["react" :as react]`, `["react-dom" :as react-dom]`
+   *   Material-UI: `["@material-ui/core/Button" :as Button]`
+   *   Firebase: `["firebase/app" :as firebase]`, `["firebase/auth"]`
+   *   React: `["react" :as react]`, `["react-dom" :as react-dom]`
 
 2. **名前空間の統一**: 同じパッケージを参照する場合、import方法を統一します
 
 3. **グローバル変数の使用制限**: `js/MaterialUI`や`js/firebase`などのグローバル変数への直接アクセスを避け、インポートした変数を使用します
+
+4. **(SSR時の注意)**: まれに、特定のコンポーネントを直接インポート (`["@material-ui/core/Fab" :as Fab]`) した場合、SSR時に `React.createElement: type is invalid ... got: object` のようなエラーが発生することがあります。これは、SSR環境でコンポーネントが正しく解決されていない可能性があります。その場合は、代わりにコアパッケージ (`["@material-ui/core" :as mui]`) をインポートし、そのプロパティとしてアクセス (`(def fab (r/adapt-react-class (.-Fab mui)))`) する方法を試すと解決する場合があります。
 
 この修正アプローチにより、より明示的な依存関係管理が可能になり、コード品質とビルドプロセスが改善されます。
 

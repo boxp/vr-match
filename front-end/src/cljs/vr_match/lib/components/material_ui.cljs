@@ -3,7 +3,6 @@
   (:require
    [reagent.core :as r]
    ["@material-ui/core" :as mui]
-   ["@material-ui/core/Fab" :as Fab]
    ["@material-ui/core/styles" :refer [withStyles createTheme createGenerateClassName MuiThemeProvider]]
    ["@material-ui/core/colors" :as colors]))
 
@@ -45,7 +44,7 @@
 (def list-item-icon (r/adapt-react-class (.-ListItemIcon mui)))
 (def list-item-secondary-action (r/adapt-react-class (.-ListItemSecondaryAction mui)))
 (def list-subheader (r/adapt-react-class (.-ListSubheader mui)))
-(def fab (r/adapt-react-class Fab))
+(def fab (r/adapt-react-class (.-Fab mui)))
 
 ;; material-ui/styles
 (def with-styles withStyles)
