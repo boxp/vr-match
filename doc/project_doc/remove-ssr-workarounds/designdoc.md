@@ -283,6 +283,7 @@ SSR時の `ServerStyleSheets` に関する問題が v3 と shadow-cljs の組み
     - `"subheading"` → `"subtitle1"` など、v4で有効な値に変更
 - テーマ作成関数の変更: `createMuiTheme` → `createTheme`
 - `Grid` コンポーネントのレイアウトプロパティ: `:justify` → `:justify-content` など、CSS標準に合わせて変更
+- Floating Action Button: `Button` コンポーネントの `variant="fab"` → 専用の `Fab` コンポーネントを使用
 
 #### 修正スケジュール
 
