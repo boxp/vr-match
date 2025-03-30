@@ -52,7 +52,7 @@
                         :aria-label "Menu"
                         :on-click (if isOpen handleClickClose handleOpenDrawer)}
        [mui/icon "menu"]]
-      [mui/typo-graphy {:variant "title"
+      [mui/typo-graphy {:variant "h6"
                         :color "inherit"
                         :style {:flex-grow 1}}
        title]]]]

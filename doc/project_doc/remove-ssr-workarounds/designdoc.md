@@ -273,10 +273,16 @@ SSR時の `ServerStyleSheets` に関する問題が v3 と shadow-cljs の組み
 
 1. `["material-ui"]` という一括インポートを個別コンポーネントのインポートに変更
 2. `js/MaterialUI.XXX` の参照を直接インポートしたコンポーネントへの参照に変更
+3. **API変更への対応**: v3からv4への移行に伴うAPIの変更点（プロパティ名、`variant`の値など）を修正します。
 
 例えば：
 - `[:> js/MaterialUI.Button ...]` → `[:> Button ...]`
 - `[:> js/MaterialUI.Dialog ...]` → `[:> Dialog ...]`
+- `Typography` コンポーネントの `variant` プロパティ: 
+    - `"title"` → `"h6"`
+    - `"subheading"` → `"subtitle1"` など、v4で有効な値に変更
+- テーマ作成関数の変更: `createMuiTheme` → `createTheme`
+- `Grid` コンポーネントのレイアウトプロパティ: `:justify` → `:justify-content` など、CSS標準に合わせて変更
 
 #### 修正スケジュール
 
