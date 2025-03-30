@@ -28,6 +28,7 @@ WORKDIR /usr/src/app
 # ビルドステージから必要なファイルをコピー
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/resources/public ./resources/public
+COPY --from=build /usr/src/app/target/server/js/compiled ./target/server/js/compiled
 
 # アプリケーションの実行
-CMD ["node", "resources/public/js/compiled/server.js", "3000"]
+CMD ["node", "target/server/js/compiled/server.js", "3000"]
