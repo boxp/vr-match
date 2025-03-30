@@ -42,7 +42,7 @@
                   :style {:font-size "40px"}}
         "info"]]
       [mui/grid {:container true
-                 :justify "flex-start"
+                 :justify-content "flex-start"
                  :style {"marginBottom" "0.35em"}
                  :spacing 8}
        (->> platforms
@@ -51,7 +51,7 @@
                                                :item true}
                                      [plat-form-chip {:name name}]])))]
       [mui/typo-graphy {:gutterBottom true
-                        :variant "subheading"
+                        :variant "subtitle1"
                         :component "h2"}
        name]
       [mui/typo-graphy {:noWrap true}

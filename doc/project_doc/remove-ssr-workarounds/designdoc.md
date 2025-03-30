@@ -34,6 +34,10 @@
                 [kibu/pushy "0.3.8"]
                 [e85th/venia "0.2.5-1"]
                 [cljs-ajax "0.8.4"]]
+
+ ;; 注: npmパッケージのエイリアスを設定
+ :npm-aliases {"material-ui" "@material-ui/core"}
+
  :builds
  {:client {:target :browser
            :output-dir "resources/public/js/compiled"
@@ -48,16 +52,20 @@
                                :depends-on #{:client}
                                :output-name "example.js"}
                      ;; 他のモジュールもproject.cljから移行
-                     }
+                     :worker {:entries [vr-match.worker]
+                              :depends-on #{:cljs-base}
+                              :web-worker true  ;; Web Workerとして扱う
+                              :init-fn vr-match.worker/init
+                              :output-name "worker.js"}}
            :devtools {:after-load vr-match.client/remount-for-figwheel}}
   
   :server {:target :node-script
-           :output-dir "target/server/prod/js/compiled"
-           :output-to "target/server/prod/js/compiled/server.js"
+           :output-dir "target/server/js/compiled"
+           :output-to "target/server/js/compiled/server.js"
            :main vr-match.server/main
            :compiler-options {:optimizations :simple}}
   
-  :worker {:target :webworker
+  :worker {:target :browser
            :output-dir "resources/public/prod/worker/js/compiled"
            :output-to "resources/public/prod/worker/js/compiled/worker.js"
            :compiler-options {:optimizations :advanced}}}}
@@ -73,14 +81,14 @@
   "version": "1.0.0",
   "description": "VR Match Frontend",
   "scripts": {
-    "clean": "rm -rf resources/public/js/compiled resources/public/prod/worker/js/compiled target",
+    "clean": "rm -rf resources/public/js/compiled resources/public/prod target",
     "shadow-cljs": "shadow-cljs",
     "build": "npm run build:prod",
-    "build:dev": "shadow-cljs compile client server worker",
-    "build:prod": "shadow-cljs release client server worker && npm run workbox",
-    "watch": "shadow-cljs watch client server worker",
+    "build:dev": "shadow-cljs compile client server",
+    "build:prod": "shadow-cljs release client server && npm run workbox",
+    "watch": "shadow-cljs watch client server",
     "workbox": "workbox generateSW",
-    "start": "node target/server/prod/js/compiled/server.js"
+    "start": "node target/server/js/compiled/server.js 8888"
   },
   "dependencies": {
     "compression": "1.8.0",
@@ -90,7 +98,8 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-jss": "8.6.1",
-    "@material-ui/core": "3.9.3",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "whatwg-fetch": "3.0.0",
     "xmlhttprequest": "1.8.0"
   },
@@ -116,7 +125,7 @@
 
 ### 2.1 CLJSJSパッケージ用シムの作成
 
-CLJSJSパッケージからnpmパッケージへの移行を簡単にするために、一時的な互換レイヤー（シム）を作成します。
+CLJSJSパッケージからnpmパッケージへの移行を簡単にするために、一時的な互換レイヤー（シム）を作成します。ただし、Material-UIについてはnpm-aliasesの設定で対応するため、シムは作成しません。
 
 #### Reactのシム
 
@@ -144,18 +153,6 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
 (js/goog.exportSymbol "ReactDOMServer" react-dom-server)
 ```
 
-#### Material-UIのシム
-
-ファイルパス: `front-end/src/cljs/cljsjs/material_ui.cljs`
-
-```clojure
-(ns cljsjs.material-ui
-  (:require ["@material-ui/core" :as mui]))
-
-;; グローバル変数の公開
-(js/goog.exportSymbol "MaterialUI" mui)
-```
-
 #### Firebaseのシム
 
 ファイルパス: `front-end/src/cljs/cljsjs/firebase.cljs`
@@ -174,6 +171,196 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
 (defn import-firestore []
   (js/require "firebase/firestore"))
 ```
+
+### 2.2 Material-UIの移行戦略: v4へのアップグレード
+
+SSR時の `ServerStyleSheets` に関する問題が v3 と shadow-cljs の組み合わせで解決困難であるため、Material-UI を v3 から v4 へアップグレードする方針を採用します。
+
+#### 方針
+
+1.  **バージョン更新**: `package.json` で `@material-ui/core` および関連パッケージ (`@material-ui/icons` など) のバージョンを v4 系に更新します。
+2.  **コード修正**: Material-UI 公式の [v3 から v4 への移行ガイド](https://v4.mui.com/guides/migration-v3/) に基づき、プロジェクト全体のコードを修正します。主な修正点には以下が含まれます:
+    *   **インポートパスの変更**: コンポーネントや関数のインポートパスが変更されている場合があります。
+    *   **API の変更**: コンポーネントのプロパティ名や動作が変更されている場合があります。
+    *   **スタイリング**: スタイルエンジンが `@material-ui/styles` に基づくものに変わるため、テーマや `withStyles` などの使い方を確認・修正する必要があります。
+    *   **TypeScript 型**: (このプロジェクトでは直接関係ないかもしれませんが) 型定義も変更されています。
+3.  **SSR 対応**: v4 の SSR 実装方法に合わせて、`server.cljs` 内の `ServerStyleSheets` (または v4 で相当するもの) の使い方を修正します。
+4.  **段階的実施**: フェーズ3 (クライアント移行) およびフェーズ4 (サーバー移行) で、影響範囲を考慮しながら段階的に修正作業を進めます。
+5.  **テスト**: 各コンポーネントの修正後および全体のアップグレード完了後に、表示崩れや機能不全がないか徹底的にテストします。
+
+#### 注意点
+
+*   **破壊的変更**: v4 へのアップグレードは破壊的変更を伴うため、広範囲なコード修正が必要になる可能性があります。
+*   **作業量**: プロジェクト規模に応じて、修正には相応の時間と工数が必要です。
+
+このアップグレードにより、SSR の問題解決に加え、Material-UI の新機能や改善されたパフォーマンスの恩恵を受けることが期待されます。
+
+### 2.3 Material-UIを直接参照しているコンポーネントの修正リスト
+
+プロジェクト内で`material-ui`を直接requireしているファイルおよび`js/MaterialUI`としてグローバル変数からアクセスしているコンポーネントが複数見つかりました。これらのコンポーネントは以下の手順で修正する必要があります。
+
+#### 修正対象ファイル
+
+**`material-ui`をrequireしているファイル**:
+1. `front-end/src/cljs/vr_match/lib/components/linear_progress.cljs` (修正済み)
+2. `front-end/src/cljs/vr_match/lib/components/progress_button.cljs`
+3. `front-end/src/cljs/vr_match/approach/components/empty.cljs`
+4. `front-end/src/cljs/vr_match/approach/components/reset_all_skip_alert.cljs`
+5. `front-end/src/cljs/vr_match/auth/components/email_login.cljs`
+6. `front-end/src/cljs/vr_match/auth/components/email_register.cljs`
+7. `front-end/src/cljs/vr_match/auth/components/email_login_complete.cljs`
+8. `front-end/src/cljs/vr_match/auth/components/email_register_complete.cljs`
+9. `front-end/src/cljs/vr_match/auth/components/twitter_login.cljs`
+10. `front-end/src/cljs/vr_match/setting/components/cannot_unlink_third_party_alert.cljs`
+11. `front-end/src/cljs/vr_match/setting/components/unlink_confirmation_alert.cljs`
+12. `front-end/src/cljs/vr_match/favorite/component.cljs`
+13. `front-end/src/cljs/vr_match/matching/component.cljs`
+14. `front-end/src/cljs/vr_match/favorited_from_users/component.cljs`
+15. `front-end/src/cljs/vr_match/mypage/components/platform_expansion_panel.cljs`
+16. `front-end/src/cljs/vr_match/mypage/components/edit_platform_dialog.cljs`
+
+#### 修正例
+
+例えば、`progress_button.cljs`の修正前・修正後は以下のようになります：
+
+**修正前:**
+```clojure
+(ns vr-match.lib.components.progress-button
+  (:require ["material-ui"]))
+
+(defn progress-button
+  [{:keys [loading?] :as props} children]
+  [:div {:style {:position "relative"}}
+   [:> js/MaterialUI.Button (-> props
+                                (dissoc :loading?)
+                                (assoc :disabled loading?))
+    children]
+   (when loading?
+     [:> js/MaterialUI.CircularProgress {:size 24
+                                         :style {:position "absolute"
+                                                 :top "50%"
+                                                 :left "50%"
+                                                 :margin-top "-12"
+                                                 :margin-left "-12"}}])])
+```
+
+**修正後:**
+```clojure
+(ns vr-match.lib.components.progress-button
+  (:require
+   ["@material-ui/core/Button" :as Button]
+   ["@material-ui/core/CircularProgress" :as CircularProgress]))
+
+(defn progress-button
+  [{:keys [loading?] :as props} children]
+  [:div {:style {:position "relative"}}
+   [:> Button (-> props
+                  (dissoc :loading?)
+                  (assoc :disabled loading?))
+    children]
+   (when loading?
+     [:> CircularProgress {:size 24
+                           :style {:position "absolute"
+                                   :top "50%"
+                                   :left "50%"
+                                   :margin-top "-12"
+                                   :margin-left "-12"}}])])
+```
+
+#### 修正方針
+
+各コンポーネントにおいて以下の修正を行います：
+
+1. `["material-ui"]` という一括インポートを個別コンポーネントのインポートに変更
+2. `js/MaterialUI.XXX` の参照を直接インポートしたコンポーネントへの参照に変更
+3. **API変更への対応**: v3からv4への移行に伴うAPIの変更点（プロパティ名、`variant`の値など）を修正します。
+
+例えば：
+- `[:> js/MaterialUI.Button ...]` → `[:> Button ...]`
+- `[:> js/MaterialUI.Dialog ...]` → `[:> Dialog ...]`
+- `Typography` コンポーネントの `variant` プロパティ: 
+    - `"title"` → `"h6"`
+    - `"subheading"` → `"subtitle1"` など、v4で有効な値に変更
+- テーマ作成関数の変更: `createMuiTheme` → `createTheme`
+- `Grid` コンポーネントのレイアウトプロパティ: `:justify` → `:justify-content` など、CSS標準に合わせて変更
+- Floating Action Button: `Button` コンポーネントの `variant="fab"` → 専用の `Fab` コンポーネントを使用
+
+#### 修正スケジュール
+
+フェーズ2のシム実装フェーズ終了後、フェーズ3のクライアント移行フェーズで段階的に修正していきます。重要度の高いコンポーネントから順に修正し、各コンポーネントの修正後にテストを行い、問題がないことを確認します。
+
+### 2.4 Firebaseの参照方法の修正リスト
+
+コードベース内でFirebaseを参照している箇所も同様に修正が必要です。特に、以下のようなインポート形式を修正する必要があります。
+
+#### 修正対象ファイル
+
+1. `front-end/src/cljs/vr_match/auth/effects.cljs`
+2. その他Firebaseを参照しているファイル
+
+#### 修正例
+
+**修正前:**
+```clojure
+(ns vr-match.auth.effects
+  (:require [firebase.app]
+            [firebase.auth]
+            [cljs.reader :refer [read-string]]
+            [ajax.core :refer [ajax-request json-request-format json-response-format]]
+            [re-frame.core :as re-frame]))
+```
+
+**修正後:**
+```clojure
+(ns vr-match.auth.effects
+  (:require ["firebase/app" :as firebase]
+            ["firebase/auth"]
+            [cljs.reader :refer [read-string]]
+            [ajax.core :refer [ajax-request json-request-format json-response-format]]
+            [re-frame.core :as re-frame]))
+```
+
+#### 修正方針
+
+Firebaseの参照方法は以下のパターンに統一します：
+
+1. **メインパッケージの参照**:
+   - `["firebase/app" :as firebase]`をrequireする
+   - インポートした`firebase`変数を通してFirebaseの基本機能にアクセスする
+
+2. **追加サービスの参照**:
+   - 必要な追加サービスを`["firebase/auth"]`などとして直接requireする
+   - 追加サービスはrequireするだけで自動的にfirebaseオブジェクトに機能が追加される
+
+3. **グローバル変数の使用制限**:
+   - `js/firebase`などのグローバル変数への参照を避け、インポートした変数を使用する
+
+この方法は、依存関係が明示的になるため、コードの可読性と保守性が向上します。また、shadow-cljsの最適化の恩恵も受けやすくなります。
+
+#### 修正スケジュール
+
+フェーズ2のシム実装フェーズ終了後、フェーズ3のクライアント移行フェーズで段階的に修正していきます。重要度の高いコンポーネントから順に修正し、各コンポーネントの修正後にテストを行い、問題がないことを確認します。
+
+### 2.5 JSパッケージのインポート方法に関する一般的な修正方針
+
+JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方法について、以下の原則に従って修正を行います：
+
+1. **直接インポート**: 各コンポーネントやサービスを直接インポートする方法を採用します
+   *   Material-UI: `["@material-ui/core/Button" :as Button]`
+   *   Firebase: `["firebase/app" :as firebase]`, `["firebase/auth"]`
+   *   React: `["react" :as react]`, `["react-dom" :as react-dom]`
+
+2. **名前空間の統一**: 同じパッケージを参照する場合、import方法を統一します
+
+3. **グローバル変数の使用制限**: `js/MaterialUI`や`js/firebase`などのグローバル変数への直接アクセスを避け、インポートした変数を使用します
+
+4. **(SSR時の注意)**: まれに、特定のコンポーネントを直接インポート (`["@material-ui/core/Fab" :as Fab]`) した場合、SSR時に `React.createElement: type is invalid ... got: object` のようなエラーが発生することがあります。これは、SSR環境でコンポーネントが正しく解決されていない可能性があります。その場合は、代わりにコアパッケージ (`["@material-ui/core" :as mui]`) をインポートし、そのプロパティとしてアクセス (`(def fab (r/adapt-react-class (.-Fab mui)))`) する方法を試すと解決する場合があります。
+
+この修正アプローチにより、より明示的な依存関係管理が可能になり、コード品質とビルドプロセスが改善されます。
+
+#### 修正スケジュール
+
+フェーズ2のシム実装フェーズ終了後、フェーズ3のクライアント移行フェーズで段階的に修正していきます。重要度の高いコンポーネントから順に修正し、各コンポーネントの修正後にテストを行い、問題がないことを確認します。
 
 ## フェーズ3: クライアント移行フェーズ
 
@@ -307,6 +494,10 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
 
 ファイルパス: `front-end/src/cljs-server/vr_match/server.cljs`
 
+**現状の問題**: v3 環境で SSR 時の `ServerStyleSheets` のインポート/認識に問題が発生していました。Material-UI v4 へのアップグレードで対応します。
+
+**対応方針**: Material-UI v4 へのアップグレード後、v4 の SSR 実装方法に従ってコードを修正します。また、静的ファイルの配信は開発・本番問わず `resources/public` ディレクトリから行うように Express の設定を単純化します。
+
 ```clojure
 (ns vr-match.server
   (:require
@@ -318,7 +509,8 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
    ["compression" :as compression]
    ["react" :as react]
    ["react-dom/server" :as react-dom-server]
-   ["@material-ui/core/styles" :refer [MuiThemeProvider ServerStyleSheets createMuiTheme]]
+   ["@material-ui/core/styles" :as styles]
+   ["@material-ui/styles" :refer [ServerStyleSheets]]
    ["react-jss" :refer [JssProvider SheetsRegistry]]
    [vr-match.lib.component :as component]
    [vr-match.lib.components.material-ui :as mui]
@@ -344,13 +536,10 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
 
 (def google-analytics-tracking-id js/process.env.GOOGLE_ANALYTICS_TRACKING_ID)
 
-(goog-define static-file-path "/")
 (goog-define dev? false)
 
 (defn dev-setup []
-  (when dev?
-    (enable-console-print!)
-    (println "dev mode")))
+  (when dev? (enable-console-print!) (println "dev mode")))
 
 (defn render-app-html [request-path]
   (let [sheets (new ServerStyleSheets)
@@ -358,7 +547,7 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
         generate-class-name (mui/create-generate-class-name)
         html (.renderToString react-dom-server
                 (.collect sheets
-                  (react/createElement MuiThemeProvider
+                  (react/createElement (.-MuiThemeProvider styles)
                     #js{:theme theme}
                     (reagent/as-element [component/app]))))
         css (.toString sheets)]
@@ -375,7 +564,6 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
     (when-not dev?
       [:link {:rel "apple-touch-icon" :href "/static/img/logo.png"}])
     [:title "Hito Hub"]
-    ;; リセットCSSなど
     [:style "/* リセットCSS */"]
     [:style {:id "jss-server-side"} css]]
    [:body
@@ -392,12 +580,10 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
    [:script {:src "/static/js/compiled/app.js"}]
    [:link {:rel "stylesheet"
            :href "https://fonts.googleapis.com/icon?family=Material+Icons"}]
-   ;; Google Analyticsスクリプト
    (when google-analytics-tracking-id
      [:div
       {:dangerouslySetInnerHTML
        {:__html "/* Google Analyticsスクリプト */"}}])
-   ;; Service Workerスクリプト
    (when-not dev?
      [:div
       {:dangerouslySetInnerHTML
@@ -411,21 +597,20 @@ CLJSJSパッケージからnpmパッケージへの移行を簡単にするた�
 (defn serve [port]
   (.listen express-app port))
 
-(defn -main [& args]
+(defn ^:export main [& args]
   (let [port (-> args first js/parseInt)]
     (dev-setup)
     (serve port)))
 
 (doto express-app
   (.use (compression))
-  (.use "/sw.js" (.static express (str static-file-path "sw.js")))
-  (.use "/manifest.json" (.static express (str static-file-path "manifest.json")))
-  (.use "/favicon.ico" (.static express (str static-file-path "favicon.ico")))
-  (.use "static" (.static express static-file-path))
-  (.use "/static" (.static express static-file-path))
+  (.use "/static" (.static express "resources/public"))
+  (.get "/sw.js" (fn [req res] (.sendFile res "sw.js" #js{:root "resources/public/"})))
+  (.get "/manifest.json" (fn [req res] (.sendFile res "manifest.json" #js{:root "resources/public/"})))
+  (.get "/favicon.ico" (fn [req res] (.sendFile res "favicon.ico" #js{:root "resources/public/"})))
   (.use "/*" handle-render))
 
-(set! *main-cli-fn* -main)
+(set! *main-cli-fn* main)
 ```
 
 ### 4.2 プリアンブルファイルの簡素化
@@ -453,13 +638,17 @@ global.window.localStorage = null;
 
 ```dockerfile
 # ビルドステージ
-FROM node:14-alpine as build
+FROM node:8.17-alpine as build
 
 # 作業ディレクトリの作成
 WORKDIR /usr/src/app
 
 # パッケージ依存関係のインストール
 COPY package.json package-lock.json ./
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache make gcc g++ python openjdk11
+
 RUN npm ci
 
 # ソースコードと設定ファイルのコピー
@@ -471,23 +660,95 @@ COPY resources/ ./resources/
 RUN npm run build:prod
 
 # 実行ステージ
-FROM node:14-alpine
+FROM node:8.17-alpine
 
 # 作業ディレクトリの作成
 WORKDIR /usr/src/app
 
 # ビルドステージから必要なファイルをコピー
 COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/target ./target
-COPY --from=build /usr/src/app/resources/public/prod ./resources/public/prod
+# クライアントサイドのアセット
+COPY --from=build /usr/src/app/resources/public ./resources/public
+# 変更: サーバーサイドのJSをコピー
+COPY --from=build /usr/src/app/target/server/js/compiled ./target/server/js/compiled
 
 # アプリケーションの実行
-CMD ["node", "target/server/prod/js/compiled/server.js", "3000"]
+# 変更: サーバーJSのパスを更新
+CMD ["node", "target/server/js/compiled/server.js", "3000"]
 ```
 
 ### 5.2 CIビルドスクリプトの更新
 
 必要に応じてCIビルドスクリプトも更新します。具体的な内容はプロジェクトのCIサービスに依存します。
+
+### 5.3 Workbox 設定の更新
+
+ファイルパス: `front-end/workbox-config.js`
+
+ビルド成果物と静的ファイルの出力先を `resources/public` に統一したことに伴い、Service Worker の設定ファイルも更新します。
+
+```javascript
+module.exports = {
+  // キャッシュ対象ファイルの検索元を更新
+  "globDirectory": "resources/public",
+  "globPatterns": [
+    // キャッシュ対象は JS ビルド成果物
+    "js/compiled/*.js"
+  ],
+  "modifyUrlPrefix": {
+      // Service Worker 内での URL パスを実際の配信パスに合わせる
+      "js/compiled": "/static/js/compiled",
+  },
+  // 生成される sw.js の出力先を更新
+  "swDest": "resources/public/sw.js",
+  "runtimeCaching": [
+      // ... 既存の runtimeCaching 設定 ...
+      {
+          "urlPattern": /\//,
+          "handler": "networkFirst",
+          "options": {
+              "cacheableResponse": {
+                  "statuses": [0, 200],
+                  "headers": {
+                      "Content-type": "text/html; charset=utf-8",
+                  },
+              },
+          },
+      },
+      {
+          "urlPattern": /^https\:\/\/use\.fontawesome\.com\/releases\//,
+          "handler": "cacheFirst",
+          "options": {
+              "cacheableResponse": {
+                  "statuses": [0, 200],
+              },
+          },
+      },
+      {
+          "urlPattern": /^https\:\/\/api\.github\.com\//,
+          "handler": "networkFirst",
+          "options": {
+              "cacheableResponse": {
+                  "statuses": [0, 200],
+              },
+          },
+      },
+      {
+          "urlPattern": /^https\:\/\/avatars0\.githubusercontent\.com\//,
+          "handler": "cacheFirst",
+          "options": {
+              "cacheableResponse": {
+                  "statuses": [0, 200],
+              },
+          },
+      },
+  ],
+  "skipWaiting": true,
+  "clientsClaim": true,
+};
+```
+
+これにより、Workbox は `resources/public` ディレクトリを基準に動作し、生成された `sw.js` も同ディレクトリに出力されるようになります。
 
 ## フェーズ6: 検証フェーズ
 
@@ -549,3 +810,86 @@ CMD ["node", "target/server/prod/js/compiled/server.js", "3000"]
 6. フェーズ6 (検証): 1週間
 
 合計: 約8週間（問題解決の時間を含む）
+
+## 最終調整
+
+- パフォーマンスチューニング
+- 残りのワークアラウンドの除去
+
+## Web Workerの実装方法
+
+### Web Workerモジュールの設定
+
+shadow-cljsのドキュメント「[User's Guide - Web Workers](https://shadow-cljs.github.io/docs/UsersGuide.html#_web_workers)」に基づき、Web Workerを`:browser`ターゲット内のモジュールとして実装します。
+
+#### モジュール設定
+
+```clojure
+;; shadow-cljs.edn の :modules 設定
+:modules {:cljs-base {...}
+          :client {...}
+          ;; 他のモジュール
+          :worker {:entries [vr-match.worker]
+                   :depends-on #{:cljs-base}
+                   :web-worker true  ;; Web Workerとして扱う
+                   :init-fn vr-match.worker/init}}
+```
+
+この設定により、`:worker`モジュールがWeb Workerとして適切に構成されます。`:web-worker true`フラグにより、クライアントモジュールから分離され、適切なWeb Workerコンテキストで動作するためのコードが生成されます。
+
+#### Web Workerの呼び出し
+
+クライアントコードからは以下のようにWeb Workerを初期化して使用します：
+
+```clojure
+;; vr-match.effects などのクライアントコード
+(defn initialize-worker []
+  (let [worker (js/Worker. "/js/compiled/worker.js")]
+    (.addEventListener worker "message" 
+                       (fn [event] 
+                         ;; メッセージ処理
+                         ))
+    ;; Workerにメッセージを送信
+    (.postMessage worker #js{:cmd "start" :data "some-data"})))
+```
+
+#### Worker側の実装
+
+```clojure
+;; src/cljs/vr_match/worker.cljs
+(ns vr-match.worker)
+
+(defn handle-message [event]
+  (let [data (.-data event)
+        cmd (.-cmd data)]
+    (case cmd
+      "start" (.postMessage js/self #js{:result "開始しました"})
+      ;; その他のコマンド処理
+      )))
+
+(defn init []
+  ;; メッセージ受信リスナーを設定
+  (.addEventListener js/self "message" handle-message))
+```
+
+この方法の利点は、別途ビルド定義を作成する必要がなく、一つのビルド内でWeb Workerを管理できることです。また、コードの共有や依存関係の管理も容易になります。
+
+### ディレクトリ構造の整理
+
+Web Worker実装のためのディレクトリ構造も整理します：
+
+1. **従来の構造：**
+   - `src/cljs-worker/vr_match/worker.cljs` - 独立したワーカーコードを配置
+   - `:worker`ビルド定義で別々にビルド
+
+2. **新しい構造：**
+   - `src/cljs/vr_match/worker.cljs` - 通常のソースディレクトリ内にワーカーコードを統合
+   - `:client`ビルド内のモジュールとしてワーカーを管理
+
+3. **移行手順：**
+   - `src/cljs/vr_match/worker.cljs`を新規作成
+   - `src/cljs-worker/vr_match/worker.cljs`の内容をベースに`init`関数を追加
+   - `src/cljs-worker/vr_match/worker.cljs`を削除
+   - 必要に応じて`src/cljs-worker`ディレクトリ自体も削除
+
+これらの変更により、より統一されたディレクトリ構造が実現され、ワーカーコードの管理が容易になります。また、`shadow-cljs.edn`の`:source-paths`からも将来的には`"src/cljs-worker"`を削除できますが、他に依存するコードがないことを確認してから行うべきです。

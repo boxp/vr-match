@@ -1,6 +1,6 @@
 (ns vr-match.auth.effects
-  (:require [firebase.app]
-            [firebase.auth]
+  (:require ["firebase/app" :as firebase]
+            ["firebase/auth"]
             [cljs.reader :refer [read-string]]
             [ajax.core :refer [ajax-request json-request-format json-response-format]]
             [re-frame.core :as re-frame]))
@@ -11,7 +11,7 @@
  ::initialize-firebase
  (fn [{:keys [config on-success]}]
    (when-not @firebase-instance
-     (->> (js/firebase.initializeApp config)
+     (->> (firebase.initializeApp config)
           (reset! firebase-instance)))
    (re-frame/dispatch [on-success])))
 
@@ -78,13 +78,13 @@
 (re-frame/reg-fx
  ::sign-in-with-twitter
  (fn [_]
-   (let [provider (new (.. js/firebase -auth -TwitterAuthProvider))]
+   (let [provider (new (.. firebase -auth -TwitterAuthProvider))]
      (.. @firebase-instance auth (signInWithRedirect provider)))))
 
 (re-frame/reg-fx
  ::link-with-twitter
  (fn [_]
-   (let [provider (new (.. js/firebase -auth -TwitterAuthProvider))]
+   (let [provider (new (.. firebase -auth -TwitterAuthProvider))]
      (.. @firebase-instance auth -currentUser (linkWithRedirect provider)))))
 
 (re-frame/reg-fx

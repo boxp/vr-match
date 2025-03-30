@@ -1,6 +1,11 @@
 (ns vr-match.auth.components.email-register
   (:require [reagent.core :as r]
-            ["material-ui"]
+            ["@material-ui/core/Grid" :as Grid]
+            ["@material-ui/core/Typography" :as Typography]
+            ["@material-ui/core/Icon" :as Icon]
+            ["@material-ui/core/Button" :as Button]
+            ["@material-ui/core/FormControl" :as FormControl]
+            ["@material-ui/core/TextField" :as TextField]
             [vr-match.lib.components.linear-progress :refer [linear-progress]] ))
 
 (defn- handle-change-email
@@ -15,7 +20,7 @@
 (defn send-email-sign-in-link-complete
   [email]
   [:div {:style {:padding 16}}
-   [:> js/MaterialUI.Grid {:container true
+   [:> Grid {:container true
                            :spacing 32
                            :direction "column"
                            :justify "space-between"
@@ -23,23 +28,23 @@
                            :style {:height "100%"
                                    :width "100vw"
                                    :padding 32}}
-    [:> js/MaterialUI.Typography {:variant "display1"
+    [:> Typography {:variant "display1"
                                   :component "h1"
                                   :gutterBottom true
                                   :style {:text-align "left"}}
      "登録確認メールを送信しました"]
-    [:> js/MaterialUI.Grid {:container true
+    [:> Grid {:container true
                             :spacing 32
                             :direction "column"
                             :justify "space-between"
                             :align-items "center"
                             :style {:padding 32}}
-     [:> js/MaterialUI.Icon
+     [:> Icon
       {:font-size "inherit"
        :color "primary"
        :style {:font-size "10em"}}
      "mail_outline"]]
-    [:> js/MaterialUI.Typography {:variant "body1"
+    [:> Typography {:variant "body1"
                                   :component "p"}
      [:span {:style {:font-weight "bold"}}
       email]
@@ -61,7 +66,7 @@
            (when isLoading
             [linear-progress])
             [:div {:style {:padding 16}}
-             [:> js/MaterialUI.Grid {:container true
+             [:> Grid {:container true
                                      :spacing 32
                                      :direction "column"
                                      :justify "space-between"
@@ -69,17 +74,17 @@
                                      :style {:height "100%"
                                              :width "100vw"
                                              :padding 32}}
-              [:> js/MaterialUI.Typography {:variant "display1"
+              [:> Typography {:variant "display1"
                                             :component "h1"
                                             :gutterBottom true
                                             :style {:text-align "left"}}
                "メールアドレスを入力してください"]
-              [:> js/MaterialUI.FormControl {:fullWidth true}
-               [:> js/MaterialUI.TextField {:type "email"
+              [:> FormControl {:fullWidth true}
+               [:> TextField {:type "email"
                                             :auto-complete "email"
                                             :on-change #(handle-change-email draft-email %)
                                             :placeholder "sample@example.com"}]]
-              [:> js/MaterialUI.Button {:disabled (= @draft-email "")
+              [:> Button {:disabled (= @draft-email "")
                                         :variant "contained"
                                         :color "primary"
                                         :on-click #(handleSubmit @draft-email)

@@ -11,13 +11,11 @@
            onClickSkip
            onClickFavorite] :as props}]
   [mui/grid {:container true
-             :justify "space-around"}
-   [mui/button {:variant "fab"
-                :aria-label "スキップ"
+             :justify-content "space-around"}
+   [mui/fab {:aria-label "スキップ"
                 :on-click onClickSkip}
     [mui/icon "reply"]]
-   [mui/button {:variant "fab"
-                :color "secondary"
+   [mui/fab {:color "secondary"
                 :aria-label "すき"
                 :on-click onClickFavorite}
     [mui/icon "favorite"]]])

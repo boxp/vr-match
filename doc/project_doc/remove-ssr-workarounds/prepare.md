@@ -16,6 +16,12 @@ VR-Matchプロジェクトのフロントエンド部分、特にSSR（Server-Si
 3. **環境の互換性問題**
    - ClojureScriptのGoogle Closureコンパイラとnode.jsの環境の違いを解決するための複雑なワークアラウンドが存在しています
 
+4. **SSR時のスタイル生成エラー (ステージング環境)**
+   -   ステージング環境で `TypeError: shadow.js.shim.module$$material_ui$core$styles.ServerStyleSheets is not a constructor` というエラーが発生しています。
+   -   **原因**: SSRサーバー (`vr_match.server.render_app_html`) で Material-UI v3 のスタイルを処理する際に、`@material-ui/core/styles` から `ServerStyleSheets` を正しくインポート・認識できていないことが原因と考えられます。これは、shadow-cljs のビルド・shim 処理の問題、または `server.cljs` での `:refer` を使ったインポート方法の問題である可能性が高いです。
+   -   **影響**: SSR 時に Material-UI のスタイルが適用されず、サーバーから返される HTML のスタイルが崩れる、またはサーバーがエラーで応答できなくなります。
+   -   **参考**: [Stack Overflow の類似事例](https://stackoverflow.com/questions/59018739/trying-ssr-but-got-serverstylesheets-is-not-a-constructor) (ただし、こちらは v4 の事例)
+
 ## 詳細な技術的状況
 
 ### ビルドプロセスの問題
@@ -122,6 +128,61 @@ VR-Matchプロジェクトのフロントエンド部分、特にSSR（Server-Si
    # CLJSJSパッケージの代わりに直接npmからインストール
    npm install react react-dom create-react-class firebase
    ```
+
+#### Web Workerのビルド方法
+
+shadow-cljsのドキュメント「[User's Guide - Web Workers](https://shadow-cljs.github.io/docs/UsersGuide.html#_web_workers)」セクションに基づき、Web Workerの適切なビルド方法を説明します。shadow-cljsでは、Web Workerを実装する方法として、`:modules`定義内に`:web-worker true`を設定する方法が推奨されています。
+
+1. **モジュールとしてのWeb Worker実装（推奨）**
+   ```clojure
+   ;; shadow-cljs.edn の例
+   {:builds
+    {:client {:target :browser
+              :output-dir "resources/public/js/compiled"
+              :modules {:main {:entries [vr-match.client]
+                               :init-fn vr-match.client/init}
+                        :worker {:entries [vr-match.worker]
+                                 :web-worker true  ;; このモジュールをWeb Workerとして扱う
+                                 :init-fn vr-match.worker/init}}
+              :compiler-options {:optimizations :advanced}}}}
+   ```
+
+   この方法では、`:worker`モジュールが自動的にWeb Workerとして適切に構成されます。クライアントコードからは以下のように使用します：
+
+   ```clojure
+   ;; クライアント側のコード例
+   (defn init-worker []
+     (let [worker (js/Worker. "/js/compiled/worker.js")]
+       (.addEventListener worker "message" 
+                          (fn [event] 
+                            (js/console.log "Worker response:" (.-data event))))
+       (.postMessage worker #js{:cmd "start" :data "some-data"})))
+   ```
+
+2. **Worker側のコード例**
+   ```clojure
+   ;; src/cljs/vr_match/worker.cljs
+   (ns vr-match.worker)
+   
+   (defn handle-message [event]
+     (let [data (.-data event)
+           cmd (.-cmd data)]
+       (case cmd
+         "start" (.postMessage js/self #js{:result "started"})
+         ;; その他のコマンド処理
+         )))
+   
+   (defn init []
+     ;; メッセージ受信リスナーを設定
+     (.addEventListener js/self "message" handle-message))
+   ```
+
+この方法の利点：
+- より統合的なアプローチで、単一のビルド設定内でWeb Workerを管理できます
+- モジュール間の依存関係を適切に管理しやすくなります
+- コードの共有や再利用が容易になります
+
+特に、shadow-cljsドキュメントでは、「Web Workersの使用」セクションで`:web-worker`オプションを使用してモジュールをWeb Workerとして指定する方法が説明されています。これにより、別途ビルドを定義するよりも簡潔で管理しやすい構成が可能になります。
 
 ### 2. Material-UIのSSRサポート改善
 

@@ -5,7 +5,7 @@
    [re-frame.db :as db]
    [pushy.core :as pushy]))
 
-(goog-define worker-resource-path "/static/worker/js/compiled/worker.js")
+(goog-define worker-resource-path "/static/js/compiled/worker.js")
 
 (re-frame/reg-fx
  ::set-localstorage
