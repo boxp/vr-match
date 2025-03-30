@@ -50,7 +50,7 @@
 
 (def google-analytics-tracking-id js/process.env.GOOGLE_ANALYTICS_TRACKING_ID)
 
-(goog-define static-file-path "/")
+;; goog-define dev? は一旦残す
 (goog-define dev? false)
 
 (defn dev-setup []
@@ -198,11 +198,16 @@
 
 (doto express-app
   (.use (compression))
-  (.use "/sw.js" (.static express (str static-file-path "sw.js")))
-  (.use "/manifest.json" (.static express (str static-file-path "manifest.json")))
-  (.use "/favicon.ico" (.static express (str static-file-path "favicon.ico")))
-  (.use "static" (.static express static-file-path))
-  (.use "/static" (.static express static-file-path))
+
+  ;; 静的ファイル配信を resources/public に一本化
+  (.use "/static" (.static express "resources/public"))
+
+  ;; ルートパスの特定ファイルに対する設定 (resources/public を参照)
+  (.get "/sw.js" (fn [req res] (.sendFile res "sw.js" #js{:root "resources/public/"})))
+  (.get "/manifest.json" (fn [req res] (.sendFile res "manifest.json" #js{:root "resources/public/"})))
+  (.get "/favicon.ico" (fn [req res] (.sendFile res "favicon.ico" #js{:root "resources/public/"})))
+
+  ;; その他のすべてのパスに対するSSRハンドラ
   (.use "/*" handle-render))
 
 (set! *main-cli-fn* main)

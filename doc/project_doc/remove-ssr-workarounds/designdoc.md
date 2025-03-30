@@ -60,8 +60,8 @@
            :devtools {:after-load vr-match.client/remount-for-figwheel}}
   
   :server {:target :node-script
-           :output-dir "target/server/prod/js/compiled"
-           :output-to "target/server/prod/js/compiled/server.js"
+           :output-dir "target/server/js/compiled"
+           :output-to "target/server/js/compiled/server.js"
            :main vr-match.server/main
            :compiler-options {:optimizations :simple}}
   
@@ -81,14 +81,14 @@
   "version": "1.0.0",
   "description": "VR Match Frontend",
   "scripts": {
-    "clean": "rm -rf resources/public/js/compiled resources/public/prod/js/compiled target",
+    "clean": "rm -rf resources/public/js/compiled resources/public/prod target",
     "shadow-cljs": "shadow-cljs",
     "build": "npm run build:prod",
     "build:dev": "shadow-cljs compile client server",
     "build:prod": "shadow-cljs release client server && npm run workbox",
     "watch": "shadow-cljs watch client server",
     "workbox": "workbox generateSW",
-    "start": "node target/server/prod/js/compiled/server.js 8888"
+    "start": "node target/server/js/compiled/server.js 8888"
   },
   "dependencies": {
     "compression": "1.8.0",
@@ -325,7 +325,7 @@ Firebaseの参照方法は以下のパターンに統一します：
    - 必要な追加サービスを`["firebase/auth"]`などとして直接requireする
    - 追加サービスはrequireするだけで自動的にfirebaseオブジェクトに機能が追加される
 
-3. **グローバル変数を避ける**:
+3. **グローバル変数の使用制限**:
    - `js/firebase`などのグローバル変数への参照を避け、インポートした変数を使用する
 
 この方法は、依存関係が明示的になるため、コードの可読性と保守性が向上します。また、shadow-cljsの最適化の恩恵も受けやすくなります。
@@ -485,9 +485,9 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
 
 ファイルパス: `front-end/src/cljs-server/vr_match/server.cljs`
 
-**現状の問題**: v3 環境で SSR 時の `ServerStyleSheets` のインポート/認識に問題が発生していました。
+**現状の問題**: v3 環境で SSR 時の `ServerStyleSheets` のインポート/認識に問題が発生していました。Material-UI v4 へのアップグレードで対応します。
 
-**対応方針**: Material-UI v4 へのアップグレードに伴い、v4 の SSR 実装方法に従ってコードを修正します。v4 の [Server-Side Rendering ガイド](https://v4.mui.com/guides/server-rendering/) を参照し、`ServerStyleSheets` (または v4 での同等の仕組み) の使い方を適切に更新します。これにより、v3 で発生していた問題の解決が期待されます。
+**対応方針**: Material-UI v4 へのアップグレード後、v4 の SSR 実装方法に従ってコードを修正します。また、静的ファイルの配信は開発・本番問わず `resources/public` ディレクトリから行うように Express の設定を単純化します。
 
 ```clojure
 (ns vr-match.server
@@ -527,13 +527,10 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
 
 (def google-analytics-tracking-id js/process.env.GOOGLE_ANALYTICS_TRACKING_ID)
 
-(goog-define static-file-path "/")
 (goog-define dev? false)
 
 (defn dev-setup []
-  (when dev?
-    (enable-console-print!)
-    (println "dev mode")))
+  (when dev? (enable-console-print!) (println "dev mode")))
 
 (defn render-app-html [request-path]
   (let [sheets (new ServerStyleSheets)
@@ -558,7 +555,6 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
     (when-not dev?
       [:link {:rel "apple-touch-icon" :href "/static/img/logo.png"}])
     [:title "Hito Hub"]
-    ;; リセットCSSなど
     [:style "/* リセットCSS */"]
     [:style {:id "jss-server-side"} css]]
    [:body
@@ -575,12 +571,10 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
    [:script {:src "/static/js/compiled/app.js"}]
    [:link {:rel "stylesheet"
            :href "https://fonts.googleapis.com/icon?family=Material+Icons"}]
-   ;; Google Analyticsスクリプト
    (when google-analytics-tracking-id
      [:div
       {:dangerouslySetInnerHTML
        {:__html "/* Google Analyticsスクリプト */"}}])
-   ;; Service Workerスクリプト
    (when-not dev?
      [:div
       {:dangerouslySetInnerHTML
@@ -594,21 +588,20 @@ JSパッケージ（Material-UI、Firebase、Reactなど）のインポート方
 (defn serve [port]
   (.listen express-app port))
 
-(defn -main [& args]
+(defn ^:export main [& args]
   (let [port (-> args first js/parseInt)]
     (dev-setup)
     (serve port)))
 
 (doto express-app
   (.use (compression))
-  (.use "/sw.js" (.static express (str static-file-path "sw.js")))
-  (.use "/manifest.json" (.static express (str static-file-path "manifest.json")))
-  (.use "/favicon.ico" (.static express (str static-file-path "favicon.ico")))
-  (.use "static" (.static express static-file-path))
-  (.use "/static" (.static express static-file-path))
+  (.use "/static" (.static express "resources/public"))
+  (.get "/sw.js" (fn [req res] (.sendFile res "sw.js" #js{:root "resources/public/"})))
+  (.get "/manifest.json" (fn [req res] (.sendFile res "manifest.json" #js{:root "resources/public/"})))
+  (.get "/favicon.ico" (fn [req res] (.sendFile res "favicon.ico" #js{:root "resources/public/"})))
   (.use "/*" handle-render))
 
-(set! *main-cli-fn* -main)
+(set! *main-cli-fn* main)
 ```
 
 ### 4.2 プリアンブルファイルの簡素化
@@ -665,16 +658,88 @@ WORKDIR /usr/src/app
 
 # ビルドステージから必要なファイルをコピー
 COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/target ./target
-COPY --from=build /usr/src/app/resources/public/prod ./resources/public/prod
+# クライアントサイドのアセット
+COPY --from=build /usr/src/app/resources/public ./resources/public
+# 変更: サーバーサイドのJSをコピー
+COPY --from=build /usr/src/app/target/server/js/compiled ./target/server/js/compiled
 
 # アプリケーションの実行
-CMD ["node", "target/server/prod/js/compiled/server.js", "3000"]
+# 変更: サーバーJSのパスを更新
+CMD ["node", "target/server/js/compiled/server.js", "3000"]
 ```
 
 ### 5.2 CIビルドスクリプトの更新
 
 必要に応じてCIビルドスクリプトも更新します。具体的な内容はプロジェクトのCIサービスに依存します。
+
+### 5.3 Workbox 設定の更新
+
+ファイルパス: `front-end/workbox-config.js`
+
+ビルド成果物と静的ファイルの出力先を `resources/public` に統一したことに伴い、Service Worker の設定ファイルも更新します。
+
+```javascript
+module.exports = {
+  // キャッシュ対象ファイルの検索元を更新
+  "globDirectory": "resources/public",
+  "globPatterns": [
+    // キャッシュ対象は JS ビルド成果物
+    "js/compiled/*.js"
+  ],
+  "modifyUrlPrefix": {
+      // Service Worker 内での URL パスを実際の配信パスに合わせる
+      "js/compiled": "/static/js/compiled",
+  },
+  // 生成される sw.js の出力先を更新
+  "swDest": "resources/public/sw.js",
+  "runtimeCaching": [
+      // ... 既存の runtimeCaching 設定 ...
+      {
+          "urlPattern": /\//,
+          "handler": "networkFirst",
+          "options": {
+              "cacheableResponse": {
+                  "statuses": [0, 200],
+                  "headers": {
+                      "Content-type": "text/html; charset=utf-8",
+                  },
+              },
+          },
+      },
+      {
+          "urlPattern": /^https\:\/\/use\.fontawesome\.com\/releases\//,
+          "handler": "cacheFirst",
+          "options": {
+              "cacheableResponse": {
+                  "statuses": [0, 200],
+              },
+          },
+      },
+      {
+          "urlPattern": /^https\:\/\/api\.github\.com\//,
+          "handler": "networkFirst",
+          "options": {
+              "cacheableResponse": {
+                  "statuses": [0, 200],
+              },
+          },
+      },
+      {
+          "urlPattern": /^https\:\/\/avatars0\.githubusercontent\.com\//,
+          "handler": "cacheFirst",
+          "options": {
+              "cacheableResponse": {
+                  "statuses": [0, 200],
+              },
+          },
+      },
+  ],
+  "skipWaiting": true,
+  "clientsClaim": true,
+};
+```
+
+これにより、Workbox は `resources/public` ディレクトリを基準に動作し、生成された `sw.js` も同ディレクトリに出力されるようになります。
 
 ## フェーズ6: 検証フェーズ
 
