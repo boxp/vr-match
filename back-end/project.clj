@@ -6,7 +6,7 @@
   :plugins [[lein-bom "0.2.0-SNAPSHOT"]]
   :bom {:import [[com.google.cloud/libraries-bom "23.0.0"]]}
   :dependencies [[org.clojure/clojure "1.12.0"]
-                 [org.clojure/core.async "1.7.701"]
+                 [org.clojure/core.async "1.8.741"]
                  [org.clojure/data.codec "0.2.0"]
                  [org.clojure/test.check "1.1.1"]
                  [org.clojure/tools.logging "1.3.0"]
