@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/hoge/vr-match#readme",
   "dependencies": {
-    "compression": "1.8.0",
+    "compression": "1.8.1",
     "create-react-class": "15.7.0",
     "express": "4.21.2",
     "firebase": "5.11.1",
