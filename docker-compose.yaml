@@ -1,7 +1,7 @@
 version: '2'
 services:
   mysql:
-    image: mysql:9.3
+    image: mysql:9.5
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_USER: dev
