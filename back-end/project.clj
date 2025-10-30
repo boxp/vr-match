@@ -18,7 +18,7 @@
                  [com.stuartsierra/component "1.1.0"]
                  [ring "1.13.0"]
                  [ring/ring-json "0.5.1"]
-                 [compojure "1.7.1"]
+                 [compojure "1.7.2"]
                  [cheshire "5.13.0"]
                  [cljstache "2.0.6"]
                  [integrant "0.8.0"]
