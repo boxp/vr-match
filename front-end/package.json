@@ -43,7 +43,7 @@
     "create-react-class": "15.7.0",
     "express": "4.21.2",
     "firebase": "5.11.1",
-    "nodemon": "3.1.10",
+    "nodemon": "3.1.11",
     "npm-run-all2": "7.0.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
