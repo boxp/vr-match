@@ -62,7 +62,7 @@
             :depends-on #{:cljs-base}}})
 
 (defproject vr-match "0.1.0-SNAPSHOT"
-  :dependencies [[org.clojure/clojure "1.12.3"]
+  :dependencies [[org.clojure/clojure "1.12.4"]
                  [org.clojure/clojurescript "1.12.35"]
                  [org.clojure/test.check "1.1.1"]
                  [reagent "0.8.1"]
