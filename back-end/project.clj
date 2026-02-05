@@ -22,7 +22,7 @@
                  [cheshire "5.13.0"]
                  [cljstache "2.0.6"]
                  [integrant "0.8.0"]
-                 [org.clojure/tools.namespace "1.5.0"]
+                 [org.clojure/tools.namespace "1.5.1"]
                  [com.walmartlabs/lacinia "1.2.2"]
                  [e85th/venia "0.2.5-1"]
                  [com.layerware/hugsql "0.5.3"]
