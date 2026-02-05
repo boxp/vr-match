@@ -7,7 +7,7 @@
   :bom {:import [[com.google.cloud/libraries-bom "23.0.0"]]}
   :dependencies [[org.clojure/clojure "1.12.4"]
                  [org.clojure/core.async "1.8.741"]
-                 [org.clojure/data.codec "0.2.0"]
+                 [org.clojure/data.codec "0.2.1"]
                  [org.clojure/test.check "1.1.1"]
                  [org.clojure/tools.logging "1.3.0"]
                  [org.slf4j/slf4j-log4j12 "2.0.17"]
