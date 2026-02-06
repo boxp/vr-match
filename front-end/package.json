@@ -41,7 +41,7 @@
   "dependencies": {
     "compression": "1.8.1",
     "create-react-class": "15.7.0",
-    "express": "4.21.2",
+    "express": "4.22.1",
     "firebase": "5.11.1",
     "nodemon": "3.1.11",
     "npm-run-all2": "7.0.2",
