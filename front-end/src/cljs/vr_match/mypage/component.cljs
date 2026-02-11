@@ -64,29 +64,31 @@
                    handleSubmitPlatforms]
             :as props}]
         [navigation-bar-layout {:title "プロフィールを編集"}
-         [:div {:style {:position "relative"}}
+         [:div
           (when isLoading
             [linear-progress])
           [mui/button-base {:on-click #(handle-click-reset-image image-ref)
                             :style {:width "100vw"
-                                    :height "100vw"}}
-           [:div {:style {:width "100vw"
-                          :height "100vw"
+                                    :max-height "480px"
+                                    :height "60%"}}
+           [:div {:style {:width "100%"
+                          :height "100%"
                           :background-image (str "url(" (some-> props :me :images first :url) ")")
                           :background-size "cover"
-                          :background-position "center"}}]]
-          [mui/icon-button {:on-click #(handle-click-reset-image image-ref)
-                            :style
-                            {:position "absolute"
-                             :width "64px"
-                             :height "64px"
-                             :top "calc(100vw - 40px)"
-                             :right "16px"
-                             :background-color mui/primary-color}}
-           [mui/icon {:font-size "inherit"
-                      :style {:color "white"
-                              :font-size "32px"}}
-            "edit"]]
+                          :background-position "center"
+                          :position "relative"}}
+            [mui/icon-button {:on-click #(handle-click-reset-image image-ref)
+                              :style
+                              {:position "absolute"
+                               :width "64px"
+                               :height "64px"
+                               :bottom "-16px"
+                               :right "16px"
+                               :background-color mui/primary-color}}
+             [mui/icon {:font-size "inherit"
+                        :style {:color "white"
+                                :font-size "32px"}}
+              "edit"]]]]
           [mui/list {:subheader (r/as-element [mui/list-subheader "ユーザー名"])}
            [mui/list-item {:key "user-name"
                            :on-click handle-click-user-name}
