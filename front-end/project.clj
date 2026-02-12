@@ -65,7 +65,7 @@
   :dependencies [[org.clojure/clojure "1.12.4"]
                  [org.clojure/clojurescript "1.12.35"]
                  [org.clojure/test.check "1.1.3"]
-                 [reagent "0.8.1"]
+                 [reagent "0.10.0"]
                  [re-frame "0.12.0"]
                  [clj-commons/secretary "1.2.4"]
                  [kibu/pushy "0.3.8"]
