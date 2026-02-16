@@ -24,3 +24,21 @@ global.window.localStorage = null;
 self = {
     fetch: function(){},
 };
+
+// Firebase v8 をロードしてグローバルに設定
+var firebase = require("firebase/app");
+require("firebase/auth");
+global.firebase = firebase;
+
+// cljsjs/firebase v5 互換シム
+// cljsjs/firebase 5.7.3 のインラインUMDコード (firebase-auth.inc.js) は
+// firebase.INTERNAL.registerService() を呼んでサービスを登録しようとする。
+// firebase v8 では registerService が registerComponent に置き換わっているため、
+// そのままでは "Cannot find the firebase namespace" エラーが発生する。
+// 以下のシムは registerService を追加し、既にv8で登録済みのサービスへの
+// 重複登録を安全にスキップする。
+if (firebase.INTERNAL && !firebase.INTERNAL.registerService) {
+    firebase.INTERNAL.registerService = function(name) {
+        return firebase[name] || null;
+    };
+}
