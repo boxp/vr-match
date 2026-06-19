@@ -33,6 +33,6 @@
   :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/slf4j-factory"]
   :profiles
   {:dev {:source-paths ["src" "dev"]
-         :dependencies [[integrant/repl "0.5.0"]]}
+         :dependencies [[integrant/repl "0.5.1"]]}
    :uberjar {:main vr-match-back-end.app.my-webapp.system
              :aot :all}})
