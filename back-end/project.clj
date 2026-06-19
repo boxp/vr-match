@@ -16,7 +16,7 @@
                  [environ "1.2.0"]
                  [clj-time "0.15.2"]
                  [com.stuartsierra/component "1.2.0"]
-                 [ring "1.15.3"]
+                 [ring "1.15.4"]
                  [ring/ring-json "0.5.1"]
                  [compojure "1.7.2"]
                  [cheshire "5.13.0"]
