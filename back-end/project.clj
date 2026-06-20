@@ -10,7 +10,7 @@
                  [org.clojure/data.codec "0.2.1"]
                  [org.clojure/test.check "1.1.3"]
                  [org.clojure/tools.logging "1.3.1"]
-                 [org.slf4j/slf4j-log4j12 "2.0.17"]
+                 [org.slf4j/slf4j-log4j12 "2.0.18"]
                  [com.novemberain/pantomime "2.11.0"]
                  [digest "1.4.10"]
                  [environ "1.2.0"]
