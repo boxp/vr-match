@@ -66,7 +66,7 @@
                  [org.clojure/clojurescript "1.12.35"]
                  [org.clojure/test.check "1.1.3"]
                  [reagent "0.8.1"]
-                 [re-frame "0.12.0"]
+                 [re-frame "1.4.7"]
                  [clj-commons/secretary "1.2.4"]
                  [kibu/pushy "0.3.8"]
                  [cljsjs/material-ui "3.9.3-0"]
