@@ -70,7 +70,7 @@
                  [clj-commons/secretary "1.2.4"]
                  [kibu/pushy "0.3.8"]
                  [cljsjs/material-ui "3.9.3-0"]
-                 [cljsjs/firebase "5.7.3-1"]
+                 [cljsjs/firebase "9.6.8-0"]
                  [e85th/venia "0.2.5-1"]
                  [cljs-ajax "0.8.4"]]
 
